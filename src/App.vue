@@ -7,7 +7,6 @@
           <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
         </a>
 <a class="navbar-item " href="https://bulma.io/love/">
-        <span class="bd-emoji">❤️</span>
         Love
       </a>
         <button class="button navbar-burger">
@@ -33,30 +32,11 @@
           <div class="container">
             <nav class="tabs is-boxed">
               <ul>
-                <li>
-                  <a href="/documentation/overview/start/">Bronie</a>
-                </li>
-                <li>
-                  <a href="https://bulma.io/documentation/modifiers/syntax">Biżuteria </a>
-                </li>
-                <li>
-                  <a href="https://bulma.io/documentation/columns/basics">Columns</a>
-                </li>
-                <li class="is-active">
-                  <a href="https://bulma.io/documentation/layout/container/">Layout</a>
-                </li>
-                <li>
-                  <a href="https://bulma.io/documentation/form/general">Form</a>
-                </li>
-                <li>
-                  <a href="https://bulma.io/documentation/elements/box/">Elements</a>
-                </li>
-                <li>
-                  <a href="https://bulma.io/documentation/components/breadcrumb/">Components</a>
-                </li>
+                <li v-for="item in itemTypes" @mouseover="mouseOver(item, $event)" v-bind:class="{ active: item.isActive }"><a>das</a></li>
               </ul>
-            </nav></div>
-          </div>
+            </nav>
+            </div>
+        </div>
     </section>
     <nav class="navbar has-shadow">
       <div class="container">
@@ -97,7 +77,7 @@
       </div>
     </section>
 
-      <b-switch v-model="switchState">{{ switchState }}</b-switch>
+      <!-- <b-switch v-model="switchState">{{ switchState }}</b-switch>
       <hr>
 
       <b-checkbox v-model="checkboxState">{{ checkboxState }}</b-checkbox>
@@ -113,13 +93,28 @@
 
       <b-field>
           <b-input maxlength="25" placeholder="Your name"></b-input>
-      </b-field>
+      </b-field> -->
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  data() {
+    return {
+      itemTypes: [
+        {name: 'Bronie', isActive: false, href='1', subTypes: []},
+        {name: 'Zbroje', isActive: false},
+      ]
+    }
+
+  },
+    methods: {
+        mouseOver: function(item, event){
+          console.log('hehe', item, event);
+          item.isActive = true;
+        }
+    }
 }
 </script>
 
