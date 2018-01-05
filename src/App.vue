@@ -1,72 +1,22 @@
 <template>
   <div id="app">
-    
+
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
-          <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
-        </a>
-<a class="navbar-item " href="https://bulma.io/love/">
-        Love
-      </a>
-        <button class="button navbar-burger">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        <!--<a class="navbar-item" href="https://bulma.io">-->
+          <!--<img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox"-->
+               <!--width="112" height="28">-->
+        <!--</a>-->
+        <router-link class="navbar-item" to="items">Przedmioty</router-link>
+        <!--<router-link class="navbar-item">Zestawy EQ</router-link>-->
       </div>
     </nav>
 
-    <section class="hero is-info">
-      <div class="hero-body">
-        <div class="container">
-          <h1 class="title">
-            Primary title
-          </h1>
-          <h2 class="subtitle">
-            Primary subtitle
-          </h2>
-        </div>
-      </div>
-      <div class="hero-foot">
-          <div class="container">
-            <nav class="tabs is-boxed">
-              <ul>
-                <li v-for="item in itemTypes" @mouseover="mouseOver(item, $event)" v-bind:class="{ active: item.isActive }"><a>das</a></li>
-              </ul>
-            </nav>
-            </div>
-        </div>
-    </section>
-    <nav class="navbar has-shadow">
-      <div class="container">
-        <div class="navbar-tabs">
-          <a class="navbar-item is-tab is-active" href="https://bulma.io/documentation/layout/container/">
-            Container
-          </a>
-          <a class="navbar-item is-tab " href="https://bulma.io/documentation/layout/level/">
-            Level
-          </a>
-          <a class="navbar-item is-tab " href="https://bulma.io/documentation/layout/media-object/">
-            Media Object
-          </a>
-          <a class="navbar-item is-tab " href="https://bulma.io/documentation/layout/hero/">
-            Hero
-          </a>
-          <a class="navbar-item is-tab " href="https://bulma.io/documentation/layout/section/">
-            Section
-          </a>
-          <a class="navbar-item is-tab " href="https://bulma.io/documentation/layout/footer/">
-            Footer
-          </a>
-          <a class="navbar-item is-tab " href="https://bulma.io/documentation/layout/tiles/">
-            Tiles
-          </a>
-        </div>
-      </div>
-    </nav>
-
-
+    <!--<section class="section">-->
+      <!--<div class="container">-->
+        <router-view></router-view>
+      <!--</div>-->
+    <!--</section>-->
 
     <section class="section">
       <div class="container">
@@ -77,54 +27,63 @@
       </div>
     </section>
 
-      <!-- <b-switch v-model="switchState">{{ switchState }}</b-switch>
-      <hr>
 
-      <b-checkbox v-model="checkboxState">{{ checkboxState }}</b-checkbox>
-      <hr>
 
-      <button class="button is-primary" @click="$toast.open('This is a Toast')">
-          Show Toast
-      </button>
-      <button class="button is-primary" @click="$snackbar.open('This is a Snackbar')">
-          Show Snackbar
-      </button>
-      <hr>
+    <!-- <b-switch v-model="switchState">{{ switchState }}</b-switch>
+    <hr>
 
-      <b-field>
-          <b-input maxlength="25" placeholder="Your name"></b-input>
-      </b-field> -->
+    <b-checkbox v-model="checkboxState">{{ checkboxState }}</b-checkbox>
+    <hr>
+
+    <button class="button is-primary" @click="$toast.open('This is a Toast')">
+        Show Toast
+    </button>
+    <button class="button is-primary" @click="$snackbar.open('This is a Snackbar')">
+        Show Snackbar
+    </button>
+    <hr>
+
+    <b-field>
+        <b-input maxlength="25" placeholder="Your name"></b-input>
+    </b-field> -->
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app',
-  data() {
-    return {
-      itemTypes: [
-        {name: 'Bronie', isActive: false, href='1', subTypes: []},
-        {name: 'Zbroje', isActive: false},
-      ]
-    }
+  // import { mapGetters } from 'vuex'
 
-  },
+  export default {
+    name: 'app',
+    data () {
+      return {
+        itemTypes: [
+          {name: 'Bronie', isActive: false, href: '', subTypes: []},
+          {name: 'Zbroje', isActive: false},
+        ]
+      }
+    },
+    // computed: {
+    //   ...mapGetters([
+    //     // Mounts the "safelyStoredNumber" getter to the scope of your component.
+    //     'safelyStoredNumber'
+    //   ])
+    // },
     methods: {
-        mouseOver: function(item, event){
-          console.log('hehe', item, event);
-          item.isActive = true;
-        }
+      mouseOver: function (item, event) {
+        console.log('hehe', item, event);
+        item.isActive = true;
+      }
     }
-}
+  }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+  }
 </style>
