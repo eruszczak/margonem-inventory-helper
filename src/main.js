@@ -5,14 +5,15 @@ import App from './App'
 import router from './router'
 import Buefy from 'buefy'
 import 'buefy/lib/buefy.css'
+import { store } from './store/index.js'
 
 Vue.config.productionTip = false
 Vue.use(Buefy)
 
-/* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })
