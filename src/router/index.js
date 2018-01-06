@@ -12,14 +12,9 @@ export default new Router({
       path: '/api/item/'
     },
     {
-      path: '/',
+      path: '/:type?',
       name: 'items',
       component: Items
-    },
-    {
-      path: '/test',
-      name: 'test',
-      component: Test
     }
   ]
 })
