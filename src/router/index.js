@@ -6,6 +6,7 @@ import Test from '@/components/Test'
 Vue.use(Router)
 
 export default new Router({
+  linkActiveClass: 'is-active',
   routes: [
     {
       name: 'api',

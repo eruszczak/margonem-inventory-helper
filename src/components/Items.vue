@@ -15,7 +15,8 @@
         <div class="container">
           <nav class="tabs is-boxed">
             <ul>
-              <li v-for="item in itemTypes" @mouseover="mouseOver(item, $event)" v-bind:class="{ active: item.isActive }"><a>{{ item.name }}</a></li>
+              <!--<li v-for="item in itemTypes" @mouseover="mouseOver(item, $event)"><a>{{ item.name }}</a></li>-->
+              <li v-for="item in itemTypes" @mouseover="mouseOver(item, $event)" v-bind:class="{'is-active': item.isActive }"><a>{{ item.name }}</a></li>
             </ul>
           </nav>
         </div>
@@ -39,6 +40,7 @@
     name: 'items',
     data: function () {
       return {
+        items: [],
         subTypes: [],
         itemTypes: [
           {
@@ -71,7 +73,7 @@
       mouseOver: function (item, event) {
         // console.log('hehe', item, event);
         this.itemTypes.map((el) => {
-          el.active = false
+          el.isActive = false
         })
         item.isActive = true
         this.subTypes = item.subTypes
