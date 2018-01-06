@@ -15,8 +15,7 @@
         <div class="container">
           <nav class="tabs is-boxed">
             <ul>
-              <li v-for="item in itemTypes" @mouseover="mouseOver(item, $event)"
-                  v-bind:class="{ active: item.isActive }"><a>das</a></li>
+              <li v-for="item in itemTypes" @mouseover="mouseOver(item, $event)" v-bind:class="{ active: item.isActive }"><a>{{ item.name }}</a></li>
             </ul>
           </nav>
         </div>
@@ -26,7 +25,7 @@
     <nav class="navbar has-shadow">
       <div class="container">
         <div class="navbar-tabs">
-          <router-link class="navbar-item is-tab is-active" v-for="item in subTypes" :to="item.href">
+          <router-link class="navbar-item is-tab" v-for="item in subTypes" :to="{name: 'items', params: {type: item.href}}">
             {{ item.name }}
           </router-link>
         </div>
@@ -38,20 +37,28 @@
 <script>
   export default {
     name: 'items',
-    data () {
+    data: function () {
       return {
         subTypes: [],
         itemTypes: [
           {
-            name: 'Bronie', isActive: false, href: '', subTypes: [
-              {name: 'Jednoręczne', isActive: false, href: ''},
-              {name: 'Dwuręczne', isActive: false, href: ''}
-          ]},
+            name: 'Bronie',
+            isActive: false,
+            href: '',
+            subTypes: [
+              {name: 'Jednoręczne', isActive: false, href: '1'},
+              {name: 'Dwuręczne', isActive: false, href: '2'}
+            ]
+          },
           {
-            name: 'Ekwipunek', isActive: false, href: '', subTypes: [
-              {name: 'Zbroje', isActive: false, href: ''},
-              {name: 'Tarcze', isActive: false, href: ''}
-            ]},
+            name: 'Ekwipunek',
+            isActive: false,
+            href: '',
+            subTypes: [
+              {name: 'Zbroje', isActive: false, href: '10'},
+              {name: 'Tarcze', isActive: false, href: '20'}
+            ]
+          }
         ]
       }
     },
@@ -63,10 +70,22 @@
     methods: {
       mouseOver: function (item, event) {
         // console.log('hehe', item, event);
-        // item.isActive = true;
-        this.subTypes = item.subTypes;
+        this.itemTypes.map((el) => {
+          el.active = false
+        })
+        item.isActive = true
+        this.subTypes = item.subTypes
         // console.log(this.subTypes)
-      }
+      },
+      // mouseOver2: function (item, event) {
+      //   // console.log('hehe', item, event);
+      //   this.subTypes.map((el) => {
+      //     el.active = false
+      //   })
+      //   item.isActive = true
+      //   // this.subTypes = item.subTypes
+      //   // console.log(this.subTypes)
+      // }
     }
   }
 </script>
