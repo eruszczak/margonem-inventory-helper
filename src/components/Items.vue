@@ -32,10 +32,14 @@
         </div>
       </div>
     </nav>
+    <div v-for="item in items">{{ item }}</div>
   </div>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
+  import { mapActions } from 'vuex'
+
   export default {
     name: 'items',
     data: function () {
@@ -64,6 +68,11 @@
         ]
       }
     },
+    computed: {
+      ...mapGetters([
+        'items'
+      ])
+    },
     // watch: {
     //   '$route' (to, from) {
     //     console.log(to, from)
@@ -79,6 +88,10 @@
         this.subTypes = item.subTypes
         // console.log(this.subTypes)
       },
+      ...mapActions([
+        // Mounts the "setNumberToRemoteValue" action to `this.setNumberToRemoteValue()`.
+        'fetchItems',
+      ])
       // mouseOver2: function (item, event) {
       //   // console.log('hehe', item, event);
       //   this.subTypes.map((el) => {
