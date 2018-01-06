@@ -44,7 +44,6 @@
     name: 'items',
     data: function () {
       return {
-        items: [],
         subTypes: [],
         itemTypes: [
           {
@@ -69,15 +68,23 @@
       }
     },
     computed: {
+      // mix this into the outer object with the object spread operator
       ...mapGetters([
+        // map this.count to store.state.count
         'items'
-      ])
+      ]),
+      // count () {
+      //   return this.$store.state.count
+      // }
     },
-    // watch: {
-    //   '$route' (to, from) {
-    //     console.log(to, from)
-    //   }
-    // }
+    watch: {
+      '$route' (to, from) {
+        console.log(to, from);
+        this.$store.dispatch('fetchItems', {
+          type: this.$route.params.type
+        })
+      }
+    },
     methods: {
       mouseOver: function (item, event) {
         // console.log('hehe', item, event);
@@ -88,10 +95,10 @@
         this.subTypes = item.subTypes
         // console.log(this.subTypes)
       },
-      ...mapActions([
-        // Mounts the "setNumberToRemoteValue" action to `this.setNumberToRemoteValue()`.
-        'fetchItems',
-      ])
+      // ...mapActions([
+      //   // Mounts the "setNumberToRemoteValue" action to `this.setNumberToRemoteValue()`.
+      //   'fetchItems',
+      // ])
       // mouseOver2: function (item, event) {
       //   // console.log('hehe', item, event);
       //   this.subTypes.map((el) => {

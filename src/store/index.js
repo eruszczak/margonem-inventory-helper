@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
+    // If a piece of state strictly belongs to a single component, it could be just fine leaving it as local state.
     items: []
   },
   getters: {
