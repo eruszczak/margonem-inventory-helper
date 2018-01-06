@@ -15,8 +15,8 @@
         <div class="container">
           <nav class="tabs is-boxed">
             <ul>
-              <!--<li v-for="item in itemTypes" @mouseover="mouseOver(item, $event)"-->
-                  <!--v-bind:class="{ active: item.isActive }"><a>das</a></li>-->
+              <li v-for="item in itemTypes" @mouseover="mouseOver(item, $event)"
+                  v-bind:class="{ active: item.isActive }"><a>das</a></li>
             </ul>
           </nav>
         </div>
@@ -26,11 +26,8 @@
     <nav class="navbar has-shadow">
       <div class="container">
         <div class="navbar-tabs">
-          <router-link class="navbar-item is-tab is-active" :to="{name: 'items', params: {'type': 1}}">
-            Jednoręczne
-          </router-link>
-          <router-link class="navbar-item is-tab" :to="{name: 'items', params: {'type': 2}}">
-            Dwuręczne
+          <router-link class="navbar-item is-tab is-active" v-for="item in subTypes" :to="item.href">
+            {{ item.name }}
           </router-link>
         </div>
       </div>
@@ -41,9 +38,34 @@
 <script>
   export default {
     name: 'items',
-    watch: {
-      '$route' (to, from) {
-        console.log(to, from)
+    data () {
+      return {
+        subTypes: [],
+        itemTypes: [
+          {
+            name: 'Bronie', isActive: false, href: '', subTypes: [
+              {name: 'Jednoręczne', isActive: false, href: ''},
+              {name: 'Dwuręczne', isActive: false, href: ''}
+          ]},
+          {
+            name: 'Ekwipunek', isActive: false, href: '', subTypes: [
+              {name: 'Zbroje', isActive: false, href: ''},
+              {name: 'Tarcze', isActive: false, href: ''}
+            ]},
+        ]
+      }
+    },
+    // watch: {
+    //   '$route' (to, from) {
+    //     console.log(to, from)
+    //   }
+    // }
+    methods: {
+      mouseOver: function (item, event) {
+        // console.log('hehe', item, event);
+        // item.isActive = true;
+        this.subTypes = item.subTypes;
+        // console.log(this.subTypes)
       }
     }
   }

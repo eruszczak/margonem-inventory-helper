@@ -7,7 +7,7 @@
           <!--<img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox"-->
                <!--width="112" height="28">-->
         <!--</a>-->
-        <router-link class="navbar-item" to="items">Przedmioty</router-link>
+        <router-link class="navbar-item" to="test">Test</router-link>
         <!--<router-link class="navbar-item">Zestawy EQ</router-link>-->
       </div>
     </nav>
@@ -18,14 +18,14 @@
       <!--</div>-->
     <!--</section>-->
 
-    <section class="section">
-      <div class="container">
-        <h1 class="title">Section</h1>
-        <h2 class="subtitle">
-          A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading
-        </h2>
-      </div>
-    </section>
+    <!--<section class="section">-->
+      <!--<div class="container">-->
+        <!--<h1 class="title">Section</h1>-->
+        <!--<h2 class="subtitle">-->
+          <!--A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading-->
+        <!--</h2>-->
+      <!--</div>-->
+    <!--</section>-->
 
 
 
