@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import eq from './modules/eq'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    // TODO If a piece of state strictly belongs to a single component, it could be just fine leaving it as local state.
+    // If a piece of state strictly belongs to a single component, it could be just fine leaving it as local state.
     items: [],
     pageTitle: ''
   },
@@ -31,6 +32,8 @@ export const store = new Vuex.Store({
         console.log(err)
       })
     }
+  },
+  modules: {
+    eq
   }
-
 })

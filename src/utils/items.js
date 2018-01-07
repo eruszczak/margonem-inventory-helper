@@ -222,3 +222,22 @@ export const ITEM_STAT = {
   lowcritallval: {val: 'Obniżenie mocy krytyka fizycznego i magicznego o {}', val2: 'Obniżenie mocy krytyka fizycznego i magicznego'},
   worth: {val: 'Wartość: {}', val2: 'Wartość'}
 }
+
+export const DEFAULT_EQ_ITEMS = {
+  primary: null,
+  secondary: null,
+  armor: null,
+  helmet: null,
+  boots: null,
+  gloves: null,
+  ring: null,
+  necklace: null,
+  blessing: null
+}
+
+export const EQ_ITEMS_ROWS = [
+  ['blessing', 'helmet', ''],
+  ['ring', 'necklace', 'gloves'],
+  ['primary', 'armor', 'secondary'],
+  ['', 'boots', '']
+]
