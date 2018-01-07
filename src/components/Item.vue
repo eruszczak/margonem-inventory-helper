@@ -1,25 +1,24 @@
 <template>
-  <div>{{ data.name }}</div>
   <!--<router-link :to="{name: 'singleItem', params: {itemId: data.slug, data: data} }">-->
-    <!--<div :id="data.slug" class="item" @contextmenu.prevent="$emit('rightClick', data)">-->
-      <!--<img class="itemborder borderRarity" :class="data.rarity" :src="data.img" :alt="data.name">-->
-      <!--<div class="tooltipText">-->
-        <!--&lt;!&ndash;<tooltip :stats="stats"></tooltip>&ndash;&gt;-->
-      <!--</div>-->
-      <!--&lt;!&ndash; <p><span v-my-tooltip.right="message">{{ message }}</span></p> &ndash;&gt;-->
-    <!--</div>-->
+    <div :id="data.slug" class="item" @contextmenu.prevent="$emit('rightClick', data)">
+      <img class="itemborder borderRarity" :class="data.rarity" :src="data.img" :alt="data.name">
+      <div class="tooltipText">
+        <!--<tooltip :stats="stats"></tooltip>-->
+      </div>
+      <!-- <p><span v-my-tooltip.right="message">{{ message }}</span></p> -->
+    </div>
   <!--</router-link>-->
 </template>
 
 <script>
-  // import Tooltip from './Tooltip'
+  import Popup from './Popup'
 
   export default {
     name: 'item',
     props: ['data'],
-    // components: {
-    //   Tooltip
-    // },
+    components: {
+      Popup
+    },
     data () {
       return {
       }
