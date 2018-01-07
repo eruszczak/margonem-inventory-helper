@@ -20,10 +20,6 @@
 
   export default {
     name: 'Eq',
-    props: {
-      // forShowOnly: {default: false},
-      // hideSummary: {default: false},
-    },
     components: {
       Item
     },
