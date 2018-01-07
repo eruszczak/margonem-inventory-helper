@@ -35,7 +35,7 @@
     </nav>
     <!--<div v-for="item in items">{{ item }}</div>-->
     <div class="items">
-      <item v-for="item in items" :key="item.pk" :data="item"></item>
+      <item v-for="item in items" :key="item.pk" :data="item" @itemRightClick="itemRightClick"></item>
     </div>
   </div>
 </template>
@@ -88,8 +88,12 @@
         })
         this.setPageTitle({ text: query })
       },
+      itemRightClick: function (clickedItem) {
+        this.addItemToEq(clickedItem)
+      },
       ...mapMutations([
-        'setPageTitle'
+        'setPageTitle',
+        'addItemToEq'
       ]),
       ...mapActions([
         'fetchItems'

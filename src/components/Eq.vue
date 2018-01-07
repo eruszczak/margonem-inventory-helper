@@ -4,7 +4,7 @@
       <tbody>
         <tr v-for="row in rows">
           <td v-for="place in row" :id="place">
-            <item v-if="eqItems[place]" :data="eqItems[place]" @rightClick="removeItemFromEq"></item>
+            <item v-if="eqItems[place]" :data="eqItems[place]" @itemRightClick="removeItemFromEq"></item>
           </td>
         </tr>
       </tbody>
@@ -44,21 +44,8 @@
       //   'addItemToEq'
       // ]),
       removeItemFromEq: function (clickedItem, isStackOperation = false) {
-        if (this.forShowOnly) {
-          // EventBus.$emit('showSnackbar', 'Nie możesz edytować odwiedzanego zestawu.');
-          // this set is only for display, cannot delete items from it
-          return
-        }
         let itemType = ITEM_PLACE[clickedItem.type]
-
-        this.eqItems[itemType] = false
-        // EventBus.$emit('showSnackbar', `Zdjęto ${clickedItem.name}`);
-
-        if (!isStackOperation) {
-          this.stack.push({added: false, item: clickedItem})
-        }
-        // this.updateSetState()
-        localStorage.removeItem(itemType)
+        this.eqItems[itemType] = null
       }
     }
   }

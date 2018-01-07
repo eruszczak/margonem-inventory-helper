@@ -6,7 +6,7 @@
       <!--</b-tooltip>-->
     <!--</div>-->
 
-    <div :id="data.slug" class="item" @contextmenu.prevent="addItemToEq(data)">
+    <div :id="data.slug" class="item" @contextmenu.prevent="$emit('itemRightClick', data)">
       <img class="itemborder borderRarity" :class="data.rarity" :src="data.img" :alt="data.name">
       <div class="tooltipText">
         <popup :data="data"></popup>
@@ -77,7 +77,7 @@
     },
     methods: {
       ...mapMutations([
-        'addItemToEq'
+        // 'addItemToEq'
       ]),
     }
   }
