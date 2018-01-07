@@ -10,6 +10,7 @@ import { store } from './store/index.js'
 Vue.config.productionTip = false
 Vue.use(Buefy)
 
+// eslint-disable-next-line no-new
 new Vue({
   el: '#app',
   router,

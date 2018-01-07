@@ -15,7 +15,7 @@
           <nav class="tabs is-boxed">
             <ul>
               <!--<li v-for="item in itemTypes" @mouseover="mouseOver(item, $event)"><a>{{ item.name }}</a></li>-->
-              <li v-for="item in menu" @mouseover="mouseOver(item, $event)" v-bind:class="{'is-active': item.isActive }">
+              <li v-for="item in menu" :key="item.name" @mouseover="mouseOver(item, $event)" v-bind:class="{'is-active': item.isActive }">
                 <a>{{ item.name }}</a>
               </li>
             </ul>
@@ -27,7 +27,7 @@
     <nav class="navbar has-shadow">
       <div class="container">
         <div class="navbar-tabs">
-          <router-link class="navbar-item is-tab" v-for="item in subMenu" :to="item.href">
+          <router-link class="navbar-item is-tab" v-for="item in subMenu" :key="item.displayValue" :to="item.href">
             {{ item.displayValue }}
           </router-link>
         </div>
@@ -63,9 +63,6 @@
         'items',
         'pageTitle'
       ])
-      // count () {
-      //   return this.$store.state.count
-      // }
     },
     watch: {
       '$route' (to, from) {
@@ -85,24 +82,13 @@
         })
         item.isActive = true
         this.subMenu = item.sublinks
-        // console.log(this.subTypes)
       },
       ...mapMutations([
         'setPageTitle'
       ]),
       ...mapActions([
-        // Mounts the "setNumberToRemoteValue" action to `this.setNumberToRemoteValue()`.
         'fetchItems'
       ])
-      // mouseOver2: function (item, event) {
-      //   // console.log('hehe', item, event);
-      //   this.subTypes.map((el) => {
-      //     el.active = false
-      //   })
-      //   item.isActive = true
-      //   // this.subTypes = item.subTypes
-      //   // console.log(this.subTypes)
-      // }
     }
   }
 </script>
