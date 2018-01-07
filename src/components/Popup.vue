@@ -15,8 +15,8 @@
 </template>
 
 <script>
-  import {encodeProfessions, isItemWearable, calculateMaxFullBonusDuration} from '../utils/helpers'
-  import {ITEM_RARITY, ITEM_TYPE, ITEM_BONUS, ITEM_STAT} from '../helpers/constants_item'
+  import {encodeProfessions, calculateMaxFullBonusDuration} from '../utils/helpers'
+  import {ITEM_RARITY, ITEM_TYPE, ITEM_BONUS, ITEM_STAT} from '../utils/items'
 
   export default {
     name: 'item',
@@ -50,9 +50,9 @@
         if (this.data.profession.length === 6) {
           return 'wszystkie profesje'
         }
-        return professions;
+        return professions
       },
-      encodeItemMinorStats() {
+      encodeItemMinorStats: function () {
         // those data are already in the order
         let data = JSON.parse(this.data.json_stats)
         let encodedMinorStats = ''
@@ -61,7 +61,7 @@
             encodedMinorStats += `<p>${ITEM_STAT[attr].val.replace('{}', data[attr])}</p>`
           }
         }
-        return encodedMinorStats;
+        return encodedMinorStats
       }
     }
   }

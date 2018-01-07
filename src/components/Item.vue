@@ -3,7 +3,7 @@
     <div :id="data.slug" class="item" @contextmenu.prevent="$emit('rightClick', data)">
       <img class="itemborder borderRarity" :class="data.rarity" :src="data.img" :alt="data.name">
       <div class="tooltipText">
-        <!--<tooltip :stats="stats"></tooltip>-->
+        <popup :data="data"></popup>
       </div>
       <!-- <p><span v-my-tooltip.right="message">{{ message }}</span></p> -->
     </div>
