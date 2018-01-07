@@ -64,13 +64,13 @@
         'pageTitle'
       ])
     },
+    created () {
+      // TODO need to make navbar active
+      this.updateItems()
+    },
     watch: {
       '$route' (to, from) {
-        const query = `?t=${MAP_TYPE_NAME_TO_ID[to.query.type]}`
-        this.fetchItems({
-          query: query
-        })
-        this.setPageTitle({ text: query })
+        this.updateItems()
       }
     },
     methods: {
@@ -80,6 +80,13 @@
         })
         item.isActive = true
         this.subMenu = item.sublinks
+      },
+      updateItems: function () {
+        const query = `?t=${MAP_TYPE_NAME_TO_ID[this.$route.params.type]}`
+        this.fetchItems({
+          query: query
+        })
+        this.setPageTitle({ text: query })
       },
       ...mapMutations([
         'setPageTitle'
