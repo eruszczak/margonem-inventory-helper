@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Items from '@/components/Items'
-import Test from '@/components/Test'
 
 Vue.use(Router)
 
