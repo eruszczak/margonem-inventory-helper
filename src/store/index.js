@@ -7,10 +7,12 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     // If a piece of state strictly belongs to a single component, it could be just fine leaving it as local state.
-    items: []
+    items: [],
+    pageTitle: ''
   },
   getters: {
     items: state => state.items,
+    pageTitle: state => state.pageTitle
     // storedNumberMatches (state) {
     //   return matchNumber => {
     //     return state.safelyStoredNumber === matchNumber
@@ -30,7 +32,8 @@ export const store = new Vuex.Store({
     //   context.commit('setStoredNumber', await myRemoteService.getRemoteValue());
     //   return Promise.resolve();
     // },
-    fetchItems: function ({ commit }) {
+    // use ES2015 argument destructuring to simplify the code a bit
+    fetchItems ({ commit }) {
       axios.get('/api/item/').then((response) => {
         commit('setItems', { list: response.data })
       }, (err) => {

@@ -7,7 +7,7 @@
             {{ $route.params.type }}
           </h1>
           <h2 class="subtitle">
-            Primary subtitle
+            {{ MENU_LINKS }}
           </h2>
         </div>
       </div>
@@ -16,7 +16,9 @@
           <nav class="tabs is-boxed">
             <ul>
               <!--<li v-for="item in itemTypes" @mouseover="mouseOver(item, $event)"><a>{{ item.name }}</a></li>-->
-              <li v-for="item in itemTypes" @mouseover="mouseOver(item, $event)" v-bind:class="{'is-active': item.isActive }"><a>{{ item.name }}</a></li>
+              <li v-for="item in menu" @mouseover="mouseOver(item, $event)" v-bind:class="{'is-active': item.isActive }">
+                <a>{{ item.name }}</a>
+              </li>
             </ul>
           </nav>
         </div>
@@ -26,8 +28,8 @@
     <nav class="navbar has-shadow">
       <div class="container">
         <div class="navbar-tabs">
-          <router-link class="navbar-item is-tab" v-for="item in subTypes" :to="{name: 'items', params: {type: item.href}}">
-            {{ item.name }}
+          <router-link class="navbar-item is-tab" v-for="item in subMenu" :to="item.href">
+            {{ item.displayValue }}
           </router-link>
         </div>
       </div>
@@ -39,32 +41,13 @@
 <script>
   import { mapGetters } from 'vuex'
   import { mapActions } from 'vuex'
-
+  import { MENU_LINKS } from '../utils/navbar'
   export default {
     name: 'items',
     data: function () {
       return {
-        subTypes: [],
-        itemTypes: [
-          {
-            name: 'Bronie',
-            isActive: false,
-            href: '',
-            subTypes: [
-              {name: 'Jednoręczne', isActive: false, href: '1'},
-              {name: 'Dwuręczne', isActive: false, href: '2'}
-            ]
-          },
-          {
-            name: 'Ekwipunek',
-            isActive: false,
-            href: '',
-            subTypes: [
-              {name: 'Zbroje', isActive: false, href: '10'},
-              {name: 'Tarcze', isActive: false, href: '20'}
-            ]
-          }
-        ]
+        menu: MENU_LINKS,
+        subMenu: [],
       }
     },
     computed: {
@@ -87,12 +70,12 @@
     },
     methods: {
       mouseOver: function (item, event) {
-        // console.log('hehe', item, event);
-        this.itemTypes.map((el) => {
+        console.log('hehe', item, event);
+        this.menu.map((el) => {
           el.isActive = false
         })
         item.isActive = true
-        this.subTypes = item.subTypes
+        this.subMenu = item.sublinks
         // console.log(this.subTypes)
       },
       // ...mapActions([
