@@ -35,7 +35,7 @@
     </nav>
     <!--<div v-for="item in items">{{ item }}</div>-->
     <div class="items">
-      <item v-for="item in items" :data="item"></item>
+      <item v-for="item in items" :key="item.pk" :data="item"></item>
     </div>
   </div>
 </template>
@@ -66,7 +66,6 @@
     },
     watch: {
       '$route' (to, from) {
-        console.log(to)
         const query = `?t=${MAP_TYPE_NAME_TO_ID[to.query.type]}`
         this.fetchItems({
           query: query
@@ -76,7 +75,6 @@
     },
     methods: {
       mouseOver: function (item, event) {
-        console.log('hehe', item, event)
         this.menu.map((el) => {
           el.isActive = false
         })

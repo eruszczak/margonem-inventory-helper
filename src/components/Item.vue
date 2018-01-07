@@ -1,5 +1,5 @@
 <template>
-  <div>{{data}}</div>
+  <div>{{ data.name }}</div>
   <!--<router-link :to="{name: 'singleItem', params: {itemId: data.slug, data: data} }">-->
     <!--<div :id="data.slug" class="item" @contextmenu.prevent="$emit('rightClick', data)">-->
       <!--<img class="itemborder borderRarity" :class="data.rarity" :src="data.img" :alt="data.name">-->
