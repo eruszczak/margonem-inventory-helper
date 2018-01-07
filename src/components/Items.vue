@@ -38,8 +38,7 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
-  import { mapActions } from 'vuex'
+  import { mapGetters, mapMutations, mapActions } from 'vuex'
   import { MAP_TYPE_NAME_TO_ID, MENU_LINKS } from '../utils/navbar'
   export default {
     name: 'items',
@@ -53,7 +52,8 @@
       // mix this into the outer object with the object spread operator
       ...mapGetters([
         // map this.count to store.state.count
-        'items'
+        'items',
+        'pageTitle'
       ]),
       // count () {
       //   return this.$store.state.count
@@ -63,9 +63,10 @@
       '$route' (to, from) {
         console.log(to)
         const query = `?t=${MAP_TYPE_NAME_TO_ID[to.query.type]}`
-        this.$store.dispatch('fetchItems', {
+        this.fetchItems({
           query: query
         })
+        this.setPageTitle({ text: query })
       }
     },
     methods: {
@@ -78,10 +79,13 @@
         this.subMenu = item.sublinks
         // console.log(this.subTypes)
       },
-      // ...mapActions([
-      //   // Mounts the "setNumberToRemoteValue" action to `this.setNumberToRemoteValue()`.
-      //   'fetchItems',
-      // ])
+      ...mapMutations([
+        'setPageTitle'
+      ]),
+      ...mapActions([
+        // Mounts the "setNumberToRemoteValue" action to `this.setNumberToRemoteValue()`.
+        'fetchItems',
+      ])
       // mouseOver2: function (item, event) {
       //   // console.log('hehe', item, event);
       //   this.subTypes.map((el) => {

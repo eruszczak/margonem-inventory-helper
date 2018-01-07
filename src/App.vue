@@ -7,7 +7,7 @@
           <!--<img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox"-->
                <!--width="112" height="28">-->
         <!--</a>-->
-        <router-link class="navbar-item" to="test">Test</router-link>
+        <router-link class="navbar-item" to="test">{{ pageTitle }}</router-link>
         <!--<router-link class="navbar-item">Zestawy EQ</router-link>-->
       </div>
     </nav>
@@ -51,6 +51,7 @@
 
 <script>
   // import { mapGetters } from 'vuex'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'app',
@@ -62,12 +63,27 @@
         ]
       }
     },
+    computed: {
+      ...mapGetters([
+        // map this.count to store.state.count
+        'pageTitle'
+      ]),
+      // count () {
+      //   return this.$store.state.count
+      // }
+    },
     // computed: {
     //   ...mapGetters([
     //     // Mounts the "safelyStoredNumber" getter to the scope of your component.
     //     'safelyStoredNumber'
     //   ])
     // },
+    watch: {
+      pageTitle (newVal, oldVal) {
+        console.log(newVal, oldVal)
+        window.document.title = newVal
+      }
+    },
     methods: {
       mouseOver: function (item, event) {
         console.log('hehe', item, event);
