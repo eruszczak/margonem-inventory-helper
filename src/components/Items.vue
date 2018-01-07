@@ -1,13 +1,12 @@
 <template>
   <div>
-    <section class="hero is-dark">
+    <section class="hero is-info">
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
             {{ $route.params.type }}
           </h1>
           <h2 class="subtitle">
-            {{ MENU_LINKS }}
           </h2>
         </div>
       </div>
@@ -41,7 +40,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import { mapActions } from 'vuex'
-  import { MENU_LINKS } from '../utils/navbar'
+  import { MAP_TYPE_NAME_TO_ID, MENU_LINKS } from '../utils/navbar'
   export default {
     name: 'items',
     data: function () {
@@ -62,9 +61,10 @@
     },
     watch: {
       '$route' (to, from) {
-        console.log(to, from);
+        console.log(to)
+        const query = `?t=${MAP_TYPE_NAME_TO_ID[to.query.type]}`
         this.$store.dispatch('fetchItems', {
-          type: this.$route.params.type
+          query: query
         })
       }
     },

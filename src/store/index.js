@@ -33,8 +33,9 @@ export const store = new Vuex.Store({
     //   return Promise.resolve();
     // },
     // use ES2015 argument destructuring to simplify the code a bit
-    fetchItems ({ commit }) {
-      axios.get('/api/item/').then((response) => {
+    fetchItems ({ commit }, payload) {
+      axios.get(`/api/item/${payload.query}`).then((response) => {
+        console.log('fetchItems', payload, response.data)
         commit('setItems', { list: response.data })
       }, (err) => {
         console.log(err)
