@@ -1,12 +1,12 @@
 <template>
   <router-link :to="{name: 'singleItem', params: {itemId: data.slug, data: data} }">
-    <div :id="data.slug" class="item" @contextmenu.prevent="$emit('rightClick', data)">
-      <b-tooltip :label="encodeItemMinorStats" multilined>
-        <img class="itemborder borderRarity" :class="data.rarity" :src="data.img" :alt="data.name">
-      </b-tooltip>
-    </div>
+    <!--<div :id="data.slug" class="item" @contextmenu.prevent="addItemToEq(data)">-->
+      <!--<b-tooltip :label="encodeItemMinorStats" multilined>-->
+        <!--<img class="itemborder borderRarity" :class="data.rarity" :src="data.img" :alt="data.name">-->
+      <!--</b-tooltip>-->
+    <!--</div>-->
 
-    <div :id="data.slug" class="item" @contextmenu.prevent="$emit('rightClick', data)">
+    <div :id="data.slug" class="item" @contextmenu.prevent="addItemToEq(data)">
       <img class="itemborder borderRarity" :class="data.rarity" :src="data.img" :alt="data.name">
       <div class="tooltipText">
         <popup :data="data"></popup>
@@ -20,6 +20,7 @@
   import Popup from './Popup'
   import {encodeProfessions, calculateMaxFullBonusDuration} from '../utils/helpers'
   import {ITEM_RARITY, ITEM_TYPE, ITEM_BONUS, ITEM_STAT} from '../utils/items'
+  import { mapMutations } from 'vuex'
 
   export default {
     name: 'item',
@@ -73,6 +74,11 @@
         }
         return encodedMinorStats
       }
+    },
+    methods: {
+      ...mapMutations([
+        'addItemToEq'
+      ]),
     }
   }
 </script>

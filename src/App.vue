@@ -12,12 +12,13 @@
         <router-view></router-view>
       <!--</div>-->
     <!--</section>-->
+    <eq></eq>
   </div>
 </template>
 
 <script>
-  // import { mapGetters } from 'vuex'
   import { mapGetters } from 'vuex'
+  import Eq from './components/Eq'
 
   export default {
     name: 'app',
@@ -25,10 +26,14 @@
       return {
       }
     },
+    components: {
+      Eq
+    },
     computed: {
       ...mapGetters([
         // map this.count to store.state.count
-        'pageTitle'
+        'pageTitle',
+        'canAddToEq'
       ])
     },
     watch: {
