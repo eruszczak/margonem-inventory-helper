@@ -24,6 +24,9 @@ export const store = new Vuex.Store({
   mutations: {
     setItems: (state, { list }) => {
       state.items = list
+    },
+    setPageTitle: (state, { text }) => {
+      state.pageTitle = text
     }
   },
   actions: {
