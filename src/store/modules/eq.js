@@ -4,7 +4,8 @@ export default {
   state: {
     eqItems: DEFAULT_EQ_ITEMS,
     // this decided whether eqSet had 'preventAddingItem'. it must be stored in local storage
-    canAddToEq: false
+    canAddToEq: false,
+    stack: []
   },
   getters: {
     eqItems: state => state.eqItems
@@ -16,7 +17,11 @@ export default {
     setEqItem: (state, item, placement) => {
       state.eqItems[placement] = item
     },
+    replaceEqItems: (state, newEqItems) => {
+      state.eqItems = newEqItems
+    },
     addItemToEq: function (state, clickedItem, isStackOperation = false, initial = false) {
+      // TODO not initial but ignoreToast
       console.log(clickedItem)
       // console.log('add')
       // if (!initial && this.preventAddingItem) {

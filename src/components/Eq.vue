@@ -4,7 +4,7 @@
       <tbody>
         <tr v-for="row in rows">
           <td v-for="place in row" :id="place">
-            <item v-if="eqItems[place]" :data="eqItems[place]" @itemRightClick="removeItemFromEq"></item>
+            <item v-if="eqItems[place]" :data="eqItems[place]" @itemRightClick="itemRightClick"></item>
           </td>
         </tr>
       </tbody>
@@ -29,8 +29,7 @@
     },
     data () {
       return {
-        rows: EQ_ITEMS_ROWS,
-        showSummary: false,
+        rows: EQ_ITEMS_ROWS
       }
     },
     computed: {
@@ -43,7 +42,7 @@
       // ...mapMutations([
       //   'addItemToEq'
       // ]),
-      removeItemFromEq: function (clickedItem, isStackOperation = false) {
+      itemRightClick: function (clickedItem, isStackOperation = false) {
         let itemType = ITEM_PLACE[clickedItem.type]
         this.eqItems[itemType] = null
       }

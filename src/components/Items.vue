@@ -74,6 +74,13 @@
       }
     },
     methods: {
+      ...mapMutations([
+        'setPageTitle',
+        'addItemToEq'
+      ]),
+      ...mapActions([
+        'fetchItems'
+      ]),
       mouseOver: function (item, event) {
         this.menu.map((el) => {
           el.isActive = false
@@ -90,14 +97,7 @@
       },
       itemRightClick: function (clickedItem) {
         this.addItemToEq(clickedItem)
-      },
-      ...mapMutations([
-        'setPageTitle',
-        'addItemToEq'
-      ]),
-      ...mapActions([
-        'fetchItems'
-      ])
+      }
     }
   }
 </script>
