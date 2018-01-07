@@ -2,36 +2,36 @@ export const MENU_LINKS = [
   {
     name: 'Bronie',
     sublinks: [
-      {displayValue: 'Jednoręczne', href: {name: 'items', query: {type: 'jednoreczne'}}},
-      {displayValue: 'Dwuręczne', href: {name: 'items', query: {type: 'dwureczne'}}},
-      {displayValue: 'Półtoraręczne', href: {name: 'items', query: {type: 'poltorareczne'}}},
-      {displayValue: 'Dystansowe', href: {name: 'items', query: {type: 'dystansowe'}}},
-      {displayValue: 'Pomocnicze', href: {name: 'items', query: {type: 'pomocnicze'}}},
-      {displayValue: 'Różdżki', href: {name: 'items', query: {type: 'rozdzki'}}},
-      {displayValue: 'Laski', href: {name: 'items', query: {type: 'laski'}}}
+      {displayValue: 'Jednoręczne', href: {name: 'items', params: {type: 'jednoreczne'}}},
+      {displayValue: 'Dwuręczne', href: {name: 'items', params: {type: 'dwureczne'}}},
+      {displayValue: 'Półtoraręczne', href: {name: 'items', params: {type: 'poltorareczne'}}},
+      {displayValue: 'Dystansowe', href: {name: 'items', params: {type: 'dystansowe'}}},
+      {displayValue: 'Pomocnicze', href: {name: 'items', params: {type: 'pomocnicze'}}},
+      {displayValue: 'Różdżki', href: {name: 'items', params: {type: 'rozdzki'}}},
+      {displayValue: 'Laski', href: {name: 'items', params: {type: 'laski'}}}
     ]
   },
   {
     name: 'Ekwipunek',
     sublinks: [
-      {displayValue: 'Zbroje', href: {name: 'items', query: {type: 'zbroje'}}},
-      {displayValue: 'Hełmy', href: {name: 'items', query: {type: 'helmy'}}},
-      {displayValue: 'Buty', href: {name: 'items', query: {type: 'buty'}}},
-      {displayValue: 'Rękawice', href: {name: 'items', query: {type: 'rekawice'}}},
-      {displayValue: 'Pierścienie', href: {name: 'items', query: {type: 'pierscienie'}}},
-      {displayValue: 'Naszyjniki', href: {name: 'items', query: {type: 'naszyjniki'}}},
-      {displayValue: 'Tarcze', href: {name: 'items', query: {type: 'tarcze'}}}
+      {displayValue: 'Zbroje', href: {name: 'items', params: {type: 'zbroje'}}},
+      {displayValue: 'Hełmy', href: {name: 'items', params: {type: 'helmy'}}},
+      {displayValue: 'Buty', href: {name: 'items', params: {type: 'buty'}}},
+      {displayValue: 'Rękawice', href: {name: 'items', params: {type: 'rekawice'}}},
+      {displayValue: 'Pierścienie', href: {name: 'items', params: {type: 'pierscienie'}}},
+      {displayValue: 'Naszyjniki', href: {name: 'items', params: {type: 'naszyjniki'}}},
+      {displayValue: 'Tarcze', href: {name: 'items', params: {type: 'tarcze'}}}
     ]
   },
   {
     name: 'Pozostałe',
     sublinks: [
-      {displayValue: 'Neutralne', href: {name: 'items', query: {type: 'neutralne'}}},
-      {displayValue: 'Konsumpcyjne', href: {name: 'items', query: {type: 'konsumpcyjne'}}},
-      {displayValue: 'Strzały', href: {name: 'items', query: {type: 'strzaly'}}},
-      {displayValue: 'Talizmany', href: {name: 'items', query: {type: 'talizmany'}}},
-      {displayValue: 'Torby', href: {name: 'items', query: {type: 'torby'}}},
-      {displayValue: 'Mikstury', href: {name: 'items', query: {type: 'mikstury'}}}
+      {displayValue: 'Neutralne', href: {name: 'items', params: {type: 'neutralne'}}},
+      {displayValue: 'Konsumpcyjne', href: {name: 'items', params: {type: 'konsumpcyjne'}}},
+      {displayValue: 'Strzały', href: {name: 'items', params: {type: 'strzaly'}}},
+      {displayValue: 'Talizmany', href: {name: 'items', params: {type: 'talizmany'}}},
+      {displayValue: 'Torby', href: {name: 'items', params: {type: 'torby'}}},
+      {displayValue: 'Mikstury', href: {name: 'items', params: {type: 'mikstury'}}}
     ]
   }
 ]
