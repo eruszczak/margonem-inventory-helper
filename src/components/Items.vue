@@ -33,19 +33,27 @@
         </div>
       </div>
     </nav>
-    <div v-for="item in items">{{ item }}</div>
+    <!--<div v-for="item in items">{{ item }}</div>-->
+    <div class="items">
+      <item v-for="item in items" :data="item"></item>
+    </div>
   </div>
 </template>
 
 <script>
   import { mapGetters, mapMutations, mapActions } from 'vuex'
   import { MAP_TYPE_NAME_TO_ID, MENU_LINKS } from '../utils/navbar'
+  import Item from './Item'
+
   export default {
     name: 'items',
+    components: {
+      Item
+    },
     data: function () {
       return {
         menu: MENU_LINKS,
-        subMenu: [],
+        subMenu: []
       }
     },
     computed: {
@@ -54,7 +62,7 @@
         // map this.count to store.state.count
         'items',
         'pageTitle'
-      ]),
+      ])
       // count () {
       //   return this.$store.state.count
       // }
@@ -71,7 +79,7 @@
     },
     methods: {
       mouseOver: function (item, event) {
-        console.log('hehe', item, event);
+        console.log('hehe', item, event)
         this.menu.map((el) => {
           el.isActive = false
         })
@@ -84,7 +92,7 @@
       ]),
       ...mapActions([
         // Mounts the "setNumberToRemoteValue" action to `this.setNumberToRemoteValue()`.
-        'fetchItems',
+        'fetchItems'
       ])
       // mouseOver2: function (item, event) {
       //   // console.log('hehe', item, event);
