@@ -66,7 +66,7 @@
     data () {
       return {
         name: 'SingleItemView',
-        retrivedStats: false,
+        data: null,
         tooltip: '',
         latestVisitedItems: [],
         similarItems: [],
