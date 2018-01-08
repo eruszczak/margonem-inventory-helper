@@ -13,24 +13,10 @@
     <!--</v-row>-->
     <item :data="data"></item>
 
-    <!--<v-row class="mt-5">-->
-      <!--<v-col xs12 md8 offset-md2>-->
-        <!--<v-card>-->
-          <!--<v-card-row class="lighten-1" :class="itemClass">-->
-            <!--<v-card-title>-->
-              <!--<span class="white&#45;&#45;text">Podobne przedmioty</span>-->
-            <!--</v-card-title>-->
-          <!--</v-card-row>-->
-          <!--<v-card-text class="text-md-center">-->
-            <!--<item-list :source="similarItems"></item-list>-->
-            <!--<h6 v-if="noSimilarItems">Nie znaleziono.</h6>-->
-            <!--<clip-loader v-if="!error" :loading="spinner.loading" :size="spinner.size" :color="spinner.color"></clip-loader>-->
-            <!--<v-alert v-else error v-bind:value="true">-->
-              <!--Wystąpił problem z pobraniem przedmiotów.-->
-            <!--</v-alert>-->
-          <!--</v-card-text>-->
-        <!--</v-card>-->
-
+    <h2>Podobne przedmioty</h2>
+    <div class="items">
+      <item v-for="item in similarItems" :key="item.pk" :data="item" @itemRightClick="itemRightClick"></item>
+    </div>
         <!--<v-card>-->
           <!--<v-card-row class="lighten-1" :class="itemClass">-->
             <!--<v-card-title>-->
@@ -52,7 +38,7 @@
 <script>
   import Popup from './Popup'
   import Item from './Item'
-  import { fetchItemAndSimilar } from '../api/items'
+  import { fetchItem, fetchItemSimilar } from '../api/items'
   // import {LATEST_VISITED_ITEMS_KEY, LATEST_VISITED_ITEMS_LEN} from '../helpers/constants'
 
   export default {
@@ -75,8 +61,8 @@
       }
     },
     mounted () {
-      // this.latestVisitedItems = this.getLatestVisitedItems();
-      this.getItemStats()
+      this.latestVisitedItems = this.getLatestVisitedItems()
+      this.getItemData()
     },
     watch: {
       '$route' (to, from) {
@@ -84,8 +70,8 @@
         // this.spinner.loading = true;
         // this.noSimilarItems = false;
         // // reinitialize current item when navigated to another item (through last visited items)
-        // this.latestVisitedItems = this.getLatestVisitedItems();
-        this.getItemStats()
+        this.latestVisitedItems = this.getLatestVisitedItems()
+        this.getItemData()
       }
     },
     computed: {
@@ -101,11 +87,11 @@
     },
     // TODO why this.stats changes
     methods: {
-      getItemStats: function () {
-        fetchItemAndSimilar(this.slug, response => {
+      getItemData: function () {
+        fetchItem(this.slug, response => {
           this.data = response.data
+          this.getSimilarItems()
           // this.saveToLatestVisited();
-          // this.getSimilarItems(this.slug)
           // this.$emit('newToolbarTitle', {value: this.data.name})
         }, response => {})
       },
@@ -128,24 +114,23 @@
       //     this.latestVisitedItems.pop();
       //   }
       // },
-      // getLatestVisitedItems: function() {
-      //   let visitedItems = localStorage.getItem(LATEST_VISITED_ITEMS_KEY);
-      //   if (visitedItems !== null) {
-      //     return JSON.parse(visitedItems);
-      //   }
-      //   return [];
-      // },
-      // getSimilarItems: function(itemId) {
-      //   Vue.http.get(`/api/item/${itemId}/similar?limit=${LATEST_VISITED_ITEMS_LEN}`).then(response => {
-      //     this.similarItems = response.body;
-      //     this.spinner.loading = false;
-      //     if (this.similarItems.length === 0) {
-      //       this.noSimilarItems = true;
-      //     }
-      //   }, response => {
-      //     this.error = true;
-      //   });
-      // },
+      getLatestVisitedItems: function () {
+        // let visitedItems = localStorage.getItem(LATEST_VISITED_ITEMS_KEY);
+        // if (visitedItems !== null) {
+        //   return JSON.parse(visitedItems);
+        // }
+        // return [];
+      },
+      getSimilarItems: function(itemId) {
+        fetchItemSimilar(this.slug, response => {
+          this.similarItems = response.data
+          if (this.similarItems.length === 0) {
+            this.noSimilarItems = true
+          }
+        }, response => {
+          this.error = true
+        })
+      },
       // clearLatestVisitedItems: function() {
       //   EventBus.$emit('showSnackbar', 'Wyczyszczono ostatnio przeglądane przedmioty.');
       //   this.latestVisitedItems = [];
