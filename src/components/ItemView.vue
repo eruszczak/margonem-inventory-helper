@@ -52,7 +52,6 @@
 <script>
   import Popup from './Popup'
   import Item from './Item'
-  import ItemList from './ItemList'
   import { fetchItemAndSimilar } from '../api/items'
   // import {LATEST_VISITED_ITEMS_KEY, LATEST_VISITED_ITEMS_LEN} from '../helpers/constants'
 
@@ -60,7 +59,6 @@
     name: 'SingleItemView',
     components: {
       Item,
-      ItemList,
       Popup
       // ClipLoader
     },
