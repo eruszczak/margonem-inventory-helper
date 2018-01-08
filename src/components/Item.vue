@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{name: 'singleItem', params: {itemId: data.slug, data: data} }">
+  <router-link :to="{name: 'itemView', params: {slug: data.slug, data: data} }">
     <!--<div :id="data.slug" class="item" @contextmenu.prevent="addItemToEq(data)">-->
       <!--<b-tooltip :label="encodeItemMinorStats" multilined>-->
         <!--<img class="itemborder borderRarity" :class="data.rarity" :src="data.img" :alt="data.name">-->
