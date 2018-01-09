@@ -6,26 +6,18 @@
         <router-link class="navbar-item" :to="{name: 'items'}">Przedmioty</router-link>
         <router-link class="navbar-item" :to="{name: 'eqView'}">Zestawy EQ</router-link>
         <router-link class="navbar-item" :to="{name: 'items'}">Porównaj przedmioty</router-link>
+        <button class="button is-primary is-medium" @click="modalActive = true">
+          Pokaż EQ
+        </button>
         <!--<router-link class="navbar-item">Zestawy EQ</router-link>-->
       </div>
     </nav>
-
-    <div class="message is-success">
-      <div class="message-body">
-        <p>W tej strefie itemy po kliknięciu na nie PPM zostaną dodane do porównywarki</p>
-      </div>
-    </div>
 
     <!--<section class="section">-->
       <!--<div class="container">-->
         <router-view></router-view>
       <!--</div>-->
     <!--</section>-->
-
-    <button class="button is-primary is-medium"
-            @click="modalActive = true">
-      Launch image modal
-    </button>
 
     <b-modal :active.sync="modalActive">
       <!--<p class="image is-4by3">-->

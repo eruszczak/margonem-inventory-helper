@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div class="message is-info">
+      <div class="message-body">
+        <p>Aby szybko stworzyć zestaw, znajdź przedmioty za pomocą wyszukiwarki powyżej oraz załóż je klikając na nie PPM.</p>
+      </div>
+    </div>
     <eq></eq>
     <p>ostatnio przeglądane zestawy:</p>
   </div>
