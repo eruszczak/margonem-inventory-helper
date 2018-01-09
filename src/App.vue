@@ -99,4 +99,8 @@
     color: #2c3e50;
     margin-top: 60px;
   }
+
+  .modal-card, .modal-card-body, .modal-content {
+    overflow: visible;
+  }
 </style>
