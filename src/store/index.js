@@ -2,10 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import eq from './modules/eq'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
     // If a piece of state strictly belongs to a single component, it could be just fine leaving it as local state.
     items: [],
@@ -21,6 +23,11 @@ export const store = new Vuex.Store({
     },
     setPageTitle: (state, value) => {
       state.pageTitle = value
+    },
+    initialiseStore (state) {
+      if (localStorage.getItem('vuex')) {
+        this.replaceState(Object.assign(state, JSON.parse(localStorage.getItem('vuex'))))
+      }
     }
   },
   actions: {
