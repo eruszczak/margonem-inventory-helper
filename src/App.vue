@@ -6,13 +6,12 @@
         <router-link class="navbar-item" :to="{name: 'items'}">Przedmioty</router-link>
         <router-link class="navbar-item" :to="{name: 'eqView'}">Zestawy EQ</router-link>
         <router-link class="navbar-item" :to="{name: 'items'}">Porównaj przedmioty</router-link>
-        <button class="button is-primary is-medium" @click="modalActive = true">
+        <button class="button is-primary is-medium" @click="modalActive = !modalActive">
           Pokaż EQ
         </button>
         <!--<router-link class="navbar-item">Zestawy EQ</router-link>-->
       </div>
     </nav>
-    {{canAddToEq}}
     <div class="field">
       <b-switch :value="canAddToEq" @input="toggleCanAddToEq">
         {{ canAddToEq ? 'Do eq' : 'Do porównywarki'}}
@@ -32,7 +31,7 @@
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">Mój zestaw EQ</p>
-          <button class="delete" aria-label="close" @click="modalActive = false"></button>
+          <button class="delete" aria-label="close" @click="closeModal"></button>
         </header>
         <section class="modal-card-body">
           <eq></eq>
@@ -41,7 +40,7 @@
         <footer class="modal-card-foot">
           <button class="button">Kopiuj link</button>
           <button class="button">Zobacz szczegóły</button>
-          <button class="button is-right" @click="modalActive = false">Ukryj</button>
+          <button class="button is-right" @click="closeModal">Ukryj</button>
         </footer>
       </div>
     </b-modal>
@@ -76,7 +75,9 @@
       pageTitle (newVal, oldVal) {
         window.document.title = newVal
       },
-      // toggleValue (n)
+      '$route' (to, from) {
+        this.closeModal()
+      }
     },
     methods: {
       ...mapMutations([
@@ -85,6 +86,9 @@
       mouseOver: function (item, event) {
         console.log('hehe', item, event)
         item.isActive = true
+      },
+      closeModal: function () {
+        this.modalActive = false
       }
     }
   }
