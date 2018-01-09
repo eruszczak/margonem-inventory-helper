@@ -1,10 +1,13 @@
 <template>
-  <eq></eq>
+  <div>
+    <!--<eq></eq>-->
+    <p>ostatnio przeglądane:</p>
+  </div>
 </template>
 
 <script>
   import { mapGetters } from 'vuex'
-  import Eq from './components/Eq'
+  import Eq from './Eq'
 
   export default {
     name: 'eq-view',
