@@ -8,11 +8,13 @@ export default {
     stack: []
   },
   getters: {
-    eqItems: state => state.eqItems
+    eqItems: state => state.eqItems,
+    canAddToEq: state => state.canAddToEq
   },
   mutations: {
-    setCanAddToEq: (state, { val }) => {
-      state.canAddToEq = val
+    toggleCanAddToEq: (state) => {
+      console.log('here')
+      state.canAddToEq = !state.canAddToEq
     },
     setEqItem: (state, item, placement) => {
       state.eqItems[placement] = item
