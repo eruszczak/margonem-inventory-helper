@@ -12,7 +12,12 @@
         <!--<router-link class="navbar-item">Zestawy EQ</router-link>-->
       </div>
     </nav>
-
+    {{canAddToEq}}
+    <div class="field">
+      <b-switch :value="canAddToEq" @input="toggleCanAddToEq">
+        {{ canAddToEq ? 'Do eq' : 'Do porównywarki'}}
+      </b-switch>
+    </div>
     <!--<section class="section">-->
       <!--<div class="container">-->
         <router-view></router-view>
@@ -45,14 +50,16 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapMutations } from 'vuex'
   import Eq from './components/Eq'
 
   export default {
     name: 'app',
     data () {
       return {
-        modalActive: false
+        modalActive: false,
+        isSwitchedCustom: 'Yes',
+        toggleValue: this.canAddToEq
       }
     },
     components: {
@@ -68,9 +75,13 @@
     watch: {
       pageTitle (newVal, oldVal) {
         window.document.title = newVal
-      }
+      },
+      // toggleValue (n)
     },
     methods: {
+      ...mapMutations([
+        'toggleCanAddToEq'
+      ]),
       mouseOver: function (item, event) {
         console.log('hehe', item, event)
         item.isActive = true
