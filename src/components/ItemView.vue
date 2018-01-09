@@ -14,8 +14,6 @@
       <div class="hero-foot">
         <div class="container">
           <item :data="data"></item>
-          <h2></h2>
-
         </div>
       </div>
     </section>
@@ -34,6 +32,20 @@
       </div>
     </section>
 
+    <section class="hero is-warning">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            Ostatnio odwiedzane
+          </h1>
+          <div class="items">
+            <item v-for="item in itemHistory" :key="item.pk" :data="item"></item>
+            <!--<item v-for="item in similarItems" :key="item.pk" :data="item" @itemRightClick="itemRightClick"></item>-->
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </template>
 
@@ -41,6 +53,7 @@
   import Popup from './Popup'
   import Item from './Item'
   import { fetchItem, fetchItemSimilar } from '../api/items'
+  import { mapGetters, mapMutations } from 'vuex'
 
   export default {
     name: 'SingleItemView',
@@ -53,7 +66,6 @@
       return {
         name: 'SingleItemView',
         data: null,
-        latestVisitedItems: [],
         similarItems: [],
         noSimilarItems: false,
         error: false
@@ -68,21 +80,28 @@
       }
     },
     computed: {
-      itemClass: function () {
-        const classes = {
-          unique: 'orange',
-          heroic: 'blue',
-          legendary: 'red',
-          default: 'grey'
-        }
-        return classes[this.data.rarity]
-      }
+      ...mapGetters([
+        'itemHistory'
+      ]),
+      // itemClass: function () {   TODO
+      //   const classes = {
+      //     unique: 'orange',
+      //     heroic: 'blue',
+      //     legendary: 'red',
+      //     default: 'grey'
+      //   }
+      //   return classes[this.data.rarity]
+      // }
     },
     methods: {
+      ...mapMutations([
+        'addToItemHistory'
+      ]),
       getItemData: function () {
         fetchItem(this.slug, response => {
           this.data = response.data
           this.getSimilarItems()
+          this.addToItemHistory(this.data)
         }, response => {})
       },
       getSimilarItems: function () {

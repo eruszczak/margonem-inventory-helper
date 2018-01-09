@@ -5,11 +5,13 @@ export default {
     eqItems: DEFAULT_EQ_ITEMS,
     // this decided whether eqSet had 'preventAddingItem'. it must be stored in local storage
     canAddToEq: false,
-    stack: []
+    stack: [],
+    itemHistory: []
   },
   getters: {
     eqItems: state => state.eqItems,
-    canAddToEq: state => state.canAddToEq
+    canAddToEq: state => state.canAddToEq,
+    itemHistory: state => state.itemHistory
   },
   mutations: {
     toggleCanAddToEq: (state) => {
@@ -64,6 +66,17 @@ export default {
       //   // this set is only for display, cannot add items to it
       //   localStorage.setItem(itemPlacement, JSON.stringify(clickedItem))
       // }
+    },
+    addToItemHistory: (state, item) => {
+      // if this item was on the list, remove it because duplicate would be added
+      // state.itemHistory = state.itemHistory.filter(function (el) {
+      //   return item.slug !== el.slug
+      // })
+      console.log(state.itemHistory)
+      state.itemHistory = state.itemHistory.filter(el => item.pk !== el.pk)
+      state.itemHistory.unshift(item)
+      console.log('history', item)
+      // this.prependToFixedSizeArray(visitedItem);  todo
     },
   }
 }
