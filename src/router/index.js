@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Items from '@/components/Items'
 import ItemView from '@/components/ItemView'
+import EqView from '@/components/EqView'
 
 Vue.use(Router)
 
@@ -15,7 +16,8 @@ export default new Router({
     },
     {
       name: 'eqView',
-      path: '/zestawy/'
+      path: '/zestawy/',
+      component: EqView
     },
     {
       path: '/:type?',
