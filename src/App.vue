@@ -4,7 +4,7 @@
       <div class="navbar-brand">
         <!--todo this must link to latest filter-->
         <router-link class="navbar-item" :to="{name: 'items'}">Przedmioty</router-link>
-        <router-link class="navbar-item" :to="{name: 'items'}">Zestawy EQ</router-link>
+        <router-link class="navbar-item" :to="{name: 'eqView'}">Zestawy EQ</router-link>
         <router-link class="navbar-item" :to="{name: 'items'}">Porównaj przedmioty</router-link>
         <!--<router-link class="navbar-item">Zestawy EQ</router-link>-->
       </div>

@@ -14,6 +14,10 @@ export default new Router({
       path: '/api/item/'
     },
     {
+      name: 'eqView',
+      path: '/zestawy/'
+    },
+    {
       path: '/:type?',
       name: 'items',
       component: Items,
@@ -24,6 +28,6 @@ export default new Router({
       path: '/przedmiot/:slug',
       component: ItemView,
       props: true
-    }
+    },
   ]
 })
