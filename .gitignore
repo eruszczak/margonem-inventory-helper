@@ -1,0 +1,8 @@
+*.pyc
+__pycache__
+.idea
+*.zip
+src/utils/src.html
+src/utils/test.py
+settings_secret.py
+db.json

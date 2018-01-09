@@ -1,0 +1,4 @@
+dryscrape
+
+apt-get install memcached
+python-memcached
