@@ -1,11 +1,39 @@
 <template>
   <div v-if="data">
-    <item :data="data"></item>
-    <h2>Podobne przedmioty</h2>
-    <div class="items">
-      <item v-for="item in similarItems" :key="item.pk" :data="item"></item>
-      <!--<item v-for="item in similarItems" :key="item.pk" :data="item" @itemRightClick="itemRightClick"></item>-->
-    </div>
+    <section class="hero is-info">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            {{ data.name }} <span v-if="data.lvl">({{ data.lvl }})</span>
+          </h1>
+          <h2 class="subtitle">
+
+          </h2>
+        </div>
+      </div>
+      <div class="hero-foot">
+        <div class="container">
+          <item :data="data"></item>
+          <h2></h2>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="hero is-warning">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            Podobne przedmioty
+          </h1>
+          <div class="items">
+            <item v-for="item in similarItems" :key="item.pk" :data="item"></item>
+            <!--<item v-for="item in similarItems" :key="item.pk" :data="item" @itemRightClick="itemRightClick"></item>-->
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </template>
 
