@@ -16,8 +16,8 @@ export default new Router({
     {
       path: '/:type?',
       name: 'items',
-      component: Items
-      // props
+      component: Items,
+      props: true
     },
     {
       name: 'itemView',
