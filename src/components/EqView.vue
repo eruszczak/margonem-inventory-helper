@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!--<eq></eq>-->
-    <p>ostatnio przeglądane:</p>
+    <eq></eq>
+    <p>ostatnio przeglądane zestawy:</p>
   </div>
 </template>
 
