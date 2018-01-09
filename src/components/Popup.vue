@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="tooltipText">
     <p>{{ data.name }} <span class="green-color">{{ lvl }}</span></p>
     <!-- <p :class="className">*{{ rarity }}* {{ type }}</p> -->
     <p class="green-color">*{{ rarity }}* {{ type }}</p>

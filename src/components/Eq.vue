@@ -1,15 +1,13 @@
 <template>
-  <div>
-    <table class="set">
-      <tbody>
-        <tr v-for="row in rows">
-          <td v-for="place in row" :id="place">
-            <item v-if="eqItems[place]" :data="eqItems[place]" @itemRightClick="itemRightClick"></item>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <table class="set">
+    <tbody>
+      <tr v-for="row in rows">
+        <td v-for="place in row" :id="place">
+          <item v-if="eqItems[place]" :data="eqItems[place]" @itemRightClick="itemRightClick"></item>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script>
