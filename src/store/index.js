@@ -7,7 +7,13 @@ import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
-  plugins: [createPersistedState()],
+  plugins: [
+    createPersistedState(
+      {
+        paths: ['eq.eqItems', 'eq.canAddToEq']
+      }
+    )
+  ],
   state: {
     // If a piece of state strictly belongs to a single component, it could be just fine leaving it as local state.
     items: [],
