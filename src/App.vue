@@ -21,7 +21,34 @@
         <router-view></router-view>
       <!--</div>-->
     <!--</section>-->
-    <eq></eq>
+
+    <button class="button is-primary is-medium"
+            @click="modalActive = true">
+      Launch image modal
+    </button>
+
+    <b-modal :active.sync="modalActive">
+      <!--<p class="image is-4by3">-->
+        <!--<img src="static/img/placeholder-1280x960.png">-->
+      <!--</p>-->
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Mój zestaw EQ</p>
+          <button class="delete" aria-label="close" @click="modalActive = false"></button>
+        </header>
+        <section class="modal-card-body">
+          <eq></eq>
+          Summary
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button">Kopiuj link</button>
+          <button class="button">Zobacz szczegóły</button>
+          <button class="button is-right" @click="modalActive = false">Ukryj</button>
+        </footer>
+      </div>
+    </b-modal>
+
   </div>
 </template>
 
@@ -33,6 +60,7 @@
     name: 'app',
     data () {
       return {
+        modalActive: false
       }
     },
     components: {
