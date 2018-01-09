@@ -2,10 +2,19 @@
   <div id="app">
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <router-link class="navbar-item" to="test">{{ pageTitle }}</router-link>
+        <!--todo this must link to latest filter-->
+        <router-link class="navbar-item" :to="{name: 'items'}">Przedmioty</router-link>
+        <router-link class="navbar-item" :to="{name: 'items'}">Zestawy EQ</router-link>
+        <router-link class="navbar-item" :to="{name: 'items'}">Porównaj przedmioty</router-link>
         <!--<router-link class="navbar-item">Zestawy EQ</router-link>-->
       </div>
     </nav>
+
+    <div class="message is-success">
+      <div class="message-body">
+        <p>W tej strefie itemy po kliknięciu na nie PPM zostaną dodane do porównywarki</p>
+      </div>
+    </div>
 
     <!--<section class="section">-->
       <!--<div class="container">-->
@@ -38,7 +47,6 @@
     },
     watch: {
       pageTitle (newVal, oldVal) {
-        console.log(newVal, oldVal)
         window.document.title = newVal
       }
     },

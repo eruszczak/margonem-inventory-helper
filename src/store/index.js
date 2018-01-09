@@ -19,8 +19,8 @@ export const store = new Vuex.Store({
     setItems: (state, { list }) => {
       state.items = list
     },
-    setPageTitle: (state, { text }) => {
-      state.pageTitle = text
+    setPageTitle: (state, value) => {
+      state.pageTitle = value
     }
   },
   actions: {

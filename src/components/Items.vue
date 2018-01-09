@@ -4,7 +4,7 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
-            {{ $route.params.type }}
+            {{ type }}
           </h1>
           <h2 class="subtitle">
           </h2>
@@ -50,6 +50,7 @@
     components: {
       Item
     },
+    props: ['type'],
     data: function () {
       return {
         menu: MENU_LINKS,
@@ -89,11 +90,11 @@
         this.subMenu = item.sublinks
       },
       updateItems: function () {
-        const query = `?t=${MAP_TYPE_NAME_TO_ID[this.$route.params.type]}`
+        const query = `?t=${MAP_TYPE_NAME_TO_ID[this.type]}`
         this.fetchItems({
           query: query
         })
-        this.setPageTitle({ text: query })
+        this.setPageTitle(this.type)
       },
       itemRightClick: function (clickedItem) {
         this.addItemToEq(clickedItem)
