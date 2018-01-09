@@ -10,7 +10,7 @@ export const store = new Vuex.Store({
   plugins: [
     createPersistedState(
       {
-        paths: ['eq.eqItems', 'eq.canAddToEq']
+        paths: ['eq.eqItems', 'eq.canAddToEq', 'eq.itemHistory']
       }
     )
   ],
