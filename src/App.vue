@@ -6,16 +6,15 @@
         <router-link class="navbar-item" :to="{name: 'items'}">Przedmioty</router-link>
         <router-link class="navbar-item" :to="{name: 'eqView'}">Zestawy EQ</router-link>
         <router-link class="navbar-item" :to="{name: 'items'}">Porównaj przedmioty</router-link>
-        <button class="button is-primary is-medium" @click="modalActive = !modalActive">
-          Pokaż EQ
-        </button>
+        <a class="button navbar-item is-primary is-medium" @click="modalActive = !modalActive">Pokaż EQ</a>
+        <b-switch class="navbar-item" :value="canAddToEq" @input="toggleCanAddToEq">
+          {{ canAddToEq ? 'Do eq' : 'Do porównywarki'}}
+        </b-switch>
         <!--<router-link class="navbar-item">Zestawy EQ</router-link>-->
       </div>
     </nav>
     <div class="field">
-      <b-switch :value="canAddToEq" @input="toggleCanAddToEq">
-        {{ canAddToEq ? 'Do eq' : 'Do porównywarki'}}
-      </b-switch>
+
     </div>
     <!--<section class="section">-->
       <!--<div class="container">-->
