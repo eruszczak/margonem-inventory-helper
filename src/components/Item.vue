@@ -8,9 +8,7 @@
 
     <div :id="data.slug" class="item" @contextmenu.prevent="$emit('itemRightClick', data)">
       <img class="itemborder borderRarity" :class="data.rarity" :src="data.img" :alt="data.name">
-      <div class="tooltipText">
-        <popup :data="data"></popup>
-      </div>
+      <popup :data="data"></popup>
       <!-- <p><span v-my-tooltip.right="message">{{ message }}</span></p> -->
     </div>
   </router-link>
@@ -108,12 +106,12 @@
 
   .item .tooltipText {
     visibility: hidden;
-    width: 220px;
+    width: auto;
     background-color: black;
     color: #fff;
     font-size: 12px;
     text-align: left;
-    padding: 5px 0;
+    padding: 5px;
     padding-left: 8px;
     border-radius: 6px;
     position: absolute;
@@ -123,6 +121,7 @@
 
   .item .tooltipText p {
     margin-bottom: 5px;
+    width: max-content;
   }
 
   .item .tooltipText div hr {
