@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <div v-if="data">
     <item :data="data"></item>
     <h2>Podobne przedmioty</h2>
     <div class="items">
-      <item v-for="item in similarItems" :key="item.pk" :data="item" @itemRightClick="itemRightClick"></item>
+      <item v-for="item in similarItems" :key="item.pk" :data="item"></item>
+      <!--<item v-for="item in similarItems" :key="item.pk" :data="item" @itemRightClick="itemRightClick"></item>-->
     </div>
   </div>
 </template>
@@ -63,7 +64,7 @@
         }, response => {
           this.error = true
         })
-      }
+      },
     }
   }
 </script>
