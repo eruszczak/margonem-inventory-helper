@@ -1,5 +1,5 @@
 <template>
-  <table class="set">
+  <table class="set" v-if="source">
     <tbody>
       <tr v-for="row in rows">
         <td v-for="place in row" :id="place">
@@ -33,9 +33,10 @@
     },
     created () {
       if (this.history) {
-        console.error('history', this.history)
+        // console.error('history', this.history)
         this.source = this.history
       } else {
+        // this.source = this.readOnlyEqItems
         this.source = this.readOnly ? this.readOnlyEqItems : this.eqItems
         if (this.readOnly) {
           // todo this will modify state
