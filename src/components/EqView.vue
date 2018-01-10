@@ -8,7 +8,7 @@
     <eq :readOnly="slugs.length > 0"></eq>
     <p>ostatnio przeglądane zestawy:</p>
     <div class="columns">
-      <div class="column" v-for="eqItems in eqHistory">
+      <div class="column is-one-quarter" v-for="eqItems in eqHistory">
         <eq :history="eqItems" :readOnly="true"></eq>
       </div>
     </div>
