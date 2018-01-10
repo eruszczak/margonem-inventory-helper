@@ -7,6 +7,12 @@
     </div>
     <eq :readOnly="slugs.length > 0"></eq>
     <p>ostatnio przeglądane zestawy:</p>
+    <div class="columns">
+      <div class="column" v-for="eqItems in eqHistory">
+        <eq :history="eqItems" :readOnly="true"></eq>
+      </div>
+    </div>
+    <!--<p v-for="item in eqHistory">{{ item }}</p>-->
   </div>
 </template>
 
@@ -26,6 +32,8 @@
     },
     mounted () {
       if (this.slugs) {
+        console.error(this.slugs)
+        this.slugs = typeof this.slugs === 'string' ? [this.slugs] : this.slugs
         this.fetchReadOnlyEqItems(this.slugs)
       }
     },
@@ -33,6 +41,7 @@
       ...mapGetters([
         // 'pageTitle',
         // 'canAddToEq'
+        'eqHistory'
       ])
     },
     methods: {

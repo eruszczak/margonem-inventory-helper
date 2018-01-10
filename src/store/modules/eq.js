@@ -8,32 +8,33 @@ export default {
     eqLink: null,
     canAddToEq: false,
     stack: [],
-    itemHistory: []
+    itemHistory: [],
+    eqHistory: []
   },
   getters: {
     eqItems: state => state.eqItems,
     canAddToEq: state => state.canAddToEq,
     itemHistory: state => state.itemHistory,
     readOnlyEqItems: state => state.readOnlyEqItems,
-    eqLink: function (state) {
-      let slugs = []
-      for (let placement in state.eqItems) {
-        const item = state.eqItems[placement]
-        if (item) {
-          slugs.push(item.slug)
-        }
-      }
-      return {
-        name: 'eqView',
-        query: {
-          i: slugs
-        }
-      }
-    }
+    eqHistory: state => state.eqHistory
+    // eqLink: function (state) {
+    //   let slugs = []
+    //   for (let placement in state.eqItems) {
+    //     const item = state.eqItems[placement]
+    //     if (item) {
+    //       slugs.push(item.slug)
+    //     }
+    //   }
+    //   return {
+    //     name: 'eqView',
+    //     query: {
+    //       i: slugs
+    //     }
+    //   }
+    // }
   },
   mutations: {
     toggleCanAddToEq: (state) => {
-      console.log('here')
       state.canAddToEq = !state.canAddToEq
     },
     setEqItem: (state, item, placement) => {
@@ -56,8 +57,17 @@ export default {
       state.itemHistory.unshift(item)
       state.itemHistory = state.itemHistory.slice(0, 15)
     },
+    addToEqHistory: (state, eqItems) => {
+      // state.eqHistory = state.eqHistory.filter(el => eqItems.url !== el.url)
+      state.eqHistory.unshift(eqItems)
+      state.eqHistory = state.eqHistory.slice(0, 2)
+      // console.log(state)
+      // for (const item of items) {
+      //   const placement = ITEM_PLACE[item.type]
+      //   state.readOnlyEqItems[placement] = item
+      // }
+    },
     setReadOnlyEqItems: (state, items) => {
-      console.log(state)
       for (const item of items) {
         const placement = ITEM_PLACE[item.type]
         state.readOnlyEqItems[placement] = item
