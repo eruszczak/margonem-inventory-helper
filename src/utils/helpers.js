@@ -95,6 +95,22 @@ export const getBaseUrl = () => {
   return domain
 }
 
+export const getEqRoute = (eqItems) => {
+  let slugs = []
+  for (let placement in eqItems) {
+    const item = eqItems[placement]
+    if (item) {
+      slugs.push(item.slug)
+    }
+  }
+  return {
+    name: 'eqView',
+    query: {
+      i: slugs
+    }
+  }
+}
+
 export const replaceDiacritics = (value) => {
   for (let val in DIACTRITICS) {
     value = value.replace(val, DIACTRITICS[val])
