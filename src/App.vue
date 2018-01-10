@@ -37,8 +37,8 @@
           Summary
         </section>
         <footer class="modal-card-foot">
-          <button class="button">Kopiuj link</button>
-          <button class="button">Zobacz szczegóły</button>
+          <button class="button" v-clipboard:copy="getLink()" v-clipboard:success="onCopy">Kopiuj link</button>
+          <router-link class="button" :to="{name: 'eqView'}">Zobacz szczegóły</router-link>
         </footer>
       </div>
     </b-modal>
@@ -49,6 +49,7 @@
 <script>
   import { mapGetters, mapMutations } from 'vuex'
   import Eq from './components/Eq'
+  import { getBaseUrl } from './utils/helpers'
 
   export default {
     name: 'app',
@@ -66,7 +67,8 @@
       ...mapGetters([
         // map this.count to store.state.count
         'pageTitle',
-        'canAddToEq'
+        'canAddToEq',
+        'eqLink'
       ])
     },
     watch: {
@@ -87,7 +89,13 @@
       },
       closeModal: function () {
         this.modalActive = false
-      }
+      },
+      getLink: function () {
+        return `${getBaseUrl()}${this.$router.resolve(this.eqLink).href}`
+      },
+      onCopy: function (e) {
+        alert('You just copied: ' + e.text)
+      },
     }
   }
 </script>

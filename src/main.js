@@ -5,8 +5,10 @@ import App from './App'
 import router from './router'
 import Buefy from 'buefy'
 import 'buefy/lib/buefy.css'
-import { store } from './store/index.js'
+import { store } from './store/index'
+import VueClipboard from 'vue-clipboard2'
 
+Vue.use(VueClipboard)
 Vue.config.productionTip = false
 Vue.use(Buefy)
 
