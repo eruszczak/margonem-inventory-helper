@@ -3,6 +3,7 @@ import { DEFAULT_EQ_ITEMS, ITEM_PLACE } from '../../utils/items'
 export default {
   state: {
     eqItems: DEFAULT_EQ_ITEMS,
+    eqLink: null,
     // this decided whether eqSet had 'preventAddingItem'. it must be stored in local storage
     canAddToEq: false,
     stack: [],
@@ -11,7 +12,22 @@ export default {
   getters: {
     eqItems: state => state.eqItems,
     canAddToEq: state => state.canAddToEq,
-    itemHistory: state => state.itemHistory
+    itemHistory: state => state.itemHistory,
+    eqLink: function (state) {
+      let slugs = []
+      for (let placement in state.eqItems) {
+        const item = state.eqItems[placement]
+        if (item) {
+          slugs.push(item.slug)
+        }
+      }
+      return {
+        name: 'eqView',
+        query: {
+          i: slugs
+        }
+      }
+    }
   },
   mutations: {
     toggleCanAddToEq: (state) => {
