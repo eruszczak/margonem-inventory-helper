@@ -1,10 +1,11 @@
 import { DEFAULT_EQ_ITEMS, ITEM_PLACE } from '../../utils/items'
+import { fetchMultipleItems } from '../../api/items'
 
 export default {
   state: {
     eqItems: DEFAULT_EQ_ITEMS,
+    readOnlyEqItems: DEFAULT_EQ_ITEMS,
     eqLink: null,
-    // this decided whether eqSet had 'preventAddingItem'. it must be stored in local storage
     canAddToEq: false,
     stack: [],
     itemHistory: []
@@ -13,6 +14,7 @@ export default {
     eqItems: state => state.eqItems,
     canAddToEq: state => state.canAddToEq,
     itemHistory: state => state.itemHistory,
+    readOnlyEqItems: state => state.readOnlyEqItems,
     eqLink: function (state) {
       let slugs = []
       for (let placement in state.eqItems) {
@@ -37,12 +39,12 @@ export default {
     setEqItem: (state, item, placement) => {
       state.eqItems[placement] = item
     },
-    replaceEqItems: (state, newEqItems) => {
-      state.eqItems = newEqItems
+    copyReadOnlyEqItems: (state) => {
+      // object need to be copied?
+      state.eqItems = state.readOnlyEqItems
     },
     // addItemToEq: function (state, clickedItem, isStackOperation = false, initial = false) {
     addItemToEq: function (state, clickedItem) {
-      // TODO not initial but ignoreToast
       const itemPlacement = ITEM_PLACE[clickedItem.type]
       state.eqItems[itemPlacement] = clickedItem
     },
@@ -53,6 +55,23 @@ export default {
       state.itemHistory = state.itemHistory.filter(el => item.pk !== el.pk)
       state.itemHistory.unshift(item)
       state.itemHistory = state.itemHistory.slice(0, 15)
+    },
+    setReadOnlyEqItems: (state, items) => {
+      console.log(state)
+      for (const item of items) {
+        const placement = ITEM_PLACE[item.type]
+        state.readOnlyEqItems[placement] = item
+      }
+    }
+  },
+  actions: {
+    fetchReadOnlyEqItems ({ commit }, slugs) {
+      fetchMultipleItems(slugs, response => {
+        console.log(response.data)
+        commit('setReadOnlyEqItems', response.data.results)
+      }, error => {
+        console.log(error)
+      })
     }
   }
 }

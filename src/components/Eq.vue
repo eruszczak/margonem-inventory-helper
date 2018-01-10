@@ -3,7 +3,7 @@
     <tbody>
       <tr v-for="row in rows">
         <td v-for="place in row" :id="place">
-          <item v-if="eqItems[place]" :data="eqItems[place]" @itemRightClick="itemRightClick"></item>
+          <item v-if="source[place]" :data="source[place]" @itemRightClick="itemRightClick"></item>
         </td>
       </tr>
     </tbody>
@@ -18,17 +18,28 @@
 
   export default {
     name: 'Eq',
+    props: {
+      readOnly: {
+        type: Boolean,
+        default: false
+      }
+    },
     components: {
       Item
     },
+    created () {
+      this.source = this.readOnly ? this.readOnlyEqItems : this.eqItems
+    },
     data () {
       return {
-        rows: EQ_ITEMS_ROWS
+        rows: EQ_ITEMS_ROWS,
+        source: null
       }
     },
     computed: {
       ...mapGetters([
         'eqItems',
+        'readOnlyEqItems',
         'canAddToEq'
       ])
     },

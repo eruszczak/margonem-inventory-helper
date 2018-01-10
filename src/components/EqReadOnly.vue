@@ -36,7 +36,7 @@
     },
     methods: {
       ...mapMutations([
-        'replaceEqItems',
+        // 'replaceEqItems',
         'addItemToEq'
       ]),
       // initEqSet: function () {
