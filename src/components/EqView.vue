@@ -10,6 +10,7 @@
     <div class="columns">
       <div class="column is-one-quarter" v-for="eqItems in eqHistory">
         <eq :history="eqItems" :readOnly="true"></eq>
+        <router-link :to="getEqLink(eqItems)">Przejdź do zestawu</router-link>
       </div>
     </div>
     <!--<p v-for="item in eqHistory">{{ item }}</p>-->
@@ -19,6 +20,7 @@
 <script>
   import { mapGetters, mapActions } from 'vuex'
   import Eq from './Eq'
+  import { getEqRoute } from '../utils/helpers'
 
   export default {
     name: 'eq-view',
@@ -32,7 +34,6 @@
     },
     mounted () {
       if (this.slugs) {
-        console.error(this.slugs)
         this.slugs = typeof this.slugs === 'string' ? [this.slugs] : this.slugs
         this.fetchReadOnlyEqItems(this.slugs)
       }
@@ -47,7 +48,10 @@
     methods: {
       ...mapActions([
         'fetchReadOnlyEqItems'
-      ])
+      ]),
+      getEqLink: function (eqItems) {
+        return getEqRoute(eqItems)
+      }
     }
   }
 </script>

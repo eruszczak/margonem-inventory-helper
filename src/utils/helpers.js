@@ -91,11 +91,10 @@ export const prependToPageTitle = (val) => {
 
 export const getBaseUrl = () => {
   const port = location.port ? `:${location.port}` : ''
-  const domain = `${location.protocol}//${location.hostname}${port}`
-  return domain
+  return `${location.protocol}//${location.hostname}${port}`
 }
 
-export const getEqRoute = (eqItems) => {
+const getSlugs = (eqItems) => {
   let slugs = []
   for (let placement in eqItems) {
     const item = eqItems[placement]
@@ -103,10 +102,14 @@ export const getEqRoute = (eqItems) => {
       slugs.push(item.slug)
     }
   }
+  return slugs
+}
+
+export const getEqRoute = (eqItems) => {
   return {
     name: 'eqView',
     query: {
-      i: slugs
+      i: getSlugs(eqItems)
     }
   }
 }
