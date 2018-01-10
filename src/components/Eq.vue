@@ -12,8 +12,8 @@
 
 <script>
   import Item from './Item'
-  import { ITEM_PLACE, ITEM_BONUS, CHARACTER_CLASSES_IN_ORDER, EQ_ITEMS_ROWS } from '../utils/items'
-  import { isInt, isItemWearable, calculateBonusWeakness, calculateHolyTouchAmount, getBaseUrl } from '../utils/helpers'
+  import { ITEM_PLACE, EQ_ITEMS_ROWS } from '../utils/items'
+  import { getBaseUrl, getEqRoute } from '../utils/helpers'
   import { mapGetters, mapMutations } from 'vuex'
 
   export default {
@@ -22,13 +22,28 @@
       readOnly: {
         type: Boolean,
         default: false
+      },
+      history: {
+        type: Object,
+        default: null
       }
     },
     components: {
       Item
     },
     created () {
-      this.source = this.readOnly ? this.readOnlyEqItems : this.eqItems
+      if (this.history) {
+        console.error('history', this.history)
+        this.source = this.history
+      } else {
+        this.source = this.readOnly ? this.readOnlyEqItems : this.eqItems
+        if (this.readOnly) {
+          // todo this will modify state
+          // this.source.url = this.eqLink
+          console.error('adding to history', this.source)
+          this.addToEqHistory(this.source)
+        }
+      }
     },
     data () {
       return {
@@ -41,12 +56,16 @@
         'eqItems',
         'readOnlyEqItems',
         'canAddToEq'
-      ])
+      ]),
+      eqLink: function () {
+        // return `${getBaseUrl()}${this.$router.resolve(getEqRoute(this.source)).href}`
+      }
     },
     methods: {
       ...mapMutations([
         // 'addItemToEq',
-        'removeItemFromEq'
+        'removeItemFromEq',
+        'addToEqHistory'
       ]),
       itemRightClick: function (clickedItem) {
         let itemType = ITEM_PLACE[clickedItem.type]
