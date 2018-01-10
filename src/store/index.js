@@ -33,7 +33,11 @@ export const store = new Vuex.Store({
     },
     initialiseStore (state) {
       if (localStorage.getItem('vuex')) {
-        this.replaceState(Object.assign(state, JSON.parse(localStorage.getItem('vuex'))))
+        const localState = JSON.parse(localStorage.getItem('vuex')).eq
+        for (let key in localState) {
+          state[key] = localState[key]
+        }
+        // this.replaceState(Object.assign(state, JSON.parse(localStorage.getItem('vuex'))))
       }
     }
   },
