@@ -30,6 +30,9 @@ export default {
       const itemPlacement = ITEM_PLACE[clickedItem.type]
       state.eqItems[itemPlacement] = clickedItem
     },
+    removeItemFromEq: function (state, itemPlacement) {
+      state.eqItems[itemPlacement] = null
+    },
     addToItemHistory: (state, item) => {
       state.itemHistory = state.itemHistory.filter(el => item.pk !== el.pk)
       state.itemHistory.unshift(item)

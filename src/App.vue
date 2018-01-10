@@ -39,7 +39,6 @@
         <footer class="modal-card-foot">
           <button class="button">Kopiuj link</button>
           <button class="button">Zobacz szczegóły</button>
-          <button class="button is-right" @click="closeModal">Ukryj</button>
         </footer>
       </div>
     </b-modal>
