@@ -33,12 +33,13 @@
       ])
     },
     methods: {
-      // ...mapMutations([
-      //   'addItemToEq'
-      // ]),
-      itemRightClick: function (clickedItem, isStackOperation = false) {
+      ...mapMutations([
+        // 'addItemToEq',
+        'removeItemFromEq'
+      ]),
+      itemRightClick: function (clickedItem) {
         let itemType = ITEM_PLACE[clickedItem.type]
-        this.eqItems[itemType] = null
+        this.removeItemFromEq(itemType)
       }
     }
   }

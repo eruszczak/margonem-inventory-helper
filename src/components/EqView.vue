@@ -21,9 +21,8 @@
     },
     computed: {
       ...mapGetters([
-        // map this.count to store.state.count
-        'pageTitle',
-        'canAddToEq'
+        // 'pageTitle',
+        // 'canAddToEq'
       ])
     },
   }
