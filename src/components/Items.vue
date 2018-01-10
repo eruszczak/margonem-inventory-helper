@@ -90,11 +90,13 @@
         this.subMenu = item.sublinks
       },
       updateItems: function () {
-        const query = `?t=${MAP_TYPE_NAME_TO_ID[this.type]}`
-        this.fetchItems({
-          query: query
-        })
-        this.setPageTitle(this.type)
+        const type = MAP_TYPE_NAME_TO_ID[this.type]
+        if (type) {
+          this.fetchItems({
+            query: `?t=${type}`
+          })
+          this.setPageTitle(this.type)
+        }
       },
       itemRightClick: function (clickedItem) {
         this.addItemToEq(clickedItem)
