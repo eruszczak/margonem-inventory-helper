@@ -58,9 +58,17 @@ export default {
       state.itemHistory = state.itemHistory.slice(0, 15)
     },
     addToEqHistory: (state, eqItems) => {
-      // state.eqHistory = state.eqHistory.filter(el => eqItems.url !== el.url)
+      // todo this is always readOnlyEqItems
+      let pks = []
+      for (let placement in eqItems) {
+        const item = eqItems[placement]
+        console.error(placement, item)
+        // pks.push(item.pk)
+      }
+      console.error(pks, eqItems, Object.values(eqItems), state.readOnlyEqItems, slugs)
+
       state.eqHistory.unshift(eqItems)
-      state.eqHistory = state.eqHistory.slice(0, 2)
+      state.eqHistory = state.eqHistory.slice(0, 5)
       // console.log(state)
       // for (const item of items) {
       //   const placement = ITEM_PLACE[item.type]
