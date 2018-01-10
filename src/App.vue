@@ -49,7 +49,7 @@
 <script>
   import { mapGetters, mapMutations } from 'vuex'
   import Eq from './components/Eq'
-  import { getBaseUrl, getEqRoute } from './utils/helpers'
+  import { getEqUrl } from './utils/helpers'
 
   export default {
     name: 'app',
@@ -70,7 +70,7 @@
         'eqItems'
       ]),
       eqLink: function () {
-        return `${getBaseUrl()}${this.$router.resolve(getEqRoute(this.eqItems)).href}`
+        return getEqUrl(this.$router, this.eqItems)
       }
     },
     watch: {
