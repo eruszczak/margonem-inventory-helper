@@ -21,12 +21,11 @@
     },
     data () {
       return {
-        slugs: this.$route.query.i
+        slugs: this.$route.query.i || []
       }
     },
     mounted () {
       if (this.slugs) {
-        console.error('slugs', this.slugs)
         this.fetchReadOnlyEqItems(this.slugs)
       }
     },
