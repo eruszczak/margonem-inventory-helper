@@ -68,19 +68,21 @@ export default {
       // }
     },
     setReadOnlyEqItems: (state, items) => {
+      console.error(state)
       for (const item of items) {
         const placement = ITEM_PLACE[item.type]
         state.readOnlyEqItems[placement] = item
       }
+      console.error(state)
     }
   },
   actions: {
     fetchReadOnlyEqItems ({ commit }, slugs) {
       fetchMultipleItems(slugs, response => {
-        console.log(response.data)
+        console.error(response.data)
         commit('setReadOnlyEqItems', response.data.results)
       }, error => {
-        console.log(error)
+        console.error(error)
       })
     }
   }
