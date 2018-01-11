@@ -18,7 +18,7 @@
   import Popup from './Popup'
   import { encodeProfessions, calculateMaxFullBonusDuration, isItemWearable } from '../utils/helpers'
   import { ITEM_RARITY, ITEM_TYPE, ITEM_BONUS, ITEM_STAT, ITEM_PLACE } from '../utils/items'
-  import { mapMutations } from 'vuex'
+  import { mapMutations, mapGetters } from 'vuex'
   import { RIGHT_CLICK_MAPPER } from '../utils/constants'
   import { toast } from '../mixins/toast'
 
@@ -34,6 +34,7 @@
       }
     },
     computed: {
+      ...mapGetters(['eqItems']),
       className: function () {
         return this.data.rarity + '-color'
       },
@@ -99,13 +100,13 @@
           this.success('Nie można założyć tego typu')
           return
         }
-        const previousItem = this.$store.state.eqItems[type]
+        const previousItem = this.eqItems[type]
         if (previousItem && previousItem.pk === item.pk) {
           this.success('Ten przedmiot jest już założony')
           return
         }
         this.$store.commit('addItemToEq', item)
-        this.success('Założono przedmiot')
+        this.success(previousItem ? 'Podmieniono przedmiot' : 'Założono przedmiot')
       },
       /**
        * Calls mutation if this component is used to display my eqItems (only in this case, eqItems are editable)

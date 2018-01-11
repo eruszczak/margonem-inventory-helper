@@ -17,21 +17,6 @@ export default {
     itemHistory: state => state.itemHistory,
     readOnlyEqItems: state => state.readOnlyEqItems,
     eqHistory: state => state.eqHistory
-    // eqLink: function (state) {
-    //   let slugs = []
-    //   for (let placement in state.eqItems) {
-    //     const item = state.eqItems[placement]
-    //     if (item) {
-    //       slugs.push(item.slug)
-    //     }
-    //   }
-    //   return {
-    //     name: 'eqView',
-    //     query: {
-    //       i: slugs
-    //     }
-    //   }
-    // }
   },
   mutations: {
     toggleCanAddToEq: (state) => {

@@ -13,7 +13,7 @@
       </div>
       <div class="hero-foot">
         <div class="container">
-          <item :data="data"></item>
+          <item :data="data" :action="rmbActions.add"></item>
         </div>
       </div>
     </section>
@@ -25,8 +25,7 @@
             Podobne przedmioty
           </h1>
           <div class="items">
-            <item v-for="item in similarItems" :key="item.pk" :data="item"></item>
-            <!--<item v-for="item in similarItems" :key="item.pk" :data="item" @itemRightClick="itemRightClick"></item>-->
+            <item v-for="item in similarItems" :key="item.pk" :data="item" :action="rmbActions.add"></item>
           </div>
         </div>
       </div>
@@ -39,7 +38,7 @@
             Ostatnio odwiedzane
           </h1>
           <div class="items">
-            <item v-for="item in itemHistory" :key="item.pk" :data="item"></item>
+            <item v-for="item in itemHistory" :key="item.pk" :data="item" :action="rmbActions.add"></item>
             <!--<item v-for="item in similarItems" :key="item.pk" :data="item" @itemRightClick="itemRightClick"></item>-->
           </div>
         </div>
@@ -54,6 +53,7 @@
   import Item from './Item'
   import { fetchItem, fetchItemSimilar } from '../api/items'
   import { mapGetters, mapMutations } from 'vuex'
+  import { RIGHT_CLICK_MAPPER } from '../utils/constants'
 
   export default {
     name: 'SingleItemView',
@@ -83,6 +83,7 @@
       ...mapGetters([
         'itemHistory'
       ]),
+      rmbActions: () => RIGHT_CLICK_MAPPER
       // itemClass: function () {   TODO
       //   const classes = {
       //     unique: 'orange',
