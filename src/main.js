@@ -18,8 +18,8 @@ new Vue({
   router,
   store,
   template: '<App/>',
-  components: { App },
-  beforeCreate () {
-    this.$store.commit('initialiseStore')
-  }
+  components: { App }
+  // beforeCreate () {
+    // this.$store.commit('initialiseStore')
+  // }
 })
