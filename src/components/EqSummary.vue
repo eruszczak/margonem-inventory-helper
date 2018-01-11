@@ -1,6 +1,50 @@
 <template>
   <div>
-    {{ globalStats }}
+    <button @click="show=true">show</button>
+    <!--{{ globalStats }}-->
+    <p v-if="show"> {{ globalStats }}</p>
+
+    <section>
+      <b-field grouped group-multiline>
+        <div class="control">
+          <b-switch v-model="isLoading">Loading state</b-switch>
+        </div>
+      </b-field>
+
+      <b-table
+        :data="isEmpty ? [] : orderedStats"
+        :bordered="isBordered"
+        :striped="isStriped"
+        :narrowed="isNarrowed"
+        :hoverable="isHoverable"
+        :loading="isLoading"
+        :mobile-cards="hasMobileCards">
+
+        <template slot-scope="props">
+          <b-table-column label="First Name">
+            {{ props.row.name }}
+          </b-table-column>
+
+          <b-table-column label="Last Name">
+            {{ props.row.value }}
+          </b-table-column>
+        </template>
+
+        <template slot="empty">
+          <section class="section">
+            <div class="content has-text-grey has-text-centered">
+              <p>
+                <b-icon
+                  icon="emoticon-sad"
+                  size="is-large">
+                </b-icon>
+              </p>
+              <p>Nothing here.</p>
+            </div>
+          </section>
+        </template>
+      </b-table>
+    </section>
   </div>
 </template>
 
@@ -14,36 +58,48 @@
     props: ['readOnly'],
     data () {
       return {
-        source: null
-        // globalStats: {}
+        source: null,
+        show: false,
+        globalStats: {},
+        isEmpty: false,
+        isBordered: false,
+        isStriped: false,
+        isNarrowed: false,
+        isHoverable: false,
+        isLoading: false,
+        hasMobileCards: true
       }
     },
     created () {
       this.source = this.readOnly ? this.readOnlyEqItems : this.eqItems
+      this.getStats()
     },
     computed: {
       ...mapGetters(['eqItems', 'readOnlyEqItems']),
       orderedStats: function () {
         let globalStatsInOrder = []
         for (let statInOrder of ITEM_STATS_IN_ORDER) {
-          if (statInOrder in X) {
+          if (statInOrder in this.globalStats) {
             let stat = {
-              type: null,
-              name: statInOrder
+              // type: null,
+              name: statInOrder,
+              value: this.globalStats[statInOrder]
             }
-            // if (['ds', 'di', 'dz'].indexOf(statInOrder) > -1) {
-            //   let daRightValue = parseInt(this.rightOne['da'])
-            //
-            //   if (stat.rightValue && daRightValue) {
-            //     stat.rightValue += ` (${parseInt(stat.rightValue) + daRightValue})`
-            //   }
-            // }
+            if (['ds', 'di', 'dz'].indexOf(statInOrder) > -1) {
+              let allAttrs = parseInt(this.globalStats['da'])
+              if (stat.rightValue && allAttrs) {
+                stat.rightValue += ` (${parseInt(stat.value) + allAttrs})`
+              }
+            }
             globalStatsInOrder.push(stat)
           }
         }
         return globalStatsInOrder
-      },
-      globalStats: function () {
+      }
+    },
+    methods: {
+      getStats: function () {
+        console.log('global stats')
         // TODO: can i do this once and in order? this seems redundant
         // I think I can, for generating comparision I cant
         for (let itemPlace in this.source) {
