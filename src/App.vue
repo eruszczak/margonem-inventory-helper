@@ -10,11 +10,14 @@
         <b-switch class="navbar-item" :value="canAddToEq" @input="toggleCanAddToEq">
           {{ canAddToEq ? 'Do eq' : 'Do porównywarki'}}
         </b-switch>
+        <b-field label="Name">
+          <b-input v-model="query"></b-input>
+        </b-field>
         <!--<router-link class="navbar-item">Zestawy EQ</router-link>-->
       </div>
     </nav>
-    <div class="field">
-
+    <div class="items">
+      <item v-for="item in searchResults" :key="item.pk" :data="item" :action="rmbActions.add"></item>
     </div>
     <!--<section class="section">-->
       <!--<div class="container">-->
@@ -49,8 +52,12 @@
 <script>
   import { mapGetters, mapMutations } from 'vuex'
   import Eq from './components/Eq'
+  import Item from './components/Item'
   import { getEqUrl } from './utils/helpers'
   import { toast } from './mixins/toast'
+  import debounce from 'lodash/debounce'
+  import { searchItems } from './api/items'
+  import { RIGHT_CLICK_MAPPER } from './utils/constants'
 
   export default {
     name: 'app',
@@ -58,11 +65,15 @@
       return {
         modalActive: false,
         isSwitchedCustom: 'Yes',
-        toggleValue: this.canAddToEq
+        toggleValue: this.canAddToEq,
+        query: '',
+        searchResults: [],
+        rmbActions: () => RIGHT_CLICK_MAPPER
       }
     },
     components: {
-      Eq
+      Eq,
+      Item
     },
     mixins: [toast],
     computed: {
@@ -81,6 +92,10 @@
       },
       '$route' (to, from) {
         this.closeModal()
+      },
+      query: function (value) {
+        console.error(value)
+        this.search()
       }
     },
     methods: {
@@ -96,7 +111,20 @@
       },
       onCopy: function (e) {
         this.success('Skopiowano do schowka')
-      }
+      },
+      search: debounce(
+        function () {
+          // this.loading = true
+          var vm = this
+          searchItems(this.query, response => {
+            vm.searchResults = response.data.results
+          }, error => {
+            console.error(error)
+          })
+        },
+        // This is the number of milliseconds we wait for the user to stop typing.
+        500
+      )
     }
   }
 </script>

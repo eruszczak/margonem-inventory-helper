@@ -74,6 +74,11 @@
       this.source = this.readOnly ? this.readOnlyEqItems : this.eqItems
       this.getStats()
     },
+    watch: {
+      source: function (value) {
+        this.getStats()
+      }
+    },
     computed: {
       ...mapGetters(['eqItems', 'readOnlyEqItems']),
       orderedStats: function () {
