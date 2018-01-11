@@ -50,6 +50,7 @@
   import { mapGetters, mapMutations } from 'vuex'
   import Eq from './components/Eq'
   import { getEqUrl } from './utils/helpers'
+  import { toast } from './mixins/toast'
 
   export default {
     name: 'app',
@@ -63,6 +64,7 @@
     components: {
       Eq
     },
+    mixins: [toast],
     computed: {
       ...mapGetters([
         'pageTitle',
@@ -93,7 +95,7 @@
         this.modalActive = false
       },
       onCopy: function (e) {
-        alert('You just copied: ' + e.text)
+        this.success('Skopiowano do schowka')
       }
     }
   }
