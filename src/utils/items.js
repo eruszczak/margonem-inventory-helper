@@ -87,7 +87,6 @@ export const ITEM_PLACE = {
   2: 'primary',
   3: 'primary',
   4: 'primary',
-  // 5: 'primary',  TODO
   6: 'primary',
   7: 'primary',
 
@@ -104,11 +103,6 @@ export const ITEM_PLACE = {
 
   25: 'blessing'
 }
-
-export const ACCEPTED_ITEM_PLACES = [
-  'primary', 'secondary', 'armor', 'helmet',
-  'boots', 'gloves', 'ring', 'necklace', 'blessing'
-]
 
 export const CHARACTER_CLASSES = {
   w: 'wojownik',
@@ -142,16 +136,6 @@ export const ITEM_STATS_IN_ORDER = [
   'gold', 'bag', 'amount', 'ammo', 'capacity',
   'ttl', 'resp', 'timelimit', 'respred', 'creditsbon', 'runes', 'worth'
 ]
-
-// export const ITEM_STATS_IN_ORDER = [
-//   'dmg', 'pdmg', 'abdest', 'fire', 'light', 'wound', 'wound_chance', 'frost',
-//   'frost_slowed', 'poison', 'poison_slowed', 'crit', 'pierce', 'critval', 'critmval',
-//   'contra', 'pierceb', 'ac', 'absorb', 'absorbm', 'ds', 'di', 'dz', 'da', 'sa',
-//   'evade', 'blok', 'hp', 'hpbon', 'manabon', 'energybon', 'manadest', 'endest',
-//   'acdmg', 'adest', 'heal', 'slow', 'lowevade', 'resdmg', 'lowcrit', 'resfire',
-//   'resfrost', 'act', 'reslight', 'bag', 'amount', 'leczy', 'ttl', 'ammo',
-//   'capacity', 'gold', 'respred', 'fullheal', 'runes', 'timelimit', 'afterheal', 'afterheal_chance'
-// ];
 
 export const ITEM_STAT = {
   dmg: {val: 'Atak: {}', val2: 'Atak'},
