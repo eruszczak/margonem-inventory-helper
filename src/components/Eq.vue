@@ -36,13 +36,14 @@
         // console.error('history', this.history)
         this.source = this.history
       } else {
-        // this.source = this.readOnlyEqItems
-        this.source = this.readOnly ? this.readOnlyEqItems : this.eqItems
+        this.source = this.readOnlyEqItems
+        // this.source = this.readOnly ? this.readOnlyEqItems : this.eqItems
         if (this.readOnly) {
+          // debugger
           // todo this will modify state
           // this.source.url = this.eqLink
-          console.error('adding to history', this.source)
-          this.addToEqHistory(this.source)
+          console.error(this.source, Object.values(this.source))
+          this.addToEqHistory(this.readOnlyEqItems)
         }
       }
     },

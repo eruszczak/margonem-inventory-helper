@@ -65,10 +65,10 @@ export default {
         console.error(placement, item)
         // pks.push(item.pk)
       }
-      console.error(pks, eqItems, Object.values(eqItems), state.readOnlyEqItems, slugs)
+      console.error(pks, eqItems, Object.values(state.readOnlyEqItems), state.readOnlyEqItems)
 
       state.eqHistory.unshift(eqItems)
-      state.eqHistory = state.eqHistory.slice(0, 5)
+      // state.eqHistory = state.eqHistory.slice(0, 5)
       // console.log(state)
       // for (const item of items) {
       //   const placement = ITEM_PLACE[item.type]
