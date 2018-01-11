@@ -35,47 +35,47 @@
     },
     computed: {
       ...mapGetters(['eqItems']),
-      className: function () {
-        return this.data.rarity + '-color'
-      },
-      lvl: function () {
-        return this.data.lvl ? `(${this.data.lvl})` : ''
-      },
-      rarity: function () {
-        return ITEM_RARITY[this.data.rarity]
-      },
-      type: function () {
-        return ITEM_TYPE[this.data.type]
-      },
-      legbon: function () {
-        return ITEM_BONUS[this.data.legbon]
-      },
-      legbonMaxDuration: function () {
-        if (this.data.lvl) {
-          let maxDuration = this.data.lvl + calculateMaxFullBonusDuration(this.data.lvl)
-          return `Pełny czas działania: ${this.data.lvl} - ${maxDuration} lvl`
-        }
-        return ''
-      },
-      professions: function () {
-        let professions = encodeProfessions(this.data.profession)
-        // if (isItemWearable(this.data.type) && !professions.length) {
-        if (this.data.profession.length === 6) {
-          return 'wszystkie profesje'
-        }
-        return professions
-      },
-      encodeItemMinorStats: function () {
-        // those data are already in the order
-        let data = JSON.parse(this.data.json_stats)
-        let encodedMinorStats = ''
-        for (let attr in data) {
-          if (attr in ITEM_STAT) {
-            encodedMinorStats += `<p>${ITEM_STAT[attr].val.replace('{}', data[attr])}</p>`
-          }
-        }
-        return encodedMinorStats
-      }
+      // className: function () {
+      //   return this.data.rarity + '-color'
+      // },
+      // lvl: function () {
+      //   return this.data.lvl ? `(${this.data.lvl})` : ''
+      // },
+      // rarity: function () {
+      //   return ITEM_RARITY[this.data.rarity]
+      // },
+      // type: function () {
+      //   return ITEM_TYPE[this.data.type]
+      // },
+      // legbon: function () {
+      //   return ITEM_BONUS[this.data.legbon]
+      // },
+      // legbonMaxDuration: function () {
+      //   if (this.data.lvl) {
+      //     let maxDuration = this.data.lvl + calculateMaxFullBonusDuration(this.data.lvl)
+      //     return `Pełny czas działania: ${this.data.lvl} - ${maxDuration} lvl`
+      //   }
+      //   return ''
+      // },
+      // professions: function () {
+      //   let professions = encodeProfessions(this.data.profession)
+      //   // if (isItemWearable(this.data.type) && !professions.length) {
+      //   if (this.data.profession.length === 6) {
+      //     return 'wszystkie profesje'
+      //   }
+      //   return professions
+      // },
+      // encodeItemMinorStats: function () {
+      //   // those data are already in the order
+      //   let data = JSON.parse(this.data.json_stats)
+      //   let encodedMinorStats = ''
+      //   for (let attr in data) {
+      //     if (attr in ITEM_STAT) {
+      //       encodedMinorStats += `<p>${ITEM_STAT[attr].val.replace('{}', data[attr])}</p>`
+      //     }
+      //   }
+      //   return encodedMinorStats
+      // }
     },
     methods: {
       /**

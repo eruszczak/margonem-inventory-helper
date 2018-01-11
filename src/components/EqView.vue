@@ -13,6 +13,7 @@
         <router-link :to="getEqLink(eqItems)">Przejdź do zestawu</router-link>
       </div>
     </div>
+    <eq-summary :readOnly="slugs.length > 0"></eq-summary>
     <!--<p v-for="item in eqHistory">{{ item }}</p>-->
   </div>
 </template>
@@ -20,12 +21,14 @@
 <script>
   import { mapGetters, mapActions } from 'vuex'
   import Eq from './Eq'
+  import EqSummary from './EqSummary'
   import { getEqRoute } from '../utils/helpers'
 
   export default {
     name: 'eq-view',
     components: {
-      Eq
+      Eq,
+      EqSummary
     },
     data () {
       return {
