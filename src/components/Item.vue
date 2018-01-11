@@ -6,7 +6,7 @@
       <!--</b-tooltip>-->
     <!--</div>-->
 
-    <div :id="data.slug" class="item" @contextmenu.prevent="$emit('itemRightClick', data)">
+    <div :id="data.slug" class="item" @contextmenu.prevent="itemRightClick(data)">
       <img class="itemborder borderRarity" :class="data.rarity" :src="data.img" :alt="data.name">
       <popup :data="data"></popup>
       <!-- <p><span v-my-tooltip.right="message">{{ message }}</span></p> -->
@@ -16,16 +16,19 @@
 
 <script>
   import Popup from './Popup'
-  import {encodeProfessions, calculateMaxFullBonusDuration} from '../utils/helpers'
-  import {ITEM_RARITY, ITEM_TYPE, ITEM_BONUS, ITEM_STAT} from '../utils/items'
+  import { encodeProfessions, calculateMaxFullBonusDuration, isItemWearable } from '../utils/helpers'
+  import { ITEM_RARITY, ITEM_TYPE, ITEM_BONUS, ITEM_STAT, ITEM_PLACE } from '../utils/items'
   import { mapMutations } from 'vuex'
+  import { RIGHT_CLICK_MAPPER } from '../utils/constants'
+  import { toast } from '../mixins/toast'
 
   export default {
     name: 'item',
-    props: ['data'],
+    props: ['data', 'action'],
     components: {
       Popup
     },
+    mixins: [toast],
     data () {
       return {
       }
@@ -74,9 +77,46 @@
       }
     },
     methods: {
-      ...mapMutations([
-        // 'addItemToEq'
-      ]),
+      /**
+       * Decides what to do when Item was right clicked
+       * @param item Item that was right clicked
+       */
+      itemRightClick: function (item) {
+        const itemType = ITEM_PLACE[item.type]
+        if (this.action === RIGHT_CLICK_MAPPER.add) {
+          this.add(item, itemType)
+        } else if (this.action === RIGHT_CLICK_MAPPER.remove) {
+          this.remove(itemType)
+        }
+      },
+      /**
+       * Calls mutation if item's type is wearable and isn't already equipped
+       * @param item
+       * @param type
+       */
+      add: function (item, type) {
+        if (!isItemWearable(item.type)) {
+          this.success('Nie można założyć tego typu')
+          return
+        }
+        const previousItem = this.$store.state.eqItems[type]
+        if (previousItem && previousItem.pk === item.pk) {
+          this.success('Ten przedmiot jest już założony')
+          return
+        }
+        this.$store.commit('addItemToEq', item)
+        this.success('Założono przedmiot')
+      },
+      /**
+       * Calls mutation if this component is used to display my eqItems (only in this case, eqItems are editable)
+       * @param type
+       */
+      remove: function (type) {
+        if (!this.readOnly && !this.history) {
+          this.$store.commit('removeItemFromEq', type)
+          this.success('Zdjęto przedmiot')
+        }
+      }
     }
   }
 </script>

@@ -35,7 +35,7 @@
     </nav>
     <!--<div v-for="item in items">{{ item }}</div>-->
     <div class="items">
-      <item v-for="item in items" :key="item.pk" :data="item" @itemRightClick="itemRightClick"></item>
+      <item v-for="item in items" :key="item.pk" :data="item" :action="rmbActions.add"></item>
     </div>
   </div>
 </template>
@@ -44,12 +44,15 @@
   import { mapGetters, mapMutations, mapActions } from 'vuex'
   import { MAP_TYPE_NAME_TO_ID, MENU_LINKS } from '../utils/navbar'
   import Item from './Item'
+  import { toast } from '../mixins/toast'
+  import { RIGHT_CLICK_MAPPER } from '../utils/constants'
 
   export default {
     name: 'items',
     components: {
       Item
     },
+    mixins: [toast],
     props: ['type'],
     data: function () {
       return {
@@ -63,7 +66,8 @@
         // map this.count to store.state.count
         'items',
         'pageTitle'
-      ])
+      ]),
+      rmbActions: () => RIGHT_CLICK_MAPPER
     },
     created () {
       // TODO need to make navbar active
@@ -98,9 +102,7 @@
           this.setPageTitle(this.type)
         }
       },
-      itemRightClick: function (clickedItem) {
-        this.addItemToEq(clickedItem)
-      }
+
     }
   }
 </script>

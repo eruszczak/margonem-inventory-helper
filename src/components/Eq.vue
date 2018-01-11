@@ -3,7 +3,7 @@
     <tbody>
       <tr v-for="row in rows">
         <td v-for="place in row" :id="place">
-          <item v-if="source[place]" :data="source[place]" @itemRightClick="itemRightClick"></item>
+          <item v-if="source[place]" :data="source[place]" :action="rmbActions.remove"></item>
         </td>
       </tr>
     </tbody>
@@ -15,6 +15,8 @@
   import { ITEM_PLACE, EQ_ITEMS_ROWS } from '../utils/items'
   import { getBaseUrl, getEqRoute } from '../utils/helpers'
   import { mapGetters, mapMutations } from 'vuex'
+  import { toast } from '../mixins/toast'
+  import { RIGHT_CLICK_MAPPER } from '../utils/constants'
 
   export default {
     name: 'Eq',
@@ -31,19 +33,20 @@
     components: {
       Item
     },
+    mixins: [toast],
     created () {
       if (this.history) {
         // console.error('history', this.history)
         this.source = this.history
       } else {
-        this.source = this.readOnlyEqItems
-        // this.source = this.readOnly ? this.readOnlyEqItems : this.eqItems
+        // this.source = this.readOnlyEqItems
+        this.source = this.readOnly ? this.readOnlyEqItems : this.eqItems
         if (this.readOnly) {
           // debugger
           // todo this will modify state
           // this.source.url = this.eqLink
           console.error(this.source, Object.values(this.source))
-          this.addToEqHistory(this.readOnlyEqItems)
+          // this.addToEqHistory(this.readOnlyEqItems)
         }
       }
     },
@@ -61,7 +64,8 @@
       ]),
       eqLink: function () {
         // return `${getBaseUrl()}${this.$router.resolve(getEqRoute(this.source)).href}`
-      }
+      },
+      rmbActions: () => RIGHT_CLICK_MAPPER
     },
     methods: {
       ...mapMutations([
@@ -69,10 +73,6 @@
         'removeItemFromEq',
         'addToEqHistory'
       ]),
-      itemRightClick: function (clickedItem) {
-        let itemType = ITEM_PLACE[clickedItem.type]
-        this.removeItemFromEq(itemType)
-      }
     }
   }
 </script>
