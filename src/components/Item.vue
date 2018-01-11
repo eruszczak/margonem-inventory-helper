@@ -83,24 +83,24 @@
        * @param item Item that was right clicked
        */
       itemRightClick: function (item) {
-        const itemType = ITEM_PLACE[item.type]
+        const itemPlace = ITEM_PLACE[item.type]
         if (this.action === RIGHT_CLICK_MAPPER.add) {
-          this.add(item, itemType)
+          this.add(item, itemPlace)
         } else if (this.action === RIGHT_CLICK_MAPPER.remove) {
-          this.remove(itemType)
+          this.remove(itemPlace)
         }
       },
       /**
        * Calls mutation if item's type is wearable and isn't already equipped
        * @param item
-       * @param type
+       * @param itemPlace
        */
-      add: function (item, type) {
+      add: function (item, itemPlace) {
         if (!isItemWearable(item.type)) {
           this.success('Nie można założyć tego typu')
           return
         }
-        const previousItem = this.eqItems[type]
+        const previousItem = this.eqItems[itemPlace]
         if (previousItem && previousItem.pk === item.pk) {
           this.success('Ten przedmiot jest już założony')
           return
@@ -110,11 +110,11 @@
       },
       /**
        * Calls mutation if this component is used to display my eqItems (only in this case, eqItems are editable)
-       * @param type
+       * @param itemPlace
        */
-      remove: function (type) {
+      remove: function (itemPlace) {
         if (!this.readOnly && !this.history) {
-          this.$store.commit('removeItemFromEq', type)
+          this.$store.commit('removeItemFromEq', itemPlace)
           this.success('Zdjęto przedmiot')
         }
       }

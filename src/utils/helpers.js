@@ -23,8 +23,7 @@ export const encodeProfessions = (arr) => {
 }
 
 export const isItemWearable = (itemType) => {
-  let itemPlacement = ITEM_PLACE[itemType]
-  return ACCEPTED_ITEM_PLACES.indexOf(itemPlacement) > -1
+  return itemType in ITEM_PLACE
 }
 
 export const encodeAndSetSummaryStats = (summaryStats) => {
