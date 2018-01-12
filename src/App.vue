@@ -60,12 +60,17 @@
   export default {
     name: 'app',
     data () {
+      let search = localStorage.getItem('search')
+      if (search) {
+        search = JSON.parse(search)
+        this.query = search.query
+        this.results = search.results
+      }
       return {
         modalActive: false,
-        isSwitchedCustom: 'Yes',
         toggleValue: this.canAddToEq,
-        query: '',
-        searchResults: [],
+        query: search ? search.query : '',
+        searchResults: search ? search.results : []
       }
     },
     components: {
@@ -92,11 +97,7 @@
         this.closeModal()
       },
       query: function (value) {
-        if (value) {
-          this.search()
-        } else {
-          this.searchResults = []
-        }
+        this.search()
       }
     },
     methods: {
@@ -115,10 +116,20 @@
       },
       search: debounce(
         function () {
+          console.log('search', this.query)
+          if (!this.query) {
+            this.searchResults = []
+            localStorage.removeItem('search')
+            return
+          }
           // this.loading = true
           var vm = this
           searchItems(this.query, response => {
             vm.searchResults = response.data.results
+            localStorage.setItem('search', JSON.stringify({
+              'query': this.query,
+              'results': vm.searchResults
+            }))
           }, error => {
             console.error(error)
           })
