@@ -14,7 +14,6 @@
         <div class="container">
           <nav class="tabs is-boxed">
             <ul>
-              <!--<li v-for="item in itemTypes" @mouseover="mouseOver(item, $event)"><a>{{ item.name }}</a></li>-->
               <li v-for="item in menu" :key="item.name" @mouseover="mouseOver(item, $event)" v-bind:class="{'is-active': item.isActive }">
                 <a>{{ item.name }}</a>
               </li>
@@ -33,7 +32,6 @@
         </div>
       </div>
     </nav>
-    <!--<div v-for="item in items">{{ item }}</div>-->
     <div class="items">
       <item v-for="item in items" :key="item.pk" :data="item" :action="rmbActions.add"></item>
     </div>
@@ -46,6 +44,7 @@
   import Item from './Item'
   import { toast } from '../mixins/toast'
   import { RIGHT_CLICK_MAPPER } from '../utils/constants'
+  import { fetchItems } from '../api/items'
 
   export default {
     name: 'items',
@@ -57,34 +56,29 @@
     data: function () {
       return {
         menu: MENU_LINKS,
-        subMenu: []
+        subMenu: [],
+        items: []
       }
     },
     computed: {
-      // mix this into the outer object with the object spread operator
       ...mapGetters([
-        // map this.count to store.state.count
         'items',
         'pageTitle'
       ]),
       rmbActions: () => RIGHT_CLICK_MAPPER
     },
     created () {
-      // TODO need to make navbar active
       this.updateItems()
     },
     watch: {
       '$route' (to, from) {
+        this.items = []
         this.updateItems()
       }
     },
     methods: {
       ...mapMutations([
-        'setPageTitle',
-        'addItemToEq'
-      ]),
-      ...mapActions([
-        'fetchItems'
+        'setPageTitle'
       ]),
       mouseOver: function (item, event) {
         this.menu.map((el) => {
@@ -96,13 +90,14 @@
       updateItems: function () {
         const type = MAP_TYPE_NAME_TO_ID[this.type]
         if (type) {
-          this.fetchItems({
-            query: `?t=${type}`
+          fetchItems(`?t=${type}`, response => {
+            this.items = response.data.results
+          }, error => {
+            console.error(error)
           })
           this.setPageTitle(this.type)
         }
-      },
-
+      }
     }
   }
 </script>
