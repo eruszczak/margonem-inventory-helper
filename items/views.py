@@ -38,9 +38,6 @@ class ItemApiView(ListAPIView):
 
     def get_queryset(self):
         query = self.get_query()
-        for x in super().get_queryset():
-            print(x.rarity)
-        print(super().get_queryset().count())
         item_slugs = query.pop('slugs', None)
         if item_slugs:
             return self.queryset.filter(slug__in=item_slugs)
