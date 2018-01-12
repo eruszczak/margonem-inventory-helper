@@ -10,9 +10,7 @@
         <b-switch class="navbar-item" :value="canAddToEq" @input="toggleCanAddToEq">
           {{ canAddToEq ? 'Do eq' : 'Do porównywarki'}}
         </b-switch>
-        <b-field label="Name">
-          <b-input v-model="query"></b-input>
-        </b-field>
+        <b-input v-model="query"></b-input>
         <!--<router-link class="navbar-item">Zestawy EQ</router-link>-->
       </div>
     </nav>
@@ -68,7 +66,6 @@
         toggleValue: this.canAddToEq,
         query: '',
         searchResults: [],
-        rmbActions: () => RIGHT_CLICK_MAPPER
       }
     },
     components: {
@@ -84,7 +81,8 @@
       ]),
       eqLink: function () {
         return getEqUrl(this.$router, this.eqItems)
-      }
+      },
+      rmbActions: () => RIGHT_CLICK_MAPPER
     },
     watch: {
       pageTitle (newVal, oldVal) {
@@ -94,8 +92,11 @@
         this.closeModal()
       },
       query: function (value) {
-        console.error(value)
-        this.search()
+        if (value) {
+          this.search()
+        } else {
+          this.searchResults = []
+        }
       }
     },
     methods: {
@@ -123,7 +124,7 @@
           })
         },
         // This is the number of milliseconds we wait for the user to stop typing.
-        500
+        300
       )
     }
   }
