@@ -70,7 +70,8 @@
         modalActive: false,
         toggleValue: this.canAddToEq,
         query: search ? search.query : '',
-        searchResults: search ? search.results : []
+        searchResults: search ? search.results : [],
+        rmbActions: RIGHT_CLICK_MAPPER
       }
     },
     components: {
@@ -86,8 +87,7 @@
       ]),
       eqLink: function () {
         return getEqUrl(this.$router, this.eqItems)
-      },
-      rmbActions: () => RIGHT_CLICK_MAPPER
+      }
     },
     watch: {
       pageTitle (newVal, oldVal) {

@@ -53,7 +53,8 @@
     data () {
       return {
         rows: EQ_ITEMS_ROWS,
-        source: null
+        source: null,
+        rmbActions: RIGHT_CLICK_MAPPER
       }
     },
     computed: {
@@ -64,8 +65,7 @@
       ]),
       eqLink: function () {
         // return `${getBaseUrl()}${this.$router.resolve(getEqRoute(this.source)).href}`
-      },
-      rmbActions: () => RIGHT_CLICK_MAPPER
+      }
     },
     methods: {
       ...mapMutations([

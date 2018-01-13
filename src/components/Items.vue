@@ -57,15 +57,15 @@
       return {
         menu: MENU_LINKS,
         subMenu: [],
-        items: []
+        items: [],
+        rmbActions: RIGHT_CLICK_MAPPER
       }
     },
     computed: {
       ...mapGetters([
         'items',
         'pageTitle'
-      ]),
-      rmbActions: () => RIGHT_CLICK_MAPPER
+      ])
     },
     created () {
       this.updateItems()
