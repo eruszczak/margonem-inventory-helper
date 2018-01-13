@@ -72,9 +72,10 @@ export default {
       console.error(state)
     },
     setEqItemsStats: state => {
-      console.error(state.eqItemsStats)
-      setStats(state.eqItemsStats)
-      console.error(state.eqItemsStats)
+      console.error('in mutation', Object.values(state.eqItems), state.eqItems.helmet)
+      state.eqItemsStats = setStats(state.eqItems)
+      state.eqItemsStats.in_mutation = true
+      console.error('after setStats', Object.keys(state.eqItemsStats))
     },
     setReadOnlyEqItemsStats: (state) => {
       setStats(state.readOnlyEqItemsStats)
