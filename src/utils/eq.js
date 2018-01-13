@@ -2,10 +2,11 @@ import { CHARACTER_CLASSES_IN_ORDER, ITEM_BONUS } from './items'
 import { calculateBonusWeakness, calculateHolyTouchAmount, isInt } from './helpers'
 
 export const setStats = (eqItems) => {
-  let source = {}
+  let source = {
+    bonuses: {}
+  }
   let requiredProfessions = []
   let allowedProfessions = CHARACTER_CLASSES_IN_ORDER
-  let bonuses = {}
   let requiredLvl = 0
   let bonusesSummary = ''
   let isConflict = false
@@ -29,8 +30,8 @@ export const setStats = (eqItems) => {
     if (item.legbon) {
       const lvl = item.lvl
       const legBonus = ITEM_BONUS[item.legbon]
-      if (item.legbon in bonuses) {
-        let bonus = bonuses[item.legbon]
+      if (item.legbon in source.bonuses) {
+        let bonus = source.bonuses[item.legbon]
         bonus.count += 1
         bonus.limitReached = bonus.count > 2
 
@@ -44,7 +45,7 @@ export const setStats = (eqItems) => {
           bonus.value += legbonVal
         }
       } else {
-        bonuses[item.legbon] = {
+        source.bonuses[item.legbon] = {
           count: 1,
           value: calculateBonusWeakness(requiredLvl, lvl, legBonus.value),
           limitReached: false,

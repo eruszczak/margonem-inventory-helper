@@ -6,7 +6,7 @@
           <b-switch v-model="isLoading">Loading state</b-switch>
         </div>
       </b-field>
-
+      <p v-for="bonus in orderedBonuses" :key="bonus.name">{{ bonus.name | encodeBonus }}</p>
       <b-table
         :data="isEmpty ? [] : orderedStats"
         :bordered="isBordered"
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-  import { CHARACTER_CLASSES, ITEM_BONUS, ITEM_STAT, ITEM_STATS_IN_ORDER, ITEM_TYPE } from '../utils/items'
+  import { CHARACTER_CLASSES, ITEM_BONUS, ITEM_STAT, ITEM_STATS_IN_ORDER, ITEM_TYPE, ITEM_BONUSES_IN_ORDER } from '../utils/items'
   import { mapGetters, mapMutations } from 'vuex'
 
   export default {
@@ -74,7 +74,6 @@
       }
     },
     computed: {
-      // ...mapState(['eqItemsStats', 'readOnlyEqItemsStats']),
       ...mapGetters(['eqItems', 'readOnlyEqItems', 'eqItemsStats']),
       orderedStats: function () {
         let globalStatsInOrder = []
@@ -95,47 +94,21 @@
           }
         }
         return globalStatsInOrder
+      },
+      orderedBonuses: function() {
+        let bonuses = [];
+        for (let bonusInOrder of ITEM_BONUSES_IN_ORDER) {
+          if (bonusInOrder in this.eqItemsStats.bonuses) {
+            let bonus = this.eqItemsStats.bonuses[bonusInOrder]
+            bonus.name = bonusInOrder
+            bonuses.push(bonus)
+          }
+        }
+        return bonuses
       }
     },
     methods: {
-      ...mapMutations(['setStats']),
-      // getStats: function () {
-      //   console.log('global stats')
-      //   // TODO: can i do this once and in order? this seems redundant
-      //   // I think I can, for generating comparision I cant
-      //   for (let itemPlace in this.source) {
-      //     const item = this.source[itemPlace]
-      //     if (!item) continue
-
-      //     let stats = {}
-      //     // todo: when items comes from localStorage its json but else its still string
-      //     // console.error(item.json_stats)
-      //     if (typeof item.json_stats === 'string') {
-      //       stats = JSON.parse(item.json_stats)
-      //     }
-
-      //     // stats = item.stats_json
-
-      //     for (let attr in stats) {
-      //       if (this.globalStats.hasOwnProperty(attr)) {
-      //         if (attr === 'dmg') {
-      //           let currentRange = this.globalStats[attr].split('-')
-      //           let newRange = stats[attr].split('-')
-      //           let newMin = parseInt(currentRange[0]) + parseInt(newRange[0])
-      //           let newMax = parseInt(currentRange[1]) + parseInt(newRange[1])
-      //           this.globalStats[attr] = `${newMin}-${newMax}`
-      //         } else {
-      //           this.globalStats[attr] = parseFloat(this.globalStats[attr]) + parseFloat(stats[attr])
-      //           if (!isInt(this.globalStats[attr])) {
-      //             this.globalStats[attr] = parseFloat(this.globalStats[attr].toFixed(15)) // remove trailing zeroes
-      //           }
-      //         }
-      //       } else {
-      //         this.globalStats[attr] = stats[attr]
-      //       }
-      //     }
-      //   }
-      // }
+      ...mapMutations(['setStats'])
     },
     filters: {
       encodeStat: value => ITEM_STAT[value].val2,
