@@ -39,7 +39,6 @@
           </h1>
           <div class="items">
             <item v-for="item in itemHistory" :key="item.pk" :data="item" :action="rmbActions.add"></item>
-            <!--<item v-for="item in similarItems" :key="item.pk" :data="item" @itemRightClick="itemRightClick"></item>-->
           </div>
         </div>
       </div>

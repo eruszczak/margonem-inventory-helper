@@ -3,7 +3,7 @@
     <button @click="show=true">show</button>
     <!--{{ globalStats }}-->
     <p v-if="show"> {{ globalStats }}</p>
-    {{eqItemsStats}}
+    <p>{{eqItemsStats}}</p>
 
     <section>
       <b-field grouped group-multiline>
@@ -81,8 +81,8 @@
       }
     },
     computed: {
-      ...mapState(['eqItemsStats', 'readOnlyEqItemsStats']),
-      ...mapGetters(['eqItems', 'readOnlyEqItems']),
+      // ...mapState(['eqItemsStats', 'readOnlyEqItemsStats']),
+      ...mapGetters(['eqItems', 'readOnlyEqItems', 'eqItemsStats']),
       orderedStats: function () {
         let globalStatsInOrder = []
         for (let statInOrder of ITEM_STATS_IN_ORDER) {
