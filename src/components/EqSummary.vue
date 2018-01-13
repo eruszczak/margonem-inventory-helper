@@ -7,7 +7,23 @@
         </div>
       </b-field>
       <p>{{ eqItemsStats.lvl }}</p>
+
+      <!-- <template>
+        <td v-if="rightOne.professionConflict"><b>Zestaw ma konflikt profesji.</b></td>
+        <td v-else-if="rightOne.allowedProfessions">
+          <p v-for="prof in rightOne.allowedProfessions">{{ prof | encodeProf }}</p>
+        </td>
+        <td v-else>wszystkie</td>
+      </template> -->
+      <p>konflikt: {{ eqItemsStats.isConflict }}</p>
       <p v-for="bonus in orderedBonuses" :key="bonus.name">{{ bonus.name | encodeBonus }}</p>
+      <!-- getBonusDescription(bonus.name) -->
+        <!-- <td v-if="bonus.right">
+          <span v-if="bonus.right.count > 0" :class="{ redcolor: bonus.right.limitReached }">({{ bonus.right.count }}x)</span>
+          {{ bonus.right.value }}%
+          <span v-if="bonus.right.holyTouchAmount"> na {{ bonus.right.holyTouchAmount }} hp</span>
+        </td> -->
+                  <!-- <span v-if="bonus.right.count > 0" :class="{ redcolor: bonus.right.limitReached }">({{ bonus.right.count }}x)</span> -->
       <b-table
         :data="isEmpty ? [] : orderedStats"
         :bordered="isBordered"
