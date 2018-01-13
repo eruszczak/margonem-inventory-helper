@@ -3,12 +3,11 @@ import { calculateBonusWeakness, calculateHolyTouchAmount, isInt } from './helpe
 
 export const setStats = (eqItems) => {
   let source = {
-    bonuses: {}
+    bonuses: {},
+    lvl: 0
   }
   let requiredProfessions = []
   let allowedProfessions = CHARACTER_CLASSES_IN_ORDER
-  let requiredLvl = 0
-  let bonusesSummary = ''
   let isConflict = false
 
   for (let placement in eqItems) {
@@ -16,8 +15,8 @@ export const setStats = (eqItems) => {
     if (!item) continue
 
     // get max lvl? or get array of lvls and pick max before this loop?
-    if (item.lvl > requiredLvl) {
-      requiredLvl = item.lvl
+    if (item.lvl > source.lvl) {
+      source.lvl = item.lvl
     }
 
     if (item.profession) {
@@ -41,13 +40,13 @@ export const setStats = (eqItems) => {
         }
 
         if (item.legbon !== 'lastheal') {
-          let legbonVal = calculateBonusWeakness(requiredLvl, lvl, legBonus.value);
+          let legbonVal = calculateBonusWeakness(source.lvl, lvl, legBonus.value);
           bonus.value += legbonVal
         }
       } else {
         source.bonuses[item.legbon] = {
           count: 1,
-          value: calculateBonusWeakness(requiredLvl, lvl, legBonus.value),
+          value: calculateBonusWeakness(source.lvl, lvl, legBonus.value),
           limitReached: false,
           maxItemLvl: lvl,
           lvl: lvl,

@@ -6,6 +6,7 @@
           <b-switch v-model="isLoading">Loading state</b-switch>
         </div>
       </b-field>
+      <p>{{ eqItemsStats.lvl }}</p>
       <p v-for="bonus in orderedBonuses" :key="bonus.name">{{ bonus.name | encodeBonus }}</p>
       <b-table
         :data="isEmpty ? [] : orderedStats"
