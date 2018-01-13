@@ -1,14 +1,14 @@
 import { CHARACTER_CLASSES_IN_ORDER, ITEM_BONUS } from './items'
 import { calculateBonusWeakness, calculateHolyTouchAmount, isInt } from './helpers'
 
-export const setStats = (eqItems) => {
+export const setStats = eqItems => {
   let source = {
     bonuses: {},
-    lvl: 0
+    lvl: 0,
+    requiredProfessions: [],
+    allowedProfessions: CHARACTER_CLASSES_IN_ORDER,
+    isConflict: false
   }
-  let requiredProfessions = []
-  let allowedProfessions = CHARACTER_CLASSES_IN_ORDER
-  let isConflict = false
 
   for (let placement in eqItems) {
     const item = eqItems[placement]
@@ -19,9 +19,14 @@ export const setStats = (eqItems) => {
       source.lvl = item.lvl
     }
 
-    if (item.profession) {
+    if (item.profession && !source.isConflict) {
       const requiredProfessions = item.profession.split('')
-      // TODO
+      if (source.requiredProfessions.length === 0) {
+        // set requiredProfessions as first item's requiredProfessions
+        source.requiredProfessions = requiredProfessions;
+      }
+      
+      source.isConflict = !containsRequiredProfession(source.allowedProfessions, requiredProfessions)
     }
 
     // update bonuses
@@ -77,5 +82,21 @@ export const setStats = (eqItems) => {
       }
     }
   }
+
+  if (source.allowedProfessions.length === 6) {
+    source.allowedProfessions = false
+  }
   return source
+}
+
+
+const containsRequiredProfession = (allowedProfessions, professions) => {
+  // exclude every prof that is not required by this item's required professions
+  allowedProfessions = allowedProfessions.filter(prof => professions.indexOf(prof) > -1)
+  for (let prof of professions) {
+    if (allowedProfessions.indexOf(prof) !== -1) {
+      return true;
+    }
+  }
+  return false;
 }
