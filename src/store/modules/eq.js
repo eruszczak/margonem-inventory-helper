@@ -1,10 +1,13 @@
-import { DEFAULT_EQ_ITEMS, ITEM_PLACE } from '../../utils/items'
+import { DEFAULT_EQ_ITEMS, ITEM_PLACE, ITEM_BONUS } from '../../utils/items'
+import { setStats } from '../../utils/eq'
 import { fetchMultipleItems } from '../../api/items'
 
 export default {
   state: {
     eqItems: DEFAULT_EQ_ITEMS,
     readOnlyEqItems: DEFAULT_EQ_ITEMS,
+    eqItemsStats: {},
+    readOnlyEqItemsStats: {},
     eqLink: null,
     canAddToEq: false,
     stack: [],
@@ -67,6 +70,14 @@ export default {
         state.readOnlyEqItems[placement] = item
       }
       console.error(state)
+    },
+    setEqItemsStats: state => {
+      console.error(state.eqItemsStats)
+      setStats(state.eqItemsStats)
+      console.error(state.eqItemsStats)
+    },
+    setReadOnlyEqItemsStats: (state) => {
+      setStats(state.readOnlyEqItemsStats)
     }
   },
   actions: {
@@ -77,6 +88,14 @@ export default {
       }, error => {
         console.error(error)
       })
+    },
+    wearItem ({ commit }, item) {
+      commit('addItemToEq', item)
+      commit('setEqItemsStats')
+    },
+    takeOffItem ({ commit }, place) {
+      commit('removeItemFromEq', place)
+      commit('setEqItemsStats')
     }
   }
 }

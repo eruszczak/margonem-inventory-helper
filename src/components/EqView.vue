@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex'
+  import { mapGetters, mapActions, mapState } from 'vuex'
   import Eq from './Eq'
   import EqSummary from './EqSummary'
   import { getEqRoute } from '../utils/helpers'
