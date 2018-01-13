@@ -18,7 +18,7 @@
   import Popup from './Popup'
   import { encodeProfessions, calculateMaxFullBonusDuration, isItemWearable } from '../utils/helpers'
   import { ITEM_RARITY, ITEM_TYPE, ITEM_BONUS, ITEM_STAT, ITEM_PLACE } from '../utils/items'
-  import { mapMutations, mapGetters } from 'vuex'
+  import { mapMutations, mapGetters, mapActions } from 'vuex'
   import { RIGHT_CLICK_MAPPER } from '../utils/constants'
   import { toast } from '../mixins/toast'
 
@@ -78,6 +78,7 @@
       // }
     },
     methods: {
+      ...mapActions(['wearItem', 'takeOffItem']),
       /**
        * Decides what to do when Item was right clicked
        * @param item Item that was right clicked
@@ -105,7 +106,7 @@
           this.success('Ten przedmiot jest już założony')
           return
         }
-        this.$store.commit('addItemToEq', item)
+        this.wearItem(item)
         this.success(previousItem ? 'Podmieniono przedmiot' : 'Założono przedmiot')
       },
       /**
@@ -114,7 +115,7 @@
        */
       remove: function (itemPlace) {
         if (!this.readOnly && !this.history) {
-          this.$store.commit('removeItemFromEq', itemPlace)
+          this.takeOffItem(itemPlace)
           this.success('Zdjęto przedmiot')
         }
       }
