@@ -68,7 +68,8 @@
         data: null,
         similarItems: [],
         noSimilarItems: false,
-        error: false
+        error: false,
+        rmbActions: RIGHT_CLICK_MAPPER
       }
     },
     mounted () {
@@ -82,8 +83,7 @@
     computed: {
       ...mapGetters([
         'itemHistory'
-      ]),
-      rmbActions: () => RIGHT_CLICK_MAPPER
+      ])
       // itemClass: function () {   TODO
       //   const classes = {
       //     unique: 'orange',
