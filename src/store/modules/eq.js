@@ -19,7 +19,8 @@ export default {
     canAddToEq: state => state.canAddToEq,
     itemHistory: state => state.itemHistory,
     readOnlyEqItems: state => state.readOnlyEqItems,
-    eqHistory: state => state.eqHistory
+    eqHistory: state => state.eqHistory,
+    eqItemsStats: state => state.eqItemsStats
   },
   mutations: {
     toggleCanAddToEq: (state) => {
@@ -72,9 +73,8 @@ export default {
       console.error(state)
     },
     setEqItemsStats: state => {
-      console.error('in mutation', Object.values(state.eqItems), state.eqItems.helmet)
+      console.error('in mutation', Object.keys(state.eqItemsStats))
       state.eqItemsStats = setStats(state.eqItems)
-      state.eqItemsStats.in_mutation = true
       console.error('after setStats', Object.keys(state.eqItemsStats))
     },
     setReadOnlyEqItemsStats: (state) => {

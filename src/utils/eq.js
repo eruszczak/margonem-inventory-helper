@@ -2,9 +2,7 @@ import { CHARACTER_CLASSES_IN_ORDER, ITEM_BONUS } from './items'
 import { calculateBonusWeakness, calculateHolyTouchAmount, isInt } from './helpers'
 
 export const setStats = (eqItems) => {
-  console.error('in function', Object.values(eqItems), eqItems.helmet, Object.keys(source))
   let source = {}
-  source.in_function = true
   let requiredProfessions = []
   let allowedProfessions = CHARACTER_CLASSES_IN_ORDER
   let bonuses = {}
@@ -35,15 +33,15 @@ export const setStats = (eqItems) => {
         let bonus = bonuses[item.legbon]
         bonus.count += 1
         bonus.limitReached = bonus.count > 2
-  
-        if (legbon === 'holytouch' && lvl > bonus.maxItemLvl) {
-          bonus.maxItemLvl = lvl;
+
+        if (item.legbon === 'holytouch' && lvl > bonus.maxItemLvl) {
+          bonus.maxItemLvl = lvl
           bonus.holyTouchAmount = calculateHolyTouchAmount(lvl);
         }
-  
-        if (legbon !== 'lastheal') {
+
+        if (item.legbon !== 'lastheal') {
           let legbonVal = calculateBonusWeakness(requiredLvl, lvl, legBonus.value);
-          bonus.value += legbonVal;
+          bonus.value += legbonVal
         }
       } else {
         bonuses[item.legbon] = {
@@ -79,6 +77,5 @@ export const setStats = (eqItems) => {
       }
     }
   }
-  console.error(Object.keys(source))
   return source
 }
