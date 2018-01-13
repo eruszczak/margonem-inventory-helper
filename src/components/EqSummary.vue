@@ -45,7 +45,7 @@
 </template>
 
 <script>
-  import { ITEM_STAT, ITEM_STATS_IN_ORDER } from '../utils/items'
+  import { CHARACTER_CLASSES, ITEM_BONUS, ITEM_STAT, ITEM_STATS_IN_ORDER, ITEM_TYPE } from '../utils/items'
   import { mapGetters, mapMutations } from 'vuex'
 
   export default {
@@ -138,9 +138,11 @@
       // }
     },
     filters: {
-      encodeStat: function (value) {
-        return ITEM_STAT[value].val2
-      }
+      encodeStat: value => ITEM_STAT[value].val2,
+      encodeProf: value => CHARACTER_CLASSES[value],
+      encodeBonus: value => ITEM_BONUS[value].translation,
+      encodeType: value => ITEM_TYPE[value],
+      getBonusDescription: value => ITEM_BONUS[value].description
     }
   }
 </script>
