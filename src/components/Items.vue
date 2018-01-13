@@ -14,7 +14,7 @@
         <div class="container">
           <nav class="tabs is-boxed">
             <ul>
-              <li v-for="item in menu" :key="item.name" @mouseover="mouseOver(item, $event)" v-bind:class="{'is-active': item.isActive }">
+              <li v-for="item in menu" :key="item.name" @mouseover="mouseOver(item, $event)" :class="{'is-active': item.isActive }">
                 <a>{{ item.name }}</a>
               </li>
             </ul>
@@ -63,17 +63,28 @@
     },
     computed: {
       ...mapGetters([
-        'items',
         'pageTitle'
       ])
     },
+    mounted () {
+      this.getItems()
+    },
     created () {
-      this.updateItems()
+      for (let i = 0; i < MENU_LINKS.length; i += 1) {
+        const subLinks = MENU_LINKS[i].sublinks
+        for (let j = 0; j < subLinks.length; j += 1) {
+          if (subLinks[j].href.params.type === this.type) {
+            MENU_LINKS[i].isActive = true
+            this.subMenu = subLinks
+            return
+          }
+        }
+      }
     },
     watch: {
       '$route' (to, from) {
         this.items = []
-        this.updateItems()
+        this.getItems()
       }
     },
     methods: {
@@ -87,7 +98,7 @@
         item.isActive = true
         this.subMenu = item.sublinks
       },
-      updateItems: function () {
+      getItems: function () {
         const type = MAP_TYPE_NAME_TO_ID[this.type]
         if (type) {
           fetchItems(`?t=${type}`, response => {
