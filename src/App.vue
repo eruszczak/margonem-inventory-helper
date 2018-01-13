@@ -74,17 +74,16 @@
         rmbActions: RIGHT_CLICK_MAPPER
       }
     },
+    created () {
+      this.setEqItemsStats()
+    },
     components: {
       Eq,
       Item
     },
     mixins: [toast],
     computed: {
-      ...mapGetters([
-        'pageTitle',
-        'canAddToEq',
-        'eqItems'
-      ]),
+      ...mapGetters(['pageTitle', 'canAddToEq', 'eqItems']),
       eqLink: function () {
         return getEqUrl(this.$router, this.eqItems)
       }
@@ -101,9 +100,7 @@
       }
     },
     methods: {
-      ...mapMutations([
-        'toggleCanAddToEq'
-      ]),
+      ...mapMutations(['toggleCanAddToEq', 'setEqItemsStats']),
       mouseOver: function (item, event) {
         console.log('hehe', item, event)
         item.isActive = true

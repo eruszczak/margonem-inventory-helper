@@ -1,10 +1,5 @@
 <template>
   <div>
-    <button @click="show=true">show</button>
-    <!--{{ globalStats }}-->
-    <p v-if="show"> {{ globalStats }}</p>
-    <p>{{eqItemsStats}}</p>
-
     <section>
       <b-field grouped group-multiline>
         <div class="control">
@@ -23,7 +18,7 @@
 
         <template slot-scope="props">
           <b-table-column label="First Name">
-            {{ props.row.name }}
+            {{ props.row.name | encodeStat }}
           </b-table-column>
 
           <b-table-column label="Last Name">
@@ -50,9 +45,8 @@
 </template>
 
 <script>
-  import { ITEM_STATS_IN_ORDER } from '../utils/items'
-  import { mapGetters, mapMutations, mapState } from 'vuex'
-  import { isInt } from '../utils/helpers'
+  import { ITEM_STAT, ITEM_STATS_IN_ORDER } from '../utils/items'
+  import { mapGetters, mapMutations } from 'vuex'
 
   export default {
     name: 'eq-summary',
@@ -60,7 +54,6 @@
     data () {
       return {
         source: null,
-        show: false,
         globalStats: {},
         isEmpty: false,
         isBordered: false,
@@ -86,14 +79,14 @@
       orderedStats: function () {
         let globalStatsInOrder = []
         for (let statInOrder of ITEM_STATS_IN_ORDER) {
-          if (statInOrder in this.globalStats) {
+          if (statInOrder in this.eqItemsStats) {
             let stat = {
               // type: null,
               name: statInOrder,
-              value: this.globalStats[statInOrder]
+              value: this.eqItemsStats[statInOrder]
             }
             if (['ds', 'di', 'dz'].indexOf(statInOrder) > -1) {
-              let allAttrs = parseInt(this.globalStats['da'])
+              let allAttrs = parseInt(this.eqItemsStats['da'])
               if (stat.rightValue && allAttrs) {
                 stat.rightValue += ` (${parseInt(stat.value) + allAttrs})`
               }
@@ -143,6 +136,11 @@
       //     }
       //   }
       // }
+    },
+    filters: {
+      encodeStat: function (value) {
+        return ITEM_STAT[value].val2
+      }
     }
   }
 </script>
