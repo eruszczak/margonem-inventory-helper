@@ -13,7 +13,6 @@
 <script>
   import Item from './Item'
   import { EQ_ITEMS_ROWS } from '../utils/items'
-  import { mapGetters } from 'vuex'
   import { RIGHT_CLICK_MAPPER } from '../utils/constants'
 
   export default {
@@ -23,28 +22,18 @@
         type: Boolean,
         default: false
       },
-      history: {
+      source: {
         type: Object,
         default: null
       }
     },
     components: {Item},
-    created () {
-      if (this.history) {
-        this.source = this.history
-      } else {
-        this.source = this.readOnly ? this.readOnlyEqItems : this.eqItems
-      }
-    },
     data () {
       return {
-        rows: EQ_ITEMS_ROWS,
-        source: null,
-        rmbActions: RIGHT_CLICK_MAPPER
+        rows: EQ_ITEMS_ROWS
       }
     },
     computed: {
-      ...mapGetters(['eqItems', 'readOnlyEqItems']),
       /**
        * If eq is read only, right clicking the item should add to my eq. Removing only works when viewing my eq
        * @returns {number}
