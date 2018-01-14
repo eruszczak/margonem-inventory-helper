@@ -69,7 +69,6 @@
     },
     methods: {
       ...mapMutations([
-        // 'addItemToEq',
         'removeItemFromEq',
         'addToEqHistory'
       ])

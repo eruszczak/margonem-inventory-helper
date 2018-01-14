@@ -1,11 +1,6 @@
 <template>
   <div>
     <section>
-      <b-field grouped group-multiline>
-        <div class="control">
-          <b-switch v-model="isLoading">Loading state</b-switch>
-        </div>
-      </b-field>
       <p>min lvl: {{ eqItemsStats.lvl }}</p>
       <p>konflikt: {{ eqItemsStats.isConflict }}</p>
       <p>dozwolone profesje: <span v-for="prof in eqItemsStats.allowedProfessions">{{ prof | encodeProf }} </span></p>
@@ -21,15 +16,13 @@
         :striped="isStriped"
         :narrowed="isNarrowed"
         :hoverable="isHoverable"
-        :loading="isLoading"
         :mobile-cards="hasMobileCards">
 
         <template slot-scope="props">
-          <b-table-column label="First Name">
+          <b-table-column label="Bonus">
             {{ props.row.name | encodeStat }}
           </b-table-column>
-
-          <b-table-column label="Last Name">
+          <b-table-column label="Wartość">
             {{ props.row.value }}
           </b-table-column>
         </template>
@@ -68,8 +61,7 @@
         isStriped: false,
         isNarrowed: false,
         isHoverable: false,
-        isLoading: false,
-        hasMobileCards: true
+        hasMobileCards: false
       }
     },
     created () {
