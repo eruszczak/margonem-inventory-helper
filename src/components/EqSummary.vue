@@ -46,7 +46,7 @@
 </template>
 
 <script>
-  import { CHARACTER_CLASSES, ITEM_BONUS, ITEM_STAT, ITEM_STATS_IN_ORDER, ITEM_TYPE, ITEM_BONUSES_IN_ORDER } from '../utils/items'
+  import { CHARACTER_CLASSES, ITEM_BONUS, ITEM_STAT, ITEM_STATS_IN_ORDER, ITEM_BONUSES_IN_ORDER } from '../utils/items'
   import { mapGetters, mapMutations } from 'vuex'
 
   export default {
@@ -95,8 +95,8 @@
         }
         return globalStatsInOrder
       },
-      orderedBonuses: function() {
-        let bonuses = [];
+      orderedBonuses: function () {
+        let bonuses = []
         for (let bonusInOrder of ITEM_BONUSES_IN_ORDER) {
           if (bonusInOrder in this.eqItemsStats.bonuses) {
             let bonus = this.eqItemsStats.bonuses[bonusInOrder]

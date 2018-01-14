@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
 import eq from './modules/eq'
 import createPersistedState from 'vuex-persistedstate'
 
@@ -25,8 +24,6 @@ export const store = new Vuex.Store({
     setPageTitle: (state, value) => {
       state.pageTitle = value
     }
-  },
-  actions: {
   },
   modules: {
     eq
