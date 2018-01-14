@@ -5,9 +5,10 @@
         <p>Aby szybko stworzyć zestaw, znajdź przedmioty za pomocą wyszukiwarki powyżej oraz załóż je klikając na nie PPM.</p>
       </div>
     </div>
-    <eq :readOnly="slugs.length > 0"></eq>
+    <p v-if="readOnly"><b>TYLKO DO ODCZYTU</b></p>
+    <eq :readOnly="readOnly"></eq>
 
-    <p>ostatnio przeglądane zestawy {{ eqHistory.length }}:</p>
+    <p>TYLKO DO ODCZYTU. ostatnio przeglądane zestawy {{ eqHistory.length }}:</p>
     <div class="columns">
       <div class="column" v-for="eqItems in eqHistory">
         <eq :history="eqItems" :readOnly="true"></eq>
@@ -15,7 +16,7 @@
       </div>
     </div>
 
-    <eq-summary :readOnly="slugs.length > 0"></eq-summary>
+    <eq-summary :readOnly="readOnly"></eq-summary>
   </div>
 </template>
 
@@ -34,13 +35,16 @@
       }
     },
     mounted () {
-      if (this.slugs.length > 0) {
+      if (this.readOnly) {
         this.slugs = typeof this.slugs === 'string' ? [this.slugs] : this.slugs
         this.fetchReadOnlyEqItems(this.slugs)
       }
     },
     computed: {
-      ...mapGetters(['eqHistory'])
+      ...mapGetters(['eqHistory']),
+      readOnly: function () {
+        return this.slugs.length > 0
+      }
     },
     methods: {
       ...mapActions(['fetchReadOnlyEqItems']),

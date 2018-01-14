@@ -3,7 +3,7 @@
     <tbody>
       <tr v-for="row in rows">
         <td v-for="place in row">
-          <item v-if="source[place]" :data="source[place]" :action="rmbActions.remove"></item>
+          <item v-if="source[place]" :data="source[place]" :action="action"></item>
         </td>
       </tr>
     </tbody>
@@ -14,7 +14,6 @@
   import Item from './Item'
   import { EQ_ITEMS_ROWS } from '../utils/items'
   import { mapGetters } from 'vuex'
-  import { toast } from '../mixins/toast'
   import { RIGHT_CLICK_MAPPER } from '../utils/constants'
 
   export default {
@@ -30,7 +29,6 @@
       }
     },
     components: {Item},
-    mixins: [toast],
     created () {
       if (this.history) {
         this.source = this.history
@@ -46,7 +44,14 @@
       }
     },
     computed: {
-      ...mapGetters(['eqItems', 'readOnlyEqItems'])
+      ...mapGetters(['eqItems', 'readOnlyEqItems']),
+      /**
+       * If eq is read only, right clicking the item should add to my eq. Removing only works when viewing my eq
+       * @returns {number}
+       */
+      action: function () {
+        return this.readOnly ? RIGHT_CLICK_MAPPER.add : RIGHT_CLICK_MAPPER.remove
+      }
     }
   }
 </script>
@@ -59,12 +64,5 @@
     width: 42px;
     height: 42px;
     border: 1px solid lightgrey;
-  }
-  .redcolor {
-    color: red;
-  }
-  .redborder {
-    border: 1px solid red;
-    display: inline-block;
   }
 </style>
