@@ -78,6 +78,7 @@ export default {
     fetchReadOnlyEqItems ({ commit }, payload) {
       fetchMultipleItems(payload.slugs, response => {
         commit('setReadOnlyEqItems', response.data.results)
+        commit('setReadOnlyEqItemsStats')
         commit('addToEqHistory')
         payload.callback && payload.callback()
       }, error => {

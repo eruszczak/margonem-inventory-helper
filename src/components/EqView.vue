@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <eq-summary :readOnly="readOnly"></eq-summary>
+    <eq-summary :source="stats"></eq-summary>
   </div>
 </template>
 
@@ -31,7 +31,8 @@
     components: {Eq, EqSummary},
     data () {
       return {
-        source: null
+        source: null,
+        stats: null
       }
     },
     mounted () {
@@ -44,7 +45,7 @@
       }
     },
     computed: {
-      ...mapGetters(['eqHistory', 'eqItems', 'readOnlyEqItems']),
+      ...mapGetters(['eqHistory', 'eqItems', 'readOnlyEqItems', 'eqItemsStats', 'readOnlyEqItemsStats']),
       readOnly: function () {
         return this.slugs.length > 0
       },
@@ -64,12 +65,14 @@
             slugs: typeof this.slugs === 'string' ? [this.slugs] : this.slugs,
             callback: function () {
               vm.source = vm.readOnlyEqItems
+              vm.stats = vm.readOnlyEqItemsStats
             }
           })
         } else {
           this.source = this.eqItems
+          this.stats = this.eqItemsStats
         }
-
+        console.log(this.stats)
       }
     }
   }
