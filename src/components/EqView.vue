@@ -39,6 +39,7 @@
     },
     watch: {
       '$route' (to, from) {
+        console.log('route change', to, from)
         this.getEqItems()
       }
     },
@@ -55,6 +56,7 @@
       ...mapActions(['fetchReadOnlyEqItems']),
       getEqLink: eqItems => getEqRoute(eqItems),
       getEqItems: function () {
+        console.log('getEqItems')
         // this.source = null  todo
         if (this.readOnly) {
           let vm = this
