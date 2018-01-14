@@ -55,22 +55,16 @@
       ...mapActions(['fetchReadOnlyEqItems']),
       getEqLink: eqItems => getEqRoute(eqItems),
       getEqItems: function () {
-        console.log('getItems')
         // this.source = null  todo
         if (this.readOnly) {
-          const vm = this
-          console.log('readOnly')
-          this.slugs = typeof this.slugs === 'string' ? [this.slugs] : this.slugs
+          let vm = this
           this.fetchReadOnlyEqItems({
-            slugs: this.slugs,
+            slugs: typeof this.slugs === 'string' ? [this.slugs] : this.slugs,
             callback: function () {
               vm.source = vm.readOnlyEqItems
-              // TODO seems like readOnlyeqItems are not updated
-              console.log(vm.source, vm.readOnlyEqItems)
             }
           })
         } else {
-          console.log('my')
           this.source = this.eqItems
         }
 
