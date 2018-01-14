@@ -98,3 +98,19 @@ const professionsAreAllowed = (source, professions) => {
   }
   return false
 }
+
+export const getOrderedPksOfEqItems = eqItems => {
+  let pks = []
+  for (let placement in eqItems) {
+    const item = eqItems[placement]
+    if (item) {
+      pks.push(item.pk)
+    }
+  }
+  pks.sort((el, el2) => el > el2)
+  return pks
+}
+
+export const eqItemsAreTheSame = (pks, pks2) => {
+  return pks.length === pks2.length && pks.every((v, i) => v === pks2[i])
+}
