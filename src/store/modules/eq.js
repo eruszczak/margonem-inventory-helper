@@ -27,12 +27,8 @@ export default {
     toggleCanAddToEq: state => {
       state.canAddToEq = !state.canAddToEq
     },
-    setEqItem: (state, item, placement) => {
-      state.eqItems[placement] = item
-    },
-    copyReadOnlyEqItems: (state) => {
-      // object need to be copied?
-      state.eqItems = state.readOnlyEqItems
+    saveEqItemsAsMine: (state, eqItems) => {
+      state.eqItems = Object.assign({}, eqItems)
     },
     // addItemToEq: function (state, clickedItem, isStackOperation = false, initial = false) {
     addItemToEq: function (state, clickedItem) {
