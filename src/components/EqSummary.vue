@@ -86,12 +86,14 @@
       },
       orderedBonuses: function () {
         let bonuses = []
-        console.log(this.source)
-        for (let bonusInOrder of ITEM_BONUSES_IN_ORDER) {
-          if (bonusInOrder in this.source.bonuses) {
-            let bonus = this.source.bonuses[bonusInOrder]
-            bonus.name = bonusInOrder
-            bonuses.push(bonus)
+        if (this.source.bonuses) {
+          console.log(this.source)
+          for (let bonusInOrder of ITEM_BONUSES_IN_ORDER) {
+            if (bonusInOrder in this.source.bonuses) {
+              let bonus = this.source.bonuses[bonusInOrder]
+              bonus.name = bonusInOrder
+              bonuses.push(bonus)
+            }
           }
         }
         return bonuses
