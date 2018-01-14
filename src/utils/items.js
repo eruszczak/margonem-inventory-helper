@@ -208,7 +208,7 @@ export const ITEM_STAT = {
 }
 
 export const getDefaultEqItems = () => {
-  return JSON.parse(JSON.stringify(DEFAULT_EQ_ITEMS))
+  return Object.assign({}, DEFAULT_EQ_ITEMS)
 }
 
 export const DEFAULT_EQ_ITEMS = {

@@ -6,13 +6,17 @@
       </div>
     </div>
     <p v-if="readOnly"><b>TYLKO DO ODCZYTU</b></p>
-    <eq :source="source" :readOnly="readOnly"></eq>
+    <eq v-if="!readOnly" :source="eqItems" :readOnly="false"></eq>
+    <eq v-else :source="readOnlyEqItems" :readOnly="true"></eq>
+    <button v-if="readOnly" class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>
 
     <p>TYLKO DO ODCZYTU. ostatnio przeglądane zestawy {{ eqHistory.length }}:</p>
     <div class="columns">
       <div class="column" v-for="eqItems in eqHistory">
         <eq :source="eqItems" :readOnly="true"></eq>
+        <span>kopiuj link</span>
         <router-link :to="getEqLink(eqItems)">Przejdź do zestawu</router-link>
+        <button class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>
       </div>
     </div>
     <!--TODO cannot use stat because when it changes. its not updated. maybe use watcher and update stats manually-->
@@ -22,10 +26,11 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex'
+  import { mapGetters, mapActions, mapMutations } from 'vuex'
   import Eq from './Eq'
   import EqSummary from './EqSummary'
   import { getEqRoute } from '../utils/helpers'
+  import { toast } from '../mixins/toast'
 
   export default {
     name: 'eq-view',
@@ -36,6 +41,7 @@
         // stats: null
       }
     },
+    mixins: [toast],
     mounted () {
       this.getEqItems()
     },
@@ -55,6 +61,7 @@
       }
     },
     methods: {
+      ...mapMutations(['saveEqItemsAsMine']),
       ...mapActions(['fetchReadOnlyEqItems']),
       getEqLink: eqItems => getEqRoute(eqItems),
       getEqItems: function () {
@@ -72,6 +79,10 @@
           this.source = this.eqItems
           // this.stats = this.eqItemsStats
         }
+      },
+      saveAsMine: function (eqItems) {
+        this.saveEqItemsAsMine(eqItems)
+        this.success('Podmieniono zestaw')
       }
     }
   }
