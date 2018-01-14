@@ -47,6 +47,10 @@ export default {
       state.itemHistory.unshift(item)
       state.itemHistory = state.itemHistory.slice(0, 15)
     },
+    /**
+     * Adds readOnlyEqItems to history. If it was already in history, remove it and add again to the array beginning
+     * @param state
+     */
     addToEqHistory: state => {
       let pks = getOrderedPksOfEqItems(state.readOnlyEqItems)
       state.eqHistory = state.eqHistory.filter(el => {
