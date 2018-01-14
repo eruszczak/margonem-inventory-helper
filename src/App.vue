@@ -34,7 +34,7 @@
           <button class="delete" aria-label="close" @click="closeModal"></button>
         </header>
         <section class="modal-card-body">
-          <eq></eq>
+          <eq :source="eqItems"></eq>
           Summary
         </section>
         <footer class="modal-card-foot">
