@@ -15,8 +15,9 @@
         <router-link :to="getEqLink(eqItems)">Przejdź do zestawu</router-link>
       </div>
     </div>
-
-    <eq-summary :source="stats"></eq-summary>
+    <!--TODO cannot use stat because when it changes. its not updated. maybe use watcher and update stats manually-->
+    <eq-summary v-if="!readOnly" :source="eqItemsStats"></eq-summary>
+    <eq-summary v-else :source="readOnlyEqItemsStats"></eq-summary>
   </div>
 </template>
 
@@ -31,8 +32,8 @@
     components: {Eq, EqSummary},
     data () {
       return {
-        source: null,
-        stats: null
+        source: null
+        // stats: null
       }
     },
     mounted () {
@@ -58,21 +59,19 @@
       getEqLink: eqItems => getEqRoute(eqItems),
       getEqItems: function () {
         console.log('getEqItems')
-        // this.source = null  todo
         if (this.readOnly) {
           let vm = this
           this.fetchReadOnlyEqItems({
             slugs: typeof this.slugs === 'string' ? [this.slugs] : this.slugs,
             callback: function () {
               vm.source = vm.readOnlyEqItems
-              vm.stats = vm.readOnlyEqItemsStats
+              // vm.stats = vm.readOnlyEqItemsStats
             }
           })
         } else {
           this.source = this.eqItems
-          this.stats = this.eqItemsStats
+          // this.stats = this.eqItemsStats
         }
-        console.log(this.stats)
       }
     }
   }
