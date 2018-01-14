@@ -39,7 +39,7 @@
         </section>
         <footer class="modal-card-foot">
           <button class="button" v-clipboard:copy="eqLink" v-clipboard:success="onCopy">Kopiuj link</button>
-          <router-link class="button" :to="{name: 'eqView'}">Zobacz szczegóły</router-link>
+          <router-link class="button" :to="{name: 'eqView'}" @click.native="closeModal">Zobacz szczegóły</router-link>
         </footer>
       </div>
     </b-modal>
@@ -91,9 +91,6 @@
     watch: {
       pageTitle (newVal, oldVal) {
         window.document.title = newVal
-      },
-      '$route' (to, from) {
-        this.closeModal()
       },
       query: function (value) {
         this.search()
@@ -150,5 +147,15 @@
 
   .modal-card, .modal-card-body, .modal-content {
     overflow: visible;
+  }
+
+  @media screen and (min-width: 1024px) {
+    a.navbar-item.is-active, a.navbar-link.is-active {
+      color: hsl(204, 86%, 53%) !important;
+    }
+  }
+
+  .is-primary {
+    background-color: hsl(204, 86%, 53%) !important;
   }
 </style>

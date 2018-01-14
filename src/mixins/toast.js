@@ -8,7 +8,8 @@ export const toast = {
         message: message,
         type: 'is-dark',
         position: 'is-bottom-right',
-        queue: false
+        queue: false,
+        duration: 750
       })
     }
     // danger (message) {
