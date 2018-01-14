@@ -6,26 +6,15 @@
           <b-switch v-model="isLoading">Loading state</b-switch>
         </div>
       </b-field>
-      <p>{{ eqItemsStats.lvl }}</p>
-
-      <!-- <template>
-        <td v-if="rightOne.professionConflict"><b>Zestaw ma konflikt profesji.</b></td>
-        <td v-else-if="rightOne.allowedProfessions">
-          <p v-for="prof in rightOne.allowedProfessions">{{ prof | encodeProf }}</p>
-        </td>
-        <td v-else>wszystkie</td>
-      </template> -->
+      <p>min lvl: {{ eqItemsStats.lvl }}</p>
       <p>konflikt: {{ eqItemsStats.isConflict }}</p>
-      <!--TODO if conflict: nothing else if allowedProfes.length else wszystkie profesje-->
       <p>dozwolone profesje: <span v-for="prof in eqItemsStats.allowedProfessions">{{ prof | encodeProf }} </span></p>
-      <p v-for="bonus in orderedBonuses" :key="bonus.name">{{ bonus.name | encodeBonus }}</p>
-      <!-- getBonusDescription(bonus.name) -->
-        <!-- <td v-if="bonus.right">
-          <span v-if="bonus.right.count > 0" :class="{ redcolor: bonus.right.limitReached }">({{ bonus.right.count }}x)</span>
-          {{ bonus.right.value }}%
-          <span v-if="bonus.right.holyTouchAmount"> na {{ bonus.right.holyTouchAmount }} hp</span>
-        </td> -->
-                  <!-- <span v-if="bonus.right.count > 0" :class="{ redcolor: bonus.right.limitReached }">({{ bonus.right.count }}x)</span> -->
+      <p v-for="bonus in orderedBonuses" :key="bonus.name">
+        {{ bonus.name | encodeBonus }}; {{ bonus.count }}
+        <small>{{ bonus.name | getBonusDescription }}</small>
+        <span v-if="bonus.limitReached">LIMIT!! </span>
+        <span v-if="bonus.holyTouchAmount"> na {{ bonus.holyTouchAmount }} hp</span>
+      </p>
       <b-table
         :data="isEmpty ? [] : orderedStats"
         :bordered="isBordered"
@@ -133,7 +122,7 @@
       encodeStat: value => ITEM_STAT[value].val2,
       encodeProf: value => CHARACTER_CLASSES[value],
       encodeBonus: value => ITEM_BONUS[value].translation,
-      encodeType: value => ITEM_TYPE[value],
+      // encodeType: value => ITEM_TYPE[value],
       getBonusDescription: value => ITEM_BONUS[value].description
     }
   }

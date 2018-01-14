@@ -40,11 +40,11 @@ export const setStats = eqItems => {
 
         if (item.legbon === 'holytouch' && lvl > bonus.maxItemLvl) {
           bonus.maxItemLvl = lvl
-          bonus.holyTouchAmount = calculateHolyTouchAmount(lvl);
+          bonus.holyTouchAmount = calculateHolyTouchAmount(lvl)
         }
 
         if (item.legbon !== 'lastheal') {
-          let legbonVal = calculateBonusWeakness(source.lvl, lvl, legBonus.value);
+          let legbonVal = calculateBonusWeakness(source.lvl, lvl, legBonus.value)
           bonus.value += legbonVal
         }
       } else {
