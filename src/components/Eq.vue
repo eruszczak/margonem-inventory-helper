@@ -2,7 +2,7 @@
   <table class="set" v-if="source">
     <tbody>
       <tr v-for="row in rows">
-        <td v-for="place in row" :id="place">
+        <td v-for="place in row">
           <item v-if="source[place]" :data="source[place]" :action="rmbActions.remove"></item>
         </td>
       </tr>
@@ -72,12 +72,15 @@
         // 'addItemToEq',
         'removeItemFromEq',
         'addToEqHistory'
-      ]),
+      ])
     }
   }
 </script>
 
 <style>
+  .set tr {
+    line-height: 10px;
+  }
   .set td {
     width: 42px;
     height: 42px;
