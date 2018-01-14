@@ -7,9 +7,9 @@
     </div>
     <eq :readOnly="slugs.length > 0"></eq>
 
-    <p>ostatnio przeglądane zestawy:</p>
+    <p>ostatnio przeglądane zestawy {{ eqHistory.length }}:</p>
     <div class="columns">
-      <div class="column is-one-quarter" v-for="eqItems in eqHistory">
+      <div class="column" v-for="eqItems in eqHistory">
         <eq :history="eqItems" :readOnly="true"></eq>
         <router-link :to="getEqLink(eqItems)">Przejdź do zestawu</router-link>
       </div>
