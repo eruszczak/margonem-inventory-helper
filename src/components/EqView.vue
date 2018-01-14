@@ -31,7 +31,6 @@
     components: {Eq, EqSummary},
     data () {
       return {
-        slugs: this.$route.query.i || [],
         source: null
       }
     },
@@ -47,6 +46,9 @@
       ...mapGetters(['eqHistory', 'eqItems', 'readOnlyEqItems']),
       readOnly: function () {
         return this.slugs.length > 0
+      },
+      slugs: function () {
+        return this.$route.query.i || []
       }
     },
     methods: {
@@ -63,12 +65,15 @@
             slugs: this.slugs,
             callback: function () {
               vm.source = vm.readOnlyEqItems
+              // TODO seems like readOnlyeqItems are not updated
+              console.log(vm.source, vm.readOnlyEqItems)
             }
           })
         } else {
           console.log('my')
           this.source = this.eqItems
         }
+
       }
     }
   }
