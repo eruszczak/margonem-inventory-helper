@@ -36,7 +36,7 @@
       }
     },
     mounted () {
-      if (this.slugs) {
+      if (this.slugs.length > 0) {
         this.slugs = typeof this.slugs === 'string' ? [this.slugs] : this.slugs
         this.fetchReadOnlyEqItems(this.slugs)
       }

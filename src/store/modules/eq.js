@@ -1,4 +1,4 @@
-import { DEFAULT_EQ_ITEMS, ITEM_PLACE, ITEM_BONUS } from '../../utils/items'
+import { DEFAULT_EQ_ITEMS, ITEM_PLACE } from '../../utils/items'
 import { setStats } from '../../utils/eq'
 import { fetchMultipleItems } from '../../api/items'
 
@@ -73,9 +73,7 @@ export default {
       console.error(state)
     },
     setEqItemsStats: state => {
-      console.error('in mutation', Object.keys(state.eqItemsStats))
       state.eqItemsStats = setStats(state.eqItems)
-      console.error('after setStats', Object.keys(state.eqItemsStats))
     },
     setReadOnlyEqItemsStats: (state) => {
       setStats(state.readOnlyEqItemsStats)
@@ -84,7 +82,6 @@ export default {
   actions: {
     fetchReadOnlyEqItems ({ commit }, slugs) {
       fetchMultipleItems(slugs, response => {
-        console.error(response.data)
         commit('setReadOnlyEqItems', response.data.results)
       }, error => {
         console.error(error)
