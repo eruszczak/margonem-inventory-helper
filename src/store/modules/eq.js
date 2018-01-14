@@ -1,5 +1,5 @@
 import { DEFAULT_EQ_ITEMS, ITEM_PLACE } from '../../utils/items'
-import { setStats } from '../../utils/eq'
+import { setStats, getOrderedPksOfEqItems, eqItemsAreTheSame } from '../../utils/eq'
 import { fetchMultipleItems } from '../../api/items'
 
 export default {
@@ -48,26 +48,10 @@ export default {
       state.itemHistory = state.itemHistory.slice(0, 15)
     },
     addToEqHistory: state => {
-      let pks = []
-      for (let placement in state.readOnlyEqItems) {
-        const item = state.readOnlyEqItems[placement]
-        if (item) {
-          pks.push(item.pk)
-        }
-      }
-      pks.sort((el, el2) => el > el2)
+      let pks = getOrderedPksOfEqItems(state.readOnlyEqItems)
       state.eqHistory = state.eqHistory.filter(el => {
-        let elPks = []
-        for (let placement in el) {
-          const item = el[placement]
-          if (item) {
-            elPks.push(item.pk)
-          }
-        }
-        elPks.sort((el, el2) => el > el2)
-        let arraysAreTheSame = pks.length === elPks.length && pks.every((v, i) => v === elPks[i])
-        console.log(pks, elPks, arraysAreTheSame)
-        return !arraysAreTheSame
+        let elPks = getOrderedPksOfEqItems(el)
+        return !eqItemsAreTheSame(pks, elPks)
       })
       state.eqHistory.unshift(state.readOnlyEqItems)
       state.eqHistory = state.eqHistory.slice(0, 5)
