@@ -39,7 +39,7 @@
 </template>
 
 <script>
-  import { mapGetters, mapMutations, mapActions } from 'vuex'
+  import { mapGetters, mapMutations } from 'vuex'
   import { MAP_TYPE_NAME_TO_ID, MENU_LINKS } from '../utils/navbar'
   import Item from './Item'
   import { toast } from '../mixins/toast'

@@ -111,7 +111,7 @@
         }, response => {
           this.error = true
         })
-      },
+      }
     }
   }
 </script>

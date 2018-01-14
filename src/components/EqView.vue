@@ -14,22 +14,19 @@
       </div>
     </div>
     <eq-summary :readOnly="slugs.length > 0"></eq-summary>
-    <!--<p v-for="item in eqHistory">{{ item }}</p>-->
+    <p v-for="item in eqHistory">{{ item }}</p>
   </div>
 </template>
 
 <script>
-  import { mapGetters, mapActions, mapState } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   import Eq from './Eq'
   import EqSummary from './EqSummary'
   import { getEqRoute } from '../utils/helpers'
 
   export default {
     name: 'eq-view',
-    components: {
-      Eq,
-      EqSummary
-    },
+    components: {Eq, EqSummary},
     data () {
       return {
         slugs: this.$route.query.i || []
@@ -42,19 +39,11 @@
       }
     },
     computed: {
-      ...mapGetters([
-        // 'pageTitle',
-        // 'canAddToEq'
-        'eqHistory'
-      ])
+      ...mapGetters(['eqHistory'])
     },
     methods: {
-      ...mapActions([
-        'fetchReadOnlyEqItems'
-      ]),
-      getEqLink: function (eqItems) {
-        return getEqRoute(eqItems)
-      }
+      ...mapActions(['fetchReadOnlyEqItems']),
+      getEqLink: eqItems => getEqRoute(eqItems)
     }
   }
 </script>

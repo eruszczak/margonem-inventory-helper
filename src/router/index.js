@@ -30,6 +30,6 @@ export default new Router({
       path: '/przedmiot/:slug',
       component: ItemView,
       props: true
-    },
+    }
   ]
 })
