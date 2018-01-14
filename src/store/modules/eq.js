@@ -1,11 +1,11 @@
-import { DEFAULT_EQ_ITEMS, ITEM_PLACE } from '../../utils/items'
+import { getDefaultEqItems, ITEM_PLACE } from '../../utils/items'
 import { setStats, getOrderedPksOfEqItems, eqItemsAreTheSame } from '../../utils/eq'
 import { fetchMultipleItems } from '../../api/items'
 
 export default {
   state: {
-    eqItems: DEFAULT_EQ_ITEMS,
-    readOnlyEqItems: DEFAULT_EQ_ITEMS,
+    eqItems: getDefaultEqItems(),
+    readOnlyEqItems: getDefaultEqItems(),
     eqItemsStats: {},
     readOnlyEqItemsStats: {},
     eqLink: null,
@@ -61,6 +61,7 @@ export default {
       state.eqHistory = state.eqHistory.slice(0, 5)
     },
     setReadOnlyEqItems: (state, items) => {
+      state.readOnlyEqItems = getDefaultEqItems()
       for (const item of items) {
         const placement = ITEM_PLACE[item.type]
         state.readOnlyEqItems[placement] = item

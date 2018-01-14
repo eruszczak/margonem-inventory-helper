@@ -77,10 +77,7 @@
     created () {
       this.setEqItemsStats()
     },
-    components: {
-      Eq,
-      Item
-    },
+    components: {Eq, Item},
     mixins: [toast],
     computed: {
       ...mapGetters(['pageTitle', 'canAddToEq', 'eqItems']),
@@ -91,6 +88,10 @@
     watch: {
       pageTitle (newVal, oldVal) {
         window.document.title = newVal
+      },
+      '$route' (to, from) {
+        console.log('close modal')
+        this.closeModal()
       },
       query: function (value) {
         this.search()
