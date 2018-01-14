@@ -47,31 +47,36 @@ export default {
       state.itemHistory.unshift(item)
       state.itemHistory = state.itemHistory.slice(0, 15)
     },
-    addToEqHistory: (state, eqItems) => {
-      // todo this is always readOnlyEqItems
+    addToEqHistory: state => {
       let pks = []
-      for (let placement in eqItems) {
-        const item = eqItems[placement]
-        console.error(placement, item)
-        // pks.push(item.pk)
+      for (let placement in state.readOnlyEqItems) {
+        const item = state.readOnlyEqItems[placement]
+        if (item) {
+          pks.push(item.pk)
+        }
       }
-      console.error(pks, eqItems, Object.values(state.readOnlyEqItems), state.readOnlyEqItems)
-
-      state.eqHistory.unshift(eqItems)
-      // state.eqHistory = state.eqHistory.slice(0, 5)
-      // console.log(state)
-      // for (const item of items) {
-      //   const placement = ITEM_PLACE[item.type]
-      //   state.readOnlyEqItems[placement] = item
-      // }
+      pks.sort((el, el2) => el > el2)
+      state.eqHistory = state.eqHistory.filter(el => {
+        let elPks = []
+        for (let placement in el) {
+          const item = el[placement]
+          if (item) {
+            elPks.push(item.pk)
+          }
+        }
+        elPks.sort((el, el2) => el > el2)
+        let arraysAreTheSame = pks.length === elPks.length && pks.every((v, i) => v === elPks[i])
+        console.log(pks, elPks, arraysAreTheSame)
+        return !arraysAreTheSame
+      })
+      state.eqHistory.unshift(state.readOnlyEqItems)
+      state.eqHistory = state.eqHistory.slice(0, 5)
     },
     setReadOnlyEqItems: (state, items) => {
-      console.error(state)
       for (const item of items) {
         const placement = ITEM_PLACE[item.type]
         state.readOnlyEqItems[placement] = item
       }
-      console.error(state)
     },
     setEqItemsStats: state => {
       state.eqItemsStats = setStats(state.eqItems)
@@ -84,6 +89,7 @@ export default {
     fetchReadOnlyEqItems ({ commit }, slugs) {
       fetchMultipleItems(slugs, response => {
         commit('setReadOnlyEqItems', response.data.results)
+        commit('addToEqHistory')
       }, error => {
         console.error(error)
       })
