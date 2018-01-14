@@ -5,7 +5,7 @@ export const setStats = eqItems => {
   let source = {
     bonuses: {},
     lvl: 0,
-    requiredProfessions: [],
+    requiredProfessions: null,
     allowedProfessions: CHARACTER_CLASSES_IN_ORDER,
     isConflict: false
   }
@@ -19,14 +19,13 @@ export const setStats = eqItems => {
       source.lvl = item.lvl
     }
 
+    // check if this item's professions are not conflicting with current allowed professions
     if (item.profession && !source.isConflict) {
       const requiredProfessions = item.profession.split('')
-      if (source.requiredProfessions.length === 0) {
-        // set requiredProfessions as first item's requiredProfessions
-        source.requiredProfessions = requiredProfessions;
+      if (source.requiredProfessions === null) {
+        source.requiredProfessions = requiredProfessions
       }
-      
-      source.isConflict = !containsRequiredProfession(source.allowedProfessions, requiredProfessions)
+      source.isConflict = !professionsAreAllowed(source, requiredProfessions)
     }
 
     // update bonuses
@@ -89,14 +88,13 @@ export const setStats = eqItems => {
   return source
 }
 
-
-const containsRequiredProfession = (allowedProfessions, professions) => {
-  // exclude every prof that is not required by this item's required professions
-  allowedProfessions = allowedProfessions.filter(prof => professions.indexOf(prof) > -1)
+const professionsAreAllowed = (source, professions) => {
+  // exclude every prof that is not required by this item's professions
+  source.allowedProfessions = source.allowedProfessions.filter(prof => professions.indexOf(prof) > -1)
   for (let prof of professions) {
-    if (allowedProfessions.indexOf(prof) !== -1) {
-      return true;
+    if (source.allowedProfessions.indexOf(prof) !== -1) {
+      return true
     }
   }
-  return false;
+  return false
 }

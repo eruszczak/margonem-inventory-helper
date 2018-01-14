@@ -16,6 +16,8 @@
         <td v-else>wszystkie</td>
       </template> -->
       <p>konflikt: {{ eqItemsStats.isConflict }}</p>
+      <!--TODO if conflict: nothing else if allowedProfes.length else wszystkie profesje-->
+      <p>dozwolone profesje: <span v-for="prof in eqItemsStats.allowedProfessions">{{ prof | encodeProf }} </span></p>
       <p v-for="bonus in orderedBonuses" :key="bonus.name">{{ bonus.name | encodeBonus }}</p>
       <!-- getBonusDescription(bonus.name) -->
         <!-- <td v-if="bonus.right">
