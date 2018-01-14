@@ -1,15 +1,16 @@
 <template>
-  <div>
+  <div v-if="source">
     <section>
-      <p>min lvl: {{ eqItemsStats.lvl }}</p>
-      <p>konflikt: {{ eqItemsStats.isConflict }}</p>
-      <p>dozwolone profesje: <span v-for="prof in eqItemsStats.allowedProfessions">{{ prof | encodeProf }} </span></p>
+      <p>min lvl: {{ source.lvl }}</p>
+      <p>konflikt: {{ source.isConflict }}</p>
+      <p>dozwolone profesje: <span v-for="prof in source.allowedProfessions">{{ prof | encodeProf }} </span></p>
       <p v-for="bonus in orderedBonuses" :key="bonus.name">
         {{ bonus.name | encodeBonus }}; {{ bonus.count }}
         <small>{{ bonus.name | getBonusDescription }}</small>
         <span v-if="bonus.limitReached">LIMIT!! </span>
         <span v-if="bonus.holyTouchAmount"> na {{ bonus.holyTouchAmount }} hp</span>
       </p>
+
       <b-table
         :data="isEmpty ? [] : orderedStats"
         :bordered="isBordered"
@@ -51,11 +52,9 @@
 
   export default {
     name: 'eq-summary',
-    props: ['readOnly'],
+    props: ['source'],
     data () {
       return {
-        source: null,
-        globalStats: {},
         isEmpty: false,
         isBordered: false,
         isStriped: false,
@@ -64,28 +63,18 @@
         hasMobileCards: false
       }
     },
-    created () {
-      this.source = this.readOnly ? this.readOnlyEqItems : this.eqItems
-      // this.getStats()
-    },
-    watch: {
-      source: function (value) {
-        // this.getStats()
-      }
-    },
     computed: {
-      ...mapGetters(['eqItems', 'readOnlyEqItems', 'eqItemsStats']),
       orderedStats: function () {
         let globalStatsInOrder = []
         for (let statInOrder of ITEM_STATS_IN_ORDER) {
-          if (statInOrder in this.eqItemsStats) {
+          if (statInOrder in this.source) {
             let stat = {
               // type: null,
               name: statInOrder,
-              value: this.eqItemsStats[statInOrder]
+              value: this.source[statInOrder]
             }
             if (['ds', 'di', 'dz'].indexOf(statInOrder) > -1) {
-              let allAttrs = parseInt(this.eqItemsStats['da'])
+              let allAttrs = parseInt(this.source['da'])
               if (stat.rightValue && allAttrs) {
                 stat.rightValue += ` (${parseInt(stat.value) + allAttrs})`
               }
@@ -97,9 +86,10 @@
       },
       orderedBonuses: function () {
         let bonuses = []
+        console.log(this.source)
         for (let bonusInOrder of ITEM_BONUSES_IN_ORDER) {
-          if (bonusInOrder in this.eqItemsStats.bonuses) {
-            let bonus = this.eqItemsStats.bonuses[bonusInOrder]
+          if (bonusInOrder in this.source.bonuses) {
+            let bonus = this.source.bonuses[bonusInOrder]
             bonus.name = bonusInOrder
             bonuses.push(bonus)
           }
