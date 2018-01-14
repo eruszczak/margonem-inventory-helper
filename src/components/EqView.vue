@@ -6,6 +6,7 @@
       </div>
     </div>
     <eq :readOnly="slugs.length > 0"></eq>
+
     <p>ostatnio przeglądane zestawy:</p>
     <div class="columns">
       <div class="column is-one-quarter" v-for="eqItems in eqHistory">
@@ -13,8 +14,8 @@
         <router-link :to="getEqLink(eqItems)">Przejdź do zestawu</router-link>
       </div>
     </div>
+
     <eq-summary :readOnly="slugs.length > 0"></eq-summary>
-    <p v-for="item in eqHistory">{{ item }}</p>
   </div>
 </template>
 

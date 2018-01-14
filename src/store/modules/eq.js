@@ -20,10 +20,11 @@ export default {
     itemHistory: state => state.itemHistory,
     readOnlyEqItems: state => state.readOnlyEqItems,
     eqHistory: state => state.eqHistory,
-    eqItemsStats: state => state.eqItemsStats
+    eqItemsStats: state => state.eqItemsStats,
+    readOnlyEqItemsStats: state => state.readOnlyEqItemsStats
   },
   mutations: {
-    toggleCanAddToEq: (state) => {
+    toggleCanAddToEq: state => {
       state.canAddToEq = !state.canAddToEq
     },
     setEqItem: (state, item, placement) => {
@@ -75,8 +76,8 @@ export default {
     setEqItemsStats: state => {
       state.eqItemsStats = setStats(state.eqItems)
     },
-    setReadOnlyEqItemsStats: (state) => {
-      setStats(state.readOnlyEqItemsStats)
+    setReadOnlyEqItemsStats: state => {
+      state.readOnlyEqItemsStats = setStats(state.readOnlyEqItems)
     }
   },
   actions: {
