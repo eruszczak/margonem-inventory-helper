@@ -32,6 +32,7 @@
         <footer class="modal-card-foot">
           <button class="button" v-clipboard:copy="eqLink" v-clipboard:success="onCopy">Kopiuj link</button>
           <router-link class="button" :to="{name: 'eqView'}" @click.native="closeModal">Zobacz szczegóły</router-link>
+          <restore-eq></restore-eq>
         </footer>
       </div>
     </b-modal>
@@ -42,6 +43,7 @@
   import { mapGetters, mapMutations } from 'vuex'
   import Eq from './components/Eq'
   import Item from './components/Item'
+  import RestoreEq from './components/RestoreEq'
   import { getEqUrl } from './utils/helpers'
   import { toast } from './mixins/toast'
   import debounce from 'lodash/debounce'
@@ -68,7 +70,7 @@
     created () {
       this.setEqItemsStats()
     },
-    components: {Eq, Item},
+    components: {Eq, Item, RestoreEq},
     mixins: [toast],
     computed: {
       ...mapGetters(['pageTitle', 'canAddToEq', 'eqItems']),
