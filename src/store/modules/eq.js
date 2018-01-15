@@ -2,6 +2,10 @@ import { getDefaultEqItems, ITEM_PLACE } from '../../utils/items'
 import { setStats, getOrderedPksOfEqItems, eqItemsAreTheSame } from '../../utils/eq'
 import { fetchMultipleItems } from '../../api/items'
 
+const STACK_LENGTH_LIMIT = 10
+const ITEM_HISTORY_LIMIT = 15
+const EQ_HISTORY_LIMIT = 5
+
 export default {
   state: {
     eqItems: getDefaultEqItems(),
@@ -46,7 +50,7 @@ export default {
     addToItemHistory: (state, item) => {
       state.itemHistory = state.itemHistory.filter(el => item.pk !== el.pk)
       state.itemHistory.unshift(item)
-      state.itemHistory = state.itemHistory.slice(0, 15)
+      state.itemHistory = state.itemHistory.slice(0, ITEM_HISTORY_LIMIT)
     },
     /**
      * Adds readOnlyEqItems to history. If it was already in history, remove it and add again to the array beginning
@@ -59,7 +63,7 @@ export default {
         return !eqItemsAreTheSame(pks, elPks)
       })
       state.eqHistory.unshift(state.readOnlyEqItems)
-      state.eqHistory = state.eqHistory.slice(0, 5)
+      state.eqHistory = state.eqHistory.slice(0, EQ_HISTORY_LIMIT)
     },
     setReadOnlyEqItems: (state, items) => {
       state.readOnlyEqItems = getDefaultEqItems()
@@ -75,10 +79,7 @@ export default {
       state.readOnlyEqItemsStats = setStats(state.readOnlyEqItems)
     },
     addToStack: (state, payload) => {
-      state.stack.push({
-        item: payload.item,
-        added: payload.added
-      })
+      state.stack.push(payload)
     },
     popFromStack: state => {
       state.stack.pop()
@@ -106,10 +107,11 @@ export default {
       })
     },
     wearItem ({ commit }, payload) {
+      // Special case. If item is replaced, 2 items are added to stack.
       if (payload.previousItem) {
         commit('increaseReplacementsCounter')
         commit('addToStack', {
-          added: false,
+          replaced: true,
           item: payload.previousItem
         })
       }
@@ -132,16 +134,20 @@ export default {
       commit('replaceEqItems', eqItems)
       commit('setEqItemsStats')
     },
-    restoreEqItem ({ dispatch, commit, state }) {
+    restoreEqItem ({ commit, state }) {
       let stackTop = state.stack[state.stack.length - 1]
       commit('popFromStack')
       if (stackTop) {
+        // TODO consider if i need the counter
         if (stackTop.added) {
           commit('removeItemFromEq', stackTop.item)
           let newStackTop = state.stack[state.stack.length - 1]
-          if (newStackTop && newStackTop.item.type === stackTop.item.type) {
+          // Special case. If stackTop.item replaced newStackTop.item and stackTop.item was just removed,
+          // newStackTop must be restored to its place
+          if (newStackTop && newStackTop.replaced) {
+            commit('popFromStack')
+            commit('addItemToEq', newStackTop.item)
             commit('decreaseReplacementsCounter')
-            dispatch('restoreEqItem')
           }
         } else {
           commit('addItemToEq', stackTop.item)
