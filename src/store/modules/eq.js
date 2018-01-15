@@ -21,7 +21,8 @@ export default {
     readOnlyEqItems: state => state.readOnlyEqItems,
     eqHistory: state => state.eqHistory,
     eqItemsStats: state => state.eqItemsStats,
-    readOnlyEqItemsStats: state => state.readOnlyEqItemsStats
+    readOnlyEqItemsStats: state => state.readOnlyEqItemsStats,
+    stack: state => state.stack
   },
   mutations: {
     toggleCanAddToEq: state => {
@@ -31,11 +32,12 @@ export default {
       state.eqItems = Object.assign({}, eqItems)
     },
     // addItemToEq: function (state, clickedItem, isStackOperation = false, initial = false) {
-    addItemToEq: function (state, clickedItem) {
-      const itemPlacement = ITEM_PLACE[clickedItem.type]
-      state.eqItems[itemPlacement] = clickedItem
+    addItemToEq: function (state, item) {
+      const itemPlacement = ITEM_PLACE[item.type]
+      state.eqItems[itemPlacement] = item
     },
-    removeItemFromEq: function (state, itemPlacement) {
+    removeItemFromEq: function (state, item) {
+      const itemPlacement = ITEM_PLACE[item.type]
       state.eqItems[itemPlacement] = null
     },
     addToItemHistory: (state, item) => {
@@ -68,6 +70,16 @@ export default {
     },
     setReadOnlyEqItemsStats: state => {
       state.readOnlyEqItemsStats = setStats(state.readOnlyEqItems)
+    },
+    addToStack: (state, payload) => {
+      state.stack.push({
+        item: payload.item,
+        added: payload.added
+      })
+      console.log(state.stack)
+    },
+    popFromStack: state => {
+      state.stack.pop()
     }
   },
   actions: {
@@ -81,17 +93,48 @@ export default {
         console.error(error)
       })
     },
-    wearItem ({ commit }, item) {
-      commit('addItemToEq', item)
+    wearItem ({ commit }, payload) {
+      if (payload.previousItem) {
+        commit('addToStack', {
+          added: false,
+          item: payload.previousItem
+        })
+      }
+      commit('addItemToEq', payload.item)
       commit('setEqItemsStats')
+      commit('addToStack', {
+        added: true,
+        item: payload.item
+      })
     },
-    takeOffItem ({ commit }, place) {
-      commit('removeItemFromEq', place)
+    takeOffItem ({ commit }, item) {
+      commit('removeItemFromEq', item)
       commit('setEqItemsStats')
+      commit('addToStack', {
+        added: false,
+        item: item
+      })
     },
     saveEqAsMine ({ commit }, eqItems) {
       commit('replaceEqItems', eqItems)
       commit('setEqItemsStats')
+    },
+    restoreEqItem ({ dispatch, commit, state }) {
+      let stackTop = state.stack[state.stack.length - 1]
+      commit('popFromStack')
+      if (stackTop) {
+        if (stackTop.added) {
+          commit('removeItemFromEq', stackTop.item)
+          stackTop = state.stack[state.stack.length - 1]
+          if (stackTop) {
+            // avoid dispatching?
+            dispatch('restoreEqItem')
+            // counter
+          }
+        } else {
+          commit('addItemToEq', stackTop.item)
+        }
+      }
     }
   }
 }
