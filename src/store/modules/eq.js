@@ -27,7 +27,7 @@ export default {
     toggleCanAddToEq: state => {
       state.canAddToEq = !state.canAddToEq
     },
-    saveEqItemsAsMine: (state, eqItems) => {
+    replaceEqItems: (state, eqItems) => {
       state.eqItems = Object.assign({}, eqItems)
     },
     // addItemToEq: function (state, clickedItem, isStackOperation = false, initial = false) {
@@ -87,6 +87,10 @@ export default {
     },
     takeOffItem ({ commit }, place) {
       commit('removeItemFromEq', place)
+      commit('setEqItemsStats')
+    },
+    saveEqAsMine ({ commit }, eqItems) {
+      commit('replaceEqItems', eqItems)
       commit('setEqItemsStats')
     }
   }
