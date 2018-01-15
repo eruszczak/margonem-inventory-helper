@@ -2,7 +2,6 @@
   <div id="app">
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <!--todo this must link to latest filter-->
         <router-link class="navbar-item" :to="{name: 'items'}">Przedmioty</router-link>
         <router-link class="navbar-item" :to="{name: 'eqView'}">Zestawy EQ</router-link>
         <router-link class="navbar-item" :to="{name: 'items'}">Porównaj przedmioty</router-link>
@@ -11,22 +10,15 @@
           {{ canAddToEq ? 'Do eq' : 'Do porównywarki'}}
         </b-switch>
         <b-input v-model="query"></b-input>
-        <!--<router-link class="navbar-item">Zestawy EQ</router-link>-->
       </div>
     </nav>
     <div class="items">
       <item v-for="item in searchResults" :key="item.pk" :data="item" :action="rmbActions.add"></item>
     </div>
-    <!--<section class="section">-->
-      <!--<div class="container">-->
-        <router-view></router-view>
-      <!--</div>-->
-    <!--</section>-->
+
+    <router-view></router-view>
 
     <b-modal :active.sync="modalActive">
-      <!--<p class="image is-4by3">-->
-        <!--<img src="static/img/placeholder-1280x960.png">-->
-      <!--</p>-->
       <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
@@ -43,7 +35,6 @@
         </footer>
       </div>
     </b-modal>
-
   </div>
 </template>
 
@@ -100,7 +91,6 @@
     methods: {
       ...mapMutations(['toggleCanAddToEq', 'setEqItemsStats']),
       mouseOver: function (item, event) {
-        console.log('hehe', item, event)
         item.isActive = true
       },
       closeModal: function () {
@@ -111,7 +101,6 @@
       },
       search: debounce(
         function () {
-          console.log('search', this.query)
           if (!this.query) {
             this.searchResults = []
             localStorage.removeItem('search')
@@ -129,7 +118,6 @@
             console.error(error)
           })
         },
-        // This is the number of milliseconds we wait for the user to stop typing.
         300
       )
     }
