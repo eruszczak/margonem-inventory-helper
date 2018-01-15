@@ -6,8 +6,7 @@
       </div>
     </div>
     <p v-if="readOnly"><b>TYLKO DO ODCZYTU</b></p>
-    <eq v-if="!readOnly" :source="eqItems" :readOnly="false"></eq>
-    <eq v-else :source="readOnlyEqItems" :readOnly="true"></eq>
+    <eq :source="eqSet" :readOnly="readOnly"></eq>
     <button v-if="readOnly" class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>
 
     <p>TYLKO DO ODCZYTU. ostatnio przeglądane zestawy {{ eqHistory.length }}:</p>
@@ -19,14 +18,12 @@
         <button class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>
       </div>
     </div>
-    <!--TODO cannot use stat because when it changes. its not updated. maybe use watcher and update stats manually-->
-    <eq-summary v-if="!readOnly" :source="eqItemsStats"></eq-summary>
-    <eq-summary v-else :source="readOnlyEqItemsStats"></eq-summary>
+    <eq-summary :source="eqSetStats"></eq-summary>
   </div>
 </template>
 
 <script>
-  import { mapGetters, mapActions, mapMutations } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   import Eq from './Eq'
   import EqSummary from './EqSummary'
   import { getEqRoute } from '../utils/helpers'
@@ -37,8 +34,6 @@
     components: {Eq, EqSummary},
     data () {
       return {
-        source: null
-        // stats: null
       }
     },
     mixins: [toast],
@@ -58,11 +53,16 @@
       },
       slugs: function () {
         return this.$route.query.i || []
+      },
+      eqSet: function () {
+        return this.readOnly ? this.readOnlyEqItems : this.eqItems
+      },
+      eqSetStats: function () {
+        return this.readOnly ? this.readOnlyEqItemsStats : this.eqItemsStats
       }
     },
     methods: {
-      ...mapMutations(['saveEqItemsAsMine']),
-      ...mapActions(['fetchReadOnlyEqItems']),
+      ...mapActions(['fetchReadOnlyEqItems', 'saveEqAsMine']),
       getEqLink: eqItems => getEqRoute(eqItems),
       getEqItems: function () {
         console.log('getEqItems')
@@ -71,17 +71,13 @@
           this.fetchReadOnlyEqItems({
             slugs: typeof this.slugs === 'string' ? [this.slugs] : this.slugs,
             callback: function () {
-              vm.source = vm.readOnlyEqItems
-              // vm.stats = vm.readOnlyEqItemsStats
+              // here loading = false should be set in the future
             }
           })
-        } else {
-          this.source = this.eqItems
-          // this.stats = this.eqItemsStats
         }
       },
       saveAsMine: function (eqItems) {
-        this.saveEqItemsAsMine(eqItems)
+        this.saveEqAsMine(eqItems)
         this.success('Podmieniono zestaw')
       }
     }
