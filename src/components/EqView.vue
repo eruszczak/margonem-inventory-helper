@@ -8,8 +8,7 @@
     <p v-if="readOnly"><b>TYLKO DO ODCZYTU</b></p>
     <div v-if="!readOnly">
       <p v-for="el in stack">{{ el.added }}, {{ el.item.name }}</p>
-      <p>stack: {{ stack.length}}; counter; {{ replacementsCounter }}</p>
-      <button class="button is-dark" @click="restoreEqItem">Cofnij zmianę {{ realStackLength }}</button>
+      <button v-if="realStackLength" class="button is-dark" @click="restore">Cofnij zmianę ({{ realStackLength }})</button>
       <button class="button is-dark" @click="restart">restart</button>
     </div>
     <eq :source="eqSet" :readOnly="readOnly"></eq>
@@ -54,7 +53,7 @@
     },
     computed: {
       ...mapGetters([
-        'eqHistory', 'eqItems', 'readOnlyEqItems', 'eqItemsStats', 'readOnlyEqItemsStats', 'stack', 'realStackLength', 'replacementsCounter'
+        'eqHistory', 'eqItems', 'readOnlyEqItems', 'eqItemsStats', 'readOnlyEqItemsStats', 'stack', 'realStackLength'
       ]),
       readOnly: function () {
         return this.slugs.length > 0
@@ -76,7 +75,7 @@
       getEqItems: function () {
         console.log('getEqItems')
         if (this.readOnly) {
-          let vm = this
+          // let vm = this
           this.fetchReadOnlyEqItems({
             slugs: typeof this.slugs === 'string' ? [this.slugs] : this.slugs,
             callback: function () {
@@ -88,6 +87,10 @@
       saveAsMine: function (eqItems) {
         this.saveEqAsMine(eqItems)
         this.success('Podmieniono zestaw')
+      },
+      restore: function () {
+        this.success('Cofnięto zmianę')
+        this.restoreEqItem()
       }
     }
   }
