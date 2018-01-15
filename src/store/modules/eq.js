@@ -12,7 +12,8 @@ export default {
     canAddToEq: false,
     stack: [],
     itemHistory: [],
-    eqHistory: []
+    eqHistory: [],
+    replacementsCounter: 0
   },
   getters: {
     eqItems: state => state.eqItems,
@@ -22,7 +23,9 @@ export default {
     eqHistory: state => state.eqHistory,
     eqItemsStats: state => state.eqItemsStats,
     readOnlyEqItemsStats: state => state.readOnlyEqItemsStats,
-    stack: state => state.stack
+    stack: state => state.stack,
+    realStackLength: state => state.stack.length - state.replacementsCounter
+    // need getter for count?
   },
   mutations: {
     toggleCanAddToEq: state => {
@@ -80,6 +83,16 @@ export default {
     },
     popFromStack: state => {
       state.stack.pop()
+    },
+    increaseReplacementsCounter: state => {
+      state.replacementsCounter += 1
+    },
+    decreaseReplacementsCounter: state => {
+      state.replacementsCounter -= 1
+    },
+    restart: state => {
+      state.stack = []
+      state.replacementsCounter = 0
     }
   },
   actions: {
@@ -95,6 +108,7 @@ export default {
     },
     wearItem ({ commit }, payload) {
       if (payload.previousItem) {
+        commit('increaseReplacementsCounter')
         commit('addToStack', {
           added: false,
           item: payload.previousItem
@@ -128,6 +142,7 @@ export default {
           stackTop = state.stack[state.stack.length - 1]
           if (stackTop) {
             // avoid dispatching?
+            commit('decreaseReplacementsCounter')
             dispatch('restoreEqItem')
             // counter
           }
