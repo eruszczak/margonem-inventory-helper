@@ -24,8 +24,8 @@ export default {
     eqItemsStats: state => state.eqItemsStats,
     readOnlyEqItemsStats: state => state.readOnlyEqItemsStats,
     stack: state => state.stack,
+    replacementsCounter: state => state.replacementsCounter,
     realStackLength: state => state.stack.length - state.replacementsCounter
-    // need getter for count?
   },
   mutations: {
     toggleCanAddToEq: state => {
@@ -79,7 +79,6 @@ export default {
         item: payload.item,
         added: payload.added
       })
-      console.log(state.stack)
     },
     popFromStack: state => {
       state.stack.pop()
@@ -139,12 +138,10 @@ export default {
       if (stackTop) {
         if (stackTop.added) {
           commit('removeItemFromEq', stackTop.item)
-          stackTop = state.stack[state.stack.length - 1]
-          if (stackTop) {
-            // avoid dispatching?
+          let newStackTop = state.stack[state.stack.length - 1]
+          if (newStackTop && newStackTop.item.type === stackTop.item.type) {
             commit('decreaseReplacementsCounter')
             dispatch('restoreEqItem')
-            // counter
           }
         } else {
           commit('addItemToEq', stackTop.item)

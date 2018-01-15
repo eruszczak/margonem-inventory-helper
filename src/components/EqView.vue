@@ -8,6 +8,7 @@
     <p v-if="readOnly"><b>TYLKO DO ODCZYTU</b></p>
     <div v-if="!readOnly">
       <p v-for="el in stack">{{ el.added }}, {{ el.item.name }}</p>
+      <p>stack: {{ stack.length}}; counter; {{ replacementsCounter }}</p>
       <button class="button is-dark" @click="restoreEqItem">Cofnij zmianę {{ realStackLength }}</button>
       <button class="button is-dark" @click="restart">restart</button>
     </div>
@@ -53,7 +54,7 @@
     },
     computed: {
       ...mapGetters([
-        'eqHistory', 'eqItems', 'readOnlyEqItems', 'eqItemsStats', 'readOnlyEqItemsStats', 'stack', 'realStackLength'
+        'eqHistory', 'eqItems', 'readOnlyEqItems', 'eqItemsStats', 'readOnlyEqItemsStats', 'stack', 'realStackLength', 'replacementsCounter'
       ]),
       readOnly: function () {
         return this.slugs.length > 0
