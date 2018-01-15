@@ -11,7 +11,7 @@
   import Popup from './Popup'
   import { isItemWearable } from '../utils/helpers'
   import { ITEM_PLACE } from '../utils/items'
-  import { mapGetters, mapActions, mapMutations } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   import { RIGHT_CLICK_MAPPER } from '../utils/constants'
   import { toast } from '../mixins/toast'
 
@@ -27,7 +27,7 @@
       }
     },
     computed: {
-      ...mapGetters(['eqItems', 'stack'])
+      ...mapGetters(['eqItems'])
     },
     methods: {
       ...mapActions(['wearItem', 'takeOffItem']),

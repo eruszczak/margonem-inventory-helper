@@ -6,6 +6,11 @@
       </div>
     </div>
     <p v-if="readOnly"><b>TYLKO DO ODCZYTU</b></p>
+    <div v-if="!readOnly">
+      <p v-for="el in stack">{{ el.added }}, {{ el.item.name }}</p>
+      <button class="button is-dark" @click="restoreEqItem">Cofnij zmianę {{ realStackLength }}</button>
+      <button class="button is-dark" @click="restart">restart</button>
+    </div>
     <eq :source="eqSet" :readOnly="readOnly"></eq>
     <button v-if="readOnly" class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>
 
@@ -23,7 +28,7 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex'
+  import { mapGetters, mapActions, mapMutations } from 'vuex'
   import Eq from './Eq'
   import EqSummary from './EqSummary'
   import { getEqRoute } from '../utils/helpers'
@@ -47,7 +52,9 @@
       }
     },
     computed: {
-      ...mapGetters(['eqHistory', 'eqItems', 'readOnlyEqItems', 'eqItemsStats', 'readOnlyEqItemsStats']),
+      ...mapGetters([
+        'eqHistory', 'eqItems', 'readOnlyEqItems', 'eqItemsStats', 'readOnlyEqItemsStats', 'stack', 'realStackLength'
+      ]),
       readOnly: function () {
         return this.slugs.length > 0
       },
@@ -62,7 +69,8 @@
       }
     },
     methods: {
-      ...mapActions(['fetchReadOnlyEqItems', 'saveEqAsMine']),
+      ...mapMutations(['restart']),
+      ...mapActions(['fetchReadOnlyEqItems', 'saveEqAsMine', 'restoreEqItem']),
       getEqLink: eqItems => getEqRoute(eqItems),
       getEqItems: function () {
         console.log('getEqItems')
