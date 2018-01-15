@@ -7,8 +7,7 @@
     </div>
     <p v-if="readOnly"><b>TYLKO DO ODCZYTU</b></p>
     <div v-if="!readOnly">
-      <p v-for="el in stack">{{ el.added }}, {{ el.item.name }}</p>
-      <button v-if="realStackLength" class="button is-dark" @click="restore">Cofnij zmianę ({{ realStackLength }})</button>
+      <button :disabled="!realStackLength" class="button is-dark" @click="restore">Cofnij zmianę ({{ realStackLength }})</button>
       <button class="button is-dark" @click="restart">restart</button>
     </div>
     <eq :source="eqSet" :readOnly="readOnly"></eq>
