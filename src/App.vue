@@ -27,7 +27,7 @@
           <button class="delete" aria-label="close" @click="closeModal"></button>
         </header>
         <section class="modal-card-body">
-          <div class="content">
+          <div class="content has-text-centered">
             <eq :source="eqItems"></eq>
             <eq-summary :source="eqItemsStats"></eq-summary>
           </div>

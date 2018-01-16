@@ -1,13 +1,11 @@
 <template>
-  <table class="set" v-if="source">
-    <tbody>
-      <tr v-for="row in rows">
-        <td v-for="place in row">
-          <item v-if="source[place]" :data="source[place]" :action="action"></item>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div v-if="source" class="eq-items">
+    <div class="eq-row" v-for="row in rows">
+      <div class="eq-column" v-for="place in row">
+        <item v-if="source[place]" :data="source[place]" :action="action"></item>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -46,12 +44,12 @@
 </script>
 
 <style>
-  .set tr {
-    line-height: 10px;
-  }
-  .set td {
-    width: 42px;
+  .eq-items .eq-row {
     height: 42px;
-    border: 1px solid lightgrey;
+  }
+  .eq-items .eq-row .eq-column {
+    display: inline-block;
+    height: 42px;
+    width: 42px;
   }
 </style>
