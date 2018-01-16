@@ -20,14 +20,17 @@
 
     <b-modal :active.sync="modalActive">
       <div class="modal-background"></div>
+      <!--<div class="modal-card" style="overflow-y: visible;overflow-x: hidden;margin-top: 60px;">-->
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">Mój zestaw EQ</p>
           <button class="delete" aria-label="close" @click="closeModal"></button>
         </header>
         <section class="modal-card-body">
-          <eq :source="eqItems"></eq>
-          Summary
+          <div class="content">
+            <eq :source="eqItems"></eq>
+            <eq-summary :source="eqItemsStats"></eq-summary>
+          </div>
         </section>
         <footer class="modal-card-foot">
           <button class="button" v-clipboard:copy="eqLink" v-clipboard:success="onCopy">Kopiuj link</button>
@@ -36,7 +39,6 @@
         </footer>
       </div>
     </b-modal>
-
     <b-loading :active.sync="isLoading"></b-loading>
   </div>
 </template>
@@ -46,6 +48,7 @@
   import Eq from './components/Eq'
   import Item from './components/Item'
   import RestoreEq from './components/RestoreEq'
+  import EqSummary from './components/EqSummary'
   import { getEqUrl } from './utils/helpers'
   import { toast } from './mixins/toast'
   import debounce from 'lodash/debounce'
@@ -72,10 +75,10 @@
     created () {
       this.setEqItemsStats()
     },
-    components: {Eq, Item, RestoreEq},
+    components: {Eq, Item, RestoreEq, EqSummary},
     mixins: [toast],
     computed: {
-      ...mapGetters(['pageTitle', 'canAddToEq', 'eqItems', 'isLoading']),
+      ...mapGetters(['pageTitle', 'canAddToEq', 'eqItems', 'isLoading', 'eqItemsStats']),
       eqLink: function () {
         return getEqUrl(this.$router, this.eqItems)
       }
@@ -128,23 +131,35 @@
 </script>
 
 <style>
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-  }
+  /*#app {*/
+    /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
+    /*-webkit-font-smoothing: antialiased;*/
+    /*-moz-osx-font-smoothing: grayscale;*/
+    /*text-align: center;*/
+    /*color: #2c3e50;*/
+    /*margin-top: 60px;*/
+  /*}*/
 
-  .modal-card, .modal-card-body, .modal-content {
-    overflow: visible;
-  }
+  /*.modal-card, .modal-card-body, .modal-content {*/
+    /*overflow: visible;*/
+  /*}*/
 
   @media screen and (min-width: 1024px) {
     a.navbar-item.is-active, a.navbar-link.is-active {
       color: hsl(204, 86%, 53%) !important;
     }
+  }
+
+  .modal-card-body {
+    overflow-x: hidden;
+  }
+
+  .modal-card {
+    max-height: calc(100vh - 100px);
+  }
+
+  .modal .animation-content .modal-card {
+    margin-top: 50px;
   }
 
   .is-primary {
