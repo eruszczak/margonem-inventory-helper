@@ -4,44 +4,45 @@
       <p>min lvl: {{ source.lvl }}</p>
       <p>konflikt: {{ source.isConflict }}</p>
       <p>dozwolone profesje: <span v-for="prof in source.allowedProfessions">{{ prof | encodeProf }} </span></p>
-      <p v-for="bonus in orderedBonuses" :key="bonus.name">
-        {{ bonus.name | encodeBonus }}; {{ bonus.count }}
-        <small>{{ bonus.name | getBonusDescription }}</small>
-        <span v-if="bonus.limitReached">LIMIT!! </span>
-        <span v-if="bonus.holyTouchAmount"> na {{ bonus.holyTouchAmount }} hp</span>
-      </p>
-
+      <h2 class="title">Statystyki</h2>
       <b-table
-        :data="isEmpty ? [] : orderedStats"
-        :bordered="isBordered"
-        :striped="isStriped"
-        :narrowed="isNarrowed"
-        :hoverable="isHoverable"
-        :mobile-cards="hasMobileCards">
-
+        :data="orderedStats"
+        :striped="true"
+        :narrowed="true"
+        :hoverable="false">
         <template slot-scope="props">
-          <b-table-column label="Bonus">
+          <b-table-column label="Nazwa">
             {{ props.row.name | encodeStat }}
           </b-table-column>
           <b-table-column label="Wartość">
             {{ props.row.value }}
           </b-table-column>
         </template>
-
-        <template slot="empty">
-          <section class="section">
-            <div class="content has-text-grey has-text-centered">
-              <p>
-                <b-icon
-                  icon="emoticon-sad"
-                  size="is-large">
-                </b-icon>
-              </p>
-              <p>Nothing here.</p>
-            </div>
-          </section>
+      </b-table>
+      <h2 class="title">Bonusy</h2>
+      <b-table
+        :data="orderedBonuses"
+        :striped="true"
+        :narrowed="false"
+        :hoverable="false">
+        <template slot-scope="props">
+          <b-table-column label="Nazwa">
+            <!--<b-tooltip :label="props.row.name | getBonusDescription" position="is-bottom">-->
+              <!--{{ props.row.name | encodeBonus }}-->
+            <!--</b-tooltip>-->
+            {{ props.row.name | encodeBonus }}
+            <!--{{ props.row.bonus.count }} TODO COLOR-->
+            <p class="bonus-description">{{ props.row.name | getBonusDescription }}</p>
+            <!--<span v-if="bonus.limitReached">LIMIT!! </span>-->
+            <!--<span v-if="bonus.holyTouchAmount"> na {{ bonus.holyTouchAmount }} hp</span>-->
+          </b-table-column>
+          <b-table-column label="Wartość">
+            {{ props.row.value }}
+          </b-table-column>
         </template>
       </b-table>
+
+      <!--uwagi?-->
     </section>
   </div>
 </template>
@@ -55,12 +56,6 @@
     props: ['source'],
     data () {
       return {
-        isEmpty: false,
-        isBordered: false,
-        isStriped: false,
-        isNarrowed: false,
-        isHoverable: false,
-        hasMobileCards: false
       }
     },
     computed: {
@@ -112,5 +107,7 @@
 </script>
 
 <style scoped>
-
+  .bonus-description {
+    font-size: 0.65em;
+  }
 </style>
