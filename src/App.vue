@@ -83,7 +83,6 @@
         window.document.title = newVal
       },
       '$route' (to, from) {
-        console.log('close modal')
         this.closeModal()
       },
       query: function (value) {
