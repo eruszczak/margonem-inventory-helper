@@ -10,6 +10,22 @@
         <b-tag v-if="source.allowedProfessions.length === 6" type="is-info">wszystkie profesje</b-tag>
         <b-tag v-else v-for="prof in source.allowedProfessions" type="is-info">{{ prof | encodeProf }}</b-tag>
       </b-taglist>
+      <b-taglist>
+        <div class="field is-grouped is-grouped-multiline">
+          <div class="control">
+            <div class="tags has-addons">
+              <span class="tag is-dark">unikaty</span>
+              <span class="tag">0</span>
+            </div>
+          </div>
+          <div class="control">
+            <div class="tags has-addons">
+              <span class="tag is-dark">heroiki</span>
+              <span class="tag">0</span>
+            </div>
+          </div>
+        </div>
+      </b-taglist>
 
       <template v-if="orderedStats.length">
         <h2 class="title">Statystyki</h2>
