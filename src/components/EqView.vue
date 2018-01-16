@@ -45,7 +45,6 @@
     },
     watch: {
       '$route' (to, from) {
-        console.log('route change', to, from)
         this.getEqItems()
       }
     },
@@ -71,7 +70,6 @@
       ...mapActions(['fetchReadOnlyEqItems', 'saveEqAsMine']),
       getEqLink: eqItems => getEqRoute(eqItems),
       getEqItems: function () {
-        console.log('getEqItems')
         if (this.readOnly) {
           // let vm = this
           this.fetchReadOnlyEqItems({

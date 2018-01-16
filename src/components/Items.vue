@@ -48,9 +48,7 @@
 
   export default {
     name: 'items',
-    components: {
-      Item
-    },
+    components: {Item},
     mixins: [toast],
     props: ['type'],
     data: function () {
@@ -62,9 +60,7 @@
       }
     },
     computed: {
-      ...mapGetters([
-        'pageTitle'
-      ])
+      ...mapGetters(['pageTitle'])
     },
     mounted () {
       this.getItems()
@@ -88,9 +84,7 @@
       }
     },
     methods: {
-      ...mapMutations([
-        'setPageTitle'
-      ]),
+      ...mapMutations(['setPageTitle']),
       mouseOver: function (item, event) {
         this.menu.map((el) => {
           el.isActive = false
