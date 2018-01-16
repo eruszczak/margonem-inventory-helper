@@ -81,10 +81,6 @@ export const setStats = eqItems => {
       }
     }
   }
-
-  if (source.allowedProfessions.length === 6) {
-    source.allowedProfessions = false
-  }
   return source
 }
 
