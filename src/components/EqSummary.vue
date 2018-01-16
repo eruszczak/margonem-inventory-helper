@@ -1,7 +1,9 @@
 <template>
   <div v-if="source">
     <section>
-      <p>konflikt: {{ source.isConflict }}</p>
+      <b-message v-if="source.isConflict" title="Błędny ekwipunek" type="is-warning" :closable="false">
+        Ekwipunek zawiera sprzeczne typy przedmiotów
+      </b-message>
       <b-tag type="is-dark is-medium">{{ source.lvl }} lvl</b-tag>
       <b-taglist>
         <b-tag v-for="prof in source.allowedProfessions" type="is-info">{{ prof | encodeProf }}</b-tag>
@@ -32,7 +34,6 @@
             <!--<b-tooltip :label="props.row.name | getBonusDescription" position="is-bottom">{{ props.row.name | encodeBonus }}</b-tooltip>-->
             {{ props.row.name | encodeBonus }}
             <p class="bonus-description">{{ props.row.name | getBonusDescription }}</p>
-            <!--<span v-if="bonus.holyTouchAmount"> na {{ bonus.holyTouchAmount }} hp</span>-->
           </b-table-column>
           <b-table-column label="Liczba">
             {{ props.row.count }} ({{ props.row.limitReached }})
@@ -42,8 +43,6 @@
           </b-table-column>
         </template>
       </b-table>
-
-      <!--uwagi?-->
     </section>
   </div>
 </template>
