@@ -2,7 +2,7 @@ import { getDefaultEqItems, ITEM_PLACE } from '../../utils/items'
 import { setStats, getOrderedPksOfEqItems, eqItemsAreTheSame } from '../../utils/eq'
 import { fetchMultipleItems } from '../../api/items'
 
-const STACK_LENGTH_LIMIT = 10
+const STACK_LENGTH_LIMIT = 15
 const ITEM_HISTORY_LIMIT = 15
 const EQ_HISTORY_LIMIT = 5
 
@@ -80,6 +80,14 @@ export default {
     },
     addToStack: (state, payload) => {
       state.stack.push(payload)
+      let realStackLength = state.stack.length - state.replacementsCounter
+      if (realStackLength === STACK_LENGTH_LIMIT + 1) {
+        // let top = state.stack[state.stack.length - 1]
+        // if (top.replaced) {
+        //   state.replacementsCounter -= 1
+        // }
+        state.stack.pop()
+      }
     },
     popFromStack: state => {
       state.stack.pop()
@@ -138,7 +146,6 @@ export default {
       let stackTop = state.stack[state.stack.length - 1]
       commit('popFromStack')
       if (stackTop) {
-        // TODO consider if i need the counter
         if (stackTop.added) {
           commit('removeItemFromEq', stackTop.item)
           let newStackTop = state.stack[state.stack.length - 1]
