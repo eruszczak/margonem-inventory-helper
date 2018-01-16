@@ -4,10 +4,13 @@
       <b-message v-if="source.isConflict" title="Błędny ekwipunek" type="is-warning" :closable="false">
         Ekwipunek zawiera sprzeczne typy przedmiotów
       </b-message>
-      <b-tag type="is-dark is-medium">{{ source.lvl }} lvl</b-tag>
-      <b-taglist>
-        <b-tag v-for="prof in source.allowedProfessions" type="is-info">{{ prof | encodeProf }}</b-tag>
+
+      <b-tag type="is-dark is-medium" style="margin-top:10px;">{{ source.lvl }} lvl</b-tag>
+      <b-taglist v-if="!source.isConflict">
+        <b-tag v-if="source.allowedProfessions.length === 6" type="is-info">wszystkie profesje</b-tag>
+        <b-tag v-else v-for="prof in source.allowedProfessions" type="is-info">{{ prof | encodeProf }}</b-tag>
       </b-taglist>
+
       <h2 class="title">Statystyki</h2>
       <b-table
         :data="orderedStats"

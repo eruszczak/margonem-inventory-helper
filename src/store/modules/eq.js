@@ -159,6 +159,7 @@ export default {
         } else {
           commit('addItemToEq', stackTop.item)
         }
+        commit('setEqItemsStats')
       }
     }
   }
