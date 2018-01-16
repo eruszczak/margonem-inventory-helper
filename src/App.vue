@@ -36,6 +36,8 @@
         </footer>
       </div>
     </b-modal>
+
+    <b-loading :active.sync="isLoading"></b-loading>
   </div>
 </template>
 
@@ -73,7 +75,7 @@
     components: {Eq, Item, RestoreEq},
     mixins: [toast],
     computed: {
-      ...mapGetters(['pageTitle', 'canAddToEq', 'eqItems']),
+      ...mapGetters(['pageTitle', 'canAddToEq', 'eqItems', 'isLoading']),
       eqLink: function () {
         return getEqUrl(this.$router, this.eqItems)
       }
