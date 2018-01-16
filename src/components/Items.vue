@@ -80,7 +80,6 @@
     },
     watch: {
       '$route' (to, from) {
-        this.items = []
         this.getItems()
       }
     },
@@ -94,6 +93,7 @@
         this.subMenu = item.sublinks
       },
       getItems: function () {
+        this.items = []
         const type = MAP_TYPE_NAME_TO_ID[this.type]
         if (type) {
           this.toggleLoading(true)
