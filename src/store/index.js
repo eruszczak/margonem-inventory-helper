@@ -17,14 +17,19 @@ export const store = new Vuex.Store({
     )
   ],
   state: {
-    pageTitle: ''
+    pageTitle: '',
+    isLoading: false
   },
   getters: {
-    pageTitle: state => state.pageTitle
+    pageTitle: state => state.pageTitle,
+    isLoading: state => state.isLoading
   },
   mutations: {
     setPageTitle: (state, value) => {
       state.pageTitle = value
+    },
+    toggleLoading: (state, isLoading) => {
+      state.isLoading = isLoading
     }
   },
   modules: {

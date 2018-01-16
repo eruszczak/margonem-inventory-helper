@@ -56,7 +56,8 @@
         menu: MENU_LINKS,
         subMenu: [],
         items: [],
-        rmbActions: RIGHT_CLICK_MAPPER
+        rmbActions: RIGHT_CLICK_MAPPER,
+        isLoading: false
       }
     },
     computed: {
@@ -84,7 +85,7 @@
       }
     },
     methods: {
-      ...mapMutations(['setPageTitle']),
+      ...mapMutations(['setPageTitle', 'toggleLoading']),
       mouseOver: function (item, event) {
         this.menu.map((el) => {
           el.isActive = false
@@ -95,8 +96,11 @@
       getItems: function () {
         const type = MAP_TYPE_NAME_TO_ID[this.type]
         if (type) {
+          this.toggleLoading(true)
           fetchItems(`?t=${type}`, response => {
+            // TOOD WHY THIS WORKS?
             this.items = response.data.results
+            this.toggleLoading(false)
           }, error => {
             console.error(error)
           })
