@@ -6,7 +6,7 @@ export const toast = {
     success (message) {
       this.$toast.open({
         message: message,
-        type: 'is-dark',
+        type: 'is-warning',
         position: 'is-bottom-right',
         queue: false,
         duration: 750
