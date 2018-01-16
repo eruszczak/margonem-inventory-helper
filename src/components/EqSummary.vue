@@ -11,41 +11,47 @@
         <b-tag v-else v-for="prof in source.allowedProfessions" type="is-info">{{ prof | encodeProf }}</b-tag>
       </b-taglist>
 
-      <h2 class="title">Statystyki</h2>
-      <b-table
-        :data="orderedStats"
-        :striped="true"
-        :narrowed="true"
-        :hoverable="false">
-        <template slot-scope="props">
-          <b-table-column label="Nazwa">
-            {{ props.row.name | encodeStat }}
-          </b-table-column>
-          <b-table-column label="Wartość">
-            {{ props.row.value }}
-          </b-table-column>
-        </template>
-      </b-table>
-      <h2 class="title">Bonusy</h2>
-      <b-table
-        :data="orderedBonuses"
-        :striped="true"
-        :narrowed="false"
-        :hoverable="false">
-        <template slot-scope="props">
-          <b-table-column label="Nazwa">
-            <!--<b-tooltip :label="props.row.name | getBonusDescription" position="is-bottom">{{ props.row.name | encodeBonus }}</b-tooltip>-->
-            {{ props.row.name | encodeBonus }}
-            <p class="bonus-description">{{ props.row.name | getBonusDescription }}</p>
-          </b-table-column>
-          <b-table-column label="Liczba">
-            {{ props.row.count }} ({{ props.row.limitReached }})
-          </b-table-column>
-          <b-table-column label="Wartość">
-            {{ props.row.value }}
-          </b-table-column>
-        </template>
-      </b-table>
+      <template v-if="orderedStats.length">
+        <h2 class="title">Statystyki</h2>
+        <b-table
+          v-if="orderedStats"
+          :data="orderedStats"
+          :striped="true"
+          :narrowed="true"
+          :hoverable="false">
+          <template slot-scope="props">
+            <b-table-column label="Nazwa">
+              {{ props.row.name | encodeStat }}
+            </b-table-column>
+            <b-table-column label="Wartość">
+              {{ props.row.value }}
+            </b-table-column>
+          </template>
+        </b-table>
+      </template>
+
+      <template v-if="orderedBonuses.length">
+        <h2 class="title">Bonusy</h2>
+        <b-table
+          :data="orderedBonuses"
+          :striped="true"
+          :narrowed="false"
+          :hoverable="false">
+          <template slot-scope="props">
+            <b-table-column label="Nazwa">
+              <!--<b-tooltip :label="props.row.name | getBonusDescription" position="is-bottom">{{ props.row.name | encodeBonus }}</b-tooltip>-->
+              {{ props.row.name | encodeBonus }}
+              <p class="bonus-description">{{ props.row.name | getBonusDescription }}</p>
+            </b-table-column>
+            <b-table-column label="Liczba">
+              {{ props.row.count }} ({{ props.row.limitReached }})
+            </b-table-column>
+            <b-table-column label="Wartość">
+              {{ props.row.value }}
+            </b-table-column>
+          </template>
+        </b-table>
+      </template>
     </section>
   </div>
 </template>
