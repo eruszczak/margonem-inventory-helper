@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" style="margin-bottom: 60px">
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <router-link class="navbar-item" :to="{name: 'items'}">Przedmioty</router-link>
@@ -12,6 +12,7 @@
         <b-input v-model="query"></b-input>
       </div>
     </nav>
+
     <div class="items">
       <item v-for="item in searchResults" :key="item.pk" :data="item" :action="rmbActions.add"></item>
     </div>
@@ -23,7 +24,7 @@
       <!--<div class="modal-card" style="overflow-y: visible;overflow-x: hidden;margin-top: 60px;">-->
       <div class="modal-card">
         <header class="modal-card-head">
-          <p class="modal-card-title">Mój zestaw EQ</p>
+          <p class="modal-card-title has-text-centered">Mój zestaw EQ</p>
           <button class="delete" aria-label="close" @click="closeModal"></button>
         </header>
         <section class="modal-card-body">
@@ -159,7 +160,7 @@
   }
 
   .modal .animation-content .modal-card {
-    margin-top: 50px;
+    /*margin-top: 50px;*/
   }
 
   .is-primary {
