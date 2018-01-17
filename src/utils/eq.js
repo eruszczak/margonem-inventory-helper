@@ -7,7 +7,8 @@ export const setStats = eqItems => {
     lvl: 0,
     requiredProfessions: null,
     allowedProfessions: CHARACTER_CLASSES_IN_ORDER,
-    isConflict: false
+    isConflict: false,
+    rarity: {}
   }
 
   for (let placement in eqItems) {
@@ -17,6 +18,12 @@ export const setStats = eqItems => {
     // get max lvl? or get array of lvls and pick max before this loop?
     if (item.lvl > source.lvl) {
       source.lvl = item.lvl
+    }
+
+    if (item.rarity in source.rarity) {
+      source.rarity[item.rarity] += 1
+    } else {
+      source.rarity[item.rarity] = 1
     }
 
     // check if this item's professions are not conflicting with current allowed professions

@@ -5,6 +5,8 @@ export const ITEM_RARITY = {
   legendary: 'legendarny'
 }
 
+export const ITEM_RARITY_IN_ORDER = ['default', 'unique', 'heroic', 'legendary']
+
 export const ITEM_BONUS = {
   holytouch: {
     translation: 'dotyk anioła',
