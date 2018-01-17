@@ -12,16 +12,10 @@
       </b-taglist>
       <b-taglist>
         <div class="field is-grouped is-grouped-multiline">
-          <div class="control">
+          <div class="control" v-for="rarity in ITEM_RARITY_IN_ORDER">
             <div class="tags has-addons">
-              <span class="tag is-dark">unikaty</span>
-              <span class="tag">0</span>
-            </div>
-          </div>
-          <div class="control">
-            <div class="tags has-addons">
-              <span class="tag is-dark">heroiki</span>
-              <span class="tag">0</span>
+              <span class="tag is-dark">{{ rarity | encodeRarity }}</span>
+              <span class="tag">{{ source.rarity[rarity] || 0 }}</span>
             </div>
           </div>
         </div>
@@ -73,7 +67,7 @@
 </template>
 
 <script>
-  import { CHARACTER_CLASSES, ITEM_BONUS, ITEM_STAT, ITEM_STATS_IN_ORDER, ITEM_BONUSES_IN_ORDER } from '../utils/items'
+  import { CHARACTER_CLASSES, ITEM_BONUS, ITEM_STAT, ITEM_RARITY, ITEM_STATS_IN_ORDER, ITEM_RARITY_IN_ORDER, ITEM_BONUSES_IN_ORDER } from '../utils/items'
   import { mapGetters, mapMutations } from 'vuex'
 
   export default {
@@ -81,6 +75,7 @@
     props: ['source'],
     data () {
       return {
+        ITEM_RARITY_IN_ORDER: ITEM_RARITY_IN_ORDER
       }
     },
     computed: {
@@ -126,7 +121,8 @@
       encodeProf: value => CHARACTER_CLASSES[value],
       encodeBonus: value => ITEM_BONUS[value].translation,
       // encodeType: value => ITEM_TYPE[value],
-      getBonusDescription: value => ITEM_BONUS[value].description
+      getBonusDescription: value => ITEM_BONUS[value].description,
+      encodeRarity: value => ITEM_RARITY[value]
     }
   }
 </script>
