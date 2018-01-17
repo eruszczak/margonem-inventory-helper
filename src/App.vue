@@ -13,15 +13,19 @@
       </div>
     </nav>
 
-    <div class="items" style="margin-top:60px">
-      <div v-if="searching"><div class="vue-simple-spinner" style="margin: 0px auto; border-radius: 100%; border-width: 3px; border-style: solid; border-color: rgb(33, 150, 243) rgb(238, 238, 238) rgb(238, 238, 238); border-image: initial; width: 42px; height: 42px; animation: vue-simple-spinner-spin 0.8s linear infinite;"></div> <!----></div>
-      <item v-else-if="searchResults.length" v-for="item in searchResults" :key="item.pk" :data="item" :action="rmbActions.add"></item>
-      <b-message v-else-if="query && noResults" type="is-warning">
-        Nie znaleziono pasujących przedmiotów.
-      </b-message>
-    </div>
+    <transition name="fade">
+      <div class="items" style="margin-top:60px" v-if="query">
+        <div v-if="searching"><div class="vue-simple-spinner" style="margin: 0px auto; border-radius: 100%; border-width: 3px; border-style: solid; border-color: rgb(33, 150, 243) rgb(238, 238, 238) rgb(238, 238, 238); border-image: initial; width: 42px; height: 42px; animation: vue-simple-spinner-spin 0.8s linear infinite;"></div> <!----></div>
+        <item v-else-if="searchResults.length" v-for="item in searchResults" :key="item.pk" :data="item" :action="rmbActions.add"></item>
+        <b-message v-else-if="noResults" type="is-warning">
+          Nie znaleziono pasujących przedmiotów.
+        </b-message>
+      </div>
+    </transition>
 
-    <router-view></router-view>
+    <!--<transition name="fade">-->
+      <router-view></router-view>
+    <!--</transition>-->
 
     <b-modal :active.sync="modalActive">
       <div class="modal-background"></div>
@@ -99,9 +103,7 @@
       },
       query: function (value) {
         this.noResults = false
-        if (value.length > 2) {
-          this.search()
-        }
+        this.search()
       }
     },
     methods: {
@@ -122,16 +124,23 @@
             localStorage.removeItem('search')
             return
           }
+          if (this.query.length < 3) {
+            return
+          }
+
           this.searching = true
           let vm = this
           searchItems(this.query, response => {
             vm.searchResults = response.data.results
-            localStorage.setItem('search', JSON.stringify({
-              'query': this.query,
-              'results': vm.searchResults
-            }))
             vm.searching = false
-            vm.noResults = vm.searchResults.length === 0
+            if (vm.searchResults.length) {
+              localStorage.setItem('search', JSON.stringify({
+                'query': this.query,
+                'results': vm.searchResults
+              }))
+            } else {
+              vm.noResults = true
+            }
           }, error => {
             console.error(error)
           })
@@ -176,5 +185,12 @@
 
   .is-primary {
     background-color: hsl(204, 86%, 53%) !important;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
   }
 </style>
