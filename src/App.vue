@@ -13,8 +13,12 @@
       </div>
     </nav>
 
-    <div class="items">
-      <item v-for="item in searchResults" :key="item.pk" :data="item" :action="rmbActions.add"></item>
+    <div class="items" style="margin-top:60px">
+      <div v-if="searching"><div class="vue-simple-spinner" style="margin: 0px auto; border-radius: 100%; border-width: 3px; border-style: solid; border-color: rgb(33, 150, 243) rgb(238, 238, 238) rgb(238, 238, 238); border-image: initial; width: 42px; height: 42px; animation: vue-simple-spinner-spin 0.8s linear infinite;"></div> <!----></div>
+      <item v-else-if="searchResults.length" v-for="item in searchResults" :key="item.pk" :data="item" :action="rmbActions.add"></item>
+      <b-message v-else-if="query && noResults" type="is-warning">
+        Nie znaleziono pasujących przedmiotów.
+      </b-message>
     </div>
 
     <router-view></router-view>
@@ -70,7 +74,9 @@
         toggleValue: this.canAddToEq,
         query: search ? search.query : '',
         searchResults: search ? search.results : [],
-        rmbActions: RIGHT_CLICK_MAPPER
+        rmbActions: RIGHT_CLICK_MAPPER,
+        searching: false,
+        noResults: false
       }
     },
     created () {
@@ -92,7 +98,10 @@
         this.closeModal()
       },
       query: function (value) {
-        this.search()
+        this.noResults = false
+        if (value.length > 2) {
+          this.search()
+        }
       }
     },
     methods: {
@@ -113,14 +122,16 @@
             localStorage.removeItem('search')
             return
           }
-          // this.loading = true
-          var vm = this
+          this.searching = true
+          let vm = this
           searchItems(this.query, response => {
             vm.searchResults = response.data.results
             localStorage.setItem('search', JSON.stringify({
               'query': this.query,
               'results': vm.searchResults
             }))
+            vm.searching = false
+            vm.noResults = vm.searchResults.length === 0
           }, error => {
             console.error(error)
           })
@@ -144,7 +155,7 @@
   /*.modal-card, .modal-card-body, .modal-content {*/
     /*overflow: visible;*/
   /*}*/
-
+.vue-simple-spinner{transition:all .3s linear}@keyframes vue-simple-spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}
   @media screen and (min-width: 1024px) {
     a.navbar-item.is-active, a.navbar-link.is-active {
       color: hsl(204, 86%, 53%) !important;

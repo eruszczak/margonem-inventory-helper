@@ -113,15 +113,16 @@
       }
     },
     methods: {
-      ...mapMutations(['restart']),
+      ...mapMutations(['restart', 'toggleLoading']),
       ...mapActions(['fetchReadOnlyEqItems', 'saveEqAsMine']),
       getEqLink: eqItems => getEqRoute(eqItems),
       getEqItems: function () {
         if (this.readOnly) {
-          // let vm = this
+          this.toggleLoading(true)
           this.fetchReadOnlyEqItems({
             slugs: typeof this.slugs === 'string' ? [this.slugs] : this.slugs,
-            callback: function () {
+            callback: () => {
+              this.toggleLoading(false)
               // here loading = false should be set in the future
             }
           })
