@@ -47,22 +47,28 @@ export const setStats = eqItems => {
 
         if (item.legbon === 'holytouch' && lvl > bonus.maxItemLvl) {
           bonus.maxItemLvl = lvl
-          bonus.holyTouchAmount = calculateHolyTouchAmount(lvl)
+          // TODO calculateBonusWeakness
+          bonus.description = legBonus.description.replace('{}', calculateHolyTouchAmount(lvl))
         }
 
-        if (item.legbon !== 'lastheal') {
+        if (item.legbon === 'lastheal') {
+          // TODO calculateBonusWeakness
+          bonus.description = legBonus.description.replace('30-50%', '60%')
+        } else {
           let legbonVal = calculateBonusWeakness(source.lvl, lvl, legBonus.value)
           bonus.value += legbonVal
         }
       } else {
+        // TODO calculateBonusWeakness - for holytouch && lastheal TOO
         source.bonuses[item.legbon] = {
           count: 1,
           value: calculateBonusWeakness(source.lvl, lvl, legBonus.value),
           limitReached: false,
           maxItemLvl: lvl,
-          lvl: lvl,
-          // TODO: calculate amounts - not just for holy touch. like 14% for 2x curse
-          holyTouchAmount: item.legbon === 'holytouch' ? calculateHolyTouchAmount(lvl) : null
+          lvl: lvl
+        }
+        if (item.legbon === 'holytouch') {
+          source.bonuses[item.legbon].description = legBonus.description.replace('{}', calculateHolyTouchAmount(lvl))
         }
       }
     }
