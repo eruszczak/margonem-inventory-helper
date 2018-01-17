@@ -10,43 +10,51 @@ export const ITEM_RARITY_IN_ORDER = ['default', 'unique', 'heroic', 'legendary']
 export const ITEM_BONUS = {
   holytouch: {
     translation: 'dotyk anioła',
-    description: 'podczas udanego ataku 5% szansy na ogromne uleczenie ran',
+    description: 'szansa na uleczenie {} życia',
     value: 5
+    // 4000hp na 10%
   },
   dmgred: {
     translation: 'fizyczna osłona',
     description: 'obrażenia fizyczne zmniejszone o 12%',
     value: 12
+    // 24%
   },
   verycrit: {
     translation: 'cios bardzo krytyczny',
     description: '10% szansy na podwojenie mocy ciosu krytycznego',
     value: 10
+    // 20%
   },
   resgain: {
     translation: 'ochrona żywiołów',
-    description: '12% szans na podniesienie wszystkich odporności do maksimum (90%) przy przyjmowaniu ciosu magicznego',
+    description: '12% szans na 90% odporności przyjmując cios magiczny',
     value: 12
+    // 24%
   },
   critred: {
     translation: 'krytyczna osłona',
-    description: 'przyjmowane ciosy krytyczne są o 15% słabsze',
+    description: 'przyjmowane ciosy krytyczne są słabsze',
     value: 15
+    // 30%
   },
   lastheal: {
     translation: 'ostatni ratunek',
-    description: 'kiedy po otrzymanym ataku zostanie graczowi mniej niż 12% życia, zostaje jednorazowo uleczony do 30-50% swojego życia',
+    description: 'uleczenie do 30-50% życia kiedy gracz ma mniej niż 12% życia',
     value: 12
+    // 12% na 60%
   },
   pushback: {
     translation: 'odrzut',
-    description: '8% szans na cofnięcie przeciwnika o krok do tyłu. Dotyczy profesji dystansowych',
+    description: '8% szans na cofnięcie przeciwnika o krok',
     value: 8
+    // 16%
   },
   curse: {
     translation: 'klątwa',
-    description: 'udany atak powoduje, iż przeciwnik otrzymuje 7% szans na chybienie przy jego następnym ataku',
+    description: '7% szans na to, że przeciwnik straci turę',
     value: 7
+    // 14%
   }
 }
 

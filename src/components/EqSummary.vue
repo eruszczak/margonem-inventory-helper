@@ -28,7 +28,8 @@
           :data="orderedStats"
           :striped="true"
           :narrowed="true"
-          :hoverable="false">
+          :hoverable="false"
+          :mobile-cards="false">
           <template slot-scope="props">
             <b-table-column label="Nazwa">
               {{ props.row.name | encodeStat }}
@@ -46,18 +47,19 @@
           :data="orderedBonuses"
           :striped="true"
           :narrowed="false"
-          :hoverable="false">
+          :hoverable="false"
+          :mobile-cards="false">
           <template slot-scope="props">
             <b-table-column label="Nazwa">
               <!--<b-tooltip :label="props.row.name | getBonusDescription" position="is-bottom">{{ props.row.name | encodeBonus }}</b-tooltip>-->
               {{ props.row.name | encodeBonus }}
-              <p class="bonus-description">{{ props.row.name | getBonusDescription }}</p>
+              <p class="bonus-description">{{ props.row.description }}</p>
             </b-table-column>
             <b-table-column label="Liczba">
               {{ props.row.count }} ({{ props.row.limitReached }})
             </b-table-column>
-            <b-table-column label="Wartość">
-              {{ props.row.value }}
+            <b-table-column label="Wartość/Szansa">
+              {{ props.row.value }}%
             </b-table-column>
           </template>
         </b-table>
@@ -106,6 +108,7 @@
             if (bonusInOrder in this.source.bonuses) {
               let bonus = this.source.bonuses[bonusInOrder]
               bonus.name = bonusInOrder
+              bonus.description = bonus.description || ITEM_BONUS[bonus.name].description
               bonuses.push(bonus)
             }
           }
@@ -121,7 +124,7 @@
       encodeProf: value => CHARACTER_CLASSES[value],
       encodeBonus: value => ITEM_BONUS[value].translation,
       // encodeType: value => ITEM_TYPE[value],
-      getBonusDescription: value => ITEM_BONUS[value].description,
+      // getBonusDescription: value => ITEM_BONUS[value].description,
       encodeRarity: value => ITEM_RARITY[value]
     }
   }
