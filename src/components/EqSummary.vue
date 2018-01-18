@@ -25,7 +25,7 @@
         <h2 class="title">Statystyki</h2>
         <b-table
           v-if="orderedStats"
-          :data="orderedStats"
+          :data="[]"
           :striped="true"
           :narrowed="true"
           :hoverable="false"
@@ -42,9 +42,12 @@
       </template>
 
       <template v-if="orderedBonuses.length">
+        niektóre bonusy mają niepełny czas działania.
+        <br>niektóre bonusy > 2
         <h2 class="title">Bonusy</h2>
         <b-table
           :data="orderedBonuses"
+          :row-class="(row, index) => row.limitReached ? 'limit-reached' : ''"
           :striped="true"
           :narrowed="false"
           :hoverable="false"
@@ -52,18 +55,16 @@
           <template slot-scope="props">
             <b-table-column label="Nazwa">
               <!--<b-tooltip :label="props.row.name | getBonusDescription" position="is-bottom">{{ props.row.name | encodeBonus }}</b-tooltip>-->
-              {{ props.row.name | encodeBonus }}
-              <p class="bonus-description">{{ props.row.description }}</p>
+              {{ props.row.name | encodeBonus }} (x{{ props.row.count }})
+              <!--<p class="bonus-description">{{ props.row.description }}</p>-->
             </b-table-column>
-            <b-table-column label="Liczba">
-              {{ props.row.count }} ({{ props.row.limitReached }})
-            </b-table-column>
-            <b-table-column label="Wartość/Szansa">
-              {{ props.row.value }}%
+            <b-table-column label="Szansa">
+              {{ props.row.value }}% {{ props.row.amount }}
             </b-table-column>
           </template>
         </b-table>
       </template>
+      Jeśli gdzies count > 2, wartosci moga byc zle obliczone
     </section>
   </div>
 </template>
@@ -130,12 +131,16 @@
   }
 </script>
 
-<style scoped>
+<style>
   .bonus-description {
     font-size: 0.65em;
   }
   .tags {
     margin-top: 5px;
     justify-content: center;
+  }
+
+  tr.limit-reached {
+    background: hsl(348, 100%, 61%) !important;
   }
 </style>
