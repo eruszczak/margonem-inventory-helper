@@ -1,9 +1,9 @@
 import { CHARACTER_CLASSES_IN_ORDER, ITEM_BONUS } from './items'
 import { calculateBonusWeakness, calculateHolyTouchAmount, isInt } from './helpers'
+import { BONUS_LIMIT } from './constants'
 
 export const setStats = eqItems => {
   let source = {
-    bonuses: {},
     lvl: 0,
     requiredProfessions: null,
     allowedProfessions: CHARACTER_CLASSES_IN_ORDER,
@@ -35,44 +35,6 @@ export const setStats = eqItems => {
       source.isConflict = !professionsAreAllowed(source, requiredProfessions)
     }
 
-    // update bonuses
-    // TODO: legendary item you can wear which doesnt have lvl requirement??
-    if (item.legbon) {
-      const lvl = item.lvl
-      const legBonus = ITEM_BONUS[item.legbon]
-      if (item.legbon in source.bonuses) {
-        let bonus = source.bonuses[item.legbon]
-        bonus.count += 1
-        bonus.limitReached = bonus.count > 2
-
-        if (item.legbon === 'holytouch' && lvl > bonus.maxItemLvl) {
-          bonus.maxItemLvl = lvl
-          // TODO calculateBonusWeakness
-          bonus.description = legBonus.description.replace('{}', calculateHolyTouchAmount(lvl))
-        }
-
-        if (item.legbon === 'lastheal') {
-          // TODO calculateBonusWeakness
-          bonus.description = legBonus.description.replace('30-50%', '60%')
-        } else {
-          let legbonVal = calculateBonusWeakness(source.lvl, lvl, legBonus.value)
-          bonus.value += legbonVal
-        }
-      } else {
-        // TODO calculateBonusWeakness - for holytouch && lastheal TOO
-        source.bonuses[item.legbon] = {
-          count: 1,
-          value: calculateBonusWeakness(source.lvl, lvl, legBonus.value),
-          limitReached: false,
-          maxItemLvl: lvl,
-          lvl: lvl
-        }
-        if (item.legbon === 'holytouch') {
-          source.bonuses[item.legbon].description = legBonus.description.replace('{}', calculateHolyTouchAmount(lvl))
-        }
-      }
-    }
-
     // update eq stats
     const stats = JSON.parse(item.json_stats)
     for (let attr in stats) {
@@ -94,6 +56,7 @@ export const setStats = eqItems => {
       }
     }
   }
+  source.bonuses = getBonuses(source, eqItems)
   return source
 }
 
@@ -120,6 +83,53 @@ export const getOrderedPksOfEqItems = eqItems => {
   return pks
 }
 
-export const eqItemsAreTheSame = (pks, pks2) => {
-  return pks.length === pks2.length && pks.every((v, i) => v === pks2[i])
+export const getBonuses = (source, eqItems) => {
+  let bonuses = {}
+  for (let placement in eqItems) {
+    const item = eqItems[placement]
+    if (item && item.legbon) {
+      const legBonus = ITEM_BONUS[item.legbon]
+      if (item.legbon in bonuses) {
+        let bonus = bonuses[item.legbon]
+        bonus.count += 1
+        bonus.limitReached = bonus.count > BONUS_LIMIT
+        if (!bonus.limitReached) {
+          if (item.legbon === 'lastheal') {
+            const val1 = calculateBonusWeakness(source.lvl, item.lvl, legBonus.range[0])
+            const previousVal = bonus.range[0]
+            bonus.value = `do ${val1 + previousVal}`
+          } else {
+            let legbonVal = calculateBonusWeakness(source.lvl, item.lvl, legBonus.value)
+            bonus.value += legbonVal
+            bonus.value = parseFloat(bonus.value.toFixed(2))
+          }
+
+          if (item.legbon === 'holytouch' && item.lvl > bonus.lvl) {
+            bonus.amount = `na ${calculateHolyTouchAmount(item.lvl)} hp`
+          }
+        }
+      } else {
+        let bonus = {
+          count: 1,
+          limitReached: false,
+          lvl: item.lvl,
+          amount: ''
+        }
+        if (item.legbon === 'lastheal') {
+          const val1 = calculateBonusWeakness(source.lvl, item.lvl, legBonus.range[0])
+          const val2 = calculateBonusWeakness(source.lvl, item.lvl, legBonus.range[1])
+          bonus.range = [val1, val2]
+          bonus.value = `do ${val1}-${val2}`
+        } else {
+          bonus.value = calculateBonusWeakness(source.lvl, item.lvl, legBonus.value)
+        }
+
+        if (item.legbon === 'holytouch') {
+          bonus.amount = `na ${calculateHolyTouchAmount(item.lvl)} hp`
+        }
+        bonuses[item.legbon] = bonus
+      }
+    }
+  }
+  return bonuses
 }

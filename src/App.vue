@@ -14,7 +14,7 @@
     </nav>
 
     <transition name="fade">
-      <div class="items" style="margin-top:60px" v-if="query">
+      <div class="search-items has-text-centered is-clearfix" :class="{'search-items-modal': modalActive}" v-if="query">
         <div v-if="searching"><div class="vue-simple-spinner" style="margin: 0px auto; border-radius: 100%; border-width: 3px; border-style: solid; border-color: rgb(33, 150, 243) rgb(238, 238, 238) rgb(238, 238, 238); border-image: initial; width: 42px; height: 42px; animation: vue-simple-spinner-spin 0.8s linear infinite;"></div> <!----></div>
         <item v-else-if="searchResults.length" v-for="item in searchResults" :key="item.pk" :data="item" :action="rmbActions.add"></item>
         <b-message v-else-if="noResults" type="is-warning">
@@ -74,7 +74,7 @@
         this.results = search.results
       }
       return {
-        modalActive: false,
+        modalActive: true,
         toggleValue: this.canAddToEq,
         query: search ? search.query : '',
         searchResults: search ? search.results : [],
@@ -192,5 +192,15 @@
   }
   .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
     opacity: 0;
+  }
+
+  .search-items {
+    margin-top: 60px;
+
+  }
+
+  .search-items-modal {
+    position: fixed;
+    z-index: 1000;
   }
 </style>
