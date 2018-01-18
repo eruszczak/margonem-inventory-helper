@@ -1,4 +1,5 @@
 # from django.db.utils import OperationalError
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.generics import ListAPIView, RetrieveAPIView
@@ -19,7 +20,7 @@ from django.views.decorators.cache import cache_page
 
 
 class SetPagination(PageNumberPagination):
-    page_size = 200
+    page_size = 100
     page_size_query_param = 'per_page'
 
 
@@ -37,19 +38,22 @@ class ItemApiView(ListAPIView):
     #     return super().dispatch(*args, **kwargs)
 
     def get_queryset(self):
+        queryset = super().get_queryset()
         query = self.get_query()
         item_slugs = query.pop('slugs', None)
         if item_slugs:
-            return self.queryset.filter(slug__in=item_slugs)
+            return queryset.filter(slug__in=item_slugs)
 
         if query:
-            return self.queryset.filter(**query)
+            val = self.request.query_params.get('n', '')
+            return queryset.filter(Q(name__unaccent__icontains=val) | Q(legbon__name__icontains=val))
+            # return queryset.filter(**query)
 
         return self.queryset
 
     def get_query(self):
         item_rarity = self.request.query_params.getlist('r')
-        item_type = self.request.query_params.getlist('t')
+        item_type = self.request.query_params.get('t')
         name = self.request.query_params.get('n')
         prof = self.request.query_params.getlist('p')
         bonus = self.request.query_params.get('b')
@@ -63,18 +67,18 @@ class ItemApiView(ListAPIView):
             # somehow, I cannot catch this error
             contains, startswith = 'name__unaccent__icontains', 'name__unaccent__istartswith'
             key = contains if len(name) > 2 else startswith
-            query[key] = name
+            # query[key] = name
+            query['legbon__name__icontains'] = name
+        # if item_rarity:
+        #     if 'none' in item_rarity:
+        #         return Item.objects.none()
+        #     query['rarity__name__in'] = item_rarity
 
-        if item_rarity:
-            if 'none' in item_rarity:
-                return Item.objects.none()
-            query['rarity__name__in'] = item_rarity
+        # if item_type:
+        #     query['type__number'] = item_type
 
-        if item_type:
-            query['type__number__in'] = item_type
-
-        if prof:
-            query['profession__name__in'] = prof
+        # if prof:
+        #     query['profession__name__in'] = prof
 
         if bonus:
             bonus = bonus.split(',')
