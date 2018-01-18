@@ -64,7 +64,13 @@
           </template>
         </b-table>
       </template>
-      Jeśli gdzies count > 2, wartosci moga byc zle obliczone
+
+      <b-message v-if="source.bonusWarnings" title="Uwagi do bonusów" type="is-warning" :closable="false">
+        <ul>
+          <li>Ekwipunek zawiera sprzeczne typy przedmiotów</li>
+          <li>Jeśli gdzies count > 2, wartosci moga byc zle obliczone</li>
+        </ul>
+      </b-message>
     </section>
   </div>
 </template>
