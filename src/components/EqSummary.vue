@@ -24,8 +24,7 @@
       <template v-if="orderedStats.length">
         <h2 class="title">Statystyki</h2>
         <b-table
-          v-if="orderedStats"
-          :data="[]"
+          :data="orderedStats"
           :striped="true"
           :narrowed="true"
           :hoverable="false"
@@ -42,8 +41,6 @@
       </template>
 
       <template v-if="orderedBonuses.length">
-        niektóre bonusy mają niepełny czas działania.
-        <br>niektóre bonusy > 2
         <h2 class="title">Bonusy</h2>
         <b-table
           :data="orderedBonuses"
@@ -64,6 +61,7 @@
           </template>
         </b-table>
       </template>
+      <hr style="margin-bottom: 0;border:0">
       <b-message v-if="source.bonusWarnings.decreased.length || !isObjectEmpty(source.bonusWarnings.limit)" title="Uwagi do bonusów" type="is-warning" :closable="false">
         <ul>
           <li v-for="item in source.bonusWarnings.decreased">{{ item }}</li>
