@@ -96,6 +96,11 @@
   .heroic {border-color: #136bf7;}
   .legendary {border-color: #c60d14;}
 
+  .default-tag {background-color: #cecece!important;color:white!important;}
+  .unique-tag {background-color: orange!important;color:white!important;}
+  .heroic-tag {background-color: #136bf7!important;color:white!important;}
+  .legendary-tag {background-color: #f5383f!important;color:white!important;}
+
   .item .tooltipText {
     visibility: hidden;
     width: auto;

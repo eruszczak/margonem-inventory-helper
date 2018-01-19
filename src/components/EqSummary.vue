@@ -10,16 +10,9 @@
         <b-tag v-if="source.allowedProfessions.length === 6" type="is-info">wszystkie profesje</b-tag>
         <b-tag v-else v-for="prof in source.allowedProfessions" type="is-info">{{ prof | encodeProf }}</b-tag>
       </b-taglist>
-      <b-taglist>
-        <div class="field is-grouped is-grouped-multiline">
-          <div class="control" v-for="rarity in ITEM_RARITY_IN_ORDER">
-            <div class="tags has-addons">
-              <span class="tag is-dark">{{ rarity | encodeRarity }}</span>
-              <span class="tag">{{ source.rarity[rarity] || 0 }}</span>
-            </div>
-          </div>
-        </div>
-      </b-taglist>
+      <div class="tags">
+        <span class="tag" v-for="rarity in ITEM_RARITY_IN_ORDER" :class="rarity + '-tag'">{{ source.rarity[rarity] || 0 }}</span>
+      </div>
 
       <template v-if="orderedStats.length">
         <h2 class="title">Statystyki</h2>
@@ -51,9 +44,7 @@
           :mobile-cards="false">
           <template slot-scope="props">
             <b-table-column label="Nazwa">
-              <!--<b-tooltip :label="props.row.name | getBonusDescription" position="is-bottom">{{ props.row.name | encodeBonus }}</b-tooltip>-->
               {{ props.row.name | encodeBonus }} (x{{ props.row.count }})
-              <!--<p class="bonus-description">{{ props.row.description }}</p>-->
             </b-table-column>
             <b-table-column label="Szansa">
               {{ props.row.value }}% {{ props.row.amount }}
@@ -61,14 +52,17 @@
           </template>
         </b-table>
       </template>
-      <hr style="margin-bottom: 0;border:0">
-      <b-message v-if="source.bonusWarnings.decreased.length || !isAnyLimitReached" title="Uwagi do bonusów" type="is-warning" :closable="false">
-        <ul>
-          <li v-for="item in source.bonusWarnings.decreased">{{ item }}</li>
-          <li v-for="(value, key) in source.bonusWarnings.limit">Przekroczono limit: {{ key }} (x{{ value }})</li>
-          <li v-if="isAnyLimitReached"><small>Wartości oraz uwagi dla bonusu z przekroczonym limitem mogą być niepoprawne.</small></li>
-        </ul>
-      </b-message>
+
+      <template v-if="source.bonusWarnings.decreased.length || isAnyLimitReached">
+        <hr style="border:0">
+        <b-message title="Uwagi do bonusów" type="is-warning" :closable="false">
+          <ul>
+            <li v-for="item in source.bonusWarnings.decreased">{{ item }}</li>
+            <li v-for="(value, key) in source.bonusWarnings.limit">Przekroczono limit: {{ key }} (x{{ value }})</li>
+            <li v-if="isAnyLimitReached"><small>Wartości oraz uwagi dla bonusu z przekroczonym limitem mogą być niepoprawne.</small></li>
+          </ul>
+        </b-message>
+      </template>
     </section>
   </div>
 </template>
