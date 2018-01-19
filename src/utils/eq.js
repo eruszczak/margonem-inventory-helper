@@ -1,5 +1,5 @@
 import { CHARACTER_CLASSES_IN_ORDER, ITEM_BONUS } from './items'
-import { calculateBonusWeakness, calculateHolyTouchAmount, isInt } from './helpers'
+import { calculateBonusWeakness, calculateHolyTouchAmount, isInt, round } from './helpers'
 import { BONUS_LIMIT } from './constants'
 
 export const setStats = eqItems => {
@@ -8,7 +8,8 @@ export const setStats = eqItems => {
     requiredProfessions: null,
     allowedProfessions: CHARACTER_CLASSES_IN_ORDER,
     isConflict: false,
-    rarity: {}
+    rarity: {},
+    bonusWarnings: []
   }
 
   for (let placement in eqItems) {
@@ -48,7 +49,7 @@ export const setStats = eqItems => {
         } else {
           source[attr] = parseFloat(source[attr]) + parseFloat(stats[attr])
           if (!isInt(source[attr])) {
-            source[attr] = parseFloat(source[attr].toFixed(15))
+            source[attr] = round(source[attr])
           }
         }
       } else {
@@ -98,10 +99,12 @@ export const getBonuses = (source, eqItems) => {
             const val1 = calculateBonusWeakness(source.lvl, item.lvl, legBonus.range[0])
             const previousVal = bonus.range[0]
             bonus.value = `do ${val1 + previousVal}`
+            setBonusWarnings(val1, legBonus.range[0], source, item)
           } else {
             let legbonVal = calculateBonusWeakness(source.lvl, item.lvl, legBonus.value)
+            setBonusWarnings(legbonVal, legBonus.value, source, item)
             bonus.value += legbonVal
-            bonus.value = parseFloat(bonus.value.toFixed(2))
+            bonus.value = round(bonus.value)
           }
 
           if (item.legbon === 'holytouch' && item.lvl > bonus.lvl) {
@@ -120,8 +123,10 @@ export const getBonuses = (source, eqItems) => {
           const val2 = calculateBonusWeakness(source.lvl, item.lvl, legBonus.range[1])
           bonus.range = [val1, val2]
           bonus.value = `do ${val1}-${val2}`
+          setBonusWarnings(val1, legBonus.range[0], source, item)
         } else {
           bonus.value = calculateBonusWeakness(source.lvl, item.lvl, legBonus.value)
+          setBonusWarnings(bonus.value, legBonus.value, source, item)
         }
 
         if (item.legbon === 'holytouch') {
@@ -132,4 +137,11 @@ export const getBonuses = (source, eqItems) => {
     }
   }
   return bonuses
+}
+
+const setBonusWarnings = (actualValue, fullValue, source, item) => {
+  if (actualValue < fullValue) {
+    const diff = actualValue - fullValue
+    source.bonusWarnings.push(`${item.name} (${item.lvl}) na ${source.lvl} lvl ma ${actualValue}% (${round(diff)} p.p)`)
+  }
 }
