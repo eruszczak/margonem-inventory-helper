@@ -62,13 +62,13 @@
         </b-table>
       </template>
       <hr style="margin-bottom: 0;border:0">
-      <b-message v-if="source.bonusWarnings.decreased.length || !isObjectEmpty(source.bonusWarnings.limit)" title="Uwagi do bonusów" type="is-warning" :closable="false">
+      <b-message v-if="source.bonusWarnings.decreased.length || !isAnyLimitReached" title="Uwagi do bonusów" type="is-warning" :closable="false">
         <ul>
           <li v-for="item in source.bonusWarnings.decreased">{{ item }}</li>
           <li v-for="(value, key) in source.bonusWarnings.limit">Przekroczono limit: {{ key }} (x{{ value }})</li>
+          <li v-if="isAnyLimitReached"><small>Wartości oraz uwagi dla bonusu z przekroczonym limitem mogą być niepoprawne.</small></li>
         </ul>
       </b-message>
-      <small v-if="source.bonusWarnings.limit.length">Wartości oraz uwagi dla bonusu z przekroczonym limitem (zaznaczony na czerwono) mogą być niepoprawne, gdyż nie jestem pewien, które 2 przedmioty brane są pod uwagę.</small>
     </section>
   </div>
 </template>
@@ -120,11 +120,13 @@
           }
         }
         return bonuses
+      },
+      isAnyLimitReached: function () {
+        return !isObjEmpty(this.source.bonusWarnings.limit)
       }
     },
     methods: {
-      ...mapMutations(['setStats']),
-      isObjectEmpty: value => isObjEmpty(value)
+      ...mapMutations(['setStats'])
     },
     filters: {
       encodeStat: value => ITEM_STAT[value].val2,
