@@ -47,7 +47,7 @@
         <h2 class="title">Bonusy</h2>
         <b-table
           :data="orderedBonuses"
-          :row-class="(row, index) => row.limitReached ? 'limit-reached' : ''"
+          :row-class="row => row.limitReached ? 'limit-reached' : ''"
           :striped="true"
           :narrowed="false"
           :hoverable="false"
@@ -65,12 +65,13 @@
         </b-table>
       </template>
 
-      <b-message v-if="source.bonusWarnings" title="Uwagi do bonusów" type="is-warning" :closable="false">
+      <b-message v-if="source.bonusWarnings.length" title="Uwagi do bonusów" type="is-warning" :closable="false">
         <ul>
-          <li>Ekwipunek zawiera sprzeczne typy przedmiotów</li>
-          <li>Jeśli gdzies count > 2, wartosci moga byc zle obliczone</li>
+          <li></li>
+          <li v-for="item in source.bonusWarnings">{{ item }}</li>
         </ul>
       </b-message>
+      <small>Wartości oraz uwagi dla bonusu z przekroczonym limitem (zaznaczony na czerwono) mogą być źle obliczone, gdyż nie jestem pewien, które 2 przedmioty brane są pod uwagę.</small>
     </section>
   </div>
 </template>

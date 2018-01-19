@@ -47,8 +47,7 @@ export const calculateMaxFullBonusDuration = (itemLvl) => {
 export const calculateBonusWeakness = (requiredLvl, itemLvl, itemBonusValue) => {
   let lvlDiff = requiredLvl - itemLvl
   if (lvlDiff > calculateMaxFullBonusDuration(itemLvl)) {
-    // let decreasedValue = itemBonusValue - 0.02 * lvlDiff
-    return parseFloat((itemBonusValue - 0.02 * lvlDiff).toFixed(2))
+    return round(itemBonusValue - 0.02 * lvlDiff)
   }
   return itemBonusValue
 }
@@ -126,3 +125,5 @@ export const replaceDiacritics = (value) => {
 const DIACTRITICS = {
   'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n', 'ó': 'o', 'ś': 's', 'ź': 'z', 'ż': 'z'
 }
+
+export const round = value => parseFloat(value.toFixed(2))
