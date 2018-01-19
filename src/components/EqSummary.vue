@@ -64,14 +64,13 @@
           </template>
         </b-table>
       </template>
-
-      <b-message v-if="source.bonusWarnings.length" title="Uwagi do bonusów" type="is-warning" :closable="false">
+      <b-message v-if="source.bonusWarnings.decreased.length || !isObjectEmpty(source.bonusWarnings.limit)" title="Uwagi do bonusów" type="is-warning" :closable="false">
         <ul>
-          <li></li>
-          <li v-for="item in source.bonusWarnings">{{ item }}</li>
+          <li v-for="item in source.bonusWarnings.decreased">{{ item }}</li>
+          <li v-for="(value, key) in source.bonusWarnings.limit">Przekroczono limit: {{ key }} (x{{ value }})</li>
         </ul>
       </b-message>
-      <small>Wartości oraz uwagi dla bonusu z przekroczonym limitem (zaznaczony na czerwono) mogą być źle obliczone, gdyż nie jestem pewien, które 2 przedmioty brane są pod uwagę.</small>
+      <small v-if="source.bonusWarnings.limit.length">Wartości oraz uwagi dla bonusu z przekroczonym limitem (zaznaczony na czerwono) mogą być niepoprawne, gdyż nie jestem pewien, które 2 przedmioty brane są pod uwagę.</small>
     </section>
   </div>
 </template>
@@ -79,6 +78,7 @@
 <script>
   import { CHARACTER_CLASSES, ITEM_BONUS, ITEM_STAT, ITEM_RARITY, ITEM_STATS_IN_ORDER, ITEM_RARITY_IN_ORDER, ITEM_BONUSES_IN_ORDER } from '../utils/items'
   import { mapGetters, mapMutations } from 'vuex'
+  import { isObjEmpty } from '../utils/helpers'
 
   export default {
     name: 'eq-summary',
@@ -125,7 +125,8 @@
       }
     },
     methods: {
-      ...mapMutations(['setStats'])
+      ...mapMutations(['setStats']),
+      isObjectEmpty: value => isObjEmpty(value)
     },
     filters: {
       encodeStat: value => ITEM_STAT[value].val2,

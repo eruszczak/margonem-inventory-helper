@@ -127,3 +127,7 @@ const DIACTRITICS = {
 }
 
 export const round = value => parseFloat(value.toFixed(2))
+
+export const isObjEmpty = obj => {
+  return Object.keys(obj).length === 0
+}
