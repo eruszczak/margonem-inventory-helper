@@ -61,8 +61,9 @@
         amet.
       </b-tab-item>
     </b-tabs>
-
-    <eq-summary :source="eqSetStats"></eq-summary>
+    <section class="section">
+      <eq-summary :source="eqSetStats"></eq-summary>
+    </section>
   </div>
 </template>
 
