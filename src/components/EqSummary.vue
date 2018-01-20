@@ -16,41 +16,12 @@
 
       <template v-if="orderedStats.length">
         <h2 class="title">Statystyki</h2>
-        <b-table
-          :data="orderedStats"
-          :striped="true"
-          :narrowed="true"
-          :hoverable="false"
-          :mobile-cards="false">
-          <template slot-scope="props">
-            <b-table-column label="Nazwa">
-              {{ props.row.name | encodeStat }}
-            </b-table-column>
-            <b-table-column label="Wartość">
-              {{ props.row.value }}
-            </b-table-column>
-          </template>
-        </b-table>
+        <eq-stats></eq-stats>
       </template>
 
       <template v-if="orderedBonuses.length">
         <h2 class="title">Bonusy</h2>
-        <b-table
-          :data="orderedBonuses"
-          :row-class="row => row.limitReached ? 'limit-reached' : ''"
-          :striped="true"
-          :narrowed="true"
-          :hoverable="false"
-          :mobile-cards="false">
-          <template slot-scope="props">
-            <b-table-column label="Nazwa">
-              {{ props.row.name | encodeBonus }} (x{{ props.row.count }})
-            </b-table-column>
-            <b-table-column label="Szansa">
-              {{ props.row.value }}% {{ props.row.amount }}
-            </b-table-column>
-          </template>
-        </b-table>
+        <eq-bonuses></eq-bonuses>
       </template>
 
       <template v-if="source.bonusWarnings.decreased.length || isAnyLimitReached">
@@ -69,53 +40,22 @@
 </template>
 
 <script>
-  import { CHARACTER_CLASSES, ITEM_BONUS, ITEM_STAT, ITEM_RARITY, ITEM_STATS_IN_ORDER, ITEM_RARITY_IN_ORDER, ITEM_BONUSES_IN_ORDER } from '../utils/items'
-  import { mapGetters, mapMutations } from 'vuex'
+  import { CHARACTER_CLASSES, ITEM_RARITY_IN_ORDER } from '../utils/items'
+  import { mapMutations } from 'vuex'
   import { isObjEmpty } from '../utils/helpers'
+  import EqStats from './EqStats'
+  import EqBonuses from './EqBonuses'
 
   export default {
     name: 'eq-summary',
     props: ['source'],
+    components: { EqStats, EqBonuses },
     data () {
       return {
         ITEM_RARITY_IN_ORDER: ITEM_RARITY_IN_ORDER
       }
     },
     computed: {
-      orderedStats: function () {
-        let globalStatsInOrder = []
-        for (let statInOrder of ITEM_STATS_IN_ORDER) {
-          if (statInOrder in this.source) {
-            let stat = {
-              // type: null,
-              name: statInOrder,
-              value: this.source[statInOrder]
-            }
-            if (['ds', 'di', 'dz'].indexOf(statInOrder) > -1) {
-              let allAttrs = parseInt(this.source['da'])
-              if (stat.rightValue && allAttrs) {
-                stat.rightValue += ` (${parseInt(stat.value) + allAttrs})`
-              }
-            }
-            globalStatsInOrder.push(stat)
-          }
-        }
-        return globalStatsInOrder
-      },
-      orderedBonuses: function () {
-        let bonuses = []
-        if (this.source.bonuses) {
-          for (let bonusInOrder of ITEM_BONUSES_IN_ORDER) {
-            if (bonusInOrder in this.source.bonuses) {
-              let bonus = this.source.bonuses[bonusInOrder]
-              bonus.name = bonusInOrder
-              bonus.description = bonus.description || ITEM_BONUS[bonus.name].description
-              bonuses.push(bonus)
-            }
-          }
-        }
-        return bonuses
-      },
       isAnyLimitReached: function () {
         return !isObjEmpty(this.source.bonusWarnings.limit)
       }
@@ -124,12 +64,7 @@
       ...mapMutations(['setStats'])
     },
     filters: {
-      encodeStat: value => ITEM_STAT[value].val2,
-      encodeProf: value => CHARACTER_CLASSES[value],
-      encodeBonus: value => ITEM_BONUS[value].translation,
-      // encodeType: value => ITEM_TYPE[value],
-      // getBonusDescription: value => ITEM_BONUS[value].description,
-      encodeRarity: value => ITEM_RARITY[value]
+      encodeProf: value => CHARACTER_CLASSES[value]
     }
   }
 </script>
