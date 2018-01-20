@@ -39,7 +39,7 @@
           :data="orderedBonuses"
           :row-class="row => row.limitReached ? 'limit-reached' : ''"
           :striped="true"
-          :narrowed="false"
+          :narrowed="true"
           :hoverable="false"
           :mobile-cards="false">
           <template slot-scope="props">
@@ -63,6 +63,7 @@
           </ul>
         </b-message>
       </template>
+      <hr style="visibility: hidden;">
     </section>
   </div>
 </template>

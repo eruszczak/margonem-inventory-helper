@@ -74,7 +74,7 @@
         this.results = search.results
       }
       return {
-        modalActive: true,
+        modalActive: false,
         toggleValue: this.canAddToEq,
         query: search ? search.query : '',
         searchResults: search ? search.results : [],
@@ -196,7 +196,6 @@
 
   .search-items {
     margin-top: 60px;
-
   }
 
   .search-items-modal {
