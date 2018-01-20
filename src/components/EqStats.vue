@@ -21,6 +21,7 @@
 
   export default {
     name: 'eq-stats',
+    props: ['source'],
     computed: {
       orderedStats: function () {
         let globalStatsInOrder = []

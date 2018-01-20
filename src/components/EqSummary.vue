@@ -1,30 +1,23 @@
 <template>
-  <div v-if="source">
+  <div v-if="eqItemsStats">
     <section>
-      <b-message v-if="source.isConflict" title="Błędny ekwipunek" type="is-warning" :closable="false">
+      <b-message v-if="eqItemsStats.isConflict" title="Błędny ekwipunek" type="is-warning" :closable="false">
         Ekwipunek zawiera sprzeczne typy przedmiotów
       </b-message>
 
-      <b-tag type="is-dark is-medium" style="margin-top:10px;">{{ source.lvl }} lvl</b-tag>
-      <b-taglist v-if="!source.isConflict">
-        <b-tag v-if="source.allowedProfessions.length === 6" type="is-info">wszystkie profesje</b-tag>
-        <b-tag v-else v-for="prof in source.allowedProfessions" type="is-info">{{ prof | encodeProf }}</b-tag>
-      </b-taglist>
-      <div class="tags">
-        <span class="tag" v-for="rarity in ITEM_RARITY_IN_ORDER" :class="rarity + '-tag'">{{ source.rarity[rarity] || 0 }}</span>
-      </div>
+      <eq-overview :source="eqItemsStats"></eq-overview>
 
-      <template v-if="orderedStats.length">
+      <!-- <template v-if="orderedStats.length || true"> -->
         <h2 class="title">Statystyki</h2>
-        <eq-stats></eq-stats>
-      </template>
+        <eq-stats :source="eqItemsStats"></eq-stats>
+      <!-- </template> -->
 
-      <template v-if="orderedBonuses.length">
+      <!-- <template v-if="orderedBonuses.length || true"> -->
         <h2 class="title">Bonusy</h2>
-        <eq-bonuses></eq-bonuses>
-      </template>
+        <eq-bonuses :source="eqItemsStats"></eq-bonuses>
+      <!-- </template> -->
 
-      <template v-if="source.bonusWarnings.decreased.length || isAnyLimitReached">
+      <template v-if="eqItemsStats.bonusWarnings.decreased.length || isAnyLimitReached">
         <hr style="border:0">
         <b-message title="Uwagi do bonusów" type="is-warning" :closable="false">
           <ul>
@@ -40,31 +33,21 @@
 </template>
 
 <script>
-  import { CHARACTER_CLASSES, ITEM_RARITY_IN_ORDER } from '../utils/items'
-  import { mapMutations } from 'vuex'
+  import { mapMutations, mapGetters } from 'vuex'
   import { isObjEmpty } from '../utils/helpers'
   import EqStats from './EqStats'
   import EqBonuses from './EqBonuses'
+  import EqOverview from './EqOverview'
 
   export default {
     name: 'eq-summary',
     props: ['source'],
-    components: { EqStats, EqBonuses },
-    data () {
-      return {
-        ITEM_RARITY_IN_ORDER: ITEM_RARITY_IN_ORDER
-      }
-    },
+    components: { EqStats, EqBonuses, EqOverview },
     computed: {
+      ...mapGetters(['eqItemsStats']),
       isAnyLimitReached: function () {
         return !isObjEmpty(this.source.bonusWarnings.limit)
       }
-    },
-    methods: {
-      ...mapMutations(['setStats'])
-    },
-    filters: {
-      encodeProf: value => CHARACTER_CLASSES[value]
     }
   }
 </script>

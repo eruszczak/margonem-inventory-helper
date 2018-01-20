@@ -22,6 +22,7 @@
 
   export default {
     name: 'eq-bonuses',
+    props: ['source'],
     computed: {
       orderedBonuses: function () {
         let bonuses = []
