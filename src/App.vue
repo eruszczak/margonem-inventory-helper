@@ -56,7 +56,7 @@
   import { mapGetters, mapMutations } from 'vuex'
   import Eq from './components/Eq'
   import Item from './components/Item'
-  import RestoreEq from './components/RestoreEq'
+  import RestoreEq from './components/includes/RestoreEq'
   import EqModal from './components/EqModal'
   import { getEqUrl } from './utils/helpers'
   import { toast } from './mixins/toast'

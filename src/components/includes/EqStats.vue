@@ -17,7 +17,7 @@
 </template>
 
 <script>
-  import { ITEM_STAT, ITEM_STATS_IN_ORDER } from '../utils/items'
+  import { ITEM_STAT, ITEM_STATS_IN_ORDER } from '../../utils/items'
 
   export default {
     name: 'eq-stats',
