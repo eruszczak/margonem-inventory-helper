@@ -6,11 +6,14 @@
     :hoverable="false"
     :mobile-cards="false">
     <template slot-scope="props">
+      <b-table-column label="Wartość">
+        {{ props.row.leftValue }}
+      </b-table-column>
       <b-table-column label="Nazwa">
         {{ props.row.name | encodeStat }}
       </b-table-column>
       <b-table-column label="Wartość">
-        {{ props.row.value }}
+        {{ props.row.rightValue }}
       </b-table-column>
     </template>
   </b-table>
@@ -20,21 +23,26 @@
   import { ITEM_STAT, ITEM_STATS_IN_ORDER } from '../../utils/items'
 
   export default {
-    name: 'eq-stats',
-    props: ['source'],
+    name: 'eq-stats-compare',
+    props: ['leftSource', 'rightSource'],
     computed: {
       orderedStats: function () {
         let globalStatsInOrder = []
         for (let statInOrder of ITEM_STATS_IN_ORDER) {
-          if (statInOrder in this.source) {
+          if (statInOrder in this.leftSource || statInOrder in this.rightSource) {
             let stat = {
               name: statInOrder,
-              value: this.source[statInOrder]
+              leftValue: this.leftSource[statInOrder] || 0,
+              rightValue: this.rightSource[statInOrder] || 0
             }
             if (['ds', 'di', 'dz'].indexOf(statInOrder) > -1) {
-              let allAttrs = parseInt(this.source['da'])
-              if (stat.value && allAttrs) {
-                stat.value = `${stat.value} (${parseInt(stat.value) + allAttrs})`
+              let leftAllAttrs = parseInt(this.leftSource['da'])
+              let rightAllAttrs = parseInt(this.rightSource['da'])
+              if (stat.leftValue && leftAllAttrs) {
+                stat.leftValue = `${stat.leftValue} (${parseInt(stat.leftValue) + leftAllAttrs})`
+              }
+              if (stat.rightValue && rightAllAttrs) {
+                stat.rightValue = `${stat.rightValue} (${parseInt(stat.rightValue) + leftAllAttrs})`
               }
             }
             globalStatsInOrder.push(stat)
