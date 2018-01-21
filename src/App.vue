@@ -27,7 +27,7 @@
       <router-view></router-view>
     <!--</transition>-->
     <section class="hero is-light">
-      <div class="hero-body">
+      <div class="hero-body" style="padding:2em">
         <div class="container has-text-centered">
           Grafiki przedmiotów należą do <a href="http://garmory.pl/" target="_blank">Garmory sp. z o.o.</a>
         </div>
@@ -209,4 +209,14 @@
     position: fixed;
     z-index: 1000;
   }
+
+  /*.footer {*/
+    /*position: absolute;*/
+    /*right: 0;*/
+    /*bottom: 0;*/
+    /*left: 0;*/
+    /*padding: 1rem;*/
+    /*background-color: #efefef;*/
+    /*text-align: center;*/
+  /*}*/
 </style>

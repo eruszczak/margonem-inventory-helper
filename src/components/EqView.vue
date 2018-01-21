@@ -6,7 +6,11 @@
           <p>Aby szybko stworzyć zestaw, znajdź przedmioty za pomocą wyszukiwarki powyżej oraz załóż je klikając na nie PPM.</p>
         </div>
       </div>
-
+      <div v-if="readOnly" class="message is-warning">
+        <div class="message-body">
+          <p>Odwiedzasz zestaw. Nie możesz go edytować.</p>
+        </div>
+      </div>
       <div class="tile is-ancestor">
         <div class="tile is-vertical is-7">
           <div class="tile">
@@ -21,10 +25,9 @@
             </div>
             <div class="tile is-parent">
               <article class="tile is-child notification is-warning has-text-centered">
-                <p class="title">Podsumowanie</p>
+                <p class="title">Ogólne</p>
                 <div class="content">
                   <eq-overview :source="eqSetStats"></eq-overview>
-                  <p v-if="readOnly"><b>TYLKO DO ODCZYTU</b></p>
                   <div v-if="!readOnly">
                     <restore-eq></restore-eq>
                     <button class="button is-dark" @click="restart">restart</button>
@@ -57,19 +60,18 @@
         <div class="content">
           <p class="title">Ostatnio przeglądane zestawy</p>
           <div class="content">
+            <p>TYLKO DO ODCZYTU. :</p>
+            <div class="columns">
+              <div class="column" v-for="eqItems in eqHistory">
+                <eq :source="eqItems" :readOnly="true"></eq>
+                <span>kopiuj link</span>
+                <router-link :to="getEqLink(eqItems)">Przejdź do zestawu</router-link>
+                <button class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>
+              </div>
+            </div>
           </div>
         </div>
       </article>
-      <!-- </template> -->
-      <!--<p>TYLKO DO ODCZYTU. :</p>-->
-      <!--<div class="columns">-->
-      <!--<div class="column" v-for="eqItems in eqHistory">-->
-      <!--<eq :source="eqItems" :readOnly="true"></eq>-->
-      <!--<span>kopiuj link</span>-->
-      <!--<router-link :to="getEqLink(eqItems)">Przejdź do zestawu</router-link>-->
-      <!--<button class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>-->
-      <!--</div>-->
-      <!--</div>-->
 
       <!--<section>-->
       <!--<b-collapse class="card" :open.sync="isOpen">-->
@@ -175,7 +177,6 @@
             slugs: typeof this.slugs === 'string' ? [this.slugs] : this.slugs,
             callback: () => {
               this.toggleLoading(false)
-              // here loading = false should be set in the future
             }
           })
         }
