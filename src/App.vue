@@ -1,5 +1,5 @@
 <template>
-  <div id="app" style="margin-bottom: 60px">
+  <div id="app">
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <router-link class="navbar-item" :to="{name: 'items'}">Przedmioty</router-link>
@@ -26,6 +26,13 @@
     <!--<transition name="fade">-->
       <router-view></router-view>
     <!--</transition>-->
+    <section class="hero is-light">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          Grafiki przedmiotów należą do <a href="http://garmory.pl/" target="_blank">Garmory sp. z o.o.</a>
+        </div>
+      </div>
+    </section>
 
     <b-modal :active.sync="modalActive">
       <div class="modal-background"></div>
