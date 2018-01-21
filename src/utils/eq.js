@@ -153,3 +153,7 @@ const setBonusDecreased = (actualValue, fullValue, source, item) => {
     )
   }
 }
+
+export const eqItemsAreTheSame = (pks, pks2) => {
+  return pks.length === pks2.length && pks.every((v, i) => v === pks2[i])
+}
