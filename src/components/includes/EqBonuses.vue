@@ -18,7 +18,7 @@
 </template>
 
 <script>
-  import { ITEM_BONUS, ITEM_BONUSES_IN_ORDER } from '../utils/items'
+  import { ITEM_BONUS, ITEM_BONUSES_IN_ORDER } from '../../utils/items'
 
   export default {
     name: 'eq-bonuses',

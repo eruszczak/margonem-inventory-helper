@@ -1,10 +1,6 @@
 <template>
   <div v-if="eqItemsStats">
     <section>
-      <b-message v-if="eqItemsStats.isConflict" title="Błędny ekwipunek" type="is-warning" :closable="false">
-        Ekwipunek zawiera sprzeczne typy przedmiotów
-      </b-message>
-
       <eq-overview :source="eqItemsStats"></eq-overview>
 
       <!-- <template v-if="orderedStats.length || true"> -->
@@ -36,11 +32,11 @@
   import { mapMutations, mapGetters } from 'vuex'
   import { isObjEmpty } from '../utils/helpers'
   import EqStats from './EqStats'
-  import EqBonuses from './EqBonuses'
-  import EqOverview from './EqOverview'
+  import EqBonuses from './includes/EqBonuses'
+  import EqOverview from './includes/EqOverview'
 
   export default {
-    name: 'eq-summary',
+    name: 'eq-modal',
     props: ['source'],
     components: { EqStats, EqBonuses, EqOverview },
     computed: {

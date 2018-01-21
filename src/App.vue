@@ -38,7 +38,7 @@
         <section class="modal-card-body">
           <div class="content has-text-centered">
             <eq :source="eqItems"></eq>
-            <eq-summary :source="eqItemsStats"></eq-summary>
+            <eq-modal :source="eqItemsStats"></eq-modal>
           </div>
         </section>
         <footer class="modal-card-foot">
@@ -57,7 +57,7 @@
   import Eq from './components/Eq'
   import Item from './components/Item'
   import RestoreEq from './components/RestoreEq'
-  import EqSummary from './components/EqSummary'
+  import EqModal from './components/EqModal'
   import { getEqUrl } from './utils/helpers'
   import { toast } from './mixins/toast'
   import debounce from 'lodash/debounce'
@@ -86,7 +86,7 @@
     created () {
       this.setEqItemsStats()
     },
-    components: {Eq, Item, RestoreEq, EqSummary},
+    components: {Eq, Item, RestoreEq, EqModal},
     mixins: [toast],
     computed: {
       ...mapGetters(['pageTitle', 'canAddToEq', 'eqItems', 'isLoading', 'eqItemsStats']),
