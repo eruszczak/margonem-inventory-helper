@@ -1,18 +1,60 @@
 <template>
-  <div>
+  <section class="section">
+    <div class="container">
     <div class="message is-info">
       <div class="message-body">
         <p>Aby szybko stworzyć zestaw, znajdź przedmioty za pomocą wyszukiwarki powyżej oraz załóż je klikając na nie PPM.</p>
       </div>
     </div>
-    <p v-if="readOnly"><b>TYLKO DO ODCZYTU</b></p>
-    <div v-if="!readOnly">
-      <restore-eq></restore-eq>
-      <button class="button is-dark" @click="restart">restart</button>
-    </div>
-    <eq :source="eqSet" :readOnly="readOnly"></eq>
-    <button v-if="readOnly" class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>
 
+    <div class="tile is-ancestor">
+      <div class="tile is-vertical is-7">
+        <div class="tile">
+          <div class="tile is-parent">
+            <article class="tile is-child notification is-info has-text-centered">
+              <p class="title">Ekwipunek</p>
+              <div class="content">
+                <eq :source="eqSet" :readOnly="readOnly"></eq>
+                <button v-if="readOnly" class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>
+              </div>
+            </article>
+          </div>
+          <div class="tile is-parent">
+            <article class="tile is-child notification is-warning has-text-centered">
+              <p class="title">Podsumowanie</p>
+              <div class="content">
+                <eq-overview :source="eqSetStats"></eq-overview>
+                <p v-if="readOnly"><b>TYLKO DO ODCZYTU</b></p>
+                <div v-if="!readOnly">
+                  <restore-eq></restore-eq>
+                  <button class="button is-dark" @click="restart">restart</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="tile is-parent">
+          <article class="tile is-child notification is-danger has-text-centered">
+            <p class="title">Bonusy</p>
+            <div class="content">
+              <eq-bonuses :source="eqSetStats"></eq-bonuses>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="tile is-parent">
+        <article class="tile is-child notification is-success has-text-centered">
+          <div class="content">
+            <p class="title">Statystyki</p>
+            <div class="content">
+              <eq-stats :source="eqSetStats"></eq-stats>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- </template> -->
     <!--<p>TYLKO DO ODCZYTU. :</p>-->
     <!--<div class="columns">-->
       <!--<div class="column" v-for="eqItems in eqHistory">-->
@@ -64,7 +106,8 @@
     <!-- <section class="section">
       <eq-summary :source="eqSetStats"></eq-summary>
     </section> -->
-  </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -73,10 +116,13 @@
   import RestoreEq from './includes/RestoreEq'
   import { getEqRoute } from '../utils/helpers'
   import { toast } from '../mixins/toast'
+  import EqStats from './includes/EqStats'
+  import EqBonuses from './includes/EqBonuses'
+  import EqOverview from './includes/EqOverview'
 
   export default {
     name: 'eq-view',
-    components: {Eq, RestoreEq},
+    components: {Eq, RestoreEq, EqStats, EqBonuses, EqOverview},
     data () {
       return {
         isOpen: true,

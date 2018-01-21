@@ -52,6 +52,6 @@
     height: 42px;
     width: 42px;
     border: 1px solid #d3d3d36e;
-    margin: 0.5px;
+    margin: 1px;
   }
 </style>
