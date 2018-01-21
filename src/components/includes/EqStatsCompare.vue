@@ -39,10 +39,10 @@
               let leftAllAttrs = parseInt(this.leftSource['da'])
               let rightAllAttrs = parseInt(this.rightSource['da'])
               if (stat.leftValue && leftAllAttrs) {
-                stat.leftValue = `${stat.leftValue} (${parseInt(stat.leftValue) + leftAllAttrs})`
+                stat.leftValue = `${stat.leftValue} (${stat.leftValue + leftAllAttrs})`
               }
               if (stat.rightValue && rightAllAttrs) {
-                stat.rightValue = `${stat.rightValue} (${parseInt(stat.rightValue) + leftAllAttrs})`
+                stat.rightValue = `${stat.rightValue} (${stat.rightValue + leftAllAttrs})`
               }
             }
             globalStatsInOrder.push(stat)
