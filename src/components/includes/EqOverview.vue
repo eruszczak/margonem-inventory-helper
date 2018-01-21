@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="isSource">
     <b-tag type="is-dark is-medium" style="margin-top:10px;">{{ source.lvl }} lvl</b-tag>
     <b-taglist>
       <b-tag v-if="source.isConflict" type="is-danger">sprzeczne typy przedmiotów</b-tag>
@@ -14,6 +14,7 @@
 
 <script>
   import { ITEM_RARITY_IN_ORDER, CHARACTER_CLASSES } from '../../utils/items'
+  import { isObjEmpty } from '../../utils/helpers'
 
   export default {
     name: 'eq-overview',
@@ -21,6 +22,16 @@
     data () {
       return {
         ITEM_RARITY_IN_ORDER: ITEM_RARITY_IN_ORDER
+      }
+    },
+    computed: {
+      isSource: function () {
+        return !isObjEmpty(this.source)
+      }
+    },
+    methods: {
+      isEmpty: function () {
+        return !isObjEmpty(this.source)
       }
     },
     filters: {
