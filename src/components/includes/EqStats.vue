@@ -34,7 +34,7 @@
             if (['ds', 'di', 'dz'].indexOf(statInOrder) > -1) {
               let allAttrs = parseInt(this.source['da'])
               if (stat.value && allAttrs) {
-                stat.value = `${stat.value} (${parseInt(stat.value) + allAttrs})`
+                stat.value = `${stat.value} (${stat.value + allAttrs})`
               }
             }
             globalStatsInOrder.push(stat)
