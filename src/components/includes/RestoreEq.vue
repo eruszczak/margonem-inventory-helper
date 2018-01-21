@@ -4,7 +4,7 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex'
-  import { toast } from '../mixins/toast'
+  import { toast } from '../../mixins/toast'
 
   export default {
     name: 'restore-eq',

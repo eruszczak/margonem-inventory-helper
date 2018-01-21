@@ -31,7 +31,7 @@
 <script>
   import { mapMutations, mapGetters } from 'vuex'
   import { isObjEmpty } from '../utils/helpers'
-  import EqStats from './EqStats'
+  import EqStats from './includes/EqStats'
   import EqBonuses from './includes/EqBonuses'
   import EqOverview from './includes/EqOverview'
 

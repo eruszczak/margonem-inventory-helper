@@ -70,7 +70,7 @@
 <script>
   import { mapGetters, mapActions, mapMutations } from 'vuex'
   import Eq from './Eq'
-  import RestoreEq from './RestoreEq'
+  import RestoreEq from './includes/RestoreEq'
   import { getEqRoute } from '../utils/helpers'
   import { toast } from '../mixins/toast'
 
