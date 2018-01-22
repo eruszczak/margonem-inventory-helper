@@ -123,11 +123,11 @@
   import { mapGetters, mapActions, mapMutations } from 'vuex'
   import Eq from './Eq'
   import RestoreEq from './includes/RestoreEq'
-  import { getEqRoute } from '../utils/helpers'
-  import { toast } from '../mixins/toast'
   import EqStats from './includes/EqStats'
   import EqBonuses from './includes/EqBonuses'
   import EqOverview from './includes/EqOverview'
+  import { getEqRoute } from '../utils/helpers'
+  import { toast } from '../mixins/toast'
 
   export default {
     name: 'eq-view',
