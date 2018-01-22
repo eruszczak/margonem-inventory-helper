@@ -16,7 +16,7 @@
           <div class="tile">
             <div class="tile is-parent">
               <article class="tile is-child notification has-text-centered" :class="[readOnly ? 'is-warning' : 'is-primary']">
-                <p class="title">Ekwipunek</p>
+                <p class="title">{{ readOnly ? 'Odwiedzany' : 'Twój' }}</p>
                 <div class="content">
                   <eq :source="eqSet" :readOnly="readOnly"></eq>
                   <button v-if="readOnly" class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>
