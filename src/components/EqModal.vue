@@ -12,17 +12,8 @@
         <h2 class="title">Bonusy</h2>
         <eq-bonuses :source="eqItemsStats"></eq-bonuses>
       <!-- </template> -->
+        <eq-bonuses-warnings :source="eqItemsStats"></eq-bonuses-warnings>
 
-      <template v-if="eqItemsStats.bonusWarnings.decreased.length || isAnyLimitReached">
-        <hr style="border:0">
-        <b-message title="Uwagi do bonusów" type="is-warning" :closable="false">
-          <ul>
-            <li v-for="item in source.bonusWarnings.decreased">{{ item }}</li>
-            <li v-for="(value, key) in source.bonusWarnings.limit">Przekroczono limit: {{ key }} (x{{ value }})</li>
-            <li v-if="isAnyLimitReached"><small>Wartości oraz uwagi dla bonusu z przekroczonym limitem mogą być niepoprawne.</small></li>
-          </ul>
-        </b-message>
-      </template>
       <hr style="visibility: hidden;">
     </section>
   </div>
@@ -30,20 +21,17 @@
 
 <script>
   import { mapMutations, mapGetters } from 'vuex'
-  import { isObjEmpty } from '../utils/helpers'
   import EqStats from './includes/EqStats'
   import EqBonuses from './includes/EqBonuses'
   import EqOverview from './includes/EqOverview'
+  import EqBonusesWarnings from './includes/EqBonusesWarnings'
 
   export default {
     name: 'eq-modal',
     props: ['source'],
-    components: { EqStats, EqBonuses, EqOverview },
+    components: { EqStats, EqBonuses, EqOverview, EqBonusesWarnings },
     computed: {
-      ...mapGetters(['eqItemsStats']),
-      isAnyLimitReached: function () {
-        return !isObjEmpty(this.source.bonusWarnings.limit)
-      }
+      ...mapGetters(['eqItemsStats'])
     }
   }
 </script>

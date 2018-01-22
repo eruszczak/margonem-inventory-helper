@@ -42,6 +42,7 @@
               <p class="title">Bonusy</p>
               <div class="content">
                 <eq-bonuses :source="eqSetStats"></eq-bonuses>
+                <eq-bonuses-warnings :source="eqSetStats"></eq-bonuses-warnings>
               </div>
             </article>
           </div>
@@ -126,13 +127,14 @@
   import RestoreEq from './includes/RestoreEq'
   import EqStats from './includes/EqStats'
   import EqBonuses from './includes/EqBonuses'
+  import EqBonusesWarnings from './includes/EqBonusesWarnings'
   import EqOverview from './includes/EqOverview'
   import { getEqRoute } from '../utils/helpers'
   import { toast } from '../mixins/toast'
 
   export default {
     name: 'eq-view',
-    components: {Eq, RestoreEq, EqStats, EqBonuses, EqOverview},
+    components: {Eq, RestoreEq, EqStats, EqBonuses, EqOverview, EqBonusesWarnings},
     data () {
       return {
         isOpen: true,
