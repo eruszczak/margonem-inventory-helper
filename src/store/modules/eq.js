@@ -108,7 +108,9 @@ export default {
       fetchMultipleItems(payload.slugs, response => {
         commit('setReadOnlyEqItems', response.data.results)
         commit('setReadOnlyEqItemsStats')
-        commit('addToEqHistory')
+        if (!payload.isCompare) {
+          commit('addToEqHistory')
+        }
         payload.callback && payload.callback()
       }, error => {
         console.error(error)

@@ -3,7 +3,7 @@
     <div class="tile is-ancestor">
       <div class="tile is-parent is-6">
         <div class="tile is-parent">
-          <article class="tile is-child notification is-success has-text-centered">
+          <article class="tile is-child notification is-primary has-text-centered">
             <div class="content">
               <p class="title">Twój zestaw</p>
               <div class="content">
@@ -19,40 +19,38 @@
             <div class="content">
               <p class="title">Odwiedzany zestaw</p>
               <div class="content">
-                <eq :source="eqItems" :readOnly="true"></eq>
+                <eq :source="readOnlyEqItems" :readOnly="true"></eq>
               </div>
             </div>
           </article>
         </div>
       </div>
     </div>
-    <div class="tile is-parent">
-      <article class="tile is-child notification is-success has-text-centered">
-        <div class="content">
-          <p class="title">Statystyki</p>
-          <div class="content">
-            <eq-stats :source="eqItemsStats"></eq-stats>
-          </div>
+    <div class="tile is-ancestor">
+      <div class="tile is-parent is-7">
+        <div class="tile is-parent">
+          <article class="tile is-child notification is-success has-text-centered">
+            <div class="content">
+              <p class="title">Porównanie statystyk</p>
+              <div class="content">
+                <eq-stats-compare :leftSource="eqItemsStats" :rightSource="readOnlyEqItemsStats"></eq-stats-compare>
+              </div>
+            </div>
+          </article>
         </div>
-      </article>
+      </div>
+      <div class="tile is-parent is-5">
+        <div class="tile is-parent">
+          <article class="tile is-child notification is-danger has-text-centered">
+            <div class="content">
+              <p class="title">Porównanie bonusów</p>
+              <div class="content">
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
     </div>
-    <!--TODO MAYBE-->
-    <!--<article class="tile is-child notification is-primary has-text-centered">-->
-      <!--<div class="content">-->
-        <!--<p class="title">Ostatnio przeglądane zestawy</p>-->
-        <!--<div class="content">-->
-          <!--<p>TYLKO DO ODCZYTU. :</p>-->
-          <!--<div class="columns">-->
-            <!--<div class="column" v-for="eqItems in eqHistory">-->
-              <!--<eq :source="eqItems" :readOnly="true"></eq>-->
-              <!--<span>kopiuj link</span>-->
-              <!--<router-link :to="getEqLink(eqItems)">Przejdź do zestawu</router-link>-->
-              <!--<button class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</article>-->
   </div>
 </template>
 
@@ -60,21 +58,37 @@
   import { mapGetters, mapActions, mapMutations } from 'vuex'
   import Eq from './Eq'
   import RestoreEq from './includes/RestoreEq'
-  import EqStats from './includes/EqStats'
+  import EqStatsCompare from './includes/EqStatsCompare'
   import EqBonuses from './includes/EqBonuses'
   import EqOverview from './includes/EqOverview'
 
   export default {
     name: 'eq-compare-view',
-    components: {Eq, RestoreEq, EqStats, EqBonuses, EqOverview},
+    components: {Eq, RestoreEq, EqStatsCompare, EqBonuses, EqOverview},
     computed: {
       ...mapGetters([
         'eqItems', 'readOnlyEqItems', 'eqItemsStats', 'readOnlyEqItemsStats', 'realStackLength'
-      ])
+      ]),
+      slugs: function () {
+        return this.$route.query.i || []
+      }
+    },
+    created () {
+      this.getEqItems()
     },
     methods: {
       ...mapActions(['fetchReadOnlyEqItems', 'saveEqAsMine']),
-
+      ...mapMutations(['toggleLoading']),
+      getEqItems: function () {
+        this.toggleLoading(true)
+        this.fetchReadOnlyEqItems({
+          slugs: typeof this.slugs === 'string' ? [this.slugs] : this.slugs,
+          callback: () => {
+            this.toggleLoading(false)
+          },
+          isCompare: true
+        })
+      }
     }
   }
 </script>
