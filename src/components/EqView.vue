@@ -15,7 +15,7 @@
         <div class="tile is-vertical is-7">
           <div class="tile">
             <div class="tile is-parent">
-              <article class="tile is-child notification is-info has-text-centered">
+              <article class="tile is-child notification has-text-centered" :class="[readOnly ? 'is-warning' : 'is-primary']">
                 <p class="title">Ekwipunek</p>
                 <div class="content">
                   <eq :source="eqSet" :readOnly="readOnly"></eq>
@@ -25,7 +25,7 @@
               </article>
             </div>
             <div class="tile is-parent">
-              <article class="tile is-child notification is-warning has-text-centered">
+              <article class="tile is-child notification is-light has-text-centered">
                 <p class="title">Ogólne</p>
                 <div class="content">
                   <eq-overview :source="eqSetStats"></eq-overview>
@@ -57,7 +57,7 @@
           </article>
         </div>
       </div>
-      <article class="tile is-child notification is-primary has-text-centered">
+      <article class="tile is-child notification is-light has-text-centered">
         <div class="content">
           <p class="title">Ostatnio przeglądane zestawy</p>
           <div class="content">
