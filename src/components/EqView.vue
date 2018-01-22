@@ -20,6 +20,7 @@
                 <div class="content">
                   <eq :source="eqSet" :readOnly="readOnly"></eq>
                   <button v-if="readOnly" class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>
+                  <router-link v-if="readOnly" :to="compareEqLink">Porównaj z moim</router-link>
                 </div>
               </article>
             </div>
@@ -164,6 +165,11 @@
       },
       currentEqItems: function () {
         return this.eqHistory[this.current]
+      },
+      compareEqLink: function () {
+        let route = Object.assign({}, getEqRoute(this.eqSet))
+        route.name = 'eqCompareView'
+        return route
       }
     },
     methods: {

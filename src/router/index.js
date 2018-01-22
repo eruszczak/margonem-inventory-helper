@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Items from '@/components/Items'
 import ItemView from '@/components/ItemView'
 import EqView from '@/components/EqView'
+import EqCompareView from '@/components/EqCompareView'
 
 Vue.use(Router)
 
@@ -18,6 +19,11 @@ export default new Router({
       name: 'eqView',
       path: '/zestawy/',
       component: EqView
+    },
+    {
+      name: 'eqCompareView',
+      path: '/porownaj/',
+      component: EqCompareView
     },
     {
       path: '/:type?',
