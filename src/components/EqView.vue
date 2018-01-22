@@ -20,7 +20,7 @@
                 <div class="content">
                   <eq :source="eqSet" :readOnly="readOnly"></eq>
                   <button v-if="readOnly" class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>
-                  <router-link v-if="readOnly" :to="compareEqLink">Porównaj z moim</router-link>
+                  <router-link v-if="readOnly" :to="getCompareEqLink(eqItems)">Porównaj z moim</router-link>
                 </div>
               </article>
             </div>
@@ -68,6 +68,7 @@
                 <span>kopiuj link</span>
                 <router-link :to="getEqLink(eqItems)">Przejdź do zestawu</router-link>
                 <button class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>
+                <router-link :to="getCompareEqLink(eqItems)">Porównaj z moim</router-link>
               </div>
             </div>
           </div>
@@ -165,17 +166,17 @@
       },
       currentEqItems: function () {
         return this.eqHistory[this.current]
-      },
-      compareEqLink: function () {
-        let route = Object.assign({}, getEqRoute(this.eqSet))
-        route.name = 'eqCompareView'
-        return route
       }
     },
     methods: {
       ...mapMutations(['restart', 'toggleLoading']),
       ...mapActions(['fetchReadOnlyEqItems', 'saveEqAsMine']),
       getEqLink: eqItems => getEqRoute(eqItems),
+      getCompareEqLink: function (eqItems) {
+        let route = Object.assign({}, getEqRoute(eqItems))
+        route.name = 'eqCompareView'
+        return route
+      },
       getEqItems: function () {
         if (this.readOnly) {
           this.toggleLoading(true)

@@ -6,13 +6,13 @@
     :hoverable="false"
     :mobile-cards="false">
     <template slot-scope="props">
-      <b-table-column label="Twój">
+      <b-table-column label="Twój" centered>
         {{ props.row.leftValue || '-' }}
       </b-table-column>
-      <b-table-column label="Nazwa">
+      <b-table-column label="Nazwa" centered>
         {{ props.row.name | encodeStat }}
       </b-table-column>
-      <b-table-column label="Odwiedzany">
+      <b-table-column label="Odwiedzany" centered>
         {{ props.row.rightValue || '-' }}
       </b-table-column>
     </template>
