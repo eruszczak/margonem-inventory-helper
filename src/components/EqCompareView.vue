@@ -45,6 +45,7 @@
             <div class="content">
               <p class="title">Porównanie bonusów</p>
               <div class="content">
+                <eq-bonuses-compare :leftSource="eqItemsStats.bonuses" :rightSource="readOnlyEqItemsStats.bonuses"></eq-bonuses-compare>
               </div>
             </div>
           </article>
@@ -61,10 +62,11 @@
   import EqStatsCompare from './includes/EqStatsCompare'
   import EqBonuses from './includes/EqBonuses'
   import EqOverview from './includes/EqOverview'
+  import EqBonusesCompare from './includes/EqBonusesCompare'
 
   export default {
     name: 'eq-compare-view',
-    components: {Eq, RestoreEq, EqStatsCompare, EqBonuses, EqOverview},
+    components: {Eq, RestoreEq, EqStatsCompare, EqBonuses, EqOverview, EqBonusesCompare},
     computed: {
       ...mapGetters([
         'eqItems', 'readOnlyEqItems', 'eqItemsStats', 'readOnlyEqItemsStats', 'realStackLength'
