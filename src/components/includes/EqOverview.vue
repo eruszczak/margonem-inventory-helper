@@ -1,12 +1,12 @@
 <template>
   <div v-if="isSource">
     <b-tag type="is-dark is-medium" style="margin-top:10px;">{{ source.lvl }} lvl</b-tag>
-    <b-taglist>
+    <b-taglist class="center-tags" style="margin-top: 10px">
       <b-tag v-if="source.isConflict" type="is-danger">sprzeczne typy przedmiotów</b-tag>
       <b-tag v-else-if="source.allowedProfessions.length === 6" type="is-info">wszystkie profesje</b-tag>
       <b-tag v-else v-for="prof in source.allowedProfessions" type="is-info">{{ prof | encodeProf }}</b-tag>
     </b-taglist>
-    <div class="tags">
+    <div class="tags center-tags">
       <span class="tag" v-for="rarity in ITEM_RARITY_IN_ORDER" :class="rarity + '-tag'">{{ source.rarity[rarity] || 0 }}</span>
     </div>
   </div>
@@ -41,5 +41,8 @@
 </script>
 
 <style scoped>
-
+  .center-tags {
+    display: flex;
+    justify-content: center;
+  }
 </style>
