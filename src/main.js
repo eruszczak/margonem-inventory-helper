@@ -12,6 +12,11 @@ Vue.use(VueClipboard)
 Vue.config.productionTip = false
 Vue.use(Buefy)
 
+router.beforeEach(function (to, from, next) {
+  window.scrollTo(0, 0)
+  next()
+})
+
 // eslint-disable-next-line no-new
 new Vue({
   el: '#app',
