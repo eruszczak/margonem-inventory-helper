@@ -4,7 +4,7 @@
       <div class="navbar-brand">
         <router-link class="navbar-item" :to="{name: 'items'}">Przedmioty</router-link>
         <router-link class="navbar-item" :to="{name: 'eqView'}">Zestawy EQ</router-link>
-        <router-link class="navbar-item" :to="{name: 'items'}">Porównaj przedmioty</router-link>
+        <router-link class="navbar-item" :to="{name: 'itemCompareView'}">Porównaj przedmioty</router-link>
         <a class="button is-primary is-medium" :class="{'is-active': modalActive}" @click="modalActive = !modalActive">Pokaż EQ</a>
         <b-switch class="navbar-item" :value="canAddToEq" @input="toggleCanAddToEq">
           {{ canAddToEq ? 'Do eq' : 'Do porównywarki'}}
