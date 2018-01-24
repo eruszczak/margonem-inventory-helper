@@ -143,6 +143,7 @@ export default {
     saveEqAsMine ({ commit }, eqItems) {
       commit('replaceEqItems', eqItems)
       commit('setEqItemsStats')
+      commit('restart')
     },
     restoreEqItem ({ commit, state }) {
       let stackTop = state.stack[state.stack.length - 1]
