@@ -27,6 +27,11 @@ export default new Router({
       component: EqCompareView
     },
     {
+      name: 'itemCompareView',
+      path: '/porownaj-przedmioty/',
+      component: ItemCompareView
+    },
+    {
       path: '/:type?',
       name: 'items',
       component: Items,
@@ -37,11 +42,6 @@ export default new Router({
       path: '/przedmiot/:slug',
       component: ItemView,
       props: true
-    },
-    {
-      name: 'itemCompareView',
-      path: '/porownaj-przedmioty/',
-      component: ItemCompareView
     }
   ]
 })
