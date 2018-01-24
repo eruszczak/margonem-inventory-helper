@@ -23,9 +23,9 @@
       </div>
     </transition>
 
-    <transition name="fade">
+    <!--<transition name="fade">-->
       <router-view></router-view>
-    </transition>
+    <!--</transition>-->
     <section class="hero is-light">
       <div class="hero-body" style="padding:2em">
         <div class="container has-text-centered">

@@ -1,58 +1,60 @@
 <template>
-  <div>
-    <div class="tile is-ancestor">
-      <div class="tile is-parent is-6">
-        <div class="tile is-parent">
-          <article class="tile is-child notification is-primary has-text-centered">
-            <div class="content">
-              <p class="title">Twój zestaw</p>
+  <section class="section">
+    <div class="container">
+      <div class="tile is-ancestor">
+        <div class="tile is-parent is-6">
+          <div class="tile is-parent">
+            <article class="tile is-child notification is-primary has-text-centered">
               <div class="content">
-                <eq :source="eqItems"></eq>
+                <p class="title">Twój zestaw</p>
+                <div class="content">
+                  <eq :source="eqItems"></eq>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
+          </div>
+        </div>
+        <div class="tile is-parent is-6">
+          <div class="tile is-parent">
+            <article class="tile is-child notification is-warning has-text-centered">
+              <div class="content">
+                <p class="title">Odwiedzany zestaw</p>
+                <div class="content">
+                  <eq :source="readOnlyEqItems" :readOnly="true"></eq>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
-      <div class="tile is-parent is-6">
-        <div class="tile is-parent">
-          <article class="tile is-child notification is-warning has-text-centered">
-            <div class="content">
-              <p class="title">Odwiedzany zestaw</p>
+      <div class="tile is-ancestor">
+        <div class="tile is-parent is-7">
+          <div class="tile is-parent">
+            <article class="tile is-child notification is-success has-text-centered">
               <div class="content">
-                <eq :source="readOnlyEqItems" :readOnly="true"></eq>
+                <p class="title">Porównanie statystyk</p>
+                <div class="content">
+                  <eq-stats-compare :leftSource="eqItemsStats" :rightSource="readOnlyEqItemsStats"></eq-stats-compare>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
+          </div>
+        </div>
+        <div class="tile is-parent is-5">
+          <div class="tile is-parent">
+            <article class="tile is-child notification is-danger has-text-centered">
+              <div class="content">
+                <p class="title">Porównanie bonusów</p>
+                <div class="content">
+                  <eq-bonuses-compare :leftSource="eqItemsStats.bonuses" :rightSource="readOnlyEqItemsStats.bonuses"></eq-bonuses-compare>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
     </div>
-    <div class="tile is-ancestor">
-      <div class="tile is-parent is-7">
-        <div class="tile is-parent">
-          <article class="tile is-child notification is-success has-text-centered">
-            <div class="content">
-              <p class="title">Porównanie statystyk</p>
-              <div class="content">
-                <eq-stats-compare :leftSource="eqItemsStats" :rightSource="readOnlyEqItemsStats"></eq-stats-compare>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-      <div class="tile is-parent is-5">
-        <div class="tile is-parent">
-          <article class="tile is-child notification is-danger has-text-centered">
-            <div class="content">
-              <p class="title">Porównanie bonusów</p>
-              <div class="content">
-                <eq-bonuses-compare :leftSource="eqItemsStats.bonuses" :rightSource="readOnlyEqItemsStats.bonuses"></eq-bonuses-compare>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </div>
-  </div>
+  </section>
 </template>
 
 <script>
