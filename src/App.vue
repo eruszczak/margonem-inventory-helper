@@ -219,4 +219,8 @@
     /*background-color: #efefef;*/
     /*text-align: center;*/
   /*}*/
+
+  .media-content {
+    margin-top: -15px;
+  }
 </style>
