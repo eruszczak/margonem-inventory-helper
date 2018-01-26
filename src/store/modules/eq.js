@@ -14,7 +14,7 @@ export default {
     readOnlyEqItemsStats: {},
     eqLink: null,
     compareItems: [],
-    canAddToEq: false,
+    canAddToEq: true,
     stack: [],
     itemHistory: [],
     eqHistory: [],
@@ -172,6 +172,16 @@ export default {
         }
         commit('setEqItemsStats')
       }
+    },
+    compareItem ({ commit, state }, payload) {
+      for (let item of state.compareItems) {
+        if (payload.item.pk === item.pk) {
+          payload.callback('Już porównywany')
+          return
+        }
+      }
+      commit('addCompareItem', payload.item)
+      payload.callback('Dodano do porównywarki')
     }
   }
 }
