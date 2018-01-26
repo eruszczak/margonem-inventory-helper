@@ -13,6 +13,7 @@ export default {
     eqItemsStats: {},
     readOnlyEqItemsStats: {},
     eqLink: null,
+    compareItems: [],
     canAddToEq: false,
     stack: [],
     itemHistory: [],
@@ -29,7 +30,8 @@ export default {
     readOnlyEqItemsStats: state => state.readOnlyEqItemsStats,
     stack: state => state.stack,
     replacementsCounter: state => state.replacementsCounter,
-    realStackLength: state => state.stack.length - state.replacementsCounter
+    realStackLength: state => state.stack.length - state.replacementsCounter,
+    compareItems: state => state.compareItems
   },
   mutations: {
     toggleCanAddToEq: state => {
@@ -101,6 +103,12 @@ export default {
     restart: state => {
       state.stack = []
       state.replacementsCounter = 0
+    },
+    addCompareItem: (state, item) => {
+      state.compareItems.push(item)
+    },
+    removeCompareItem: (state, item) => {
+      state.compareItems = state.compareItems.filter(el => el.pk !== item.pk)
     }
   },
   actions: {

@@ -27,7 +27,7 @@
       }
     },
     computed: {
-      ...mapGetters(['eqItems'])
+      ...mapGetters(['eqItems', 'canAddToEq'])
     },
     methods: {
       ...mapActions(['wearItem', 'takeOffItem']),
