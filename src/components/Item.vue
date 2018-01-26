@@ -30,12 +30,21 @@
       ...mapGetters(['eqItems', 'canAddToEq'])
     },
     methods: {
-      ...mapActions(['wearItem', 'takeOffItem']),
+      ...mapActions(['wearItem', 'takeOffItem', 'compareItem']),
       /**
        * Decides what to do when Item was right clicked
        * @param item Item that was right clicked
        */
       itemRightClick: function (item) {
+        if (!this.canAddToEq) {
+          this.compareItem({
+            item: item,
+            callback: (message) => {
+              this.success(message)
+            }
+          })
+          return
+        }
         if (this.action === RIGHT_CLICK_MAPPER.add) {
           this.add(item)
         } else if (this.action === RIGHT_CLICK_MAPPER.remove) {
