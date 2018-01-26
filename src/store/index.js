@@ -11,7 +11,8 @@ export const store = new Vuex.Store({
     createPersistedState(
       {
         paths: [
-          'eq.eqItems', 'eq.canAddToEq', 'eq.itemHistory', 'eq.eqHistory', 'eq.stack', 'eq.replacementsCounter'
+          'eq.eqItems', 'eq.canAddToEq', 'eq.itemHistory', 'eq.eqHistory', 'eq.stack', 'eq.replacementsCounter',
+          'eq.compareItems'
         ]
       }
     )
