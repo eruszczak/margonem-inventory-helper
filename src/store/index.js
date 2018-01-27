@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import eq from './modules/eq'
+import compare from './modules/compare'
 import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
@@ -11,8 +12,8 @@ export const store = new Vuex.Store({
     createPersistedState(
       {
         paths: [
-          'eq.eqItems', 'eq.canAddToEq', 'eq.itemHistory', 'eq.eqHistory', 'eq.stack', 'eq.replacementsCounter',
-          'eq.compareItems'
+          'eq.eqItems', 'eq.itemHistory', 'eq.eqHistory', 'eq.stack', 'eq.replacementsCounter',
+          'compare.compareItems', 'compare.canAddToEq'
         ]
       }
     )
@@ -34,6 +35,6 @@ export const store = new Vuex.Store({
     }
   },
   modules: {
-    eq
+    eq, compare
   }
 })
