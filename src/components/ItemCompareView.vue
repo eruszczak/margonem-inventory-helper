@@ -11,6 +11,7 @@
           <p>Aby szybko porównać przedmioty, znajdź je za pomocą wyszukiwarki powyżej oraz dodaj klikając na nie PPM.</p>
         </div>
       </div>
+      <button class="button" @click="removeAllItems">Wyczyść przedmioty</button>
       <item v-for="item in compareItems" :key="item.pk" :data="item" :action="rmbActions.removeCompare"></item>
 
       <!--<h4 v-if="queryStringSlugs" class="text-xs-center">Link do porównania.-->
@@ -71,7 +72,7 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
+  import {mapGetters, mapActions} from 'vuex'
   import Item from './Item'
   import { RIGHT_CLICK_MAPPER } from '../utils/constants'
 
@@ -85,6 +86,9 @@
     },
     computed: {
       ...mapGetters(['compareItems'])
+    },
+    methods: {
+      ...mapActions(['removeAllItems'])
     }
   }
 </script>

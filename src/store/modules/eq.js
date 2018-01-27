@@ -16,14 +16,10 @@ export default {
     stack: [],
     itemHistory: [],
     eqHistory: [],
-    canAddToEq: true,
     replacementsCounter: 0,
-    compareItems: [],
-    comparePairs: []
   },
   getters: {
     eqItems: state => state.eqItems,
-    canAddToEq: state => state.canAddToEq,
     itemHistory: state => state.itemHistory,
     readOnlyEqItems: state => state.readOnlyEqItems,
     eqHistory: state => state.eqHistory,
@@ -32,12 +28,8 @@ export default {
     stack: state => state.stack,
     replacementsCounter: state => state.replacementsCounter,
     realStackLength: state => state.stack.length - state.replacementsCounter,
-    compareItems: state => state.compareItems
   },
   mutations: {
-    toggleCanAddToEq: state => {
-      state.canAddToEq = !state.canAddToEq
-    },
     replaceEqItems: (state, eqItems) => {
       state.eqItems = Object.assign({}, eqItems)
     },
@@ -104,12 +96,6 @@ export default {
     restart: state => {
       state.stack = []
       state.replacementsCounter = 0
-    },
-    addCompareItem: (state, item) => {
-      state.compareItems.push(item)
-    },
-    removeCompareItem: (state, item) => {
-      state.compareItems = state.compareItems.filter(el => el.pk !== item.pk)
     }
   },
   actions: {
@@ -173,20 +159,6 @@ export default {
         }
         commit('setEqItemsStats')
       }
-    },
-    compareItem ({ commit, state }, payload) {
-      for (let item of state.compareItems) {
-        if (payload.item.pk === item.pk) {
-          payload.callback('Już porównywany')
-          return
-        }
-      }
-      commit('addCompareItem', payload.item)
-      payload.callback('Porównuję')
-    },
-    uncompareItem ({ commit, state }, payload) {
-      commit('removeCompareItem', payload.item)
-      payload.callback('Usunięto z porównania')
     }
   }
 }
