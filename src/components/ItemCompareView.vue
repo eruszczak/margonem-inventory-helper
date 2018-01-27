@@ -13,7 +13,16 @@
       </div>
       <button class="button" @click="removeAllItems">Wyczyść przedmioty</button>
       <item v-for="item in compareItems" :key="item.pk" :data="item" :action="rmbActions.removeCompare"></item>
-
+        
+      <div v-for="pair in comparePairs">
+        <item :data="pair.item"></item>
+        <b-tabs size="is-small" class="block">
+            <b-tab-item v-for="comparision in pair.comparisions" :label="comparision.item.name">
+              <item :data="pair.item"></item> vs <item :data="comparision.item"></item>
+              <eq-stats-compare :leftSource="pair.itemStats" :rightSource="comparision.itemStats"></eq-stats-compare>
+            </b-tab-item>
+        </b-tabs>
+      </div>
       <!--<h4 v-if="queryStringSlugs" class="text-xs-center">Link do porównania.-->
         <!--Możesz edytować, ale zmiany nie zostaną zapisane.</h4>-->
       <!--<h4 v-else class="text-xs-center">Moje porównanie</h4>-->
@@ -75,17 +84,18 @@
   import {mapGetters, mapActions} from 'vuex'
   import Item from './Item'
   import { RIGHT_CLICK_MAPPER } from '../utils/constants'
+  import EqStatsCompare from './includes/EqStatsCompare'
 
   export default {
     name: 'item-compare-view',
-    components: {Item},
+    components: {Item, EqStatsCompare},
     data () {
       return {
         rmbActions: RIGHT_CLICK_MAPPER
       }
     },
     computed: {
-      ...mapGetters(['compareItems'])
+      ...mapGetters(['compareItems', 'comparePairs'])
     },
     methods: {
       ...mapActions(['removeAllItems'])

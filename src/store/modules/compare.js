@@ -1,3 +1,5 @@
+import {setStats} from '../../utils/eq'
+
 export default {
   state: {
     canAddToEq: true,
@@ -6,7 +8,8 @@ export default {
   },
   getters: {
     canAddToEq: state => state.canAddToEq,
-    compareItems: state => state.compareItems
+    compareItems: state => state.compareItems,
+    comparePairs: state => state.comparePairs
   },
   mutations: {
     toggleCanAddToEq: state => {
@@ -21,6 +24,9 @@ export default {
     clearCompareItems: state => {
       state.compareItems = []
     },
+    addPair: (state, pair) => {
+      state.comparePairs.unshift(pair)
+    },
     clearCompareParis: state => {
       state.comparePairs = []
     }
@@ -33,6 +39,27 @@ export default {
           return
         }
       }
+      // get eqItems for payload.item
+      let pair = {
+        item: payload.item,
+        itemStats: setStats({
+          primary: payload.item
+        }),
+        comparisions: []
+      }
+      
+      for (let item of state.compareItems) {
+        if (item.type === payload.item.type) {
+          // get eqItems for item
+          pair.comparisions.push({
+            'item': item,
+            'itemStats': setStats({
+              primary: item
+            })
+          })
+        }
+      }
+      commit('addPair', pair)
       commit('addCompareItem', payload.item)
       payload.callback('Porównuję')
     },
