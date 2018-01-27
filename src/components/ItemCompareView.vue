@@ -11,6 +11,7 @@
           <p>Aby szybko porównać przedmioty, znajdź je za pomocą wyszukiwarki powyżej oraz dodaj klikając na nie PPM.</p>
         </div>
       </div>
+      <item v-for="item in compareItems" :key="item.pk" :data="item" :action="rmbActions.removeCompare"></item>
 
       <!--<h4 v-if="queryStringSlugs" class="text-xs-center">Link do porównania.-->
         <!--Możesz edytować, ale zmiany nie zostaną zapisane.</h4>-->
@@ -70,8 +71,21 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
+  import Item from './Item'
+  import { RIGHT_CLICK_MAPPER } from '../utils/constants'
+
   export default {
-    name: 'item-compare-view'
+    name: 'item-compare-view',
+    components: {Item},
+    data () {
+      return {
+        rmbActions: RIGHT_CLICK_MAPPER
+      }
+    },
+    computed: {
+      ...mapGetters(['compareItems'])
+    }
   }
 </script>
 

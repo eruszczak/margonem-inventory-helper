@@ -13,12 +13,13 @@ export default {
     eqItemsStats: {},
     readOnlyEqItemsStats: {},
     eqLink: null,
-    compareItems: [],
-    canAddToEq: true,
     stack: [],
     itemHistory: [],
     eqHistory: [],
-    replacementsCounter: 0
+    canAddToEq: true,
+    replacementsCounter: 0,
+    compareItems: [],
+    comparePairs: []
   },
   getters: {
     eqItems: state => state.eqItems,
@@ -181,7 +182,11 @@ export default {
         }
       }
       commit('addCompareItem', payload.item)
-      payload.callback('Dodano do porównywarki')
+      payload.callback('Porównuję')
+    },
+    uncompareItem ({ commit, state }, payload) {
+      commit('removeCompareItem', payload.item)
+      payload.callback('Usunięto z porównania')
     }
   }
 }
