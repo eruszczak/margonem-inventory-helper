@@ -32,42 +32,47 @@ export default {
     }
   },
   actions: {
-    compareItem ({ commit, state }, payload) {
+    compareItem ({ commit, state, dispatch }, payload) {
       for (let item of state.compareItems) {
         if (payload.item.pk === item.pk) {
-          payload.callback('Już porównywany')
+          payload.callback && payload.callback('Już porównywany')
           return
         }
       }
-      // get eqItems for payload.item
+      dispatch('createPairForItem', payload.item)
+      commit('addCompareItem', payload.item)
+      payload.callback && payload.callback('Porównuję')
+    },
+    createPairForItem ({ commit, state }, item) {
       let pair = {
-        item: payload.item,
+        item: item,
         itemStats: setStats({
-          primary: payload.item
+          unknownPlacement: item
         }),
-        comparisions: []
+        comparisons: []
       }
-      
-      for (let item of state.compareItems) {
-        if (item.type === payload.item.type) {
-          // get eqItems for item
-          pair.comparisions.push({
-            'item': item,
+      for (let comparedItem of state.compareItems) {
+        if (comparedItem.type === item.type && comparedItem.pk !== item.pk) {
+          pair.comparisons.push({
+            'item': comparedItem,
             'itemStats': setStats({
-              primary: item
+              unknownPlacement: comparedItem
             })
           })
         }
       }
       commit('addPair', pair)
-      commit('addCompareItem', payload.item)
-      payload.callback('Porównuję')
+    },
+    initPairs ({ state, dispatch }) {
+      for (let item of state.compareItems) {
+        dispatch('createPairForItem', item)
+      }
     },
     uncompareItem ({ commit, state }, payload) {
       commit('removeCompareItem', payload.item)
       payload.callback('Usunięto z porównania')
     },
-    removeAllItems ({ commit, state }) {
+    removeAllItems ({ commit }) {
       commit('clearCompareItems')
       commit('clearCompareParis')
     }
