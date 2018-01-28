@@ -4,12 +4,12 @@ export default {
   state: {
     canAddToEq: true,
     compareItems: [],
-    comparePairs: []
+    comparision: {}
   },
   getters: {
     canAddToEq: state => state.canAddToEq,
     compareItems: state => state.compareItems,
-    comparePairs: state => state.comparePairs
+    comparision: state => state.comparision
   },
   mutations: {
     toggleCanAddToEq: state => {
@@ -24,11 +24,18 @@ export default {
     clearCompareItems: state => {
       state.compareItems = []
     },
-    addPair: (state, pair) => {
-      state.comparePairs.unshift(pair)
+    addTypeComparision: (state, type, pairs) => {
+      state.comparision[type] = pairs
     },
-    clearCompareParis: state => {
-      state.comparePairs = []
+    addPair: (state, pair) => {
+      // state.comparision
+      // state.comparePairs.unshift(pair)
+    },
+    clearComparision: state => {
+      state.comparision = {}
+    },
+    clearTypeFromComparision: (state, type) => {
+      state.comparision[type] = []
     }
   },
   actions: {
