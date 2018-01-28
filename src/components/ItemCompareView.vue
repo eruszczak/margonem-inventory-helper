@@ -17,36 +17,36 @@
         </div>
       </div>
       <button class="button" @click="removeAllItems">Wyczyść przedmioty</button>
-
-      <section class="hero is-primary">
-        <div class="hero-body">
-          <div class="container">
-            <h1 class="title">
-              Rękawice
-            </h1>
-            <h2 class="subtitle">
-              <item v-for="item in compareItems" :key="item.pk" :data="item" :action="rmbActions.removeCompare"/>
-            </h2>
+{{comparision}}
+      <template v-for="type in comparision">
+        <section class="hero is-primary">
+          <div class="hero-body">
+            <div class="container">
+              <h1 class="title">
+                {{ type }}
+              </h1>
+              <h2 class="subtitle">
+                <item v-for="pk in comparision[type]" :key="pk" :data="comparision[type][pk].item" :action="rmbActions.removeCompare"/>
+              </h2>
+            </div>
           </div>
-        </div>
-      </section>
-      <div v-for="">
-        <!--<item :data="pair.item"/>-->
+        </section>
+          <!--<item :data="pair.item"/>-->
         <tabs size="is-small" class="block">
-          <tab-item v-for="(pair, index) in comparePairs" :item="pair.item">
+          <tab-item v-for="pk in comparision[type]" :item="comparision[type][pk].item">
             <tabs size="is-small" class="block">
-              <tab-item v-for="comparision in pair.comparisons" :item="comparision.item">
+              <tab-item v-for="comparision in comparision[type][pk].comparisions" :item="comparision.item">
                 <!--<div slot="label">-->
                 <!--<img class="itemborder borderRarity" :class="comparision.item.rarity" :src="comparision.item.img" :alt="comparision.item.name">-->
                 <!--<p>{{ comparision.item.name }}</p>-->
                 <!--</div>-->
-                <item :data="pair.item"/> vs <item :data="comparision.item"/>
+                <item :data="comparision[type][pk].item"/> vs <item :data="comparision.item"/>
                 <!--<eq-stats-compare :leftSource="pair.itemStats" :rightSource="comparision.itemStats"/>-->
               </tab-item>
             </tabs>
           </tab-item>
         </tabs>
-      </div>
+      </template>
     </div>
   </section>
 </template>
@@ -71,7 +71,7 @@
       }
     },
     computed: {
-      ...mapGetters(['compareItems', 'comparePairs'])
+      ...mapGetters(['compareItems', 'comparision'])
     },
     methods: {
       ...mapActions(['removeAllItems', 'initPairs'])

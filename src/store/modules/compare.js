@@ -27,9 +27,11 @@ export default {
     addTypeComparision: (state, type, pairs) => {
       state.comparision[type] = pairs
     },
-    addPair: (state, pair) => {
-      // state.comparision
-      // state.comparePairs.unshift(pair)
+    addItemComparision: (state, payload) => {
+      state.comparision[payload.type] = payload.itemComparision
+    },
+    updateItemComparision: (state, payload) => {
+      state.comparision[payload.item.type][payload.item.pk] = payload.itemComparision
     },
     clearComparision: state => {
       state.comparision = {}
@@ -57,7 +59,8 @@ export default {
      * Compares an item with other items of the same type
      */
     createPairForItem ({ commit, state }, item) {
-      let pair = {
+      let itemComparision = {}
+      itemComparision[item.pk] = {
         item: item,
         itemStats: setStats({
           unknownPlacement: item
@@ -68,14 +71,20 @@ export default {
         comparedItem => comparedItem.type === item.type && comparedItem.pk !== item.pk
       )
       for (let comparedItem of otherItemsOfTheSameType) {
-        pair.comparisons.push({
+        itemComparision[item.pk].comparisons.push({
           'item': comparedItem,
           'itemStats': setStats({
             unknownPlacement: comparedItem
           })
         })
       }
-      commit('addPair', pair)
+      commit('addItemComparision', {itemComparision, type: item.type})
+
+      // if (item.type in state.comparision) {
+        // commit('updateItemComparision', {itemComparision, item})
+      // } else {
+        // commit('addItemComparision', {itemComparision, type: item.type})
+      // }
     },
     /**
      * Creates pairs for all compared items.
