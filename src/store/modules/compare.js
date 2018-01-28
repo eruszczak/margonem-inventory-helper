@@ -32,6 +32,9 @@ export default {
     }
   },
   actions: {
+    /**
+     * Adds item to comparedItems and compares it with other items
+     */
     compareItem ({ commit, state, dispatch }, payload) {
       for (let item of state.compareItems) {
         if (payload.item.pk === item.pk) {
@@ -43,6 +46,9 @@ export default {
       commit('addCompareItem', payload.item)
       payload.callback && payload.callback('Porównuję')
     },
+    /**
+     * Compares an item with other items of the same type
+     */
     createPairForItem ({ commit, state }, item) {
       let pair = {
         item: item,
@@ -51,18 +57,22 @@ export default {
         }),
         comparisons: []
       }
-      for (let comparedItem of state.compareItems) {
-        if (comparedItem.type === item.type && comparedItem.pk !== item.pk) {
-          pair.comparisons.push({
-            'item': comparedItem,
-            'itemStats': setStats({
-              unknownPlacement: comparedItem
-            })
+      const otherItemsOfTheSameType = state.compareItems.filter(
+        comparedItem => comparedItem.type === item.type && comparedItem.pk !== item.pk
+      )
+      for (let comparedItem of otherItemsOfTheSameType) {
+        pair.comparisons.push({
+          'item': comparedItem,
+          'itemStats': setStats({
+            unknownPlacement: comparedItem
           })
-        }
+        })
       }
       commit('addPair', pair)
     },
+    /**
+     * Creates pairs for all compared items.
+     */
     initPairs ({ state, dispatch }) {
       for (let item of state.compareItems) {
         dispatch('createPairForItem', item)
