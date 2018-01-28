@@ -13,11 +13,10 @@
       </div>
       <button class="button" @click="removeAllItems">Wyczyść przedmioty</button>
       <item v-for="item in compareItems" :key="item.pk" :data="item" :action="rmbActions.removeCompare"></item>
-        
       <div v-for="pair in comparePairs">
         <item :data="pair.item"></item>
         <b-tabs size="is-small" class="block">
-            <b-tab-item v-for="comparision in pair.comparisions" :label="comparision.item.name">
+            <b-tab-item v-for="comparision in pair.comparisons" :label="comparision.item.name">
               <item :data="pair.item"></item> vs <item :data="comparision.item"></item>
               <eq-stats-compare :leftSource="pair.itemStats" :rightSource="comparision.itemStats"></eq-stats-compare>
             </b-tab-item>
@@ -89,6 +88,9 @@
   export default {
     name: 'item-compare-view',
     components: {Item, EqStatsCompare},
+    mounted () {
+      this.initPairs()
+    },
     data () {
       return {
         rmbActions: RIGHT_CLICK_MAPPER
@@ -98,7 +100,7 @@
       ...mapGetters(['compareItems', 'comparePairs'])
     },
     methods: {
-      ...mapActions(['removeAllItems'])
+      ...mapActions(['removeAllItems', 'initPairs'])
     }
   }
 </script>
