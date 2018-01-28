@@ -13,7 +13,8 @@
       label: String,
       icon: String,
       iconPack: String,
-      disabled: Boolean
+      disabled: Boolean,
+      item: Object
     },
     data () {
       return {
@@ -33,12 +34,12 @@
     },
     created () {
       this.$parent.tabItems.push(this)
-    },
-    beforeDestroy () {
-      const index = this.$parent.tabItems.indexOf(this)
-      if (index >= 0) {
-        this.$parent.tabItems.splice(index, 1)
-      }
     }
+    // beforeDestroy () {
+    //   const index = this.$parent.tabItems.indexOf(this)
+    //   if (index >= 0) {
+    //     this.$parent.tabItems.splice(index, 1)
+    //   }
+    // }
   }
 </script>

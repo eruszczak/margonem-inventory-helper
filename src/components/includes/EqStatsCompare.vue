@@ -1,30 +1,32 @@
 <template>
-  <b-table
+  <table
     :data="orderedStats"
     :striped="true"
     :narrowed="true"
     :hoverable="false"
     :mobile-cards="false">
     <template slot-scope="props">
-      <b-table-column label="Twój" centered>
+      <table-column label="Twój" centered>
         {{ props.row.leftValue || '-' }}
-      </b-table-column>
-      <b-table-column label="Nazwa" centered>
+      </table-column>
+      <table-column label="Nazwa" centered>
         {{ props.row.name | encodeStat }}
-      </b-table-column>
-      <b-table-column label="Odwiedzany" centered>
+      </table-column>
+      <table-column label="Odwiedzany" centered>
         {{ props.row.rightValue || '-' }}
-      </b-table-column>
+      </table-column>
     </template>
-  </b-table>
+  </table>
 </template>
 
 <script>
   import { ITEM_STAT, ITEM_STATS_IN_ORDER } from '../../utils/items'
+  import {Table, TableColumn} from '../ui/table'
 
   export default {
     name: 'eq-stats-compare',
     props: ['leftSource', 'rightSource'],
+    components: {Table, TableColumn},
     computed: {
       orderedStats: function () {
         let globalStatsInOrder = []

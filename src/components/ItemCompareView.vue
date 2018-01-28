@@ -25,17 +25,25 @@
               Rękawice
             </h1>
             <h2 class="subtitle">
-              <item v-for="item in compareItems" :key="item.pk" :data="item" :action="rmbActions.removeCompare"></item>
+              <item v-for="item in compareItems" :key="item.pk" :data="item" :action="rmbActions.removeCompare"/>
             </h2>
           </div>
         </div>
       </section>
-      <div v-for="pair in comparePairs">
-        <item :data="pair.item"></item>
+      <div v-for="">
+        <!--<item :data="pair.item"/>-->
         <tabs size="is-small" class="block">
-          <tab-item v-for="comparision in pair.comparisons" :label="'vs ' + comparision.item.name">
-            <item :data="pair.item"></item> vs <item :data="comparision.item"></item>
-            <eq-stats-compare :leftSource="pair.itemStats" :rightSource="comparision.itemStats"></eq-stats-compare>
+          <tab-item v-for="(pair, index) in comparePairs" :item="pair.item">
+            <tabs size="is-small" class="block">
+              <tab-item v-for="comparision in pair.comparisons" :item="comparision.item">
+                <!--<div slot="label">-->
+                <!--<img class="itemborder borderRarity" :class="comparision.item.rarity" :src="comparision.item.img" :alt="comparision.item.name">-->
+                <!--<p>{{ comparision.item.name }}</p>-->
+                <!--</div>-->
+                <item :data="pair.item"/> vs <item :data="comparision.item"/>
+                <!--<eq-stats-compare :leftSource="pair.itemStats" :rightSource="comparision.itemStats"/>-->
+              </tab-item>
+            </tabs>
           </tab-item>
         </tabs>
       </div>
