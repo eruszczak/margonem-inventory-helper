@@ -7,7 +7,8 @@
           :key="index"
           :class="{ 'is-active': newValue === index, 'is-disabled': tabItem.disabled }">
           <a @click="tabClick(index)">
-            <span>{{ tabItem.label }}</span>
+            <!--{{ tabItem.label }}-->
+            vs <img v-if="tabItem.item" class="itemborder borderRarity" :class="tabItem.item.rarity" :src="tabItem.item.img" :alt="tabItem.item.name">
           </a>
         </li>
       </ul>
@@ -19,8 +20,11 @@
 </template>
 
 <script>
+  import Item from '../../Item'
+
   export default {
     name: 'Tabs',
+    components: {Item},
     props: {
       value: [String, Number],
       expanded: Boolean,
