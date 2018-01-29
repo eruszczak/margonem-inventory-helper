@@ -17,6 +17,14 @@
       </table-column>
     </template>
   </table>
+        <!-- <table class="table">
+          <thead>
+          </thead>
+          <tbody>
+            <tr v-for="">
+            </tr>
+          </tbody>
+        </table> -->
 </template>
 
 <script>

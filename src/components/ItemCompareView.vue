@@ -18,7 +18,7 @@
       </div>
       <button class="button" @click="removeAllItems">Wyczyść przedmioty</button>
 <!--{{comparision}}-->
-      <template v-for="(items, key) in comparision" v-if="items">
+      <template v-for="(items, key) in comparisons" v-if="items">
         <section class="hero is-primary">
           <div class="hero-body">
             <div class="container">
@@ -26,28 +26,29 @@
                 {{ key }}
               </h1>
               <h2 class="subtitle">
-                <!--{{// comparision[key]}}-->
-                <!--<p v-for="(val2, key2) in comparision[key]">{{comparision[key][key2]}}</p>-->
-                <item v-for="(val2, key2) in comparision[key]" :key="pk" :data="comparision[key][key2].item" :action="rmbActions.removeCompare"/>
+                <!--{{// comparison[key]}}-->
+                <!--<p v-for="(val2, key2) in comparison[key]">{{comparison[key][key2]}}</p>-->
+                <item v-for="(val2, key2) in comparisons[key]" :key="key2" :data="comparisons[key][key2].item" :action="rmbActions.removeCompare"/>
               </h2>
             </div>
           </div>
         </section>
           <!--<item :data="pair.item"/>-->
-        <!--<tabs size="is-small" class="block">-->
-          <!--<tab-item v-for="pk in comparision[type]" :item="comparision[type][pk].item">-->
-            <!--<tabs size="is-small" class="block">-->
-              <!--<tab-item v-for="comparision in comparision[type][pk].comparisions" :item="comparision.item">-->
-                <!--&lt;!&ndash;<div slot="label">&ndash;&gt;-->
-                <!--&lt;!&ndash;<img class="itemborder borderRarity" :class="comparision.item.rarity" :src="comparision.item.img" :alt="comparision.item.name">&ndash;&gt;-->
-                <!--&lt;!&ndash;<p>{{ comparision.item.name }}</p>&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--<item :data="comparision[type][pk].item"/> vs <item :data="comparision.item"/>-->
-                <!--&lt;!&ndash;<eq-stats-compare :leftSource="pair.itemStats" :rightSource="comparision.itemStats"/>&ndash;&gt;-->
-              <!--</tab-item>-->
-            <!--</tabs>-->
-          <!--</tab-item>-->
-        <!--</tabs>-->
+        <tabs size="is-small" class="block">
+          <tab-item v-for="(val2, key2) in comparisons[key]" :item="comparisons[key][key2].item">
+            <tabs size="is-small" class="block">
+              <tab-item v-for="comparison in comparisons[key][key2].comparisons" :item="comparison.item">
+                <div slot="label">
+                  <img class="itemborder borderRarity" :class="comparison.item.rarity" :src="comparison.item.img" :alt="comparison.item.name">
+                  <p>{{ comparison.item.name }}</p>
+                </div>
+                <item :data="comparisons[key][key2].item"/> vs <item :data="comparison.item"/>
+                <!-- <eq-stats-compare :leftSource="pair.itemStats" :rightSource="comparison.itemStats"/> -->
+              </tab-item> 
+            </tabs>
+          </tab-item>
+        </tabs> 
+
       </template>
     </div>
   </section>
@@ -73,7 +74,7 @@
       }
     },
     computed: {
-      ...mapGetters(['compareItems', 'comparision'])
+      ...mapGetters(['compareItems', 'comparisons'])
     },
     methods: {
       ...mapActions(['removeAllItems', 'initPairs'])

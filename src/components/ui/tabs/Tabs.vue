@@ -8,7 +8,7 @@
           :class="{ 'is-active': newValue === index, 'is-disabled': tabItem.disabled }">
           <a @click="tabClick(index)">
             <!--{{ tabItem.label }}-->
-            vs <img v-if="tabItem.item" class="itemborder borderRarity" :class="tabItem.item.rarity" :src="tabItem.item.img" :alt="tabItem.item.name">
+            <img v-if="tabItem.item" class="itemborder borderRarity" :class="tabItem.item.rarity" :src="tabItem.item.img" :alt="tabItem.item.name">
           </a>
         </li>
       </ul>
