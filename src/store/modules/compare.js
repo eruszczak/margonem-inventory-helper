@@ -1,5 +1,6 @@
 import {setStats} from '../../utils/eq'
 import { getDefaultEqItems, ITEM_PLACE } from '../../utils/items'
+import Vue from 'vue'
 
 export default {
   state: {
@@ -22,6 +23,25 @@ export default {
     removeCompareItem: (state, item) => {
       state.compareItems = state.compareItems.filter(el => el.pk !== item.pk)
     },
+    removeItemFromComparison: (state, item) => {
+      const itemPlacement = ITEM_PLACE[item.type]
+      state.comparisons[itemPlacement] = state.comparisons[itemPlacement].filter(el => {
+        console.log(el.item.pk, item.pk)
+        return el.item.pk !== item.pk
+      })
+      console.log('removing', item.pk)
+      console.log(state.comparisons[itemPlacement])
+      console.log(state.comparisons[itemPlacement].find(el => {
+        console.log('checking', el.item.pk)
+        return el.item.pk === item.pk
+      }))
+      // console.log('before', state.comparisons[itemPlacement])
+      // console.log('after', state.comparisons[itemPlacement].filter(el => {
+      //   console.log(el.item.pk, item.pk)
+      //   return el.item.pk !== item.pk
+      // }))
+      // remove `main` item and from other item's comparisons
+    },
     clearCompareItems: state => {
       state.compareItems = []
     },
@@ -29,11 +49,12 @@ export default {
       state.comparisons[type] = pairs
     },
     addItemComparisons: (state, payload) => {
-      state.comparisons[payload.itemPlacement] = payload.itemComparisons
+      state.comparisons[payload.itemPlacement] = [payload.itemComparisons]
+      console.error(this.$set)
     },
     updateItemComparisons: (state, payload) => {
-      // Vue.set needed?
-      state.comparisons[payload.itemPlacement][payload.item.pk] = payload.itemComparisons
+      state.comparisons[payload.itemPlacement].push(payload.itemComparisons)
+      // Vue.set(state.comparisons[payload.itemPlacement], payload.item.pk, payload.itemComparisons)
     },
     clearComparisons: state => {
       state.comparisons = getDefaultEqItems()
@@ -62,8 +83,7 @@ export default {
      */
     createPairForItem ({ commit, state }, item) {
       const itemPlacement = ITEM_PLACE[item.type]
-      let itemComparisons = {}
-      itemComparisons[item.pk] = {
+      let itemComparisons = {
         item: item,
         itemStats: setStats({
           [itemPlacement]: item
@@ -74,7 +94,7 @@ export default {
         comparedItem => comparedItem.type === item.type && comparedItem.pk !== item.pk
       )
       for (let comparedItem of otherItemsOfTheSameType) {
-        itemComparisons[item.pk].comparisons.push({
+        itemComparisons.comparisons.push({
           'item': comparedItem,
           'itemStats': setStats({
             [itemPlacement]: comparedItem
@@ -82,18 +102,18 @@ export default {
         })
       }
 
-      console.log(itemComparisons, itemPlacement, item.name)
+      // console.log(itemComparisons, itemPlacement, item.name)
       // console.log('commit', item.type)
       // commit('addItemComparisons', {itemComparisons, placement: itemPlacement})
 
       if (state.comparisons[itemPlacement]) {
-        console.log('update')
-        commit('updateItemComparisons', {itemComparisons: itemComparisons[item.pk], itemPlacement, item})
+        // console.log('update')
+        commit('updateItemComparisons', {itemComparisons: itemComparisons, itemPlacement, item})
       } else {
-        console.log('add')
+        // console.log('add')
         commit('addItemComparisons', {itemComparisons, itemPlacement})
       }
-      console.log(state.comparisons)
+      // console.log(state.comparisons)
     },
     /**
      * Creates pairs for all compared items.
@@ -105,6 +125,7 @@ export default {
     },
     uncompareItem ({ commit, state }, payload) {
       commit('removeCompareItem', payload.item)
+      commit('removeItemFromComparison', payload.item)
       payload.callback('Usunięto z porównania')
     },
     removeAllItems ({ commit }) {

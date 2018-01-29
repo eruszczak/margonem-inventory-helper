@@ -28,29 +28,26 @@
               <h2 class="subtitle">
                 <!--{{// comparison[key]}}-->
                 <!--<p v-for="(val2, key2) in comparison[key]">{{comparison[key][key2]}}</p>-->
-                <item v-for="(val2, key2) in comparisons[key]" :key="key2" :data="comparisons[key][key2].item" :action="rmbActions.removeCompare"/>
+                <!--{{items}}-->
+                <item v-for="(comp, index) in items" :key="index" :data="comp.item" :action="rmbActions.removeCompare"/>
               </h2>
             </div>
           </div>
         </section>
-          <!--<item :data="pair.item"/>-->
         <tabs size="is-small" class="block">
-          <tab-item v-for="(val2, key2) in comparisons[key]" :item="comparisons[key][key2].item">
+          <tab-item v-for="(comp, index) in items" :key="index" :item="comp.item">
             <tabs size="is-small" class="block">
-              <tab-item v-for="comparison in comparisons[key][key2].comparisons" :item="comparison.item">
+              <tab-item v-for="comparison in comp.comparisons" :item="comparison.item">
                 <div slot="label">
                   <img class="itemborder borderRarity" :class="comparison.item.rarity" :src="comparison.item.img" :alt="comparison.item.name">
                   <p>{{ comparison.item.name }}</p>
                 </div>
-                <item :data="comparisons[key][key2].item"/> vs <item :data="comparison.item"/>
-                <eq-stats-compare :leftSource="comparisons[key][key2].itemStats" :rightSource="comparison.itemStats"/>
-                
-
+                <!--<item :data="comparisons[key][key2].item"/> vs <item :data="comparison.item"/>-->
+                <eq-stats-compare :leftSource="comp.itemStats" :rightSource="comparison.itemStats"/>
               </tab-item>
             </tabs>
           </tab-item>
-        </tabs> 
-
+        </tabs>
       </template>
     </div>
   </section>
