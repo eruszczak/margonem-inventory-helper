@@ -43,8 +43,10 @@
                   <p>{{ comparison.item.name }}</p>
                 </div>
                 <item :data="comparisons[key][key2].item"/> vs <item :data="comparison.item"/>
-                <!-- <eq-stats-compare :leftSource="pair.itemStats" :rightSource="comparison.itemStats"/> -->
-              </tab-item> 
+                <eq-stats-compare :leftSource="comparisons[key][key2].itemStats" :rightSource="comparison.itemStats"/>
+                
+
+              </tab-item>
             </tabs>
           </tab-item>
         </tabs> 
@@ -59,11 +61,12 @@
   import Item from './Item'
   import { RIGHT_CLICK_MAPPER } from '../utils/constants'
   import EqStatsCompare from './includes/EqStatsCompare'
+  import Test from './includes/Test'
   import {Tabs, TabItem} from './ui/tabs'
 
   export default {
     name: 'item-compare-view',
-    components: {Item, EqStatsCompare, Tabs, TabItem},
+    components: {Item, EqStatsCompare, Tabs, TabItem, Test},
     mounted () {
       this.initPairs()
     },
