@@ -1,10 +1,11 @@
 import {setStats} from '../../utils/eq'
+import { getDefaultEqItems, ITEM_PLACE } from '../../utils/items'
 
 export default {
   state: {
     canAddToEq: true,
     compareItems: [],
-    comparision: {}
+    comparision: getDefaultEqItems()
   },
   getters: {
     canAddToEq: state => state.canAddToEq,
@@ -28,16 +29,16 @@ export default {
       state.comparision[type] = pairs
     },
     addItemComparision: (state, payload) => {
-      state.comparision[payload.type] = payload.itemComparision
+      state.comparision[payload.itemPlacement] = payload.itemComparision
     },
     updateItemComparision: (state, payload) => {
-      state.comparision[payload.item.type][payload.item.pk] = payload.itemComparision
+      state.comparision[payload.itemPlacement][payload.item.pk] = payload.itemComparision
     },
     clearComparision: state => {
       state.comparision = {}
     },
-    clearTypeFromComparision: (state, type) => {
-      state.comparision[type] = []
+    clearTypeFromComparision: (state, placement) => {
+      state.comparision[placement] = []
     }
   },
   actions: {
@@ -59,11 +60,12 @@ export default {
      * Compares an item with other items of the same type
      */
     createPairForItem ({ commit, state }, item) {
+      const itemPlacement = ITEM_PLACE[item.type]
       let itemComparision = {}
       itemComparision[item.pk] = {
         item: item,
         itemStats: setStats({
-          unknownPlacement: item
+          [itemPlacement]: item
         }),
         comparisons: []
       }
@@ -74,17 +76,23 @@ export default {
         itemComparision[item.pk].comparisons.push({
           'item': comparedItem,
           'itemStats': setStats({
-            unknownPlacement: comparedItem
+            [itemPlacement]: comparedItem
           })
         })
       }
-      commit('addItemComparision', {itemComparision, type: item.type})
 
-      // if (item.type in state.comparision) {
-        // commit('updateItemComparision', {itemComparision, item})
-      // } else {
-        // commit('addItemComparision', {itemComparision, type: item.type})
-      // }
+      console.log(itemComparision, itemPlacement, item.name)
+      // console.log('commit', item.type)
+      // commit('addItemComparision', {itemComparision, placement: itemPlacement})
+
+      if (state.comparision[itemPlacement]) {
+        console.log('update')
+        commit('updateItemComparision', {itemComparision: itemComparision[item.pk], itemPlacement, item})
+      } else {
+        console.log('add')
+        commit('addItemComparision', {itemComparision, itemPlacement})
+      }
+      console.log(state.comparision)
     },
     /**
      * Creates pairs for all compared items.
