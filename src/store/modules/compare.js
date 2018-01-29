@@ -5,12 +5,12 @@ export default {
   state: {
     canAddToEq: true,
     compareItems: [],
-    comparision: getDefaultEqItems()
+    comparisons: getDefaultEqItems()
   },
   getters: {
     canAddToEq: state => state.canAddToEq,
     compareItems: state => state.compareItems,
-    comparision: state => state.comparision
+    comparisons: state => state.comparisons
   },
   mutations: {
     toggleCanAddToEq: state => {
@@ -25,20 +25,21 @@ export default {
     clearCompareItems: state => {
       state.compareItems = []
     },
-    addTypeComparision: (state, type, pairs) => {
-      state.comparision[type] = pairs
+    addTypeComparisons: (state, type, pairs) => {
+      state.comparisons[type] = pairs
     },
-    addItemComparision: (state, payload) => {
-      state.comparision[payload.itemPlacement] = payload.itemComparision
+    addItemComparisons: (state, payload) => {
+      state.comparisons[payload.itemPlacement] = payload.itemComparisons
     },
-    updateItemComparision: (state, payload) => {
-      state.comparision[payload.itemPlacement][payload.item.pk] = payload.itemComparision
+    updateItemComparisons: (state, payload) => {
+      // Vue.set needed?
+      state.comparisons[payload.itemPlacement][payload.item.pk] = payload.itemComparisons
     },
-    clearComparision: state => {
-      state.comparision = {}
+    clearComparisons: state => {
+      state.comparisons = getDefaultEqItems()
     },
-    clearTypeFromComparision: (state, placement) => {
-      state.comparision[placement] = []
+    clearTypeFromComparisons: (state, placement) => {
+      state.comparisons[placement] = {}
     }
   },
   actions: {
@@ -61,8 +62,8 @@ export default {
      */
     createPairForItem ({ commit, state }, item) {
       const itemPlacement = ITEM_PLACE[item.type]
-      let itemComparision = {}
-      itemComparision[item.pk] = {
+      let itemComparisons = {}
+      itemComparisons[item.pk] = {
         item: item,
         itemStats: setStats({
           [itemPlacement]: item
@@ -73,7 +74,7 @@ export default {
         comparedItem => comparedItem.type === item.type && comparedItem.pk !== item.pk
       )
       for (let comparedItem of otherItemsOfTheSameType) {
-        itemComparision[item.pk].comparisons.push({
+        itemComparisons[item.pk].comparisons.push({
           'item': comparedItem,
           'itemStats': setStats({
             [itemPlacement]: comparedItem
@@ -81,18 +82,18 @@ export default {
         })
       }
 
-      console.log(itemComparision, itemPlacement, item.name)
+      console.log(itemComparisons, itemPlacement, item.name)
       // console.log('commit', item.type)
-      // commit('addItemComparision', {itemComparision, placement: itemPlacement})
+      // commit('addItemComparisons', {itemComparisons, placement: itemPlacement})
 
-      if (state.comparision[itemPlacement]) {
+      if (state.comparisons[itemPlacement]) {
         console.log('update')
-        commit('updateItemComparision', {itemComparision: itemComparision[item.pk], itemPlacement, item})
+        commit('updateItemComparisons', {itemComparisons: itemComparisons[item.pk], itemPlacement, item})
       } else {
         console.log('add')
-        commit('addItemComparision', {itemComparision, itemPlacement})
+        commit('addItemComparisons', {itemComparisons, itemPlacement})
       }
-      console.log(state.comparision)
+      console.log(state.comparisons)
     },
     /**
      * Creates pairs for all compared items.
