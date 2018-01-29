@@ -21,10 +21,12 @@
 
 <script>
   import { ITEM_STAT, ITEM_STATS_IN_ORDER } from '../../utils/items'
+  import {Table, TableColumn} from '../ui/table'
 
   export default {
     name: 'eq-stats-compare',
     props: ['leftSource', 'rightSource'],
+    components: {Table, TableColumn},
     computed: {
       orderedStats: function () {
         let globalStatsInOrder = []
