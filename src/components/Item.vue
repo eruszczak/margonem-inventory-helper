@@ -45,6 +45,9 @@
             this.success(message)
           }
         }
+        if (this.action === RIGHT_CLICK_MAPPER.ignore) {
+          return
+        }
         if (this.action === RIGHT_CLICK_MAPPER.removeCompare) {
           this.uncompareItem(comparePayload)
         } else if (!this.canAddToEq) {
