@@ -41,7 +41,7 @@
 <script>
   import { mapGetters, mapMutations } from 'vuex'
   import { MAP_TYPE_NAME_TO_ID, MENU_LINKS } from '../utils/navbar'
-  import Item from './Item'
+  import Item from './item/Item'
   import { toast } from '../mixins/toast'
   import { RIGHT_CLICK_MAPPER } from '../utils/constants'
   import { fetchItems } from '../api/items'

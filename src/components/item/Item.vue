@@ -12,11 +12,11 @@
 
 <script>
   import Popup from './Popup'
-  import { isItemWearable } from '../utils/helpers'
-  import { ITEM_PLACE } from '../utils/items'
+  import { isItemWearable } from '../../utils/helpers'
+  import { ITEM_PLACE } from '../../utils/items'
   import { mapGetters, mapActions } from 'vuex'
-  import { RIGHT_CLICK_MAPPER } from '../utils/constants'
-  import { toast } from '../mixins/toast'
+  import { RIGHT_CLICK_MAPPER } from '../../utils/constants'
+  import { toast } from '../../mixins/toast'
 
   export default {
     name: 'item',
@@ -95,7 +95,7 @@
     display: inline-block;
   }
   .itemborder {
-    background-image:url('../assets/itembg.png');
+    background-image:url('../../assets/itembg.png');
     padding: 2px;
     margin: 1px;
   }

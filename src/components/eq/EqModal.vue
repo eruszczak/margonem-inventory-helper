@@ -14,10 +14,10 @@
 
 <script>
   import { mapMutations, mapGetters } from 'vuex'
-  import EqStats from './includes/EqStats'
-  import EqBonuses from './includes/EqBonuses'
-  import EqOverview from './includes/EqOverview'
-  import EqBonusesWarnings from './includes/EqBonusesWarnings'
+  import EqStats from './EqStats'
+  import EqBonuses from './EqBonuses'
+  import EqOverview from './EqOverview'
+  import EqBonusesWarnings from './EqBonusesWarnings'
 
   export default {
     name: 'eq-modal',

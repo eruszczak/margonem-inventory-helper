@@ -59,12 +59,12 @@
 
 <script>
   import { mapGetters, mapActions, mapMutations } from 'vuex'
-  import Eq from './Eq'
-  import RestoreEq from './includes/RestoreEq'
-  import EqStatsCompare from './includes/EqStatsCompare'
-  import EqBonuses from './includes/EqBonuses'
-  import EqOverview from './includes/EqOverview'
-  import EqBonusesCompare from './includes/EqBonusesCompare'
+  import Eq from './eq/Eq'
+  import RestoreEq from './eq/RestoreEq'
+  import EqStatsCompare from './eq/EqStatsCompare'
+  import EqBonuses from './eq/EqBonuses'
+  import EqOverview from './eq/EqOverview'
+  import EqBonusesCompare from './eq/EqBonusesCompare'
 
   export default {
     name: 'eq-compare-view',

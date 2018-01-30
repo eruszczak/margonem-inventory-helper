@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import Item from '../../Item'
+  import Item from '../../item/Item'
   import { RIGHT_CLICK_MAPPER } from '../../../utils/constants'
 
   export default {

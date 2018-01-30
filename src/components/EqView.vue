@@ -123,12 +123,12 @@
 
 <script>
   import { mapGetters, mapActions, mapMutations } from 'vuex'
-  import Eq from './Eq'
-  import RestoreEq from './includes/RestoreEq'
-  import EqStats from './includes/EqStats'
-  import EqBonuses from './includes/EqBonuses'
-  import EqBonusesWarnings from './includes/EqBonusesWarnings'
-  import EqOverview from './includes/EqOverview'
+  import Eq from './eq/Eq'
+  import RestoreEq from './eq/RestoreEq'
+  import EqStats from './eq/EqStats'
+  import EqBonuses from './eq/EqBonuses'
+  import EqBonusesWarnings from './eq/EqBonusesWarnings'
+  import EqOverview from './eq/EqOverview'
   import { getEqRoute } from '../utils/helpers'
   import { toast } from '../mixins/toast'
 

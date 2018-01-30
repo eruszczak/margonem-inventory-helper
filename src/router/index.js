@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Items from '@/components/Items'
+import ItemListView from '@/components/ItemListView'
 import ItemView from '@/components/ItemView'
 import EqView from '@/components/EqView'
 import EqCompareView from '@/components/EqCompareView'
@@ -34,7 +34,7 @@ export default new Router({
     {
       path: '/:type?',
       name: 'items',
-      component: Items,
+      component: ItemListView,
       props: true
     },
     {

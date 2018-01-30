@@ -48,9 +48,9 @@
 
 <script>
   import {mapGetters, mapActions} from 'vuex'
-  import Item from './Item'
+  import Item from './item/Item'
   import { RIGHT_CLICK_MAPPER } from '../utils/constants'
-  import EqStatsCompare from './includes/EqStatsCompare'
+  import EqStatsCompare from './eq/EqStatsCompare'
   import {Tabs, TabItem} from './ui/tabs'
 
   export default {

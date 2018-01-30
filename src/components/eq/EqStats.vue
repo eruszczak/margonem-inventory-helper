@@ -15,7 +15,7 @@
 
 <script>
   import { ITEM_STAT, ITEM_STATS_IN_ORDER } from '../../utils/items'
-  import { Table, TableColumn, TableHeader, TableRow } from '../ui/table'
+  import { Table, TableColumn, TableHeader, TableRow } from '../ui/table/index'
 
   export default {
     name: 'eq-stats',
