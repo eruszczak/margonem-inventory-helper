@@ -17,7 +17,6 @@
         </div>
       </div>
       <button class="button" @click="removeAllItems">Wyczyść przedmioty</button>
-<!--{{comparision}}-->
       <template v-for="(items, key) in comparisons" v-if="items">
         <section class="hero is-primary">
           <div class="hero-body">
@@ -25,12 +24,6 @@
               <h1 class="title">
                 {{ key }}
               </h1>
-              <h2 class="subtitle">
-                <!--{{// comparison[key]}}-->
-                <!--<p v-for="(val2, key2) in comparison[key]">{{comparison[key][key2]}}</p>-->
-                <!--{{items}}-->
-                <item v-for="(comp, index) in items" :key="index" :data="comp.item" :action="rmbActions.removeCompare"/>
-              </h2>
             </div>
           </div>
         </section>
