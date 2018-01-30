@@ -1,22 +1,18 @@
 <template>
-  <b-table
-    :data="orderedBonuses"
-    :striped="true"
-    :narrowed="true"
-    :hoverable="false"
-    :mobile-cards="false">
-    <template slot-scope="props">
-      <b-table-column label="Twój" centered>
-        {{ props.row.leftValue | encode }}
-      </b-table-column>
-      <b-table-column label="Nazwa" centered>
-        {{ props.row.name | encodeBonus }}
-      </b-table-column>
-      <b-table-column label="Odwiedzany" centered>
-        {{ props.row.rightValue | encode }}
-      </b-table-column>
-    </template>
-  </b-table>
+  <tbl>
+    <tbl-row slot="header">
+      <tbl-header centered>Twoj</tbl-header>
+      <tbl-header centered>Nazwa</tbl-header>
+      <tbl-header centered>Odwiedzany</tbl-header>
+    </tbl-row>
+    <tbody slot="tbody">
+    <tbl-row v-for="obj in orderedBonuses">
+      <tbl-col centered>{{ obj.leftValue | encode }}</tbl-col>
+      <tbl-col centered>{{ obj.name | encodeBonus }}</tbl-col>
+      <tbl-col centered>{{ obj.rightValue | encode }}</tbl-col>
+    </tbl-row>
+    </tbody>
+  </tbl>
 </template>
 
 <script>
