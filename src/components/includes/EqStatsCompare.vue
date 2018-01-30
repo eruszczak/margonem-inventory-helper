@@ -1,30 +1,48 @@
 <template>
-  <b-table
-    :data="orderedStats"
-    :striped="true"
-    :narrowed="true"
-    :hoverable="false"
-    :mobile-cards="false">
-    <template slot-scope="props">
-      <b-table-column label="Twój" centered>
-        {{ props.row.leftValue || '-' }}
-      </b-table-column>
-      <b-table-column label="Nazwa" centered>
-        {{ props.row.name | encodeStat }}
-      </b-table-column>
-      <b-table-column label="Odwiedzany" centered>
-        {{ props.row.rightValue || '-' }}
-      </b-table-column>
-    </template>
-  </b-table>
+  <!--<b-table-->
+    <!--:data="orderedStats"-->
+    <!--:striped="true"-->
+    <!--:narrowed="true"-->
+    <!--:hoverable="false"-->
+    <!--:mobile-cards="false">-->
+    <!--<template slot-scope="props">-->
+      <!--<b-table-column label="Twój" centered>-->
+        <!--{{ props.row.leftValue || '-' }}-->
+      <!--</b-table-column>-->
+      <!--<b-table-column label="Nazwa" centered>-->
+        <!--{{ props.row.name | encodeStat }}-->
+      <!--</b-table-column>-->
+      <!--<b-table-column label="Odwiedzany" centered>-->
+        <!--{{ props.row.rightValue || '-' }}-->
+      <!--</b-table-column>-->
+    <!--</template>-->
+  <!--</b-table>-->
+  <tbl>
+    <tbl-row slot="header">
+      <tbl-header v-if="leftItem"><item :data="leftItem"/></tbl-header>
+      <tbl-header v-else>Twój</tbl-header>
+      <tbl-header>Nazwa</tbl-header>
+      <tbl-header v-if="rightItem"><item :data="rightItem"/></tbl-header>
+      <tbl-header v-else>Odwiedzany</tbl-header>
+    </tbl-row>
+    <tbody slot="tbody">
+      <tbl-row v-for="obj in orderedStats">
+        <tbl-col>{{ obj.leftValue || '-' }}</tbl-col>
+        <tbl-col>{{ obj.name | encodeStat }}</tbl-col>
+        <tbl-col>{{ obj.rightValue || '-' }}</tbl-col>
+      </tbl-row>
+    </tbody>
+  </tbl>
 </template>
 
 <script>
   import { ITEM_STAT, ITEM_STATS_IN_ORDER } from '../../utils/items'
+  import Item from '../Item'
 
   export default {
     name: 'eq-stats-compare',
-    props: ['leftSource', 'rightSource'],
+    props: ['leftSource', 'rightSource', 'leftItem', 'rightItem'],
+    components: { Item },
     computed: {
       orderedStats: function () {
         let globalStatsInOrder = []
