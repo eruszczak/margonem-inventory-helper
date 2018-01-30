@@ -7,14 +7,13 @@
           :key="index"
           :class="{ 'is-active': newValue === index, 'is-disabled': tabItem.disabled }">
           <a @click="tabClick(index)">
-            <!--{{ tabItem.label }}-->
-            <item :data="tabItem.item" :action="rmbActions.removeCompare" :link="false"/>
+            <span v-if="tabItem.label" style="margin-right:4px">{{ tabItem.label }}</span><item :data="tabItem.item" :action="tabItem.itemAction" :noLink="tabItem.noLink"/>
           </a>
         </li>
       </ul>
     </nav>
     <section class="tab-content">
-      <slot/>
+      <slot name="content"/>
     </section>
   </div>
 </template>

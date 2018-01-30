@@ -28,14 +28,9 @@
           </div>
         </section>
         <tabs size="is-small" class="block">
-          <tab-item v-for="(comp, index) in items" :key="index" :item="comp.item">
+          <tab-item slot="content" v-for="(comp, index) in items" :key="index" :item="comp.item" :noLink="true" :itemAction="RIGHT_CLICK_MAPPER.removeCompare">
             <tabs size="is-small" class="block">
-              <tab-item v-for="comparison in comp.comparisons" :item="comparison.item">
-                <div slot="label">
-                  <img class="itemborder borderRarity" :class="comparison.item.rarity" :src="comparison.item.img" :alt="comparison.item.name">
-                  <p>{{ comparison.item.name }}</p>
-                </div>
-                <!--<item :data="comparisons[key][key2].item"/> vs <item :data="comparison.item"/>-->
+              <tab-item slot="content" v-for="(comparison, index) in comp.comparisons" :key="index" :noLink="true" :item="comparison.item" label="vs">
                 <eq-stats-compare :leftSource="comp.itemStats" :rightSource="comparison.itemStats"/>
               </tab-item>
             </tabs>
@@ -62,8 +57,7 @@
     },
     data () {
       return {
-        rmbActions: RIGHT_CLICK_MAPPER,
-        active: 0
+        RIGHT_CLICK_MAPPER: RIGHT_CLICK_MAPPER
       }
     },
     computed: {
