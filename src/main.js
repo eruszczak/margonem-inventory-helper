@@ -7,10 +7,16 @@ import Buefy from 'buefy'
 import 'buefy/lib/buefy.css'
 import { store } from './store/index'
 import VueClipboard from 'vue-clipboard2'
+import { Table, TableColumn, TableHeader, TableRow } from './components/ui/table'
 
 Vue.use(VueClipboard)
 Vue.config.productionTip = false
 Vue.use(Buefy)
+
+Vue.component('tbl', Table)
+Vue.component('tbl-col', TableColumn)
+Vue.component('tbl-header', TableHeader)
+Vue.component('tbl-row', TableRow)
 
 router.beforeEach(function (to, from, next) {
   window.scrollTo(0, 0)

@@ -14,14 +14,30 @@
       </b-table-column>
     </template>
   </b-table>
+  <!--<table>-->
+    <!--<thead slot="headers">-->
+      <!--<table-header></table-header>-->
+      <!--<table-header>Nazwa</table-header>-->
+      <!--<table-header></table-header>-->
+    <!--</thead>-->
+    <!--<tbody slot="tbody">-->
+      <!--<table-row v-for="obj in orderedStats">-->
+        <!--<table-column></table-column>-->
+        <!--<table-column></table-column>-->
+        <!--<table-column></table-column>-->
+      <!--</table-row>-->
+    <!--</tbody>-->
+  <!--</table>-->
 </template>
 
 <script>
   import { ITEM_STAT, ITEM_STATS_IN_ORDER } from '../../utils/items'
+  import { Table, TableColumn, TableHeader, TableRow } from '../ui/table'
 
   export default {
     name: 'eq-stats',
     props: ['source'],
+    components: {Table, TableColumn, TableHeader, TableRow},
     computed: {
       orderedStats: function () {
         let globalStatsInOrder = []
