@@ -25,16 +25,20 @@ export default {
     },
     removeItemFromComparison: (state, item) => {
       const itemPlacement = ITEM_PLACE[item.type]
+      console.log(state.comparisons, itemPlacement)
+      console.log('before', state.comparisons[itemPlacement].length)
       state.comparisons[itemPlacement] = state.comparisons[itemPlacement].filter(el => {
+      // Vue.set(state.comparisons, itemPlacement, state.comparisons[itemPlacement].filter(el => {
         console.log(el.item.pk, item.pk)
         return el.item.pk !== item.pk
       })
-      console.log('removing', item.pk)
-      console.log(state.comparisons[itemPlacement])
-      console.log(state.comparisons[itemPlacement].find(el => {
-        console.log('checking', el.item.pk)
-        return el.item.pk === item.pk
-      }))
+      console.log('after', state.comparisons[itemPlacement].length)
+      // console.log('removing', item.pk)
+      // console.log(state.comparisons[itemPlacement])
+      // console.log(state.comparisons[itemPlacement].find(el => {
+      //   console.log('checking', el.item.pk)
+      //   return el.item.pk === item.pk
+      // }))
       // console.log('before', state.comparisons[itemPlacement])
       // console.log('after', state.comparisons[itemPlacement].filter(el => {
       //   console.log(el.item.pk, item.pk)

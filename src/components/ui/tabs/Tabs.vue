@@ -8,7 +8,7 @@
           :class="{ 'is-active': newValue === index, 'is-disabled': tabItem.disabled }">
           <a @click="tabClick(index)">
             <!--{{ tabItem.label }}-->
-            <img v-if="tabItem.item" class="itemborder borderRarity" :class="tabItem.item.rarity" :src="tabItem.item.img" :alt="tabItem.item.name">
+            <item :data="tabItem.item" :action="rmbActions.removeCompare" :link="false"/>
           </a>
         </li>
       </ul>
@@ -21,6 +21,7 @@
 
 <script>
   import Item from '../../Item'
+  import { RIGHT_CLICK_MAPPER } from '../../../utils/constants'
 
   export default {
     name: 'Tabs',
@@ -40,6 +41,7 @@
       return {
         newValue: this.value || 0,
         tabItems: [],
+        rmbActions: RIGHT_CLICK_MAPPER,
         contentHeight: 0,
         _isTabs: true // Used internally by TabItem
       }
