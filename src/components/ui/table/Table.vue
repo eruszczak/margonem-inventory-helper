@@ -1,4 +1,5 @@
 <template>
+  <!--no need for wrapper and b-table? als loading-->
   <div class="b-table" :class="{ 'is-loading': loading }">
     <div class="table-wrapper">
       <table class="table is-striped is-narrow" :class="tableClasses">

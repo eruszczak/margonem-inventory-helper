@@ -1,20 +1,16 @@
 <template>
-  <b-table
-    :data="orderedBonuses"
-    :row-class="row => row.limitReached ? 'limit-reached' : ''"
-    :striped="true"
-    :narrowed="true"
-    :hoverable="false"
-    :mobile-cards="false">
-    <template slot-scope="props">
-      <b-table-column label="Nazwa">
-        {{ props.row.name | encodeBonus }} (x{{ props.row.count }})
-      </b-table-column>
-      <b-table-column label="Szansa">
-        {{ props.row.value }}% {{ props.row.amount }}
-      </b-table-column>
-    </template>
-  </b-table>
+  <tbl>
+    <tbl-row slot="header">
+      <tbl-header>Nazwa</tbl-header>
+      <tbl-header>Wartość</tbl-header>
+    </tbl-row>
+    <tbody slot="tbody">
+      <tbl-row v-for="obj in orderedBonuses">
+        <tbl-col>{{ obj.name | encodeBonus }} (x{{ obj.count }})</tbl-col>
+        <tbl-col>{{ obj.value }}% {{ obj.amount }}</tbl-col>
+      </tbl-row>
+    </tbody>
+  </tbl>
 </template>
 
 <script>

@@ -2,18 +2,11 @@
   <div v-if="eqItemsStats">
     <section>
       <eq-overview :source="eqItemsStats"></eq-overview>
-
-      <!-- <template v-if="orderedStats.length || true"> -->
-        <h2 class="title">Statystyki</h2>
-        <eq-stats :source="eqItemsStats"></eq-stats>
-      <!-- </template> -->
-
-      <!-- <template v-if="orderedBonuses.length || true"> -->
-        <h2 class="title">Bonusy</h2>
-        <eq-bonuses :source="eqItemsStats"></eq-bonuses>
-      <!-- </template> -->
-        <eq-bonuses-warnings :source="eqItemsStats"></eq-bonuses-warnings>
-
+      <h2 class="title">Statystyki</h2>
+      <eq-stats :source="eqItemsStats"></eq-stats>
+      <h2 class="title">Bonusy</h2>
+      <eq-bonuses :source="eqItemsStats"></eq-bonuses>
+      <eq-bonuses-warnings :source="eqItemsStats"></eq-bonuses-warnings>
       <hr style="visibility: hidden;">
     </section>
   </div>
