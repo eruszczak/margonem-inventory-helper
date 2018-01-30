@@ -9,6 +9,13 @@
         <li v-if="isAnyLimitReached"><small>Wartości oraz uwagi dla bonusu z przekroczonym limitem mogą być niepoprawne.</small></li>
       </ul>
     </b-message>
+    <msg header="Uwagi do bonusów">
+      <ul v-if="isWarnings">
+        <li v-for="item in source.bonusWarnings.decreased">{{ item }}</li>
+        <li v-for="(value, key) in source.bonusWarnings.limit">Przekroczono limit: {{ key }} (x{{ value }})</li>
+        <li v-if="isAnyLimitReached"><small>Wartości oraz uwagi dla bonusu z przekroczonym limitem mogą być niepoprawne.</small></li>
+      </ul>
+    </msg>
   </div>
 </template>
 

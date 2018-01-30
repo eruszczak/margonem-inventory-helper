@@ -9,9 +9,9 @@
 </template>
 
 <script>
-  import Item from './Item'
-  import { EQ_ITEMS_ROWS } from '../utils/items'
-  import { RIGHT_CLICK_MAPPER } from '../utils/constants'
+  import Item from '../item/Item'
+  import { EQ_ITEMS_ROWS } from '../../utils/items'
+  import { RIGHT_CLICK_MAPPER } from '../../utils/constants'
 
   export default {
     name: 'Eq',

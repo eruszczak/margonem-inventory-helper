@@ -19,7 +19,7 @@
 
 <script>
   import { ITEM_STAT, ITEM_STATS_IN_ORDER } from '../../utils/items'
-  import Item from '../Item'
+  import Item from '../item/Item'
 
   export default {
     name: 'eq-stats-compare',

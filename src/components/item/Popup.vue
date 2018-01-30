@@ -15,8 +15,8 @@
 </template>
 
 <script>
-  import {encodeProfessions, calculateMaxFullBonusDuration} from '../utils/helpers'
-  import {ITEM_RARITY, ITEM_TYPE, ITEM_BONUS, ITEM_STAT} from '../utils/items'
+  import {encodeProfessions, calculateMaxFullBonusDuration} from '../../utils/helpers'
+  import {ITEM_RARITY, ITEM_TYPE, ITEM_BONUS, ITEM_STAT} from '../../utils/items'
 
   export default {
     name: 'item',

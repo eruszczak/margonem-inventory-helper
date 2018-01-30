@@ -48,8 +48,8 @@
 </template>
 
 <script>
-  import Popup from './Popup'
-  import Item from './Item'
+  import Popup from './item/Popup'
+  import Item from './item/Item'
   import { fetchItem, fetchItemSimilar } from '../api/items'
   import { mapGetters, mapMutations } from 'vuex'
   import { RIGHT_CLICK_MAPPER } from '../utils/constants'
