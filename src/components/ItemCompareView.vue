@@ -30,7 +30,7 @@
         <tabs size="is-small" class="block">
           <tab-item slot="content" v-for="(comp, index) in items" :key="index" :item="comp.item" :noLink="true" :itemAction="RIGHT_CLICK_MAPPER.removeCompare">
             <tabs size="is-small" class="block">
-              <tab-item slot="content" v-for="(comparison, index) in comp.comparisons" :key="index" :noLink="true" :item="comparison.item" label="vs">
+              <tab-item slot="content" v-for="(comparison, index) in comp.comparisons" :key="index" :noLink="true" :itemAction="RIGHT_CLICK_MAPPER.ignore" :item="comparison.item" label="vs">
                 <eq-stats-compare :leftSource="comp.itemStats" :rightSource="comparison.itemStats"/>
               </tab-item>
             </tabs>
