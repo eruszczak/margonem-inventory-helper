@@ -29,11 +29,16 @@
         </section>
         <tabs size="is-small" class="block">
           <tab-item slot="content" v-for="(comp, index) in items" :key="index" :item="comp.item" :noLink="true" :itemAction="RIGHT_CLICK_MAPPER.removeCompare">
-            <tabs size="is-small" class="block">
+            <tabs size="is-small" class="block" v-if="compareItems.length > 1">
               <tab-item slot="content" v-for="(comparison, index) in comp.comparisons" :key="index" :noLink="true" :itemAction="RIGHT_CLICK_MAPPER.ignore" :item="comparison.item" label="vs">
                 <eq-stats-compare :leftItem="comp.item" :leftSource="comp.itemStats" :rightItem="comparison.item" :rightSource="comparison.itemStats"/>
               </tab-item>
             </tabs>
+            <div class="message is-info">
+              <div class="message-body">
+                <p>Aby zobaczyć porównanie, musisz dodać minimum 2 przedmioty tego samego typu</p>
+              </div>
+            </div>
           </tab-item>
         </tabs>
       </template>

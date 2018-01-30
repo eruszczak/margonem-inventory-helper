@@ -27,9 +27,9 @@
     </tbl-row>
     <tbody slot="tbody">
       <tbl-row v-for="obj in orderedStats">
-        <tbl-col>{{ obj.leftValue || '-' }}</tbl-col>
-        <tbl-col>{{ obj.name | encodeStat }}</tbl-col>
-        <tbl-col>{{ obj.rightValue || '-' }}</tbl-col>
+        <tbl-col centered>{{ obj.leftValue || '-' }}</tbl-col>
+        <tbl-col centered>{{ obj.name | encodeStat }}</tbl-col>
+        <tbl-col centered>{{ obj.rightValue || '-' }}</tbl-col>
       </tbl-row>
     </tbody>
   </tbl>
