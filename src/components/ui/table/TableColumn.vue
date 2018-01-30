@@ -1,5 +1,5 @@
 <template>
-  <td :class="{ 'has-text-right': !centered, 'has-text-centered': centered }" :data-label="label">
+  <td :class="{ 'has-text-centered': centered }">
     <span>
       <slot></slot>
     </span>
@@ -10,23 +10,7 @@
   export default {
     name: 'TableColumn',
     props: {
-      label: String,
-      customKey: [String, Number],
-      field: String,
-      meta: {},
-      width: [Number, String],
-      numeric: Boolean,
-      centered: Boolean,
-      sortable: Boolean,
-      visible: {
-        type: Boolean,
-        default: true
-      },
-      customSort: Function
-    },
-    data () {
-      return {
-      }
+      centered: Boolean
     }
   }
 </script>
