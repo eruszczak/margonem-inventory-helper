@@ -11,10 +11,9 @@
     name: 'TabItem',
     props: {
       label: String,
-      icon: String,
-      iconPack: String,
-      disabled: Boolean,
-      item: Object
+      item: Object,
+      noLink: Boolean,
+      itemAction: Number
     },
     data () {
       return {

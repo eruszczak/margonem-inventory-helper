@@ -1,5 +1,5 @@
 <template>
-  <router-link v-if="link" :to="{name: 'itemView', params: {slug: data.slug}}">
+  <router-link v-if="!noLink" :to="{name: 'itemView', params: {slug: data.slug}}">
     <div :id="data.slug" class="item" @contextmenu.prevent="itemRightClick(data)">
       <img class="itemborder borderRarity" :class="data.rarity" :src="data.img" :alt="data.name">
       <popup :data="data"></popup>
@@ -20,7 +20,7 @@
 
   export default {
     name: 'item',
-    props: ['data', 'action', 'link'],
+    props: ['data', 'action', 'noLink'],
     components: {
       Popup
     },
