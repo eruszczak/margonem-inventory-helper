@@ -12,25 +12,11 @@
         <b-input v-model="query"></b-input>
       </div>
     </nav>
-
-    <transition name="fade">
-      <div class="search-items has-text-centered is-clearfix" :class="{'search-items-modal': modalActive}" v-if="query">
-        <div v-if="searching"><div class="vue-simple-spinner" style="margin: 0px auto; border-radius: 100%; border-width: 3px; border-style: solid; border-color: rgb(33, 150, 243) rgb(238, 238, 238) rgb(238, 238, 238); border-image: initial; width: 42px; height: 42px; animation: vue-simple-spinner-spin 0.8s linear infinite;"></div> <!----></div>
-        <item v-else-if="searchResults.length" v-for="item in searchResults" :key="item.pk" :data="item" :action="rmbActions.add"></item>
-        <msg v-else-if="noResults">Nie znaleziono przedmiotów dla podanej frazy</msg>
-      </div>
-    </transition>
-
+    <search :modalActive="modalActive"></search>
     <!--<transition name="fade">-->
       <router-view></router-view>
     <!--</transition>-->
-    <section class="hero is-light">
-      <div class="hero-body" style="padding:2em">
-        <div class="container has-text-centered">
-          Grafiki przedmiotów należą do <a href="http://garmory.pl/" target="_blank">Garmory sp. z o.o.</a>
-        </div>
-      </div>
-    </section>
+    <footer></footer>
 
     <b-modal :active.sync="modalActive">
       <div class="modal-background"></div>
@@ -61,38 +47,25 @@
   import { mapGetters, mapMutations } from 'vuex'
   import Eq from './components/eq/Eq'
   import Item from './components/item/Item'
+  import Search from './components/item/Search'
   import RestoreEq from './components/eq/RestoreEq'
   import EqModal from './components/eq/EqModal'
+  import Footer from './components/ui/Footer'
   import { getEqUrl } from './utils/helpers'
   import { toast } from './mixins/toast'
-  import debounce from 'lodash/debounce'
-  import { searchItems } from './api/items'
-  import { RIGHT_CLICK_MAPPER } from './utils/constants'
 
   export default {
     name: 'app',
     data () {
-      let search = localStorage.getItem('search')
-      if (search) {
-        search = JSON.parse(search)
-        this.query = search.query
-        this.results = search.results
-        this.noResults = search.noResults
-      }
       return {
         modalActive: false,
-        toggleValue: this.canAddToEq,
-        query: search ? search.query : '',
-        searchResults: search ? search.results : [],
-        rmbActions: RIGHT_CLICK_MAPPER,
-        searching: false,
-        noResults: false
+        toggleValue: this.canAddToEq
       }
     },
     created () {
       this.setEqItemsStats()
     },
-    components: {Eq, Item, RestoreEq, EqModal},
+    components: {Eq, Item, RestoreEq, EqModal, Search, Footer},
     mixins: [toast],
     computed: {
       ...mapGetters(['pageTitle', 'canAddToEq', 'eqItems', 'isLoading', 'eqItemsStats']),
@@ -106,10 +79,6 @@
       },
       '$route' (to, from) {
         this.closeModal()
-      },
-      query: function (value) {
-        this.noResults = false
-        this.search()
       }
     },
     methods: {
@@ -122,36 +91,7 @@
       },
       onCopy: function (e) {
         this.success('Skopiowano do schowka')
-      },
-      search: debounce(
-        function () {
-          if (!this.query) {
-            this.searchResults = []
-            localStorage.removeItem('search')
-            return
-          }
-          if (this.query.length < 3) {
-            return
-          }
-
-          this.searching = true
-          let vm = this
-          searchItems(this.query, response => {
-            // TODO: can use this?
-            vm.searchResults = response.data.results
-            vm.searching = false
-            vm.noResults = vm.searchResults.length === 0
-            localStorage.setItem('search', JSON.stringify({
-              'query': vm.query,
-              'results': vm.searchResults,
-              'noResults': vm.noResults
-            }))
-          }, error => {
-            console.error(error)
-          })
-        },
-        300
-      )
+      }
     }
   }
 </script>
