@@ -1,29 +1,11 @@
 <template>
-  <!--<b-table-->
-    <!--:data="orderedStats"-->
-    <!--:striped="true"-->
-    <!--:narrowed="true"-->
-    <!--:hoverable="false"-->
-    <!--:mobile-cards="false">-->
-    <!--<template slot-scope="props">-->
-      <!--<b-table-column label="Twój" centered>-->
-        <!--{{ props.row.leftValue || '-' }}-->
-      <!--</b-table-column>-->
-      <!--<b-table-column label="Nazwa" centered>-->
-        <!--{{ props.row.name | encodeStat }}-->
-      <!--</b-table-column>-->
-      <!--<b-table-column label="Odwiedzany" centered>-->
-        <!--{{ props.row.rightValue || '-' }}-->
-      <!--</b-table-column>-->
-    <!--</template>-->
-  <!--</b-table>-->
   <tbl>
     <tbl-row slot="header">
-      <tbl-header v-if="leftItem"><item :data="leftItem"/></tbl-header>
-      <tbl-header v-else>Twój</tbl-header>
-      <tbl-header>Nazwa</tbl-header>
-      <tbl-header v-if="rightItem"><item :data="rightItem"/></tbl-header>
-      <tbl-header v-else>Odwiedzany</tbl-header>
+      <tbl-header centered><item :data="leftItem"/></tbl-header>
+      <!--<tbl-header v-else>Twój</tbl-header>-->
+      <tbl-header centered>Nazwa</tbl-header>
+      <tbl-header centered><item :data="rightItem"/></tbl-header>
+      <!--<tbl-header v-else>Odwiedzany</tbl-header>-->
     </tbl-row>
     <tbody slot="tbody">
       <tbl-row v-for="obj in orderedStats">

@@ -1,6 +1,6 @@
 <template>
   <th>
-    <div class="th-wrap is-centered">
+    <div class="th-wrap" :class="{ 'is-centered': centered }">
       <slot/>
     </div>
   </th>
@@ -10,6 +10,7 @@
   export default {
     name: 'TableHeader',
     props: {
+      centered: Boolean
     },
     data () {
       return {

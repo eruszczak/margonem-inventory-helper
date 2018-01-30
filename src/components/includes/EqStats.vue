@@ -1,33 +1,16 @@
 <template>
-  <b-table
-    :data="orderedStats"
-    :striped="true"
-    :narrowed="true"
-    :hoverable="false"
-    :mobile-cards="false">
-    <template slot-scope="props">
-      <b-table-column label="Nazwa">
-        {{ props.row.name | encodeStat }}
-      </b-table-column>
-      <b-table-column label="Wartość">
-        {{ props.row.value }}
-      </b-table-column>
-    </template>
-  </b-table>
-  <!--<table>-->
-    <!--<thead slot="headers">-->
-      <!--<table-header></table-header>-->
-      <!--<table-header>Nazwa</table-header>-->
-      <!--<table-header></table-header>-->
-    <!--</thead>-->
-    <!--<tbody slot="tbody">-->
-      <!--<table-row v-for="obj in orderedStats">-->
-        <!--<table-column></table-column>-->
-        <!--<table-column></table-column>-->
-        <!--<table-column></table-column>-->
-      <!--</table-row>-->
-    <!--</tbody>-->
-  <!--</table>-->
+  <tbl>
+    <tbl-row slot="header">
+      <tbl-header>Nazwa</tbl-header>
+      <tbl-header>Wartość</tbl-header>
+    </tbl-row>
+    <tbody slot="tbody">
+      <tbl-row v-for="obj in orderedStats">
+        <tbl-col>{{ obj.name | encodeStat }}</tbl-col>
+        <tbl-col>{{ obj.value }}</tbl-col>
+      </tbl-row>
+    </tbody>
+  </tbl>
 </template>
 
 <script>
