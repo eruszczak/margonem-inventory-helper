@@ -6,10 +6,8 @@
         <router-link class="navbar-item" :to="{name: 'eqView'}">Zestawy EQ</router-link>
         <router-link class="navbar-item" :to="{name: 'itemCompareView'}">Porównaj</router-link>
         <a class="button is-primary is-medium" :class="{'is-active': modalActive}" @click="modalActive = !modalActive">Pokaż EQ</a>
-        <b-switch class="navbar-item" :value="canAddToEq" @input="toggleCanAddToEq">
-          {{ canAddToEq ? 'Do eq' : 'Do porównywarki'}}
-        </b-switch>
-        <b-input v-model="query"></b-input>
+        <b-switch class="navbar-item" :value="canAddToEq" @input="toggleCanAddToEq">{{ canAddToEq ? 'Do eq' : 'Do porównywarki'}}</b-switch>
+        <b-input :value="searchQuery" @input="setSearchQuery"></b-input>
       </div>
     </nav>
     <search :modalActive="modalActive"></search>
@@ -46,7 +44,6 @@
 <script>
   import { mapGetters, mapMutations } from 'vuex'
   import Eq from './components/eq/Eq'
-  import Item from './components/item/Item'
   import Search from './components/item/Search'
   import RestoreEq from './components/eq/RestoreEq'
   import EqModal from './components/eq/EqModal'
@@ -65,10 +62,10 @@
     created () {
       this.setEqItemsStats()
     },
-    components: {Eq, Item, RestoreEq, EqModal, Search, Footer},
+    components: {Eq, RestoreEq, EqModal, Search, Footer},
     mixins: [toast],
     computed: {
-      ...mapGetters(['pageTitle', 'canAddToEq', 'eqItems', 'isLoading', 'eqItemsStats']),
+      ...mapGetters(['pageTitle', 'canAddToEq', 'eqItems', 'isLoading', 'eqItemsStats', 'searchQuery']),
       eqLink: function () {
         return getEqUrl(this.$router, this.eqItems)
       }
@@ -82,7 +79,7 @@
       }
     },
     methods: {
-      ...mapMutations(['toggleCanAddToEq', 'setEqItemsStats']),
+      ...mapMutations(['toggleCanAddToEq', 'setEqItemsStats', 'setSearchQuery']),
       mouseOver: function (item, event) {
         item.isActive = true
       },
@@ -109,7 +106,7 @@
   /*.modal-card, .modal-card-body, .modal-content {*/
     /*overflow: visible;*/
   /*}*/
-.vue-simple-spinner{transition:all .3s linear}@keyframes vue-simple-spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}
+  .vue-simple-spinner{transition:all .3s linear}@keyframes vue-simple-spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}
   @media screen and (min-width: 1024px) {
     a.navbar-item.is-active, a.navbar-link.is-active {
       color: hsl(204, 86%, 53%) !important;

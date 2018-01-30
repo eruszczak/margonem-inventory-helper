@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import eq from './modules/eq'
 import compare from './modules/compare'
+import search from './modules/search'
 import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
@@ -35,6 +36,6 @@ export const store = new Vuex.Store({
     }
   },
   modules: {
-    eq, compare
+    eq, compare, search
   }
 })
