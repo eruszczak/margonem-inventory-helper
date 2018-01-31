@@ -26,7 +26,7 @@
       orderedBonuses: function () {
         let bonuses = []
         console.log(this.leftSource, this.rightSource)
-        if (this.leftSource || this.rightSource || !isObjEmpty(this.leftSource) || !isObjEmpty(this.rightSource)) {
+        if (this.leftSource && this.rightSource) {
           for (let bonusInOrder of ITEM_BONUSES_IN_ORDER) {
             if (bonusInOrder in this.leftSource || bonusInOrder in this.rightSource) {
               let bonusObj = {
