@@ -13,7 +13,7 @@
       <!--</div>-->
       <div class="message is-info">
         <div class="message-body">
-          <p>Przedmioty w porównywarce są porównywane z innymi przedmiotami tego samego typu.</p>
+          <p>Przedmioty są porównywane z innymi przedmiotami tego samego typu.</p>
         </div>
       </div>
       <button class="button" @click="removeAllItems">Wyczyść przedmioty</button>
@@ -36,7 +36,7 @@
             </tabs>
             <div class="message is-info">
               <div class="message-body">
-                <p>Aby zobaczyć porównanie, musisz dodać minimum 2 przedmioty tego samego typu</p>
+                <p>Musisz dodać minimum 2 przedmioty tego samego typu</p>
               </div>
             </div>
           </tab-item>
