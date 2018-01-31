@@ -1,16 +1,8 @@
 <template>
   <section class="section">
     <div class="container">
-      <!--<div class="message is-info">-->
-        <!--<div class="message-body">-->
           <!--<p>W tej strefie itemy po kliknięciu na nie PPM zostaną dodane do porównywarki</p>-->
-        <!--</div>-->
-      <!--</div>-->
-      <!--<div class="message is-info">-->
-        <!--<div class="message-body">-->
           <!--<p>Aby szybko porównać przedmioty, znajdź je za pomocą wyszukiwarki powyżej oraz dodaj klikając na nie PPM.</p>-->
-        <!--</div>-->
-      <!--</div>-->
       <div class="message is-info">
         <div class="message-body">
           <p>Przedmioty są porównywane z innymi przedmiotami tego samego typu.</p>

@@ -1,6 +1,5 @@
 <template>
   <div v-if="source" class="eq-items">
-    {{darkBorder}}
     <div class="eq-row" v-for="row in rows">
       <div class="eq-column" :class="{'dark-border': darkBorder, 'light-border': !darkBorder}" v-for="(place, index) in row" :key="index">
         <item v-if="source[place]" :data="source[place]" :action="action"></item>
