@@ -1,7 +1,8 @@
 <template>
   <div v-if="source" class="eq-items">
+    {{darkBorder}}
     <div class="eq-row" v-for="row in rows">
-      <div class="eq-column" v-for="place in row">
+      <div class="eq-column" :class="{'dark-border': darkBorder, 'light-border': !darkBorder}" v-for="(place, index) in row" :key="index">
         <item v-if="source[place]" :data="source[place]" :action="action"></item>
       </div>
     </div>
@@ -23,7 +24,8 @@
       source: {
         type: Object,
         default: null
-      }
+      },
+      darkBorder: Boolean
     },
     components: {Item},
     data () {
@@ -51,7 +53,19 @@
     display: inline-block;
     height: 42px;
     width: 42px;
-    border: 1px solid #d3d3d36e;
-    margin: 1px;
+    margin: 1px 1px;
   }
+
+  .light-border {
+    border: 1px solid #ffffff6e;
+  }
+
+  .dark-border {
+    border: 1px solid #00000033;
+  }
+
+  .no-border {
+    border: none
+  }
+  /* hide corner columns */
 </style>

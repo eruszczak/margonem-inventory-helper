@@ -10,9 +10,9 @@
               <article class="tile is-child notification has-text-centered" :class="[readOnly ? 'is-warning' : 'is-primary']">
                 <p class="title">{{ readOnly ? 'Odwiedzany' : 'Twój' }} zestaw</p>
                 <div class="content">
-                  <div class="columns">
+                  <div class="columns is-gapless">
                     <div class="column is-narrow">
-                      <eq :source="eqSet" :readOnly="readOnly"></eq>
+                      <eq :source="eqSet" :readOnly="readOnly" :darkBorder="readOnly"></eq>
                       <button v-if="readOnly" class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>
                       <router-link v-if="readOnly" :to="getCompareEqLink(eqItems)">Porównaj z moim</router-link>
                     </div>
@@ -27,11 +27,6 @@
                 </div>
               </article>
             </div>
-            <!-- <div class="tile is-parent">
-              <article class="tile is-child notification is-light has-text-centered">
-
-              </article>
-            </div> -->
           </div>
           <div class="tile is-parent">
             <article class="tile is-child notification is-danger has-text-centered">
