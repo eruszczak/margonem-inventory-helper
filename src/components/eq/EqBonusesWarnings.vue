@@ -1,18 +1,17 @@
 <template>
-  <div v-if="source.bonusWarnings.decreased.length || isAnyLimitReached">
+  <div v-if="source.bonusWarnings && (source.bonusWarnings.decreased.length || isAnyLimitReached)">
     <hr style="border:0">
-    {{source.bonusWarnings}}
-    <b-message title="Uwagi do bonusów" type="is-warning" :closable="false">
-      <ul v-if="isWarnings">
-        <li v-for="item in source.bonusWarnings.decreased">{{ item }}</li>
-        <li v-for="(value, key) in source.bonusWarnings.limit">Przekroczono limit: {{ key }} (x{{ value }})</li>
+    <msg header="Uwagi do bonusów" type="is-warning">
+      <ul v-if="source.bonusWarnings">
+        <li v-for="(item, index) in source.bonusWarnings.decreased" :key="index">{{ item }}</li>
+        <li v-for="(value, key) in source.bonusWarnings.limit" :key="key">Przekroczono limit: {{ key }} (x{{ value }})</li>
         <li v-if="isAnyLimitReached"><small>Wartości oraz uwagi dla bonusu z przekroczonym limitem mogą być niepoprawne.</small></li>
       </ul>
-    </b-message>
+    </msg>
     <msg header="Uwagi do bonusów">
-      <ul v-if="isWarnings">
-        <li v-for="item in source.bonusWarnings.decreased">{{ item }}</li>
-        <li v-for="(value, key) in source.bonusWarnings.limit">Przekroczono limit: {{ key }} (x{{ value }})</li>
+      <ul v-if="source.bonusWarnings">
+        <li v-for="(item, index) in source.bonusWarnings.decreased" :key="index">{{ item }}</li>
+        <li v-for="(value, key) in source.bonusWarnings.limit" :key="key">Przekroczono limit: {{ key }} (x{{ value }})</li>
         <li v-if="isAnyLimitReached"><small>Wartości oraz uwagi dla bonusu z przekroczonym limitem mogą być niepoprawne.</small></li>
       </ul>
     </msg>
