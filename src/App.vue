@@ -6,7 +6,7 @@
         <router-link class="navbar-item" :to="{name: 'eqView'}">Zestawy EQ</router-link>
         <router-link class="navbar-item" :to="{name: 'itemCompareView'}">Porównaj</router-link>
         <a class="button is-primary is-medium" :class="{'is-active': modalActive}" @click="modalActive = !modalActive">Pokaż EQ</a>
-        <b-switch class="navbar-item" :value="canAddToEq" @input="toggleCanAddToEq">{{ canAddToEq ? 'Do eq' : 'Do porównywarki'}}</b-switch>
+        <toggle class="navbar-item" :value="canAddToEq" @input="toggleCanAddToEq">{{ canAddToEq ? 'Do eq' : 'Do porównywarki'}}</toggle>
         <b-input :value="searchQuery" @input="setSearchQuery"></b-input>
       </div>
     </nav>
@@ -37,7 +37,7 @@
         </footer>
       </div>
     </b-modal>
-    <b-loading :active.sync="isLoading"></b-loading>
+    <loading :active.sync="isLoading"></loading>
   </div>
 </template>
 

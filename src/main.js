@@ -7,8 +7,11 @@ import Buefy from 'buefy'
 import 'buefy/lib/buefy.css'
 import { store } from './store/index'
 import VueClipboard from 'vue-clipboard2'
+
 import { Table, TableColumn, TableHeader, TableRow } from './components/ui/table'
 import { Message } from './components/ui/message'
+import { Loading } from './components/ui/loading'
+import { Toggle } from './components/ui/toggle'
 
 Vue.use(VueClipboard)
 Vue.config.productionTip = false
@@ -19,6 +22,8 @@ Vue.component('tbl-col', TableColumn)
 Vue.component('tbl-header', TableHeader)
 Vue.component('tbl-row', TableRow)
 Vue.component('msg', Message)
+Vue.component('loading', Loading)
+Vue.component('toggle', Toggle)
 
 router.beforeEach(function (to, from, next) {
   window.scrollTo(0, 0)
