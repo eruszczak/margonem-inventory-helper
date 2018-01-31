@@ -19,7 +19,6 @@
 
   export default {
     name: 'search',
-    props: ['modalActive'],
     components: {Item},
     created () {
       let search = localStorage.getItem(SEARCH_KEY)
@@ -37,7 +36,7 @@
       }
     },
     computed: {
-      ...mapGetters(['searchQuery'])
+      ...mapGetters(['searchQuery', 'modalActive'])
     },
     watch: {
       searchQuery: function (value) {

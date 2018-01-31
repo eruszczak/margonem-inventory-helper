@@ -5,104 +5,63 @@
         <router-link class="navbar-item" :to="{name: 'items'}">Przedmioty</router-link>
         <router-link class="navbar-item" :to="{name: 'eqView'}">Zestawy EQ</router-link>
         <router-link class="navbar-item" :to="{name: 'itemCompareView'}">Porównaj</router-link>
-        <a class="button is-primary is-medium" :class="{'is-active': modalActive}" @click="modalActive = !modalActive">Pokaż EQ</a>
+        <a class="button is-primary is-medium" :class="{'is-active': modalActive}" @click="toggleModal">Pokaż EQ</a>
         <toggle class="navbar-item" :value="canAddToEq" @input="toggleCanAddToEq">{{ canAddToEq ? 'Do eq' : 'Do porównywarki'}}</toggle>
         <b-input :value="searchQuery" @input="setSearchQuery"></b-input>
       </div>
     </nav>
-    <search :modalActive="modalActive"></search>
+    <!--todo-->
+    <search></search>
     <!--<transition name="fade">-->
       <router-view></router-view>
     <!--</transition>-->
     <footer></footer>
+    <eq-modal-preview></eq-modal-preview>
 
-    <b-modal :active.sync="modalActive">
-      <div class="modal-background"></div>
-      <!--<div class="modal-card" style="overflow-y: visible;overflow-x: hidden;margin-top: 60px;">-->
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title has-text-centered">Mój zestaw EQ</p>
-          <button class="delete" aria-label="close" @click="closeModal"></button>
-        </header>
-        <section class="modal-card-body">
-          <div class="content has-text-centered">
-            <eq :source="eqItems"></eq>
-            <eq-modal :source="eqItemsStats"></eq-modal>
-          </div>
-        </section>
-        <footer class="modal-card-foot">
-          <button class="button" v-clipboard:copy="eqLink" v-clipboard:success="onCopy">Kopiuj link</button>
-          <router-link class="button" :to="{name: 'eqView'}" @click.native="closeModal">Zobacz szczegóły</router-link>
-          <restore-eq></restore-eq>
-        </footer>
-      </div>
-    </b-modal>
     <loading :active.sync="isLoading"></loading>
   </div>
 </template>
 
 <script>
   import { mapGetters, mapMutations } from 'vuex'
-  import Eq from './components/eq/Eq'
   import Search from './components/item/Search'
-  import RestoreEq from './components/eq/RestoreEq'
-  import EqModal from './components/eq/EqModal'
   import Footer from './components/ui/Footer'
-  import { getEqUrl } from './utils/helpers'
-  import { toast } from './mixins/toast'
+  import EqModalPreview from './components/eq/EqModalPreview'
 
   export default {
     name: 'app',
     data () {
       return {
-        modalActive: false,
         toggleValue: this.canAddToEq
       }
     },
     created () {
       this.setEqItemsStats()
     },
-    components: {Eq, RestoreEq, EqModal, Search, Footer},
-    mixins: [toast],
+    components: {Search, Footer, EqModalPreview},
     computed: {
-      ...mapGetters(['pageTitle', 'canAddToEq', 'eqItems', 'isLoading', 'eqItemsStats', 'searchQuery']),
-      eqLink: function () {
-        return getEqUrl(this.$router, this.eqItems)
-      }
+      ...mapGetters(['pageTitle', 'canAddToEq', 'isLoading', 'searchQuery', 'modalActive'])
     },
     watch: {
       pageTitle (newVal, oldVal) {
         window.document.title = newVal
       },
       '$route' (to, from) {
+        // todo
+        console.log('route to', to)
         this.closeModal()
       }
     },
     methods: {
-      ...mapMutations(['toggleCanAddToEq', 'setEqItemsStats', 'setSearchQuery']),
+      ...mapMutations(['toggleCanAddToEq', 'setEqItemsStats', 'setSearchQuery', 'closeModal', 'toggleModal']),
       mouseOver: function (item, event) {
         item.isActive = true
-      },
-      closeModal: function () {
-        this.modalActive = false
-      },
-      onCopy: function (e) {
-        this.success('Skopiowano do schowka')
       }
     }
   }
 </script>
 
 <style>
-  /*#app {*/
-    /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
-    /*-webkit-font-smoothing: antialiased;*/
-    /*-moz-osx-font-smoothing: grayscale;*/
-    /*text-align: center;*/
-    /*color: #2c3e50;*/
-    /*margin-top: 60px;*/
-  /*}*/
-
   /*.modal-card, .modal-card-body, .modal-content {*/
     /*overflow: visible;*/
   /*}*/
@@ -144,16 +103,6 @@
     position: fixed;
     z-index: 1000;
   }
-
-  /*.footer {*/
-    /*position: absolute;*/
-    /*right: 0;*/
-    /*bottom: 0;*/
-    /*left: 0;*/
-    /*padding: 1rem;*/
-    /*background-color: #efefef;*/
-    /*text-align: center;*/
-  /*}*/
 
   /*.media-content {*/
     /*margin-top: -15px;*/

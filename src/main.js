@@ -12,6 +12,7 @@ import { Table, TableColumn, TableHeader, TableRow } from './components/ui/table
 import { Message } from './components/ui/message'
 import { Loading } from './components/ui/loading'
 import { Toggle } from './components/ui/toggle'
+import { Modal } from './components/ui/modal'
 
 Vue.use(VueClipboard)
 Vue.config.productionTip = false
@@ -24,6 +25,7 @@ Vue.component('tbl-row', TableRow)
 Vue.component('msg', Message)
 Vue.component('loading', Loading)
 Vue.component('toggle', Toggle)
+Vue.component('modal', Modal)
 
 router.beforeEach(function (to, from, next) {
   window.scrollTo(0, 0)
