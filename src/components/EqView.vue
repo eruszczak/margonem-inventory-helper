@@ -1,16 +1,8 @@
 <template>
   <section class="section">
     <div class="container">
-      <div class="message is-info">
-        <div class="message-body">
-          <p>Aby szybko stworzyć zestaw, znajdź przedmioty za pomocą wyszukiwarki powyżej oraz załóż je klikając na nie PPM.</p>
-        </div>
-      </div>
-      <div v-if="readOnly" class="message is-warning">
-        <div class="message-body">
-          <p>Odwiedzasz zestaw. Nie możesz go edytować.</p>
-        </div>
-      </div>
+      <msg>Znajdź przedmioty za pomocą wyszukiwarki powyżej oraz załóż je klikając PPM</msg>
+      <msg v-if="readOnly">Odwiedzasz zestaw. Nie możesz go edytować</msg>
       <div class="tile is-ancestor">
         <div class="tile is-vertical is-7">
           <div class="tile">
