@@ -5,7 +5,9 @@
         <p>{{ header }}</p>
       </div>
       <div class="message-body">
-        <slot/>
+        <div class="media-content">
+          <slot></slot>
+        </div>
       </div>
     </article>
   </transition>
@@ -19,5 +21,7 @@
 </script>
 
 <style scoped>
-
+  .media-content {
+    margin-top: -15px;
+  }
 </style>

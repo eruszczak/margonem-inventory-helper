@@ -9,7 +9,7 @@
       </header>
       <section class="modal-card-body">
         <div class="content has-text-centered">
-          <eq :source="eqItems"></eq>
+          <eq :source="eqItems" :darkBorder.native="true"></eq>
           <eq-modal :source="eqItemsStats"></eq-modal>
         </div>
       </section>

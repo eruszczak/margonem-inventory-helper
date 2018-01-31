@@ -103,8 +103,4 @@
     position: fixed;
     z-index: 1000;
   }
-
-  /*.media-content {*/
-    /*margin-top: -15px;*/
-  /*}*/
 </style>
