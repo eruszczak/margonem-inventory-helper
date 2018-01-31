@@ -8,26 +8,30 @@
           <div class="tile">
             <div class="tile is-parent">
               <article class="tile is-child notification has-text-centered" :class="[readOnly ? 'is-warning' : 'is-primary']">
-                <p class="title">{{ readOnly ? 'Odwiedzany' : 'Twój' }}</p>
+                <p class="title">{{ readOnly ? 'Odwiedzany' : 'Twój' }} zestaw</p>
                 <div class="content">
-                  <eq :source="eqSet" :readOnly="readOnly"></eq>
-                  <button v-if="readOnly" class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>
-                  <router-link v-if="readOnly" :to="getCompareEqLink(eqItems)">Porównaj z moim</router-link>
-                </div>
-              </article>
-            </div>
-            <div class="tile is-parent">
-              <article class="tile is-child notification is-light has-text-centered">
-                <p class="title">Ogólne</p>
-                <div class="content">
-                  <eq-overview :source="eqSetStats"></eq-overview>
-                  <div v-if="!readOnly">
-                    <restore-eq></restore-eq>
-                    <button class="button is-dark" @click="restart">restart</button>
+                  <div class="columns">
+                    <div class="column is-narrow">
+                      <eq :source="eqSet" :readOnly="readOnly"></eq>
+                      <button v-if="readOnly" class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>
+                      <router-link v-if="readOnly" :to="getCompareEqLink(eqItems)">Porównaj z moim</router-link>
+                    </div>
+                    <div class="column">
+                      <eq-overview :source="eqSetStats"></eq-overview>
+                      <div v-if="!readOnly">
+                        <restore-eq></restore-eq>
+                        <button class="button is-dark" @click="restart">restart</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </article>
             </div>
+            <!-- <div class="tile is-parent">
+              <article class="tile is-child notification is-light has-text-centered">
+
+              </article>
+            </div> -->
           </div>
           <div class="tile is-parent">
             <article class="tile is-child notification is-danger has-text-centered">
