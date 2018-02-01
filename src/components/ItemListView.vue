@@ -32,9 +32,13 @@
         </div>
       </div>
     </nav>
-    <div class="items">
-      <item v-for="item in items" :key="item.pk" :data="item" :action="rmbActions.add"></item>
-    </div>
+    <section class="section">
+      <div class="container">
+        <div class="items">
+          <item v-for="item in items" :key="item.pk" :data="item" :action="rmbActions.add"></item>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
