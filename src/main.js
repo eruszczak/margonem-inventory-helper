@@ -11,6 +11,7 @@ import { Message } from './components/ui/message'
 import { Loading } from './components/ui/loading'
 import { Toggle } from './components/ui/toggle'
 import { Modal } from './components/ui/modal'
+import { Input } from './components/ui/input'
 
 Vue.use(VueClipboard)
 Vue.config.productionTip = false
@@ -24,6 +25,7 @@ Vue.component('msg', Message)
 Vue.component('loading', Loading)
 Vue.component('toggle', Toggle)
 Vue.component('modal', Modal)
+Vue.component('my-input', Input)
 
 router.beforeEach(function (to, from, next) {
   window.scrollTo(0, 0)
