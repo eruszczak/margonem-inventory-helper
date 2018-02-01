@@ -86,12 +86,12 @@
     background-color: hsl(204, 86%, 53%) !important;
   }
 
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
-  }
-  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-    opacity: 0;
-  }
+  /*.fade-enter-active, .fade-leave-active {*/
+    /*transition: opacity .5s;*/
+  /*}*/
+  /*.fade-enter, .fade-leave-to !* .fade-leave-active below version 2.1.8 *! {*/
+    /*opacity: 0;*/
+  /*}*/
 
   .search-items {
     margin-top: 60px;

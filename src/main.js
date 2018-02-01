@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import 'bulma/css/bulma.css' // todo modules
+import './assets/scss/all.scss'
 import { store } from './store/index'
-import VueClipboard from 'vue-clipboard2'
 
+import VueClipboard from 'vue-clipboard2'
 import { Table, TableColumn, TableHeader, TableRow } from './components/ui/table'
 import { Tag, Taglist } from './components/ui/tag'
 import Message from './components/ui/message'
@@ -13,9 +13,11 @@ import Toggle from './components/ui/toggle'
 import Modal from './components/ui/modal'
 import Input from './components/ui/input'
 
-Vue.use(VueClipboard)
-Vue.config.productionTip = false
+import Buefy from 'buefy'
+Vue.use(Buefy)
 
+Vue.config.productionTip = false
+Vue.use(VueClipboard)
 Vue.component('tbl', Table)
 Vue.component('tbl-col', TableColumn)
 Vue.component('tbl-header', TableHeader)

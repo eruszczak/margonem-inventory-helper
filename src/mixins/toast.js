@@ -9,7 +9,7 @@ export const toast = {
         type: 'is-warning',
         position: 'is-bottom-right',
         queue: false,
-        duration: 750
+        duration: 1000000
       })
     }
     // danger (message) {

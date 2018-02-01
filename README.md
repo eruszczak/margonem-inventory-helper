@@ -1,5 +1,7 @@
 # margonem-frontend
 
+Some components & styles come from [Buefy](https://buefy.github.io/#/)'s source code
+
 > A Vue.js project
 
 ## Build Setup
