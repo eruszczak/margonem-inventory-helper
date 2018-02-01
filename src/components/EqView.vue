@@ -56,7 +56,7 @@
             <p>TYLKO DO ODCZYTU. :</p>
             <div class="columns">
               <div class="column" v-for="eqItems in eqHistory">
-                <eq :source="eqItems" :readOnly="true" :darkBorder.native="true"></eq>
+                <eq :source="eqItems" :readOnly="true" darkBorder></eq>
                 <span>kopiuj link</span>
                 <router-link :to="getEqLink(eqItems)">Przejdź do zestawu</router-link>
                 <button class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>
