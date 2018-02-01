@@ -1,22 +1,20 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import Buefy from 'buefy'
 import 'bulma/css/bulma.css' // todo modules
 import { store } from './store/index'
 import VueClipboard from 'vue-clipboard2'
 
 import { Table, TableColumn, TableHeader, TableRow } from './components/ui/table'
-import { Message } from './components/ui/message'
-import { Loading } from './components/ui/loading'
-import { Toggle } from './components/ui/toggle'
-import { Modal } from './components/ui/modal'
-import { Input } from './components/ui/input'
 import { Tag, Taglist } from './components/ui/tag'
+import Message from './components/ui/message'
+import Loading from './components/ui/loading'
+import Toggle from './components/ui/toggle'
+import Modal from './components/ui/modal'
+import Input from './components/ui/input'
 
 Vue.use(VueClipboard)
 Vue.config.productionTip = false
-Vue.use(Buefy)
 
 Vue.component('tbl', Table)
 Vue.component('tbl-col', TableColumn)
