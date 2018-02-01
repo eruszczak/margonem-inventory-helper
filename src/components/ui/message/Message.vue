@@ -20,8 +20,8 @@
   }
 </script>
 
-<style scoped>
-  .media-content {
-    margin-top: -15px;
+<style>
+  .content ul {
+    margin-top: 0;
   }
 </style>
