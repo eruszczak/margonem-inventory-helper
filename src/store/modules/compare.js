@@ -1,6 +1,6 @@
 import {setStats} from '../../utils/eq'
 import { getDefaultEqItems, ITEM_PLACE } from '../../utils/items'
-import Vue from 'vue'
+import { isItemWearable } from '../../utils/helpers'
 
 export default {
   state: {
@@ -72,15 +72,19 @@ export default {
      * Adds item to comparedItems and compares it with other items
      */
     compareItem ({ commit, state, dispatch }, payload) {
+      if (!isItemWearable(payload.item.type)) {
+        payload.toast.info('Nie można porównać tego typu')
+        return
+      }
       for (let item of state.compareItems) {
         if (payload.item.pk === item.pk) {
-          payload.callback && payload.callback('Już porównywany')
+          payload.toast.info('Już porównywany')
           return
         }
       }
       dispatch('createPairForItem', payload.item)
       commit('addCompareItem', payload.item)
-      payload.callback && payload.callback('Porównuję')
+      payload.toast.info('Porównuję')
     },
     /**
      * Compares an item with other items of the same type
@@ -130,7 +134,7 @@ export default {
     uncompareItem ({ commit, state }, payload) {
       commit('removeCompareItem', payload.item)
       commit('removeItemFromComparison', payload.item)
-      payload.callback('Usunięto z porównania')
+      payload.toast.info('Usunięto z porównania')
     },
     removeAllItems ({ commit }) {
       commit('clearCompareItems')
