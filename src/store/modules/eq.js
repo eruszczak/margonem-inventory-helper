@@ -1,6 +1,7 @@
 import { getDefaultEqItems, ITEM_PLACE } from '../../utils/items'
 import { setStats, getOrderedPksOfEqItems, eqItemsAreTheSame } from '../../utils/eq'
 import { fetchMultipleItems } from '../../api/items'
+import { isItemWearable } from '../../utils/helpers'
 
 const STACK_LENGTH_LIMIT = 15
 const ITEM_HISTORY_LIMIT = 15
@@ -16,7 +17,7 @@ export default {
     stack: [],
     itemHistory: [],
     eqHistory: [],
-    replacementsCounter: 0,
+    replacementsCounter: 0
   },
   getters: {
     eqItems: state => state.eqItems,
@@ -111,13 +112,22 @@ export default {
         console.error(error)
       })
     },
-    wearItem ({ commit }, payload) {
+    wearItem ({ commit, state }, payload) {
+      if (!isItemWearable(payload.item.type)) {
+        payload.toast.info('Nie można założyć tego typu')
+        return
+      }
+      const previousItem = state.eqItems[ITEM_PLACE[payload.item.type]]
+      if (previousItem && previousItem.pk === payload.item.pk) {
+        payload.toast.info('Ten przedmiot jest już założony')
+        return
+      }
       // Special case. If item is replaced, 2 items are added to stack.
-      if (payload.previousItem) {
+      if (previousItem) {
         commit('increaseReplacementsCounter')
         commit('addToStack', {
           replaced: true,
-          item: payload.previousItem
+          item: previousItem
         })
       }
       commit('addItemToEq', payload.item)
@@ -126,14 +136,16 @@ export default {
         added: true,
         item: payload.item
       })
+      payload.toast.info(previousItem ? 'Podmieniono przedmiot' : 'Założono przedmiot')
     },
-    takeOffItem ({ commit }, item) {
-      commit('removeItemFromEq', item)
+    takeOffItem ({ commit }, payload) {
+      commit('removeItemFromEq', payload.item)
       commit('setEqItemsStats')
       commit('addToStack', {
         added: false,
-        item: item
+        item: payload.item
       })
+      payload.toast.info('Zdjęto przedmiot')
     },
     saveEqAsMine ({ commit }, eqItems) {
       commit('replaceEqItems', eqItems)

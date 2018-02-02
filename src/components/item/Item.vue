@@ -12,8 +12,6 @@
 
 <script>
   import Popup from './Popup'
-  import { isItemWearable } from '../../utils/helpers'
-  import { ITEM_PLACE } from '../../utils/items'
   import { mapGetters, mapActions } from 'vuex'
   import { RIGHT_CLICK_MAPPER } from '../../utils/constants'
 
@@ -37,54 +35,19 @@
        * @param item Item that was right clicked
        */
       itemRightClick: function (item) {
-        const comparePayload = {
-          item: item,
-          callback: message => {
-            this.$toast.info(message)
-          }
-        }
         if (this.action === RIGHT_CLICK_MAPPER.ignore) {
           return
         }
         if (this.action === RIGHT_CLICK_MAPPER.removeCompare) {
-          this.uncompareItem(comparePayload)
+          this.uncompareItem({item, toast: this.$toast})
         } else if (!this.canAddToEq) {
-          if (!isItemWearable(item.type)) {
-            this.$toast.info('Nie można porównać tego typu')
-            return
-          }
-          this.compareItem(comparePayload)
+          this.compareItem({item, toast: this.$toast})
         } else if (this.action === RIGHT_CLICK_MAPPER.add) {
-          this.add(item)
+          this.wearItem({item, toast: this.$toast})
         } else if (this.action === RIGHT_CLICK_MAPPER.remove) {
-          this.remove(item)
-        }
-      },
-      /**
-       * Calls mutation if item's type is wearable and isn't already equipped
-       * @param item
-       */
-      add: function (item) {
-        if (!isItemWearable(item.type)) {
-          this.$toast.info('Nie można założyć tego typu')
-          return
-        }
-        const previousItem = this.eqItems[ITEM_PLACE[item.type]]
-        if (previousItem && previousItem.pk === item.pk) {
-          this.$toast.info('Ten przedmiot jest już założony')
-          return
-        }
-        this.wearItem({item, previousItem})
-        this.$toast.info(previousItem ? 'Podmieniono przedmiot' : 'Założono przedmiot')
-      },
-      /**
-       * Calls mutation if this component is used to display my eqItems (only in this case, eqItems are editable)
-       * @param item
-       */
-      remove: function (item) {
-        if (!this.readOnly && !this.history) {
-          this.takeOffItem(item)
-          this.$toast.info('Zdjęto przedmiot')
+          if (!this.readOnly && !this.history) {
+            this.takeOffItem({item, toast: this.$toast})
+          }
         }
       }
     }
