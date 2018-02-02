@@ -26,7 +26,7 @@
             </tabs>
             <msg type="is-warning">
               Musisz dodać minimum 2 przedmioty tego samego typu
-            </msg>            
+            </msg>
           </tab-item>
         </tabs>
       </template>
@@ -43,7 +43,7 @@
 
   export default {
     name: 'item-compare-view',
-    components: {Item, EqStatsCompare, Tabs, TabItem },
+    components: { Item, EqStatsCompare, Tabs, TabItem },
     mounted () {
       this.initPairs()
     },

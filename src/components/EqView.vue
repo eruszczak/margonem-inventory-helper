@@ -121,7 +121,6 @@
   import EqBonusesWarnings from './eq/EqBonusesWarnings'
   import EqOverview from './eq/EqOverview'
   import { getEqRoute } from '../utils/helpers'
-  import { toast } from '../mixins/toast'
 
   export default {
     name: 'eq-view',
@@ -135,7 +134,6 @@
     mounted () {
       this.getEqItems()
     },
-    mixins: [toast],
     watch: {
       '$route' (to, from) {
         this.getEqItems()
@@ -183,7 +181,7 @@
       },
       saveAsMine: function (eqItems) {
         this.saveEqAsMine(eqItems)
-        this.success('Podmieniono zestaw')
+        this.$toast.info('Podmieniono zestaw')
       },
       showNext: function () {
         this.current += 1

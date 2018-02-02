@@ -16,7 +16,6 @@
   import { ITEM_PLACE } from '../../utils/items'
   import { mapGetters, mapActions } from 'vuex'
   import { RIGHT_CLICK_MAPPER } from '../../utils/constants'
-  import { toast } from '../../mixins/toast'
 
   export default {
     name: 'item',
@@ -24,7 +23,6 @@
     components: {
       Popup
     },
-    mixins: [toast],
     data () {
       return {
       }
@@ -42,7 +40,7 @@
         const comparePayload = {
           item: item,
           callback: message => {
-            this.success(message)
+            this.$toast.info(message)
           }
         }
         if (this.action === RIGHT_CLICK_MAPPER.ignore) {
@@ -51,6 +49,10 @@
         if (this.action === RIGHT_CLICK_MAPPER.removeCompare) {
           this.uncompareItem(comparePayload)
         } else if (!this.canAddToEq) {
+          if (!isItemWearable(item.type)) {
+            this.$toast.info('Nie można porównać tego typu')
+            return
+          }
           this.compareItem(comparePayload)
         } else if (this.action === RIGHT_CLICK_MAPPER.add) {
           this.add(item)
@@ -64,16 +66,16 @@
        */
       add: function (item) {
         if (!isItemWearable(item.type)) {
-          this.success('Nie można założyć tego typu')
+          this.$toast.info('Nie można założyć tego typu')
           return
         }
         const previousItem = this.eqItems[ITEM_PLACE[item.type]]
         if (previousItem && previousItem.pk === item.pk) {
-          this.success('Ten przedmiot jest już założony')
+          this.$toast.info('Ten przedmiot jest już założony')
           return
         }
         this.wearItem({item, previousItem})
-        this.success(previousItem ? 'Podmieniono przedmiot' : 'Założono przedmiot')
+        this.$toast.info(previousItem ? 'Podmieniono przedmiot' : 'Założono przedmiot')
       },
       /**
        * Calls mutation if this component is used to display my eqItems (only in this case, eqItems are editable)
@@ -82,7 +84,7 @@
       remove: function (item) {
         if (!this.readOnly && !this.history) {
           this.takeOffItem(item)
-          this.success('Zdjęto przedmiot')
+          this.$toast.info('Zdjęto przedmiot')
         }
       }
     }
