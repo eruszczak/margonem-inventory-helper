@@ -12,12 +12,12 @@ import Loading from './components/ui/loading'
 import Toggle from './components/ui/toggle'
 import Modal from './components/ui/modal'
 import Input from './components/ui/input'
-
-import Buefy from 'buefy'
-Vue.use(Buefy)
+import Toast from './components/ui/toast'
 
 Vue.config.productionTip = false
+Vue.prototype.$toast = Toast
 Vue.use(VueClipboard)
+
 Vue.component('tbl', Table)
 Vue.component('tbl-col', TableColumn)
 Vue.component('tbl-header', TableHeader)

@@ -23,7 +23,6 @@
 </template>
 
 <script>
-  import { toast } from '../../mixins/toast'
   import { mapGetters, mapMutations } from 'vuex'
   import { getEqUrl } from '../../utils/helpers'
   import Eq from '../eq/Eq'
@@ -32,7 +31,6 @@
 
   export default {
     name: 'eq-modal-preview',
-    mixins: [toast],
     components: {Eq, RestoreEq, EqModal},
     computed: {
       ...mapGetters(['modalActive', 'eqItemsStats', 'eqItems']),
@@ -43,7 +41,7 @@
     methods: {
       ...mapMutations(['closeModal']),
       onCopy: e => {
-        this.success('Skopiowano do schowka')
+        this.$toast.info('Skopiowano do schowka')
       }
     }
   }

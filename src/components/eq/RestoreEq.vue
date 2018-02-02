@@ -4,18 +4,16 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex'
-  import { toast } from '../../mixins/toast'
 
   export default {
     name: 'restore-eq',
-    mixins: [toast],
     computed: {
       ...mapGetters(['realStackLength'])
     },
     methods: {
       ...mapActions(['restoreEqItem']),
       restore: function () {
-        this.success('Cofnięto zmianę')
+        this.$toast.info('Cofnięto zmianę')
         this.restoreEqItem()
       }
     }
