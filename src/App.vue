@@ -6,7 +6,9 @@
         <router-link class="navbar-item" :to="{name: 'eqView'}">Zestawy EQ</router-link>
         <router-link class="navbar-item" :to="{name: 'itemCompareView'}">Porównaj</router-link>
         <a class="button is-primary is-medium" :class="{'is-active': modalActive}" @click="toggleModal">Pokaż EQ</a>
-        <toggle class="navbar-item" :value="canAddToEq" @input="toggleCanAddToEq">{{ canAddToEq ? 'Do eq' : 'Do porównywarki'}}</toggle>
+        <toggle class="navbar-item" :value="canAddToEq" @input="toggleCanAddToEq">
+          {{ canAddToEq ? 'Do eq' : 'Do porównywarki'}}
+        </toggle>
         <my-input :value="searchQuery" @input="setSearchQuery" placeholder="Szukaj przedmiotów"></my-input>
       </div>
     </nav>
@@ -61,9 +63,21 @@
 
 <style>
   /*.modal-card, .modal-card-body, .modal-content {*/
-    /*overflow: visible;*/
+  /*overflow: visible;*/
   /*}*/
-  .vue-simple-spinner{transition:all .3s linear}@keyframes vue-simple-spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}
+  .vue-simple-spinner {
+    transition: all .3s linear
+  }
+
+  @keyframes vue-simple-spinner-spin {
+    0% {
+      transform: rotate(0deg)
+    }
+    to {
+      transform: rotate(1turn)
+    }
+  }
+
   @media screen and (min-width: 1024px) {
     a.navbar-item.is-active, a.navbar-link.is-active {
       color: hsl(204, 86%, 53%) !important;
@@ -87,10 +101,10 @@
   }
 
   /*.fade-enter-active, .fade-leave-active {*/
-    /*transition: opacity .5s;*/
+  /*transition: opacity .5s;*/
   /*}*/
   /*.fade-enter, .fade-leave-to !* .fade-leave-active below version 2.1.8 *! {*/
-    /*opacity: 0;*/
+  /*opacity: 0;*/
   /*}*/
 
   .search-items {

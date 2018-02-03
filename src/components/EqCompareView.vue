@@ -46,7 +46,8 @@
               <div class="content">
                 <p class="title">Porównanie bonusów</p>
                 <div class="content">
-                  <eq-bonuses-compare :leftSource="eqItemsStats.bonuses" :rightSource="readOnlyEqItemsStats.bonuses"></eq-bonuses-compare>
+                  <eq-bonuses-compare :leftSource="eqItemsStats.bonuses"
+                                      :rightSource="readOnlyEqItemsStats.bonuses"></eq-bonuses-compare>
                 </div>
               </div>
             </article>
@@ -58,7 +59,7 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions, mapMutations } from 'vuex'
+  import { mapActions, mapGetters, mapMutations } from 'vuex'
   import Eq from './eq/Eq'
   import RestoreEq from './eq/RestoreEq'
   import EqStatsCompare from './eq/EqStatsCompare'

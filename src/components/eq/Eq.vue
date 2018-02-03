@@ -1,7 +1,8 @@
 <template>
   <div v-if="source" class="eq-items">
     <div class="eq-row" v-for="row in rows">
-      <div class="eq-column" :class="{'dark-border': darkBorder, 'light-border': !darkBorder}" v-for="(place, index) in row" :key="index">
+      <div class="eq-column" :class="{'dark-border': darkBorder, 'light-border': !darkBorder}"
+           v-for="(place, index) in row" :key="index">
         <item v-if="source[place]" :data="source[place]" :action="action"></item>
       </div>
     </div>
@@ -48,6 +49,7 @@
   .eq-items .eq-row {
     height: 42px;
   }
+
   .eq-items .eq-row .eq-column {
     display: inline-block;
     height: 42px;
@@ -66,5 +68,6 @@
   .no-border {
     border: none
   }
+
   /* hide corner columns */
 </style>

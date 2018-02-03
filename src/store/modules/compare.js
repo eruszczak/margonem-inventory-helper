@@ -1,4 +1,4 @@
-import {setStats} from '../../utils/eq'
+import { setStats } from '../../utils/eq'
 import { getDefaultEqItems, ITEM_PLACE } from '../../utils/items'
 import { isItemWearable } from '../../utils/helpers'
 
@@ -28,7 +28,7 @@ export default {
       console.log(state.comparisons, itemPlacement)
       console.log('before', state.comparisons[itemPlacement].length)
       state.comparisons[itemPlacement] = state.comparisons[itemPlacement].filter(el => {
-      // Vue.set(state.comparisons, itemPlacement, state.comparisons[itemPlacement].filter(el => {
+        // Vue.set(state.comparisons, itemPlacement, state.comparisons[itemPlacement].filter(el => {
         console.log(el.item.pk, item.pk)
         return el.item.pk !== item.pk
       })
@@ -71,7 +71,7 @@ export default {
     /**
      * Adds item to comparedItems and compares it with other items
      */
-    compareItem ({ commit, state, dispatch }, payload) {
+    compareItem ({commit, state, dispatch}, payload) {
       if (!isItemWearable(payload.item.type)) {
         payload.toast.info('Nie można porównać tego typu')
         return
@@ -89,7 +89,7 @@ export default {
     /**
      * Compares an item with other items of the same type
      */
-    createPairForItem ({ commit, state }, item) {
+    createPairForItem ({commit, state}, item) {
       const itemPlacement = ITEM_PLACE[item.type]
       let itemComparisons = {
         item: item,
@@ -126,17 +126,17 @@ export default {
     /**
      * Creates pairs for all compared items.
      */
-    initPairs ({ state, dispatch }) {
+    initPairs ({state, dispatch}) {
       for (let item of state.compareItems) {
         dispatch('createPairForItem', item)
       }
     },
-    uncompareItem ({ commit, state }, payload) {
+    uncompareItem ({commit, state}, payload) {
       commit('removeCompareItem', payload.item)
       commit('removeItemFromComparison', payload.item)
       payload.toast.info('Usunięto z porównania')
     },
-    removeAllItems ({ commit }) {
+    removeAllItems ({commit}) {
       commit('clearCompareItems')
       commit('clearCompareParis')
     }

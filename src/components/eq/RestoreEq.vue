@@ -1,9 +1,10 @@
 <template>
-  <button :disabled="!realStackLength" class="button is-dark" @click="restore">Cofnij zmianę ({{ realStackLength }})</button>
+  <button :disabled="!realStackLength" class="button is-dark" @click="restore">Cofnij zmianę ({{ realStackLength }})
+  </button>
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex'
+  import { mapActions, mapGetters } from 'vuex'
 
   export default {
     name: 'restore-eq',

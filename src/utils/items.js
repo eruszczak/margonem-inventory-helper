@@ -209,11 +209,17 @@ export const ITEM_STAT = {
   resp: {val: 'Czas odnowienia: {}', val2: 'Czas odnowienia'},
   perheal: {val: 'Leczy {}% życia', val2: 'Leczy % życia'},
   resacdmg: {val: 'Ochrona przed niszczeniem pancerza: {}', val2: 'Ochrona przed niszczeniem pancerza'},
-  lowheal2turns: {val: 'Obniżenie leczenia turowego przeciwnika na 2 tury o {}', val2: 'Obniżenie leczenia turowego przeciwnika na 2 tury'},
+  lowheal2turns: {
+    val: 'Obniżenie leczenia turowego przeciwnika na 2 tury o {}',
+    val2: 'Obniżenie leczenia turowego przeciwnika na 2 tury'
+  },
   resmanaendest: {val: 'Obniżanie niszczenia many o {}', val2: 'Obniżanie niszczenia many'},
   resmanaendest_ene: {val: 'Obniżanie niszczenia energii o {}', val2: 'Obniżanie niszczenia energii'},
   // TODO %??
-  lowcritallval: {val: 'Obniżenie mocy krytyka fizycznego i magicznego o {}', val2: 'Obniżenie mocy krytyka fizycznego i magicznego'},
+  lowcritallval: {
+    val: 'Obniżenie mocy krytyka fizycznego i magicznego o {}',
+    val2: 'Obniżenie mocy krytyka fizycznego i magicznego'
+  },
   worth: {val: 'Wartość: {}', val2: 'Wartość'}
 }
 

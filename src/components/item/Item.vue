@@ -12,7 +12,7 @@
 
 <script>
   import Popup from './Popup'
-  import { mapGetters, mapActions } from 'vuex'
+  import { mapActions, mapGetters } from 'vuex'
   import { RIGHT_CLICK_MAPPER } from '../../utils/constants'
 
   export default {
@@ -22,8 +22,7 @@
       Popup
     },
     data () {
-      return {
-      }
+      return {}
     },
     computed: {
       ...mapGetters(['eqItems', 'canAddToEq'])
@@ -59,28 +58,72 @@
     position: relative;
     display: inline-block;
   }
+
   .itemborder {
-    background-image:url('../../assets/itembg.png');
+    background-image: url('../../assets/itembg.png');
     padding: 2px;
     margin: 1px;
   }
 
-  .green-color {color: green;}
-  .default-color {color: grey;}
-  .unique-color {color: orange;}
-  .heroic-color {color: #136bf7;}
-  .legendary-color {color: #c60d14;}
+  .green-color {
+    color: green;
+  }
 
-  .borderRarity {border: 2px solid}
-  .default {border-color: #cecece;}
-  .unique {border-color: orange;}
-  .heroic {border-color: #136bf7;}
-  .legendary {border-color: #c60d14;}
+  .default-color {
+    color: grey;
+  }
 
-  .default-tag {background-color: #cecece!important;color:white!important;}
-  .unique-tag {background-color: orange!important;color:white!important;}
-  .heroic-tag {background-color: #136bf7!important;color:white!important;}
-  .legendary-tag {background-color: #f5383f!important;color:white!important;}
+  .unique-color {
+    color: orange;
+  }
+
+  .heroic-color {
+    color: #136bf7;
+  }
+
+  .legendary-color {
+    color: #c60d14;
+  }
+
+  .borderRarity {
+    border: 2px solid
+  }
+
+  .default {
+    border-color: #cecece;
+  }
+
+  .unique {
+    border-color: orange;
+  }
+
+  .heroic {
+    border-color: #136bf7;
+  }
+
+  .legendary {
+    border-color: #c60d14;
+  }
+
+  .default-tag {
+    background-color: #cecece !important;
+    color: white !important;
+  }
+
+  .unique-tag {
+    background-color: orange !important;
+    color: white !important;
+  }
+
+  .heroic-tag {
+    background-color: #136bf7 !important;
+    color: white !important;
+  }
+
+  .legendary-tag {
+    background-color: #f5383f !important;
+    color: white !important;
+  }
 
   .item .tooltipText {
     visibility: hidden;
@@ -105,6 +148,7 @@
   .item .tooltipText div hr {
     margin-bottom: 15px;
   }
+
   .item .tooltipText div div p {
     margin-top: -5px;
   }
