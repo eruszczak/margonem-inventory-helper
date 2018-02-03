@@ -2,7 +2,7 @@
   <router-link v-if="!noLink" :to="{name: 'itemView', params: {slug: data.slug}}">
     <div :id="data.slug" class="item" @contextmenu.prevent="itemRightClick(data)">
       <img class="itemborder borderRarity" :class="data.rarity" :src="data.img" :alt="data.name">
-      <popup :data="data"></popup>
+      <popup :data="data"/>
     </div>
   </router-link>
   <div v-else :id="data.slug" class="item" @contextmenu.prevent="itemRightClick(data)">
@@ -18,12 +18,7 @@
   export default {
     name: 'item',
     props: ['data', 'action', 'noLink'],
-    components: {
-      Popup
-    },
-    data () {
-      return {}
-    },
+    components: {Popup},
     computed: {
       ...mapGetters(['eqItems', 'canAddToEq'])
     },
@@ -34,19 +29,24 @@
        * @param item Item that was right clicked
        */
       itemRightClick: function (item) {
-        if (this.action === RIGHT_CLICK_MAPPER.ignore) {
-          return
-        }
-        if (this.action === RIGHT_CLICK_MAPPER.removeCompare) {
-          this.uncompareItem({item, toast: this.$toast})
-        } else if (!this.canAddToEq) {
-          this.compareItem({item, toast: this.$toast})
-        } else if (this.action === RIGHT_CLICK_MAPPER.add) {
-          this.wearItem({item, toast: this.$toast})
-        } else if (this.action === RIGHT_CLICK_MAPPER.remove) {
-          if (!this.readOnly && !this.history) {
-            this.takeOffItem({item, toast: this.$toast})
-          }
+        switch (this.action) {
+          case RIGHT_CLICK_MAPPER.ignore:
+            break
+          case RIGHT_CLICK_MAPPER.removeCompare:
+            this.uncompareItem({item, toast: this.$toast})
+            break
+          case RIGHT_CLICK_MAPPER.add:
+            if (!this.canAddToEq) {
+              this.compareItem({item, toast: this.$toast})
+            } else {
+              this.wearItem({item, toast: this.$toast})
+            }
+            break
+          case RIGHT_CLICK_MAPPER.remove:
+            if (!this.readOnly && !this.history) {
+              this.takeOffItem({item, toast: this.$toast})
+            }
+            break
         }
       }
     }
