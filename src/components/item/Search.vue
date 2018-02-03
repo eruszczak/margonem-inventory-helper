@@ -2,10 +2,7 @@
   <transition name="fade">
     <div class="search-items has-text-centered is-clearfix" :class="{'search-items-modal': modalActive}"
          v-if="searchQuery">
-      <div v-if="searching">
-        <div class="vue-simple-spinner"
-             style="margin: 0px auto; border-radius: 100%; border-width: 3px; border-style: solid; border-color: rgb(33, 150, 243) rgb(238, 238, 238) rgb(238, 238, 238); border-image: initial; width: 42px; height: 42px; animation: vue-simple-spinner-spin 0.8s linear infinite;"></div>
-        <!----></div>
+      <my-spinner v-if="searching"/>
       <item v-else-if="searchResults.length" v-for="item in searchResults" :key="item.pk" :data="item"
             :action="RIGHT_CLICK_MAPPER.add"></item>
       <msg v-else-if="noResults">Nie znaleziono przedmiotów dla podanej frazy</msg>
@@ -28,7 +25,6 @@
     mounted () {
       let search = localStorage.getItem(SEARCH_KEY)
       search = JSON.parse(search)
-      this.setSearchQuery(search ? search.searchQuery : '')
       this.noResults = search ? search.noResults : false
       this.searchResults = search ? search.searchResults : []
     },
@@ -44,7 +40,7 @@
       ...mapGetters(['searchQuery', 'modalActive'])
     },
     watch: {
-      searchQuery: function (value) {
+      searchQuery (value) {
         this.noResults = false
         this.search()
       }
@@ -63,17 +59,14 @@
           }
 
           this.searching = true
-          let vm = this
           searchItems(this.searchQuery, response => {
-            // TODO: can use this?
-            // Todo do i really need noResults
-            vm.searchResults = response.data.results
-            vm.searching = false
-            vm.noResults = vm.searchResults.length === 0
+            // do I really need noResults flag?
+            this.searchResults = response.data.results
+            this.searching = false
+            this.noResults = this.searchResults.length === 0
             localStorage.setItem(SEARCH_KEY, JSON.stringify({
-              'searchQuery': vm.searchQuery,
-              'searchResults': vm.searchResults,
-              'noResults': vm.noResults
+              'searchResults': this.searchResults,
+              'noResults': this.noResults
             }))
           }, error => {
             console.error(error)

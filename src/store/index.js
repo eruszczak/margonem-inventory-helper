@@ -15,7 +15,8 @@ export const store = new Vuex.Store({
       {
         paths: [
           'eq.eqItems', 'eq.itemHistory', 'eq.eqHistory', 'eq.stack', 'eq.replacementsCounter',
-          'compare.compareItems', 'compare.canAddToEq'
+          'compare.compareItems', 'compare.canAddToEq',
+          'search.searchQuery'
         ]
       }
     )

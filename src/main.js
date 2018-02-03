@@ -13,6 +13,7 @@ import Toggle from './components/ui/toggle'
 import Modal from './components/ui/modal'
 import Input from './components/ui/input'
 import Toast from './components/ui/toast'
+import Spinner from './components/ui/Spinner'
 
 Vue.config.productionTip = false
 Vue.prototype.$toast = Toast
@@ -29,6 +30,7 @@ Vue.component('modal', Modal)
 Vue.component('my-input', Input)
 Vue.component('my-tag', Tag)
 Vue.component('my-taglist', Taglist)
+Vue.component('my-spinner', Spinner)
 
 router.beforeEach(function (to, from, next) {
   window.scrollTo(0, 0)
