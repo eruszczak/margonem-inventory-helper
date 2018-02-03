@@ -65,18 +65,6 @@
   /*.modal-card, .modal-card-body, .modal-content {*/
   /*overflow: visible;*/
   /*}*/
-  .vue-simple-spinner {
-    transition: all .3s linear
-  }
-
-  @keyframes vue-simple-spinner-spin {
-    0% {
-      transform: rotate(0deg)
-    }
-    to {
-      transform: rotate(1turn)
-    }
-  }
 
   @media screen and (min-width: 1024px) {
     a.navbar-item.is-active, a.navbar-link.is-active {
