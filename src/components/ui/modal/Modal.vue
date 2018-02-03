@@ -2,7 +2,7 @@
   <transition :name="animation">
     <div v-if="isActive" class="modal is-active">
       <div class="modal-background" @click="close"/>
-      <div class="animation-content" :class="{ 'modal-content': !hasModalCard }" :style="{ maxWidth: newWidth }">
+      <div class="animation-content" :class="{ 'modal-content': !hasModalCard }">
         <slot/>
       </div>
       <button class="modal-close is-large" @click="close"/>
@@ -34,8 +34,7 @@
     data () {
       return {
         isActive: this.active || false,
-        savedScrollTop: null,
-        newWidth: typeof this.width === 'number' ? this.width + 'px' : this.width
+        savedScrollTop: null
       }
     },
     watch: {
