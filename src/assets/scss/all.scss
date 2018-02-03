@@ -2,7 +2,11 @@
 @import "~bulma/sass/utilities/functions";
 @import './variables';
 @import './animations';
-//$white: black;
 @import '~bulma';
 @import './notices';
 @import './loading';
+
+.is-centered {
+  justify-content: center;
+  text-align: center;
+}

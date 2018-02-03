@@ -3,9 +3,7 @@
     <div class="container">
       <!--<p>W tej strefie itemy po kliknięciu na nie PPM zostaną dodane do porównywarki</p>-->
       <!--<p>Aby szybko porównać przedmioty, znajdź je za pomocą wyszukiwarki powyżej oraz dodaj klikając na nie PPM.</p>-->
-      <msg type="is-warning">
-        Przedmioty są porównywane z innymi przedmiotami tego samego typu
-      </msg>
+      <msg>Przedmioty są porównywane z innymi przedmiotami tego samego typu</msg>
       <button class="button" @click="removeAllItems">Wyczyść przedmioty</button>
       <template v-for="(items, key) in comparisons" v-if="items">
         <section class="hero is-primary">
@@ -27,9 +25,7 @@
                                   :rightSource="comparison.itemStats"/>
               </tab-item>
             </tabs>
-            <msg type="is-warning">
-              Musisz dodać minimum 2 przedmioty tego samego typu
-            </msg>
+            <msg>Musisz dodać minimum 2 przedmioty tego samego typu</msg>
           </tab-item>
         </tabs>
       </template>
