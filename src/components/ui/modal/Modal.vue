@@ -2,12 +2,12 @@
   <transition :name="animation">
     <div v-if="isActive" class="modal is-active">
       <div class="modal-background" @click="cancel('outside')"/>
-        <div class="animation-content" :class="{ 'modal-content': !hasModalCard }" :style="{ maxWidth: newWidth }">
-          <component v-if="component" v-bind="props" v-on="events" :is="component" @close="close"/>
+      <div class="animation-content" :class="{ 'modal-content': !hasModalCard }" :style="{ maxWidth: newWidth }">
+        <component v-if="component" v-bind="props" v-on="events" :is="component" @close="close"/>
         <div v-else-if="content" v-html="content"/>
-          <slot v-else/>
-        </div>
-        <button v-if="showX" class="modal-close is-large" @click="cancel('x')"/>
+        <slot v-else/>
+      </div>
+      <button v-if="showX" class="modal-close is-large" @click="cancel('x')"/>
     </div>
   </transition>
 </template>

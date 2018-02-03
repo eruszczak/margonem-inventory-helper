@@ -1,8 +1,13 @@
 <template>
   <transition name="fade">
-    <div class="search-items has-text-centered is-clearfix" :class="{'search-items-modal': modalActive}" v-if="searchQuery">
-      <div v-if="searching"><div class="vue-simple-spinner" style="margin: 0px auto; border-radius: 100%; border-width: 3px; border-style: solid; border-color: rgb(33, 150, 243) rgb(238, 238, 238) rgb(238, 238, 238); border-image: initial; width: 42px; height: 42px; animation: vue-simple-spinner-spin 0.8s linear infinite;"></div> <!----></div>
-      <item v-else-if="searchResults.length" v-for="item in searchResults" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"></item>
+    <div class="search-items has-text-centered is-clearfix" :class="{'search-items-modal': modalActive}"
+         v-if="searchQuery">
+      <div v-if="searching">
+        <div class="vue-simple-spinner"
+             style="margin: 0px auto; border-radius: 100%; border-width: 3px; border-style: solid; border-color: rgb(33, 150, 243) rgb(238, 238, 238) rgb(238, 238, 238); border-image: initial; width: 42px; height: 42px; animation: vue-simple-spinner-spin 0.8s linear infinite;"></div>
+        <!----></div>
+      <item v-else-if="searchResults.length" v-for="item in searchResults" :key="item.pk" :data="item"
+            :action="RIGHT_CLICK_MAPPER.add"></item>
       <msg v-else-if="noResults">Nie znaleziono przedmiotów dla podanej frazy</msg>
     </div>
   </transition>
@@ -20,7 +25,7 @@
   export default {
     name: 'search',
     components: {Item},
-    created () {
+    mounted () {
       let search = localStorage.getItem(SEARCH_KEY)
       search = JSON.parse(search)
       this.setSearchQuery(search ? search.searchQuery : '')

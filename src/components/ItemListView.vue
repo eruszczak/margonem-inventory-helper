@@ -14,7 +14,8 @@
         <div class="container">
           <nav class="tabs is-boxed">
             <ul>
-              <li v-for="item in menu" :key="item.name" @mouseover="mouseOver(item, $event)" :class="{'is-active': item.isActive }">
+              <li v-for="item in menu" :key="item.name" @mouseover="mouseOver(item, $event)"
+                  :class="{'is-active': item.isActive }">
                 <a>{{ item.name }}</a>
               </li>
             </ul>

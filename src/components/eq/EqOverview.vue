@@ -7,13 +7,14 @@
       <my-tag v-else v-for="prof in source.allowedProfessions" type="is-warning">{{ prof | encodeProf }}</my-tag>
     </my-taglist>
     <my-taglist centered>
-      <span class="tag" v-for="rarity in ITEM_RARITY_IN_ORDER" :class="rarity + '-tag'">{{ source.rarity[rarity] || 0 }}</span>
+      <span class="tag" v-for="rarity in ITEM_RARITY_IN_ORDER"
+            :class="rarity + '-tag'">{{ source.rarity[rarity] || 0 }}</span>
     </my-taglist>
   </div>
 </template>
 
 <script>
-  import { ITEM_RARITY_IN_ORDER, CHARACTER_CLASSES } from '../../utils/items'
+  import { CHARACTER_CLASSES, ITEM_RARITY_IN_ORDER } from '../../utils/items'
   import { isObjEmpty } from '../../utils/helpers'
 
   export default {

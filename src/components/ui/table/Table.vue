@@ -4,7 +4,7 @@
     <div class="table-wrapper">
       <table class="table is-striped is-narrow" :class="tableClasses">
         <thead>
-          <slot name="header"/>
+        <slot name="header"/>
         </thead>
         <slot name="tbody"/>
       </table>

@@ -17,7 +17,6 @@
 
 <script>
   import { ITEM_BONUS, ITEM_BONUSES_IN_ORDER } from '../../utils/items'
-  import { isObjEmpty } from '../../utils/helpers'
 
   export default {
     name: 'eq-bonuses-compare',

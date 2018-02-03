@@ -1,5 +1,5 @@
 import { getDefaultEqItems, ITEM_PLACE } from '../../utils/items'
-import { setStats, getOrderedPksOfEqItems, eqItemsAreTheSame } from '../../utils/eq'
+import { eqItemsAreTheSame, getOrderedPksOfEqItems, setStats } from '../../utils/eq'
 import { fetchMultipleItems } from '../../api/items'
 import { isItemWearable } from '../../utils/helpers'
 
@@ -100,7 +100,7 @@ export default {
     }
   },
   actions: {
-    fetchReadOnlyEqItems ({ commit }, payload) {
+    fetchReadOnlyEqItems ({commit}, payload) {
       fetchMultipleItems(payload.slugs, response => {
         commit('setReadOnlyEqItems', response.data.results)
         commit('setReadOnlyEqItemsStats')
@@ -112,7 +112,7 @@ export default {
         console.error(error)
       })
     },
-    wearItem ({ commit, state }, payload) {
+    wearItem ({commit, state}, payload) {
       if (!isItemWearable(payload.item.type)) {
         payload.toast.info('Nie można założyć tego typu')
         return
@@ -138,7 +138,7 @@ export default {
       })
       payload.toast.info(previousItem ? 'Podmieniono przedmiot' : 'Założono przedmiot')
     },
-    takeOffItem ({ commit }, payload) {
+    takeOffItem ({commit}, payload) {
       commit('removeItemFromEq', payload.item)
       commit('setEqItemsStats')
       commit('addToStack', {
@@ -147,12 +147,12 @@ export default {
       })
       payload.toast.info('Zdjęto przedmiot')
     },
-    saveEqAsMine ({ commit }, eqItems) {
+    saveEqAsMine ({commit}, eqItems) {
       commit('replaceEqItems', eqItems)
       commit('setEqItemsStats')
       commit('restart')
     },
-    restoreEqItem ({ commit, state }) {
+    restoreEqItem ({commit, state}) {
       let stackTop = state.stack[state.stack.length - 1]
       commit('popFromStack')
       if (stackTop) {

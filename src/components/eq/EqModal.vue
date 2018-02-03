@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import { mapMutations, mapGetters } from 'vuex'
+  import { mapGetters } from 'vuex'
   import EqStats from './EqStats'
   import EqBonuses from './EqBonuses'
   import EqOverview from './EqOverview'
@@ -22,7 +22,7 @@
   export default {
     name: 'eq-modal',
     props: ['source'],
-    components: { EqStats, EqBonuses, EqOverview, EqBonusesWarnings },
+    components: {EqStats, EqBonuses, EqOverview, EqBonusesWarnings},
     computed: {
       ...mapGetters(['eqItemsStats'])
     }
@@ -33,6 +33,7 @@
   .bonus-description {
     font-size: 0.65em;
   }
+
   .tags {
     margin-top: 5px;
     justify-content: center;

@@ -5,10 +5,10 @@
       <tbl-header>Wartość</tbl-header>
     </tbl-row>
     <tbody slot="tbody">
-      <tbl-row v-for="obj in orderedBonuses">
-        <tbl-col>{{ obj.name | encodeBonus }} (x{{ obj.count }})</tbl-col>
-        <tbl-col>{{ obj.value }}% {{ obj.amount }}</tbl-col>
-      </tbl-row>
+    <tbl-row v-for="obj in orderedBonuses">
+      <tbl-col>{{ obj.name | encodeBonus }} (x{{ obj.count }})</tbl-col>
+      <tbl-col>{{ obj.value }}% {{ obj.amount }}</tbl-col>
+    </tbl-row>
     </tbody>
   </tbl>
 </template>

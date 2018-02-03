@@ -7,11 +7,9 @@
 <script>
   export default {
     name: 'TableRow',
-    props: {
-    },
+    props: {},
     data () {
-      return {
-      }
+      return {}
     }
   }
 </script>

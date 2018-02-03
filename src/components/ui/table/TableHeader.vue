@@ -13,8 +13,7 @@
       centered: Boolean
     },
     data () {
-      return {
-      }
+      return {}
     }
   }
 </script>

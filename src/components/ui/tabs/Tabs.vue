@@ -7,7 +7,8 @@
           :key="index"
           :class="{ 'is-active': newValue === index, 'is-disabled': tabItem.disabled }">
           <a @click="tabClick(index)">
-            <span v-if="tabItem.label" style="margin-right:4px">{{ tabItem.label }}</span><item :data="tabItem.item" :action="tabItem.itemAction" :noLink="tabItem.noLink"/>
+            <span v-if="tabItem.label" style="margin-right:4px">{{ tabItem.label }}</span>
+            <item :data="tabItem.item" :action="tabItem.itemAction" :noLink="tabItem.noLink"/>
           </a>
         </li>
       </ul>

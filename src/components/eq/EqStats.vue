@@ -5,10 +5,10 @@
       <tbl-header>Wartość</tbl-header>
     </tbl-row>
     <tbody slot="tbody">
-      <tbl-row v-for="obj in orderedStats">
-        <tbl-col>{{ obj.name | encodeStat }}</tbl-col>
-        <tbl-col>{{ obj.value }}</tbl-col>
-      </tbl-row>
+    <tbl-row v-for="obj in orderedStats">
+      <tbl-col>{{ obj.name | encodeStat }}</tbl-col>
+      <tbl-col>{{ obj.value }}</tbl-col>
+    </tbl-row>
     </tbody>
   </tbl>
 </template>

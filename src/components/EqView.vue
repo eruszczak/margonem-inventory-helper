@@ -7,13 +7,15 @@
         <div class="tile is-vertical is-7">
           <div class="tile">
             <div class="tile is-parent">
-              <article class="tile is-child notification has-text-centered" :class="[readOnly ? 'is-warning' : 'is-primary']">
+              <article class="tile is-child notification has-text-centered"
+                       :class="[readOnly ? 'is-warning' : 'is-primary']">
                 <p class="title">{{ readOnly ? 'Odwiedzany' : 'Twój' }} zestaw</p>
                 <div class="content">
                   <div class="columns is-gapless">
                     <div class="column is-narrow">
                       <eq :source="eqSet" :readOnly="readOnly" :darkBorder="readOnly"></eq>
-                      <button v-if="readOnly" class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>
+                      <button v-if="readOnly" class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje
+                      </button>
                       <router-link v-if="readOnly" :to="getCompareEqLink(eqItems)">Porównaj z moim</router-link>
                     </div>
                     <div class="column">
@@ -113,7 +115,7 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions, mapMutations } from 'vuex'
+  import { mapActions, mapGetters, mapMutations } from 'vuex'
   import Eq from './eq/Eq'
   import RestoreEq from './eq/RestoreEq'
   import EqStats from './eq/EqStats'
