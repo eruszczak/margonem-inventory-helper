@@ -28,7 +28,7 @@ export default {
     readOnlyEqItemsStats: state => state.readOnlyEqItemsStats,
     stack: state => state.stack,
     replacementsCounter: state => state.replacementsCounter,
-    realStackLength: state => state.stack.length - state.replacementsCounter,
+    realStackLength: state => state.stack.length - state.replacementsCounter
   },
   mutations: {
     replaceEqItems: (state, eqItems) => {

@@ -6,7 +6,7 @@
       <tbl-header centered>Odwiedzany</tbl-header>
     </tbl-row>
     <tbody slot="tbody">
-    <tbl-row v-for="obj in orderedBonuses">
+    <tbl-row v-for="obj in orderedBonuses" :key="obj.name">
       <tbl-col centered>{{ obj.leftValue | encode }}</tbl-col>
       <tbl-col centered>{{ obj.name | encodeBonus }}</tbl-col>
       <tbl-col centered>{{ obj.rightValue | encode }}</tbl-col>
