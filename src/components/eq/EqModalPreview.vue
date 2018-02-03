@@ -1,7 +1,6 @@
 <template>
-  <modal :active.sync="modalActive">
+  <modal :active.sync="modalActive" :onCancel="closeModal">
     <div class="modal-background"></div>
-    <!--<div class="modal-card" style="overflow-y: visible;overflow-x: hidden;margin-top: 60px;">-->
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title has-text-centered">Mój zestaw EQ</p>
