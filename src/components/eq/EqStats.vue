@@ -5,7 +5,7 @@
       <tbl-header>Wartość</tbl-header>
     </tbl-row>
     <tbody slot="tbody">
-    <tbl-row v-for="obj in orderedStats">
+    <tbl-row v-for="obj in orderedStats" :key="obj.name">
       <tbl-col>{{ obj.name | encodeStat }}</tbl-col>
       <tbl-col>{{ obj.value }}</tbl-col>
     </tbl-row>

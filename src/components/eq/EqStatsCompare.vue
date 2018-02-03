@@ -12,7 +12,7 @@
       <tbl-header v-else centered>Odwiedzany</tbl-header>
     </tbl-row>
     <tbody slot="tbody">
-    <tbl-row v-for="obj in orderedStats">
+    <tbl-row v-for="obj in orderedStats" :key="obj.name">
       <tbl-col centered>{{ obj.leftValue || '-' }}</tbl-col>
       <tbl-col centered>{{ obj.name | encodeStat }}</tbl-col>
       <tbl-col centered>{{ obj.rightValue || '-' }}</tbl-col>
