@@ -70,7 +70,7 @@
     max-height: calc(100vh - 100px);
   }
 
-  /*.modal .animation-content .modal-card {*/
-    /*margin-top: 50px;*/
-  /*}*/
+  .modal {
+    top: 52px;
+  }
 </style>

@@ -5,7 +5,6 @@
       <div class="animation-content" :class="{ 'modal-content': !hasModalCard }">
         <slot/>
       </div>
-      <button class="modal-close is-large" @click="close"/>
     </div>
   </transition>
 </template>
@@ -52,9 +51,7 @@
           document.documentElement.classList.toggle('is-clipped', this.isActive)
           return
         }
-        this.savedScrollTop = !this.savedScrollTop
-          ? document.documentElement.scrollTop
-          : this.savedScrollTop
+        this.savedScrollTop = !this.savedScrollTop ? document.documentElement.scrollTop : this.savedScrollTop
         document.body.classList.toggle('is-noscroll', this.isActive)
         if (this.isActive) {
           document.body.style.top = `-${this.savedScrollTop}px`
