@@ -50,15 +50,15 @@
           </article>
         </div>
       </div>
-      <article class="tile is-child notification is-light has-text-centered">
-        <div class="content">
-          <p class="title">Ostatnio przeglądane zestawy</p>
-          <div class="content">
-            <p>TYLKO DO ODCZYTU. :</p>
-            <eq-history/>
-          </div>
-        </div>
-      </article>
+      <!--<article class="tile is-child notification is-light has-text-centered">-->
+        <!--<div class="content">-->
+          <!--<p class="title">Ostatnio przeglądane zestawy</p>-->
+          <!--<div class="content">-->
+            <!--<p>TYLKO DO ODCZYTU. :</p>-->
+            <!--<eq-history/>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</article>-->
     </div>
   </section>
 </template>
