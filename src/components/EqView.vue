@@ -8,7 +8,7 @@
           <div class="tile">
             <div class="tile is-parent">
               <article class="tile is-child notification has-text-centered"
-                       :class="[readOnly ? 'is-warning' : 'is-primary']">
+                       :class="[readOnly ? 'is-warning' : 'is-info']">
                 <p class="title">{{ readOnly ? 'Odwiedzany' : 'Twój' }} zestaw</p>
                 <div class="content">
                   <div class="columns is-gapless">

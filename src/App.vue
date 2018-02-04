@@ -14,8 +14,8 @@
 <script>
   import { mapGetters, mapMutations } from 'vuex'
   import Search from './components/item/Search'
-  import Footer from './components/ui/Footer'
-  import Navbar from './components/ui/Navbar'
+  import Footer from './components/includes/Footer'
+  import Navbar from './components/includes/Navbar'
   import EqModalPreview from './components/eq/EqModalPreview'
 
   export default {
@@ -73,17 +73,4 @@
   /*.modal .animation-content .modal-card {*/
     /*margin-top: 50px;*/
   /*}*/
-
-  .is-primary {
-    background-color: hsl(204, 86%, 53%) !important;
-  }
-
-  .search-items {
-    margin-top: 60px;
-  }
-
-  .search-items-modal {
-    position: fixed;
-    z-index: 1000;
-  }
 </style>

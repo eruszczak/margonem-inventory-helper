@@ -79,5 +79,12 @@
 </script>
 
 <style scoped>
+  .search-items {
+    margin-top: 60px;
+  }
 
+  .search-items-modal {
+    position: fixed;
+    z-index: 1000;
+  }
 </style>
