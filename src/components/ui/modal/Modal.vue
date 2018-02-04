@@ -1,6 +1,6 @@
 <template>
   <transition :name="animation">
-    <div v-if="isActive" class="modal is-active">
+    <div v-if="isActive" class="modal is-active" :style="{'top': top}">
       <div class="modal-background" @click="close"/>
       <div class="animation-content" :class="{ 'modal-content': !hasModalCard }">
         <slot/>
@@ -28,7 +28,8 @@
       scroll: {
         type: String,
         default: 'clip'
-      }
+      },
+      top: String
     },
     data () {
       return {

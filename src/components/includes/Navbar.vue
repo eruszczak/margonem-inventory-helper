@@ -5,19 +5,22 @@
       <router-link class="navbar-item" to="/">
         <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
       </router-link>
-      <button class="button navbar-burger" @click="isActive = !isActive">
+      <button class="button navbar-burger" @click="toggleNavbarMenuIsActive">
         <span></span>
         <span></span>
         <span></span>
       </button>
     </div>
-    <div class="navbar-menu" :class="{'is-active': isActive}">
+    <div class="navbar-menu" :class="{'is-active': navbarMenuIsActive}">
       <router-link class="navbar-item" :to="{name: 'items'}">Przedmioty</router-link>
       <router-link class="navbar-item" :to="{name: 'eqView'}">Zestawy EQ</router-link>
       <!--<router-link class="navbar-item" :to="{name: 'itemCompareView'}">Porównaj</router-link>-->
       <div class="navbar-item field is-grouped is-grouped-multiline" style="justify-content: center">
         <p class="control">
-          <a class="button is-info" :class="{'is-active': modalActive}" @click="toggleModal">Pokaż EQ</a>
+          <a class="button is-info" :class="{'is-active': modalActive}" @click="toggleModal">
+            <span v-if="!modalActive">Podgląd EQ</span>
+            <span v-else>Ukryj podgląd</span>
+          </a>
         </p>
         <p class="control">
           <my-input :value="searchQuery" @input="setSearchQuery" placeholder="Szukaj przedmiotów"/>
@@ -35,16 +38,11 @@
 
   export default {
     name: 'navbar',
-    data () {
-      return {
-        isActive: false
-      }
-    },
     computed: {
-      ...mapGetters(['searchQuery', 'modalActive'])
+      ...mapGetters(['searchQuery', 'modalActive', 'navbarMenuIsActive'])
     },
     methods: {
-      ...mapMutations(['toggleModal', 'toggleCanAddToEq', 'setSearchQuery'])
+      ...mapMutations(['toggleModal', 'toggleCanAddToEq', 'setSearchQuery', 'toggleNavbarMenuIsActive'])
     }
   }
 </script>

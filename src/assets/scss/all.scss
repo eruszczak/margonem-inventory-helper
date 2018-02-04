@@ -10,3 +10,16 @@
   justify-content: center;
   text-align: center;
 }
+
+.modal-card-head {
+  background-color: $dark;
+}
+
+.modal-card-title {
+  color: $dark-invert;
+}
+
+.delete {
+  min-height: 35px;
+  min-width: 35px;
+}
