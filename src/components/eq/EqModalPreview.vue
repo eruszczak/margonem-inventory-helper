@@ -1,5 +1,5 @@
 <template>
-  <modal :active.sync="modalActive" :onCancel="closeModal" :top="top">
+  <modal :active.sync="modalActive" :onCancel="closeModal" :top="top" :cardHeight="cardHeight">
     <template slot="header">
       <p class="modal-card-title has-text-centered">Mój zestaw EQ</p>
       <button class="delete" aria-label="close" @click="closeModal"></button>
@@ -45,8 +45,12 @@
         if (this.searchQuery) {
           height += SEARCH_HEIGHT
         }
-        return `${height}px`
+        return height
         // return `0px`
+      },
+      cardHeight () {
+        const standardOffset = 40
+        return standardOffset + this.top
       }
     },
     methods: {

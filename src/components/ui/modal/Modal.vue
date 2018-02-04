@@ -1,9 +1,9 @@
 <template>
   <transition :name="animation">
-    <div v-if="isActive" class="modal is-active" :style="{'top': top}">
+    <div v-if="isActive" class="modal is-active" :style="{'top': topValue}">
       <div class="modal-background" @click="close"></div>
       <div class="animation-content" :class="{'modal-content': !hasModalCard}">
-        <div class="modal-card">
+        <div class="modal-card" :style="{'max-height': cardHeightValue}">
           <header class="modal-card-head">
             <slot name="header"/>
           </header>
@@ -39,12 +39,21 @@
         type: String,
         default: 'clip'
       },
-      top: String
+      top: String,
+      cardHeight: String
     },
     data () {
       return {
         isActive: this.active || false,
         savedScrollTop: null
+      }
+    },
+    computed: {
+      topValue () {
+        return `${this.top}px`
+      },
+      cardHeightValue () {
+        return `calc(100vh - ${this.cardHeight}px)`
       }
     },
     watch: {
