@@ -13,7 +13,7 @@ import Toggle from './components/ui/toggle'
 import Modal from './components/ui/modal'
 import Input from './components/ui/input'
 import Toast from './components/ui/toast'
-import Spinner from './components/ui/Spinner'
+import Spinner from './components/includes/Spinner'
 
 Vue.config.productionTip = false
 Vue.prototype.$toast = Toast
