@@ -1,7 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="search-items has-text-centered is-clearfix" :class="{'search-items-modal': modalActive}"
-         v-if="searchQuery">
+    <div class="has-text-centered" v-if="searchQuery">
       <my-spinner v-if="searching"/>
       <item v-else-if="searchResults.length" v-for="item in searchResults" :key="item.pk" :data="item"
             :action="RIGHT_CLICK_MAPPER.add"></item>
@@ -79,12 +78,5 @@
 </script>
 
 <style scoped>
-  .search-items {
-    margin-top: 60px;
-  }
 
-  .search-items-modal {
-    position: fixed;
-    z-index: 1000;
-  }
 </style>
