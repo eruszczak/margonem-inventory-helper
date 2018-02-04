@@ -1,12 +1,12 @@
 <template>
   <div v-if="eqItemsStats">
     <section>
-      <eq-overview :source="eqItemsStats"></eq-overview>
+      <eq-overview :source="eqItemsStats" margin="mt1"/>
       <h2 class="title">Statystyki</h2>
-      <eq-stats :source="eqItemsStats"></eq-stats>
+      <eq-stats :source="eqItemsStats"/>
       <h2 class="title">Bonusy</h2>
-      <eq-bonuses :source="eqItemsStats"></eq-bonuses>
-      <eq-bonuses-warnings :source="eqItemsStats"></eq-bonuses-warnings>
+      <eq-bonuses :source="eqItemsStats"/>
+      <eq-bonuses-warnings :source="eqItemsStats"/>
       <hr style="visibility: hidden;">
     </section>
   </div>

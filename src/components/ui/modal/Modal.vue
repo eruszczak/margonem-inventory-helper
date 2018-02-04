@@ -39,8 +39,8 @@
         type: String,
         default: 'clip'
       },
-      top: String,
-      cardHeight: String
+      top: Number,
+      cardHeight: Number
     },
     data () {
       return {
