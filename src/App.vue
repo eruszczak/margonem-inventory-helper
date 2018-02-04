@@ -1,24 +1,13 @@
 <template>
   <div id="app">
-    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <router-link class="navbar-item" :to="{name: 'items'}">Przedmioty</router-link>
-        <router-link class="navbar-item" :to="{name: 'eqView'}">Zestawy EQ</router-link>
-        <!--<router-link class="navbar-item" :to="{name: 'itemCompareView'}">Porównaj</router-link>-->
-        <a class="button is-primary is-medium" :class="{'is-active': modalActive}" @click="toggleModal">Pokaż EQ</a>
-        <!--<toggle class="navbar-item" :value="canAddToEq" @input="toggleCanAddToEq">-->
-          <!--{{ canAddToEq ? 'Do eq' : 'Do porównywarki'}}-->
-        <!--</toggle>-->
-        <my-input :value="searchQuery" @input="setSearchQuery" placeholder="Szukaj przedmiotów"></my-input>
-      </div>
-    </nav>
-    <search></search>
-    <!--<transition name="fade"><router-view></router-view></transition>-->
-    <router-view></router-view>
-    <footer></footer>
-    <eq-modal-preview></eq-modal-preview>
-
-    <loading :active.sync="isLoading"></loading>
+    <navbar/>
+    <search/>
+    <transition name="fade">
+      <router-view/>
+    </transition>
+    <footer/>
+    <eq-modal-preview/>
+    <loading :active.sync="isLoading"/>
   </div>
 </template>
 
@@ -26,6 +15,7 @@
   import { mapGetters, mapMutations } from 'vuex'
   import Search from './components/item/Search'
   import Footer from './components/ui/Footer'
+  import Navbar from './components/ui/Navbar'
   import EqModalPreview from './components/eq/EqModalPreview'
 
   export default {
@@ -38,22 +28,22 @@
     created () {
       this.setEqItemsStats()
     },
-    components: {Search, Footer, EqModalPreview},
+    components: {Search, Footer, EqModalPreview, Navbar},
     computed: {
-      ...mapGetters(['pageTitle', 'canAddToEq', 'isLoading', 'searchQuery', 'modalActive'])
+      ...mapGetters(['pageTitle', 'canAddToEq', 'isLoading'])
     },
     watch: {
       pageTitle (newVal, oldVal) {
         window.document.title = newVal
       },
       '$route' (to, from) {
-        // todo
+        // do this .beforeRoute (just like scrolling)
         console.log('route to', to)
         this.closeModal()
       }
     },
     methods: {
-      ...mapMutations(['toggleCanAddToEq', 'setEqItemsStats', 'setSearchQuery', 'closeModal', 'toggleModal']),
+      ...mapMutations(['setEqItemsStats', 'closeModal']),
       mouseOver: function (item, event) {
         item.isActive = true
       }
@@ -80,20 +70,13 @@
     max-height: calc(100vh - 100px);
   }
 
-  .modal .animation-content .modal-card {
+  /*.modal .animation-content .modal-card {*/
     /*margin-top: 50px;*/
-  }
+  /*}*/
 
   .is-primary {
     background-color: hsl(204, 86%, 53%) !important;
   }
-
-  /*.fade-enter-active, .fade-leave-active {*/
-  /*transition: opacity .5s;*/
-  /*}*/
-  /*.fade-enter, .fade-leave-to !* .fade-leave-active below version 2.1.8 *! {*/
-  /*opacity: 0;*/
-  /*}*/
 
   .search-items {
     margin-top: 60px;
