@@ -1,7 +1,7 @@
 <template>
   <div v-if="isSource">
-    <my-tag type="is-dark is-medium" style="margin-top:10px;">{{ source.lvl }} lvl</my-tag>
-    <my-taglist style="margin-top: 10px" centered>
+    <my-tag type="is-dark is-medium">{{ source.lvl }} lvl</my-tag>
+    <my-taglist class="mt1" centered>
       <my-tag v-if="source.isConflict" type="is-danger">sprzeczne typy przedmiotów</my-tag>
       <my-tag v-else-if="source.allowedProfessions.length === 6" type="is-warning">wszystkie profesje</my-tag>
       <my-tag v-else v-for="prof in source.allowedProfessions" type="is-warning" :key="prof">{{ prof | encodeProf }}</my-tag>

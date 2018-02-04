@@ -1,6 +1,5 @@
 <template>
-  <button :disabled="!realStackLength" class="button is-dark" @click="restore">Cofnij zmianę ({{ realStackLength }})
-  </button>
+  <button :disabled="!realStackLength" class="button is-dark is-small" :class="[size]" @click="restore">Cofnij zmianę ({{ realStackLength }})</button>
 </template>
 
 <script>
@@ -8,6 +7,7 @@
 
   export default {
     name: 'restore-eq',
+    props: ['size'],
     computed: {
       ...mapGetters(['realStackLength'])
     },
