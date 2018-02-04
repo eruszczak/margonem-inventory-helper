@@ -39,7 +39,7 @@
     },
     methods: {
       ...mapMutations(['closeModal']),
-      onCopy: e => {
+      onCopy (e) {
         this.$toast.info('Skopiowano do schowka')
       }
     }
