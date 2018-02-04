@@ -1,22 +1,20 @@
 <template>
   <modal :active.sync="modalActive" :onCancel="closeModal" :top="top">
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title has-text-centered">Mój zestaw EQ</p>
-        <button class="delete" aria-label="close" @click="closeModal"></button>
-      </header>
-      <section class="modal-card-body">
-        <div class="content has-text-centered">
-          <eq :source="eqItems" :darkBorder.native="true"/>
-          <eq-modal :source="eqItemsStats"/>
-        </div>
-      </section>
-      <footer class="modal-card-foot">
-        <button class="button" v-clipboard:copy="eqLink" v-clipboard:success="onCopy">Kopiuj link</button>
-        <router-link class="button" :to="{name: 'eqView'}" @click.native="closeModal">Zobacz szczegóły</router-link>
-        <restore-eq/>
-      </footer>
-    </div>
+    <template slot="header">
+      <p class="modal-card-title has-text-centered">Mój zestaw EQ</p>
+      <button class="delete" aria-label="close" @click="closeModal"></button>
+    </template>
+    <template slot="body">
+      <div class="content has-text-centered">
+        <eq :source="eqItems" darkBorder/>
+        <eq-modal :source="eqItemsStats"/>
+      </div>
+    </template>
+    <template slot="footer">
+      <button class="button" v-clipboard:copy="eqLink" v-clipboard:success="onCopy">Kopiuj link</button>
+      <router-link class="button" :to="{name: 'eqView'}" @click.native="closeModal">Zobacz szczegóły</router-link>
+      <restore-eq/>
+    </template>
   </modal>
 </template>
 

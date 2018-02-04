@@ -1,9 +1,19 @@
 <template>
   <transition :name="animation">
     <div v-if="isActive" class="modal is-active" :style="{'top': top}">
-      <div class="modal-background" @click="close"/>
+      <div class="modal-background" @click="close"></div>
       <div class="animation-content" :class="{ 'modal-content': !hasModalCard }">
-        <slot/>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <slot name="header"/>
+          </header>
+          <section class="modal-card-body">
+            <slot name="body"/>
+          </section>
+          <footer class="modal-card-foot">
+            <slot name="footer"/>
+          </footer>
+        </div>
       </div>
     </div>
   </transition>
