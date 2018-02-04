@@ -7,14 +7,14 @@
       </header>
       <section class="modal-card-body">
         <div class="content has-text-centered">
-          <eq :source="eqItems" :darkBorder.native="true"></eq>
-          <eq-modal :source="eqItemsStats"></eq-modal>
+          <eq :source="eqItems" :darkBorder.native="true"/>
+          <eq-modal :source="eqItemsStats"/>
         </div>
       </section>
       <footer class="modal-card-foot">
         <button class="button" v-clipboard:copy="eqLink" v-clipboard:success="onCopy">Kopiuj link</button>
         <router-link class="button" :to="{name: 'eqView'}" @click.native="closeModal">Zobacz szczegóły</router-link>
-        <restore-eq></restore-eq>
+        <restore-eq/>
       </footer>
     </div>
   </modal>
