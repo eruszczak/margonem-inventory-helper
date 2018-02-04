@@ -65,12 +65,19 @@
   .modal-card-body {
     overflow-x: hidden;
   }
+  .modal-content, .modal-card {
+    overflow: hidden
+  }
 
   .modal-card {
-    max-height: calc(100vh - 100px);
+    /*max-height: calc(100vh - 100px);*/
+    top: 70px;
   }
 
   .modal {
-    top: 52px;
+    top: 100px;
+  }
+  .notification {
+    padding: 1rem;
   }
 </style>

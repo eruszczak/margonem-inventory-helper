@@ -16,9 +16,9 @@
       <router-link class="navbar-item" :to="{name: 'eqView'}">Zestawy EQ</router-link>
       <!--<router-link class="navbar-item" :to="{name: 'itemCompareView'}">Porównaj</router-link>-->
       <div class="navbar-item field is-grouped is-grouped-multiline" style="justify-content: center">
-      <p class="control">
-        <a class="button is-info" :class="{'is-active': modalActive}" @click="toggleModal">Pokaż EQ</a>
-      </p>
+        <p class="control">
+          <a class="button is-info" :class="{'is-active': modalActive}" @click="toggleModal">Pokaż EQ</a>
+        </p>
         <p class="control">
           <my-input :value="searchQuery" @input="setSearchQuery" placeholder="Szukaj przedmiotów"/>
         </p>
