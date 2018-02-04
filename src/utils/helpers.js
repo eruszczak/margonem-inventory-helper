@@ -109,7 +109,13 @@ export const getEqUrl = (router, eqItems) => {
   return `${getBaseUrl()}${router.resolve(getEqRoute(eqItems)).href}`
 }
 
-export const replaceDiacritics = (value) => {
+export const getCompareEqLink = eqItems => {
+  let route = Object.assign({}, getEqRoute(eqItems))
+  route.name = 'eqCompareView'
+  return route
+}
+
+export const replaceDiacritics = value => {
   for (let val in DIACTRITICS) {
     value = value.replace(val, DIACTRITICS[val])
   }

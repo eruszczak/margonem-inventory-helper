@@ -14,8 +14,7 @@
                   <div class="columns is-gapless">
                     <div class="column is-narrow">
                       <eq :source="eqSet" :readOnly="readOnly" :darkBorder="readOnly"></eq>
-                      <button v-if="readOnly" class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje
-                      </button>
+                      <button v-if="readOnly" class="button is-dark" @click="copyEq(eqItems)">Zapisz jako moje</button>
                       <router-link v-if="readOnly" :to="getCompareEqLink(eqItems)">Porównaj z moim</router-link>
                     </div>
                     <div class="column">
@@ -56,60 +55,10 @@
           <p class="title">Ostatnio przeglądane zestawy</p>
           <div class="content">
             <p>TYLKO DO ODCZYTU. :</p>
-            <div class="columns">
-              <div class="column" v-for="eqItems in eqHistory">
-                <eq :source="eqItems" :readOnly="true" darkBorder></eq>
-                <span>kopiuj link</span>
-                <router-link :to="getEqLink(eqItems)">Przejdź do zestawu</router-link>
-                <button class="button is-dark" @click="saveAsMine(eqItems)">Zapisz jako moje</button>
-                <router-link :to="getCompareEqLink(eqItems)">Porównaj z moim</router-link>
-              </div>
-            </div>
+            <eq-history/>
           </div>
         </div>
       </article>
-
-      <!--<section>-->
-      <!--<b-collapse class="card" :open.sync="isOpen">-->
-      <!--<div slot="trigger" class="card-header">-->
-      <!--<p class="card-header-title">-->
-      <!--Ostatnio przeglądane zestawy {{ eqHistory.length }}-->
-      <!--</p>-->
-      <!--&lt;!&ndash;<a class="card-header-icon">&ndash;&gt;-->
-      <!--&lt;!&ndash;<b-icon :icon="isOpen ? 'menu-down' : 'menu-up'"></b-icon>&ndash;&gt;-->
-      <!--&lt;!&ndash;</a>&ndash;&gt;-->
-      <!--</div>-->
-      <!--<div class="card-content">-->
-      <!--<div class="content">-->
-      <!--Możesz zobaczyć 5 ostatnich odwiedzanych zestawów.-->
-      <!--<button class="button is-dark" @click="showNext">Następny</button>-->
-      <!--<eq :source="currentEqItems" :readOnly="true"></eq>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--<footer class="card-footer">-->
-      <!--<button class="card-footer-item">kopiuj link</button>-->
-      <!--<router-link class="card-footer-item" :to="getEqLink(currentEqItems)">Przejdź do zestawu</router-link>-->
-      <!--<button class="card-footer-item" @click="saveAsMine(currentEqItems)">Zapisz jako moje</button>-->
-      <!--</footer>-->
-      <!--</b-collapse>-->
-      <!--</section>-->
-
-      <!--<b-tabs v-model="current">-->
-      <!--<b-tab-item label="Pictures">-->
-      <!--<eq :source="currentEqItems" :readOnly="true"></eq>-->
-      <!--</b-tab-item>-->
-
-      <!--<b-tab-item label="Music">-->
-      <!--Lorem <br>-->
-      <!--ipsum <br>-->
-      <!--dolor <br>-->
-      <!--sit <br>-->
-      <!--amet.-->
-      <!--</b-tab-item>-->
-      <!--</b-tabs>-->
-      <!-- <section class="section">
-        <eq-summary :source="eqSetStats"></eq-summary>
-      </section> -->
     </div>
   </section>
 </template>
@@ -122,17 +71,14 @@
   import EqBonuses from './eq/EqBonuses'
   import EqBonusesWarnings from './eq/EqBonusesWarnings'
   import EqOverview from './eq/EqOverview'
-  import { getEqRoute } from '../utils/helpers'
+  import EqHistory from './eq/EqHistory'
+  import { getCompareEqLink } from '../utils/helpers'
+  import { copyEq } from './mixins/copyEq'
 
   export default {
     name: 'eq-view',
-    components: {Eq, RestoreEq, EqStats, EqBonuses, EqOverview, EqBonusesWarnings},
-    data () {
-      return {
-        isOpen: true,
-        current: 0
-      }
-    },
+    components: {Eq, RestoreEq, EqStats, EqBonuses, EqOverview, EqBonusesWarnings, EqHistory},
+    mixins: [copyEq],
     mounted () {
       this.getEqItems()
     },
@@ -142,9 +88,7 @@
       }
     },
     computed: {
-      ...mapGetters([
-        'eqHistory', 'eqItems', 'readOnlyEqItems', 'eqItemsStats', 'readOnlyEqItemsStats', 'realStackLength'
-      ]),
+      ...mapGetters(['eqItems', 'readOnlyEqItems', 'eqItemsStats', 'readOnlyEqItemsStats', 'realStackLength']),
       readOnly: function () {
         return this.slugs.length > 0
       },
@@ -156,20 +100,11 @@
       },
       eqSetStats: function () {
         return this.readOnly ? this.readOnlyEqItemsStats : this.eqItemsStats
-      },
-      currentEqItems: function () {
-        return this.eqHistory[this.current]
       }
     },
     methods: {
       ...mapMutations(['restart', 'toggleLoading']),
-      ...mapActions(['fetchReadOnlyEqItems', 'saveEqAsMine']),
-      getEqLink: eqItems => getEqRoute(eqItems),
-      getCompareEqLink: function (eqItems) {
-        let route = Object.assign({}, getEqRoute(eqItems))
-        route.name = 'eqCompareView'
-        return route
-      },
+      ...mapActions(['fetchReadOnlyEqItems']),
       getEqItems: function () {
         if (this.readOnly) {
           this.toggleLoading(true)
@@ -181,16 +116,13 @@
           })
         }
       },
-      saveAsMine: function (eqItems) {
-        this.saveEqAsMine(eqItems)
-        this.$toast.info('Podmieniono zestaw')
-      },
       showNext: function () {
         this.current += 1
         if (this.current >= this.eqHistory.length) {
           this.current = 0
         }
-      }
+      },
+      getCompareEqLink: getCompareEqLink
     }
   }
 </script>
