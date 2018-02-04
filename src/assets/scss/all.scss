@@ -12,14 +12,22 @@
 }
 
 .modal-card-head {
-  background-color: $dark;
+  background-color: $link;
 }
 
 .modal-card-title {
-  color: $dark-invert;
+  color: $link-invert;
+}
+
+.button.is-info.is-active {
+  background-color: $link;
 }
 
 .delete {
   min-height: 35px;
   min-width: 35px;
+}
+
+.mt1 {
+  margin-top: 1em;
 }

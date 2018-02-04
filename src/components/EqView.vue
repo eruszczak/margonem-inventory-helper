@@ -9,19 +9,22 @@
             <div class="tile is-parent">
               <article class="tile is-child notification has-text-centered"
                        :class="[readOnly ? 'is-warning' : 'is-info']">
-                <p class="title">{{ readOnly ? 'Odwiedzany' : 'Twój' }} zestaw</p>
+                <p class="title">
+                  <span v-if="readOnly">Odwiedzany zestaw</span>
+                  <span v-else>Twój zestaw</span>
+                </p>
                 <div class="content">
                   <div class="columns is-gapless">
                     <div class="column is-narrow">
-                      <eq :source="eqSet" :readOnly="readOnly" :darkBorder="readOnly"></eq>
+                      <eq :source="eqSet" :readOnly="readOnly" :darkBorder="readOnly"/>
                       <button v-if="readOnly" class="button is-dark" @click="copyEq(eqItems)">Zapisz jako moje</button>
                       <router-link v-if="readOnly" :to="getCompareEqLink(eqItems)">Porównaj z moim</router-link>
                     </div>
                     <div class="column">
-                      <eq-overview :source="eqSetStats"></eq-overview>
-                      <div v-if="!readOnly">
-                        <restore-eq></restore-eq>
-                        <button class="button is-dark" @click="restart">restart</button>
+                      <eq-overview :source="eqSetStats"/>
+                      <div v-if="!readOnly" class="mt1">
+                        <restore-eq size="is-small"/>
+                        <button class="button is-dark is-small" @click="restart">restart</button>
                       </div>
                     </div>
                   </div>
@@ -33,8 +36,8 @@
             <article class="tile is-child notification is-danger has-text-centered">
               <p class="title">Bonusy</p>
               <div class="content">
-                <eq-bonuses :source="eqSetStats"></eq-bonuses>
-                <eq-bonuses-warnings :source="eqSetStats"></eq-bonuses-warnings>
+                <eq-bonuses :source="eqSetStats"/>
+                <eq-bonuses-warnings :source="eqSetStats"/>
               </div>
             </article>
           </div>
@@ -44,7 +47,7 @@
             <div class="content">
               <p class="title">Statystyki</p>
               <div class="content">
-                <eq-stats :source="eqSetStats"></eq-stats>
+                <eq-stats :source="eqSetStats"/>
               </div>
             </div>
           </article>

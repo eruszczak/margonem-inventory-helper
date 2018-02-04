@@ -74,14 +74,10 @@
   }
 
   .modal-card {
-    top: 45px;
+    top: 2em;
   }
 
   .notification {
     padding: 1rem;
-  }
-
-  .button.is-info.is-active {
-    background-color: #067dce;
   }
 </style>
