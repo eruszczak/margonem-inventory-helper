@@ -1,6 +1,5 @@
 <template>
-  <modal :active.sync="modalActive" :onCancel="closeModal">
-    <div class="modal-background"></div>
+  <modal :active.sync="modalActive" :onCancel="closeModal" :top="top">
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title has-text-centered">Mój zestaw EQ</p>
@@ -28,13 +27,27 @@
   import RestoreEq from '../eq/RestoreEq'
   import EqModal from '../eq/EqModal'
 
+  const NAV_HEIGHT = 52
+  const SEARCH_HEIGHT = 48
+  const MOBILE_MENU_HEIGHT = 148
+
   export default {
     name: 'eq-modal-preview',
     components: {Eq, RestoreEq, EqModal},
     computed: {
-      ...mapGetters(['modalActive', 'eqItemsStats', 'eqItems']),
+      ...mapGetters(['modalActive', 'eqItemsStats', 'eqItems', 'navbarMenuIsActive', 'searchQuery']),
       eqLink: function () {
         return getEqUrl(this.$router, this.eqItems)
+      },
+      top: function () {
+        let height = NAV_HEIGHT
+        if (this.navbarMenuIsActive) {
+          height += MOBILE_MENU_HEIGHT
+        }
+        if (this.searchQuery) {
+          height += SEARCH_HEIGHT
+        }
+        return `${height}px`
       }
     },
     methods: {
@@ -46,6 +59,5 @@
   }
 </script>
 
-<style scoped>
-
+<style>
 </style>

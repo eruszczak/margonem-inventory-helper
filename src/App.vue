@@ -65,19 +65,23 @@
   .modal-card-body {
     overflow-x: hidden;
   }
+
   .modal-content, .modal-card {
-    overflow: hidden
+    overflow: hidden;
+    max-height: calc(100vh - 40px);
+    padding: 5px;
+    margin: 0 auto;
   }
 
   .modal-card {
-    /*max-height: calc(100vh - 100px);*/
-    top: 70px;
+    top: 45px;
   }
 
-  .modal {
-    top: 100px;
-  }
   .notification {
     padding: 1rem;
+  }
+
+  .button.is-info.is-active {
+    background-color: #067dce;
   }
 </style>
