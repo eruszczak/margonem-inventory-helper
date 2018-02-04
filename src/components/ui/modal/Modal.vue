@@ -2,7 +2,7 @@
   <transition :name="animation">
     <div v-if="isActive" class="modal is-active" :style="{'top': top}">
       <div class="modal-background" @click="close"></div>
-      <div class="animation-content" :class="{ 'modal-content': !hasModalCard }">
+      <div class="animation-content" :class="{'modal-content': !hasModalCard}">
         <div class="modal-card">
           <header class="modal-card-head">
             <slot name="header"/>

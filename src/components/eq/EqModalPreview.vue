@@ -46,6 +46,7 @@
           height += SEARCH_HEIGHT
         }
         return `${height}px`
+        // return `0px`
       }
     },
     methods: {

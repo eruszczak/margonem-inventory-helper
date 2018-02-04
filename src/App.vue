@@ -5,7 +5,7 @@
     <transition name="fade">
       <router-view/>
     </transition>
-    <footer/>
+    <my-footer/>
     <eq-modal-preview/>
     <loading :active.sync="isLoading"/>
   </div>
@@ -14,7 +14,7 @@
 <script>
   import { mapGetters, mapMutations } from 'vuex'
   import Search from './components/item/Search'
-  import Footer from './components/includes/Footer'
+  import MyFooter from './components/includes/Footer'
   import Navbar from './components/includes/Navbar'
   import EqModalPreview from './components/eq/EqModalPreview'
 
@@ -28,7 +28,7 @@
     created () {
       this.setEqItemsStats()
     },
-    components: {Search, Footer, EqModalPreview, Navbar},
+    components: {Search, MyFooter, EqModalPreview, Navbar},
     computed: {
       ...mapGetters(['pageTitle', 'canAddToEq', 'isLoading'])
     },
@@ -68,14 +68,14 @@
 
   .modal-content, .modal-card {
     overflow: hidden;
-    max-height: calc(100vh - 40px);
+    max-height: calc(100vh - 140px);
     padding: 5px;
     margin: 0 auto;
   }
 
-  .modal-card {
-    top: 2em;
-  }
+  /*.modal-card {*/
+    /*top: 2em;*/
+  /*}*/
 
   .notification {
     padding: 1rem;
