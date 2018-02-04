@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isSource">
+  <div v-if="isSource" :class="[margin]">
     <my-tag type="is-dark is-medium">{{ source.lvl }} lvl</my-tag>
     <my-taglist class="mt1" centered>
       <my-tag v-if="source.isConflict" type="is-danger">sprzeczne typy przedmiotów</my-tag>
@@ -19,7 +19,7 @@
 
   export default {
     name: 'eq-overview',
-    props: ['source'],
+    props: ['source', 'margin'],
     data () {
       return {
         ITEM_RARITY_IN_ORDER: ITEM_RARITY_IN_ORDER
