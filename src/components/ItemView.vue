@@ -2,43 +2,38 @@
   <div v-if="data">
     <section class="hero is-info">
       <div class="hero-body">
-        <div class="container">
-          <h1 class="title">
-            {{ data.name }} <span v-if="data.lvl">({{ data.lvl }})</span>
-          </h1>
-          <h2 class="subtitle">
-
-          </h2>
+        <div class="container has-text-centered">
+          <h1 class="title">{{ data.name }}</h1>
+          <h2 class="subtitle">{{ data.type }}<span v-if="data.lvl">, {{ data.lvl }} lvl</span></h2>
         </div>
       </div>
       <div class="hero-foot">
-        <div class="container">
-          <item :data="data" :action="rmbActions.add"></item>
-        </div>
-      </div>
-    </section>
-
-    <section class="hero is-warning">
-      <div class="hero-body">
-        <div class="container">
-          <h1 class="title">
-            Podobne przedmioty
-          </h1>
-          <div class="items">
-            <item v-for="item in similarItems" :key="item.pk" :data="item" :action="rmbActions.add"></item>
+        <div class="container has-text-centered">
+          <item :data="data" :action="rmbActions.add"/>
+          <div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="hero is-warning">
+    <section class="hero mt1">
       <div class="hero-body">
-        <div class="container">
-          <h1 class="title">
-            Ostatnio odwiedzane
-          </h1>
+        <div class="container has-text-centered">
+          <h1 class="title">Podobne przedmioty</h1>
+          <p class="subtitle">Inne przedmioty tego typu na podobny poziom</p>
           <div class="items">
-            <item v-for="item in itemHistory" :key="item.pk" :data="item" :action="rmbActions.add"></item>
+            <item v-for="item in similarItems" :key="item.pk" :data="item" :action="rmbActions.add"/>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="title">Ostatnio odwiedzane</h1>
+          <div class="items">
+            <item v-for="item in itemHistory" :key="item.pk" :data="item" :action="rmbActions.add"/>
           </div>
         </div>
       </div>

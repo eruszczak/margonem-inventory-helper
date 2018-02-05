@@ -78,9 +78,9 @@
 </script>
 
 <style scoped>
-  #search-results {
-    overflow: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-  }
+  /*#search-results {*/
+    /*overflow: auto;*/
+    /*overflow-y: hidden;*/
+    /*white-space: nowrap;*/
+  /*}*/
 </style>
