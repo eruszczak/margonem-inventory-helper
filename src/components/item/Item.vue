@@ -17,7 +17,17 @@
 
   export default {
     name: 'item',
-    props: ['data', 'action', 'noLink'],
+    props: {
+      data: {
+        type: Object,
+        required: true
+      },
+      action: Number,
+      noLink: {
+        type: Boolean,
+        default: false
+      }
+    },
     components: {Popup},
     computed: {
       ...mapGetters(['eqItems', 'canAddToEq'])
