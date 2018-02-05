@@ -2,28 +2,41 @@
   <section class="section">
     <div class="container">
       <div class="tile is-ancestor">
-        <div class="tile is-parent is-6">
-          <article class="tile is-child notification is-info has-text-centered">
+        <article class="tile is-child notification has-text-centered">
+          <div class="content">
+            <p class="title">Zestawy</p>
             <div class="content">
-              <p class="title">Twój zestaw</p>
-              <div class="content">
-                <eq :source="eqItems"/>
+              <div class="tile is-ancestor">
+                <div class="tile is-parent is-6">
+                  <div class="tile is-parent">
+                    <article class="tile is-child notification is-info has-text-centered">
+                      <div class="content">
+                        <p class="title">Twój</p>
+                        <div class="content">
+                          <eq :source="eqItems"/>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+                <div class="tile is-parent is-6">
+                  <div class="tile is-parent">
+                    <article class="tile is-child notification is-warning has-text-centered">
+                      <div class="content">
+                        <p class="title">Odwiedzany</p>
+                        <div class="content">
+                          <eq :source="readOnlyEqItems" :readOnly="true" darkBorder/>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                </div>
               </div>
             </div>
-          </article>
-        </div>
-        <div class="tile is-parent is-6">
-          <article class="tile is-child notification is-warning has-text-centered">
-            <div class="content">
-              <p class="title">Odwiedzany zestaw</p>
-              <div class="content">
-                <eq :source="readOnlyEqItems" :readOnly="true" darkBorder/>
-              </div>
-            </div>
-          </article>
-        </div>
+          </div>
+        </article>
       </div>
-      <div class="tile is-ancestor">
+      <div id="stats" class="tile is-ancestor">
         <article class="tile is-child notification has-text-centered">
           <div class="content">
             <p class="title">Porównanie</p>
@@ -103,5 +116,7 @@
 </script>
 
 <style scoped>
-
+  #stats {
+    margin-top: 10px;
+  }
 </style>
