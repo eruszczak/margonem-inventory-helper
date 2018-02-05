@@ -1,8 +1,8 @@
 <template>
-  <div v-if="data">
+  <div>
     <section class="hero is-info">
       <div v-if="isLoading" class="hero-body">
-        <my-spinner  size="100" />
+        <my-spinner size="100" />
       </div>
       <template v-else>
         <div class="hero-head has-text-centered" style="padding-top: 2em">
@@ -55,11 +55,8 @@
   import { item } from './mixins/item'
 
   export default {
-    name: 'SingleItemView',
-    components: {
-      Item,
-      Popup
-    },
+    name: 'ItemView',
+    components: {Item, Popup},
     mixins: [item],
     props: ['slug'],
     mounted () {
@@ -67,14 +64,13 @@
     },
     data () {
       return {
-        name: 'SingleItemView',
         data: null,
         similarItems: [],
         noSimilarItems: false,
         error: false,
         rmbActions: RIGHT_CLICK_MAPPER,
-        isLoading: false,
-        isLoadingSimilar: false
+        isLoading: true,
+        isLoadingSimilar: true
       }
     },
     watch: {
@@ -104,8 +100,6 @@
         'addToItemHistory'
       ]),
       getItemData: function () {
-        this.isLoading = true
-        this.isLoadingSimilar = true
         fetchItem(this.slug, response => {
           this.isLoading = false
           this.data = response.data
