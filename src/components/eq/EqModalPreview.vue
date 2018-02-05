@@ -11,7 +11,7 @@
       </div>
     </template>
     <template slot="footer">
-      <button class="button" v-clipboard:copy="eqLink" v-clipboard:success="onCopy">Kopiuj link</button>
+      <clipboard :content="getEqLink(eqItems)" value="Kopiuj link"/>
       <router-link class="button" :to="{name: 'eqView'}" @click.native="closeModal">Zobacz szczegóły</router-link>
       <restore-eq/>
     </template>
@@ -20,10 +20,11 @@
 
 <script>
   import { mapGetters, mapMutations } from 'vuex'
-  import { getEqUrl } from '../../utils/helpers'
   import Eq from '../eq/Eq'
   import RestoreEq from '../eq/RestoreEq'
   import EqModal from '../eq/EqModal'
+  import Clipboard from '../includes/Clipboard'
+  import { eqLink } from '../mixins/eqLink'
 
   const NAV_HEIGHT = 52
   const SEARCH_HEIGHT = 48
@@ -31,12 +32,10 @@
 
   export default {
     name: 'eq-modal-preview',
-    components: {Eq, RestoreEq, EqModal},
+    components: {Eq, RestoreEq, EqModal, Clipboard},
+    mixins: [eqLink],
     computed: {
       ...mapGetters(['modalActive', 'eqItemsStats', 'eqItems', 'navbarMenuIsActive', 'searchQuery']),
-      eqLink: function () {
-        return getEqUrl(this.$router, this.eqItems)
-      },
       top: function () {
         let height = NAV_HEIGHT
         if (this.navbarMenuIsActive) {
@@ -46,7 +45,6 @@
           height += SEARCH_HEIGHT
         }
         return height
-        // return `0px`
       },
       cardHeight () {
         const standardOffset = 40
@@ -54,10 +52,7 @@
       }
     },
     methods: {
-      ...mapMutations(['closeModal']),
-      onCopy (e) {
-        this.$toast.info('Skopiowano do schowka')
-      }
+      ...mapMutations(['closeModal'])
     }
   }
 </script>

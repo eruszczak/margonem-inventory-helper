@@ -19,7 +19,8 @@
                       <eq :source="eqSet" :readOnly="readOnly" :darkBorder="readOnly"/>
                       <div class="mt1">
                         <template v-if="!readOnly">
-                          <restore-eq size="is-small"/>
+                          <restore-eq size="is-small" type="is-dark"/>
+                          <clipboard :content="getEqLink(eqSet)" value="Kopiuj link" type="is-dark" size="is-small"/>
                         </template>
                         <template v-else>
                           <button class="button is-dark is-small" @click="copyEq(eqItems)">Zapisz jako moje</button>
@@ -83,11 +84,13 @@
   import EqHistory from './eq/EqHistory'
   import { getCompareEqLink } from '../utils/helpers'
   import { copyEq } from './mixins/copyEq'
+  import Clipboard from './includes/Clipboard'
+  import { eqLink } from './mixins/eqLink'
 
   export default {
     name: 'eq-view',
-    components: {Eq, RestoreEq, EqStats, EqBonuses, EqOverview, EqBonusesWarnings, EqHistory},
-    mixins: [copyEq],
+    components: {Eq, RestoreEq, EqStats, EqBonuses, EqOverview, EqBonusesWarnings, EqHistory, Clipboard},
+    mixins: [copyEq, eqLink],
     mounted () {
       this.getEqItems()
     },
