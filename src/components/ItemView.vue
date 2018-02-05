@@ -4,7 +4,7 @@
       <div class="hero-body">
         <div class="container has-text-centered">
           <h1 class="title">{{ data.name }}</h1>
-          <h2 class="subtitle">{{ data.type }}<span v-if="data.lvl">, {{ data.lvl }} lvl</span></h2>
+          <h2 class="subtitle">{{ data.type | encodeType }}<span v-if="data.lvl">, {{ data.lvl }} lvl</span></h2>
         </div>
       </div>
       <div class="hero-foot">
@@ -38,7 +38,6 @@
         </div>
       </div>
     </section>
-
   </div>
 </template>
 
@@ -48,6 +47,7 @@
   import { fetchItem, fetchItemSimilar } from '../api/items'
   import { mapGetters, mapMutations } from 'vuex'
   import { RIGHT_CLICK_MAPPER } from '../utils/constants'
+  import { item } from './mixins/item'
 
   export default {
     name: 'SingleItemView',
@@ -55,6 +55,7 @@
       Item,
       Popup
     },
+    mixins: [item],
     props: ['slug'],
     data () {
       return {
