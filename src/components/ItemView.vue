@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="hero is-info">
+    <section class="hero" :class="itemClass">
       <div v-if="isLoading" class="hero-body">
         <my-spinner size="100" />
       </div>
@@ -84,16 +84,19 @@
       ]),
       itemStats () {
         return this.data ? this.getEncodeDItemStats(this.data.json_stats) : this.data
+      },
+      itemClass: function () {
+        if (!this.data) {
+          return null
+        }
+        const classes = {
+          unique: 'is-warning',
+          heroic: 'is-info',
+          legendary: 'is-danger',
+          default: 'is-light'
+        }
+        return classes[this.data.rarity]
       }
-      // itemClass: function () {   TODO
-      //   const classes = {
-      //     unique: 'orange',
-      //     heroic: 'blue',
-      //     legendary: 'red',
-      //     default: 'grey'
-      //   }
-      //   return classes[this.data.rarity]
-      // }
     },
     methods: {
       ...mapMutations([
