@@ -26,13 +26,11 @@
     data () {
       return {
         legbonMaxDuration: this.getLegbonMaxDuration(this.data.lvl),
-        professions: this.getProfessions(item.profession),
+        professions: this.getProfessions(this.data.profession),
         itemStats: this.getEncodeDItemStats(this.data.json_stats),
         lvl: this.data.lvl ? `(${this.data.lvl})` : '',
         legbon: this.getLegbon(this.data.legbon)
       }
-    },
-    computed: {
     }
   }
 </script>
