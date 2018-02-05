@@ -4,7 +4,7 @@
     <p class="green-color">*{{ data.rarity | encodeRarity }}* {{ data.type | encodeType }}</p>
     <p v-if="professions.length" class="green-color">{{ professions }}</p>
     <div v-html="itemStats"></div>
-    <template v-if="data.legbon">
+    <template v-if="legbon">
       <p class="green-color">{{ legbon.translation }}</p>
       <p v-if="legbonMaxDuration">{{ legbonMaxDuration }}</p>
     </template>
