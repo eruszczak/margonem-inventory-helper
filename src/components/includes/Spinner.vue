@@ -1,10 +1,21 @@
 <template>
-  <div class="vue-simple-spinner"></div>
+  <div class="vue-simple-spinner" :style="{'width': sizeValue, 'height': sizeValue}"></div>
 </template>
 
 <script>
   export default {
-    name: 'spinner'
+    name: 'spinner',
+    props: {
+      size: {
+        type: String,
+        default: '42'
+      }
+    },
+    data () {
+      return {
+        sizeValue: `${this.size}px`
+      }
+    }
   }
 </script>
 
@@ -16,8 +27,6 @@
     border: 3px solid rgb(238, 238, 238);
     border-top-color: rgb(33, 150, 243);
     border-image: initial;
-    width: 42px;
-    height: 42px;
     animation: vue-simple-spinner-spin 0.8s linear infinite;
   }
   @keyframes vue-simple-spinner-spin {

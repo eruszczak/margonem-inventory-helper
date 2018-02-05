@@ -1,34 +1,44 @@
 <template>
   <div v-if="data">
     <section class="hero is-info">
-      <div class="hero-head has-text-centered" style="padding-top: 2em">
-        <h1 class="title">{{ data.name }}</h1>
-        <h2 class="subtitle">{{ data.type | encodeType }}<span v-if="data.lvl">, {{ data.lvl }} lvl</span></h2>
+      <div v-if="isLoading" class="hero-body">
+        <my-spinner  size="100" />
       </div>
-      <div class="hero-body">
-        <div class="container has-text-centered">
-          <item :data="data" :action="rmbActions.add"/>
-          <div v-html="itemStats"></div>
+      <template v-else>
+        <div class="hero-head has-text-centered" style="padding-top: 2em">
+          <h1 class="title">{{ data.name }}</h1>
+          <h2 class="subtitle">{{ data.type | encodeType }}<span v-if="data.lvl">, {{ data.lvl }} lvl</span></h2>
         </div>
-      </div>
+        <div class="hero-body">
+          <div class="container has-text-centered">
+            <item :data="data" :action="rmbActions.add"/>
+            <div v-html="itemStats"></div>
+          </div>
+        </div>
+      </template>
     </section>
-    <section class="hero mt1">
+    <section class="hero is-light mt1">
       <div class="hero-body">
         <div class="container has-text-centered">
           <h1 class="title">Podobne przedmioty</h1>
           <p class="subtitle">Inne przedmioty tego typu na podobny poziom</p>
           <div class="items">
-            <item v-for="item in similarItems" :key="item.pk" :data="item" :action="rmbActions.add"/>
+            <my-spinner v-if="isLoadingSimilar" />
+            <transition-group v-else name="fade">
+              <item  v-for="item in similarItems" :key="item.pk" :data="item" :action="rmbActions.add"/>
+            </transition-group>
           </div>
         </div>
       </div>
     </section>
-    <section class="hero">
+    <section class="hero is-light mt1">
       <div class="hero-body">
         <div class="container has-text-centered">
           <h1 class="title">Ostatnio odwiedzane</h1>
           <div class="items">
-            <item v-for="item in itemHistory" :key="item.pk" :data="item" :action="rmbActions.add"/>
+            <transition-group name="fade">
+              <item v-for="item in itemHistory" :key="item.pk" :data="item" :action="rmbActions.add"/>
+            </transition-group>
           </div>
         </div>
       </div>
@@ -62,7 +72,9 @@
         similarItems: [],
         noSimilarItems: false,
         error: false,
-        rmbActions: RIGHT_CLICK_MAPPER
+        rmbActions: RIGHT_CLICK_MAPPER,
+        isLoading: false,
+        isLoadingSimilar: false
       }
     },
     watch: {
@@ -92,7 +104,10 @@
         'addToItemHistory'
       ]),
       getItemData: function () {
+        this.isLoading = true
+        this.isLoadingSimilar = true
         fetchItem(this.slug, response => {
+          this.isLoading = false
           this.data = response.data
           this.getSimilarItems()
           this.addToItemHistory(this.data)
@@ -100,6 +115,7 @@
       },
       getSimilarItems: function () {
         fetchItemSimilar(this.slug, response => {
+          this.isLoadingSimilar = false
           this.similarItems = response.data
           this.noSimilarItems = this.similarItems.length === 0
         }, response => {
