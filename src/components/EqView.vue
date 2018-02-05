@@ -102,7 +102,7 @@
     computed: {
       ...mapGetters(['eqItems', 'readOnlyEqItems', 'eqItemsStats', 'readOnlyEqItemsStats', 'realStackLength']),
       readOnly: function () {
-        return this.slugs.length > 0
+        return 'i' in this.$route.query
       },
       slugs: function () {
         return this.$route.query.i || []

@@ -106,7 +106,14 @@ export const getEqRoute = (eqItems) => {
 }
 
 export const getEqUrl = (router, eqItems) => {
-  return `${getBaseUrl()}${router.resolve(getEqRoute(eqItems)).href}`
+  const route = getEqRoute(eqItems)
+  const path = router.resolve(route).href
+  let qs = ''
+  if (route.query.i.length === 0) {
+    // add query string for eqs with no items
+    qs = '?i='
+  }
+  return `${getBaseUrl()}${path}${qs}`
 }
 
 export const getCompareEqLink = eqItems => {
