@@ -1,5 +1,5 @@
 <template>
-  <tbl>
+  <tbl v-if="orderedBonuses.length">
     <tbl-row slot="header">
       <tbl-header centered>Twoj</tbl-header>
       <tbl-header centered>Nazwa</tbl-header>
@@ -13,6 +13,7 @@
     </tbl-row>
     </tbody>
   </tbl>
+  <msg v-else>Nie znaleziono</msg>
 </template>
 
 <script>

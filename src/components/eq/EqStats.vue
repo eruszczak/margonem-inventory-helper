@@ -1,5 +1,5 @@
 <template>
-  <tbl>
+  <tbl v-if="orderedStats.length">
     <tbl-row slot="header">
       <tbl-header>Nazwa</tbl-header>
       <tbl-header>Wartość</tbl-header>
@@ -11,6 +11,7 @@
     </tbl-row>
     </tbody>
   </tbl>
+  <msg v-else>Nie znaleziono</msg>
 </template>
 
 <script>
