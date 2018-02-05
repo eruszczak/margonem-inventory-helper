@@ -12,7 +12,7 @@
 </template>
 
 <script>
-  import {item} from '../mixins/item';
+  import {item} from '../mixins/item'
 
   export default {
     name: 'item',
