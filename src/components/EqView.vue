@@ -23,8 +23,8 @@
                           <clipboard :content="getEqLink(eqSet)" value="Kopiuj link" type="is-dark" size="is-small"/>
                         </template>
                         <template v-else>
-                          <button class="button is-dark is-small" @click="copyEq(eqItems)">Zapisz jako moje</button>
-                          <router-link class="button is-dark is-small" :to="getCompareEqLink(eqItems)">Porównaj z moim</router-link>
+                          <button class="button is-dark is-small" @click="copyEq(eqSet)">Zapisz jako moje</button>
+                          <router-link class="button is-dark is-small" :to="getCompareEqLink(eqSet)">Porównaj z moim</router-link>
                         </template>
                       </div>
                     </div>
