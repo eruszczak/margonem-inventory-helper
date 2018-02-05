@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="has-text-centered" v-if="searchQuery">
+    <div id="search-results" class="has-text-centered" v-if="searchQuery">
       <my-spinner v-if="searching"/>
       <item v-else-if="searchResults.length" v-for="item in searchResults" :key="item.pk" :data="item"
             :action="RIGHT_CLICK_MAPPER.add"/>
@@ -78,5 +78,9 @@
 </script>
 
 <style scoped>
-
+  #search-results {
+    overflow: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
 </style>
