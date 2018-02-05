@@ -1,21 +1,17 @@
 <template>
   <div v-if="data">
     <section class="hero is-info">
+      <div class="hero-head has-text-centered" style="padding-top: 2em">
+        <h1 class="title">{{ data.name }}</h1>
+        <h2 class="subtitle">{{ data.type | encodeType }}<span v-if="data.lvl">, {{ data.lvl }} lvl</span></h2>
+      </div>
       <div class="hero-body">
         <div class="container has-text-centered">
-          <h1 class="title">{{ data.name }}</h1>
-          <h2 class="subtitle">{{ data.type | encodeType }}<span v-if="data.lvl">, {{ data.lvl }} lvl</span></h2>
-        </div>
-      </div>
-      <div class="hero-foot">
-        <div class="container has-text-centered">
           <item :data="data" :action="rmbActions.add"/>
-          <div>
-          </div>
+          <div v-html="itemStats"></div>
         </div>
       </div>
     </section>
-
     <section class="hero mt1">
       <div class="hero-body">
         <div class="container has-text-centered">
@@ -27,7 +23,6 @@
         </div>
       </div>
     </section>
-
     <section class="hero">
       <div class="hero-body">
         <div class="container has-text-centered">
@@ -57,6 +52,9 @@
     },
     mixins: [item],
     props: ['slug'],
+    mounted () {
+      this.getItemData()
+    },
     data () {
       return {
         name: 'SingleItemView',
@@ -67,9 +65,6 @@
         rmbActions: RIGHT_CLICK_MAPPER
       }
     },
-    mounted () {
-      this.getItemData()
-    },
     watch: {
       '$route' (to, from) {
         this.getItemData()
@@ -78,7 +73,10 @@
     computed: {
       ...mapGetters([
         'itemHistory'
-      ])
+      ]),
+      itemStats () {
+        return this.data ? this.getEncodeDItemStats(this.data.json_stats) : this.data
+      }
       // itemClass: function () {   TODO
       //   const classes = {
       //     unique: 'orange',
