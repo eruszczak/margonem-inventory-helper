@@ -3,56 +3,60 @@
     <div class="container">
       <div class="tile is-ancestor">
         <div class="tile is-parent is-6">
-          <div class="tile is-parent">
-            <article class="tile is-child notification is-primary has-text-centered">
+          <article class="tile is-child notification is-info has-text-centered">
+            <div class="content">
+              <p class="title">Twój zestaw</p>
               <div class="content">
-                <p class="title">Twój zestaw</p>
-                <div class="content">
-                  <eq :source="eqItems"></eq>
-                </div>
+                <eq :source="eqItems"/>
               </div>
-            </article>
-          </div>
+            </div>
+          </article>
         </div>
         <div class="tile is-parent is-6">
-          <div class="tile is-parent">
-            <article class="tile is-child notification is-warning has-text-centered">
+          <article class="tile is-child notification is-warning has-text-centered">
+            <div class="content">
+              <p class="title">Odwiedzany zestaw</p>
               <div class="content">
-                <p class="title">Odwiedzany zestaw</p>
-                <div class="content">
-                  <eq :source="readOnlyEqItems" :readOnly="true"></eq>
-                </div>
+                <eq :source="readOnlyEqItems" :readOnly="true" darkBorder/>
               </div>
-            </article>
-          </div>
+            </div>
+          </article>
         </div>
       </div>
       <div class="tile is-ancestor">
-        <div class="tile is-parent is-7">
-          <div class="tile is-parent">
-            <article class="tile is-child notification is-success has-text-centered">
-              <div class="content">
-                <p class="title">Porównanie statystyk</p>
-                <div class="content">
-                  <eq-stats-compare :leftSource="eqItemsStats" :rightSource="readOnlyEqItemsStats"></eq-stats-compare>
+        <article class="tile is-child notification has-text-centered">
+          <div class="content">
+            <p class="title">Porównanie</p>
+            <div class="content">
+              <div class="tile is-ancestor">
+                <div class="tile is-parent is-6">
+                  <div class="tile is-parent">
+                    <article class="tile is-child notification is-success has-text-centered">
+                      <div class="content">
+                        <p class="title">Statystyki</p>
+                        <div class="content">
+                          <eq-stats-compare :leftSource="eqItemsStats" :rightSource="readOnlyEqItemsStats"/>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+                <div class="tile is-parent is-6">
+                  <div class="tile is-parent">
+                    <article class="tile is-child notification is-danger has-text-centered">
+                      <div class="content">
+                        <p class="title">Bonusy</p>
+                        <div class="content">
+                          <eq-bonuses-compare :leftSource="eqItemsStats.bonuses" :rightSource="readOnlyEqItemsStats.bonuses"/>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
                 </div>
               </div>
-            </article>
+            </div>
           </div>
-        </div>
-        <div class="tile is-parent is-5">
-          <div class="tile is-parent">
-            <article class="tile is-child notification is-danger has-text-centered">
-              <div class="content">
-                <p class="title">Porównanie bonusów</p>
-                <div class="content">
-                  <eq-bonuses-compare :leftSource="eqItemsStats.bonuses"
-                                      :rightSource="readOnlyEqItemsStats.bonuses"></eq-bonuses-compare>
-                </div>
-              </div>
-            </article>
-          </div>
-        </div>
+        </article>
       </div>
     </div>
   </section>

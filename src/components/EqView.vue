@@ -17,13 +17,19 @@
                   <div class="columns is-gapless">
                     <div class="column is-narrow">
                       <eq :source="eqSet" :readOnly="readOnly" :darkBorder="readOnly"/>
-                      <button v-if="readOnly" class="button is-dark" @click="copyEq(eqItems)">Zapisz jako moje</button>
-                      <router-link v-if="readOnly" :to="getCompareEqLink(eqItems)">Porównaj z moim</router-link>
+                      <div class="mt1">
+                        <template v-if="!readOnly">
+                          <restore-eq size="is-small"/>
+                        </template>
+                        <template v-else>
+                          <button class="button is-dark is-small" @click="copyEq(eqItems)">Zapisz jako moje</button>
+                          <router-link class="button is-dark is-small" :to="getCompareEqLink(eqItems)">Porównaj z moim</router-link>
+                        </template>
+                      </div>
                     </div>
                     <div class="column">
                       <eq-overview :source="eqSetStats"/>
                       <div v-if="!readOnly" class="mt1">
-                        <restore-eq size="is-small"/>
                         <!--<button class="button is-dark is-small" @click="restart">restart</button>-->
                       </div>
                     </div>
