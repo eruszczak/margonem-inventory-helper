@@ -7,7 +7,6 @@
       <h2 class="title">Bonusy</h2>
       <eq-bonuses :source="eqItemsStats"/>
       <eq-bonuses-warnings :source="eqItemsStats"/>
-      <hr style="visibility: hidden;">
     </section>
   </div>
 </template>
