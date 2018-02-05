@@ -1,5 +1,5 @@
 <template>
-  <tbl>
+  <tbl v-if="orderedStats.length">
     <tbl-row slot="header">
       <tbl-header v-if="leftItem" centered>
         <item :data="leftItem"/>
@@ -19,6 +19,7 @@
     </tbl-row>
     </tbody>
   </tbl>
+  <msg v-else>Nie znaleziono</msg>
 </template>
 
 <script>

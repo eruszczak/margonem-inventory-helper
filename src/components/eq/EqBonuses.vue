@@ -1,16 +1,17 @@
 <template>
-  <tbl>
+  <tbl v-if="orderedBonuses.length">
     <tbl-row slot="header">
       <tbl-header>Nazwa</tbl-header>
       <tbl-header>Wartość</tbl-header>
     </tbl-row>
     <tbody slot="tbody">
-    <tbl-row v-for="obj in orderedBonuses" :key="obj.name">
-      <tbl-col>{{ obj.name | encodeBonus }} (x{{ obj.count }})</tbl-col>
-      <tbl-col>{{ obj.value }}% {{ obj.amount }}</tbl-col>
-    </tbl-row>
+      <tbl-row v-for="obj in orderedBonuses" :key="obj.name">
+        <tbl-col>{{ obj.name | encodeBonus }} (x{{ obj.count }})</tbl-col>
+        <tbl-col>{{ obj.value }}% {{ obj.amount }}</tbl-col>
+      </tbl-row>
     </tbody>
   </tbl>
+  <msg v-else>Nie znaleziono</msg>
 </template>
 
 <script>
