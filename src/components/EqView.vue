@@ -1,8 +1,8 @@
 <template>
   <section class="section">
     <div class="container">
-      <msg>Znajdź przedmioty za pomocą wyszukiwarki powyżej oraz załóż je klikając PPM</msg>
-      <msg v-if="readOnly">Odwiedzasz zestaw. Nie możesz go edytować</msg>
+      <msg v-if="!readOnly">Znajdź przedmioty za pomocą wyszukiwarki powyżej oraz załóż je klikając PPM</msg>
+      <msg v-else>Odwiedzasz zestaw. Nie możesz go edytować</msg>
       <div class="tile is-ancestor">
         <div class="tile is-vertical is-7">
           <div class="tile">
@@ -24,7 +24,7 @@
                       <eq-overview :source="eqSetStats"/>
                       <div v-if="!readOnly" class="mt1">
                         <restore-eq size="is-small"/>
-                        <button class="button is-dark is-small" @click="restart">restart</button>
+                        <!--<button class="button is-dark is-small" @click="restart">restart</button>-->
                       </div>
                     </div>
                   </div>
