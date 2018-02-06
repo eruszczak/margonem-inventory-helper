@@ -4,5 +4,5 @@ __pycache__
 *.zip
 src/utils/src.html
 src/utils/test.py
-settings_secret.py
+.env
 db.json
