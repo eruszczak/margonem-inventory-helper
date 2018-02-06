@@ -8,7 +8,7 @@ class ItemSerializer(serializers.ModelSerializer):
     type = serializers.CharField(source='type.number')
     rarity = serializers.CharField(source='rarity.name')
     profession = serializers.SerializerMethodField()
-    legbon = serializers.CharField(source='legbon.name')
+    # legbon = serializers.CharField(source='legbon.name')
 
     class Meta:
         model = Item
@@ -27,7 +27,7 @@ class ItemSimilarSerializer(ItemSerializer):
     class Meta:
         model = Item
         lookup_field = 'slug'
-        fields = ('pk', 'img', 'name', 'lvl', 'type', 'rarity', 'profession', 'json_stats', 'legbon', 'slug',
+        fields = ('pk', 'img', 'name', 'lvl', 'type', 'rarity', 'profession', 'json_stats', 'legbon__name', 'slug',
                   'detail_url', 'similar')
 
     def get_similar(self, item):
