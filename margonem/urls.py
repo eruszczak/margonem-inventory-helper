@@ -9,7 +9,6 @@ schema_view = get_swagger_view(title='Item API')
 
 urlpatterns = [
     url(r'^api/', include('items.urls')),
-
     url(r'^admin/', admin.site.urls),
     url(r'^schema', schema_view),
 ]

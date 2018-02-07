@@ -1,9 +1,7 @@
 from decouple import config
 
 
-DEBUG = config('DEBUG', default=False, cast=bool)
-
-if DEBUG:
+if config('DEBUG', default=False, cast=bool):
     from .settings_local import *
 else:
     from .settings_production import *
