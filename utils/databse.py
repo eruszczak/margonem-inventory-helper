@@ -1,10 +1,10 @@
-from items.models import ItemBonus, ItemRarity, Profession, ItemType, Item
+from items.models import ItemLegbon, ItemRarity, Profession, ItemType, Item
 from utils import translators
 
 
 def init_bonuses():
     for value in translators.BONUSES:
-        obj, created = ItemBonus.objects.get_or_create(name=value)
+        obj, created = ItemLegbon.objects.get_or_create(name=value)
         if created:
             print('created', obj)
 

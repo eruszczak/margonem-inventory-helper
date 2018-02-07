@@ -17,18 +17,37 @@ forum_pages_links = [
     'https://www.margonem.pl/?task=forum&show=posts&id=457475',  # 6 spis legend
 ]
 
+
+
+
+
+
+
+
 print(Item.objects.all().count())
-
 # exit()
-
 # exit()
 # for link in forum_pages_links:
 #     add_items(link)
 init_models()
 forum_profile_link = 'https://www.margonem.pl/?task=profile&id=2779867#eq90052'
 count = add_items(forum_profile_link)
+
 print('count', count)
 print(Item.objects.all().count())
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 exit()
 items_from_profile, not_found_items, characters = get_eq_items_and_characters_from_profile(forum_profile_link)

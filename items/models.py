@@ -3,6 +3,7 @@
 import json
 from collections import OrderedDict
 
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.safestring import mark_safe
 
@@ -23,7 +24,7 @@ class ItemType(models.Model):
         return '{} ({})'.format(itemtype_translate[str(self.number)], self.number)
 
 
-class ItemBonus(models.Model):
+class ItemLegbon(models.Model):
     name = models.CharField(max_length=20, unique=True)
 
     def __str__(self):
@@ -66,9 +67,10 @@ class Profession(models.Model):
 class Item(models.Model):
     updated_at = models.DateTimeField('Ostatnia aktualizacja', auto_now=True)
     json_stats = models.CharField('Statystyki w kolejności', max_length=500, blank=True, null=True)
+    stats = JSONField('Statystyki w kolejności', blank=True, default={})
     profession = models.ManyToManyField(Profession, verbose_name='Profesje')
     # mob = models.ManyToManyField(Mob)
-    legbon = models.ForeignKey(ItemBonus, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Bonus')
+    legbon = models.ForeignKey(ItemLegbon, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Bonus')
     rarity = models.ForeignKey(ItemRarity, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Rzadkość')
     type = models.ForeignKey(ItemType, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Typ')
 

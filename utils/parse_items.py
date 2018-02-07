@@ -1,7 +1,7 @@
 import re
 import math
 
-from items.models import ItemRarity, ItemType, ItemBonus, Item, Profession
+from items.models import ItemRarity, ItemType, ItemLegbon, Item, Profession
 from utils.helpers import create_slug, clean_dict, get_soup, download_and_save_img, prepare_forum_profile_soup
 
 
@@ -49,7 +49,7 @@ def parse_item(attrs, item):
 
     for attr, val in re.findall(r'(opis|loot|legbon)=(.+?);', attrs):
         if attr == 'legbon':
-            val = ItemBonus.objects.get(name=val.split(',')[0])
+            val = ItemLegbon.objects.get(name=val.split(',')[0])
         elif attr == 'loot':
             val = val.split(',')[-1]
         elif attr == 'opis':
@@ -101,6 +101,7 @@ def add_items_from_forum(items, forum_page_url):
         item_stats['slug'] = create_slug(item_name)
         item_stats['name'] = item_name
 
+        # todo: check if stats like this already exist. is so, add this item but make it hidden
         item, created = Item.objects.get_or_create(name=item_name, defaults=dict(**item_stats))
         if created:
             print('created', item_stats['slug'])
@@ -123,8 +124,9 @@ def add_items_from_forum(items, forum_page_url):
 def add_items(forum_topic_url):
     soup = get_soup(forum_topic_url)
     items_stats = get_items_stats_from_forum(soup)
-    added_count = add_items_from_forum(items_stats, forum_topic_url)
-    return added_count
+    print(items_stats)
+    # added_count = add_items_from_forum(items_stats, forum_topic_url)
+    # return added_count
 
 
 def get_eq_items_and_characters_from_profile(profile_url):
