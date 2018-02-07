@@ -92,6 +92,11 @@ class ItemDetailApiView(RetrieveAPIView):
     serializer_class = ItemSerializer
     lookup_field = 'slug'
 
+    def get_queryset(self):
+        # from time import sleep
+        # sleep(3)
+        return super().get_queryset()
+
 
 class ItemSimilarApiView(ListAPIView):
     serializer_class = ItemSerializer
