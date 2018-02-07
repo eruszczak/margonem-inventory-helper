@@ -21,7 +21,7 @@ class ItemType(models.Model):
     number = models.IntegerField(unique=True)
 
     def __str__(self):
-        return '{} ({})'.format(itemtype_translate[str(self.number)], self.number)
+        return itemtype_translate.get(str(self.number), str(self.number))
 
 
 class ItemLegbon(models.Model):
@@ -67,7 +67,7 @@ class Profession(models.Model):
 class Item(models.Model):
     updated_at = models.DateTimeField('Ostatnia aktualizacja', auto_now=True)
     json_stats = models.CharField('Statystyki w kolejności', max_length=500, blank=True, null=True)
-    stats = JSONField('Statystyki w kolejności', blank=True, default={})
+    stats = JSONField('Statystyki w kolejności', blank=True, default=dict)
     profession = models.ManyToManyField(Profession, verbose_name='Profesje')
     # mob = models.ManyToManyField(Mob)
     legbon = models.ForeignKey(ItemLegbon, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Bonus')
@@ -180,6 +180,7 @@ class Item(models.Model):
             elif val == 'not exists':
                 print('Error. {} does not exist'.format(attr))
         self.json_stats = json.dumps(OrderedDict(stats))
+        self.stats = OrderedDict(stats)
 
         if self.rarity is None:
             self.rarity = ItemRarity.objects.get(name='default')
