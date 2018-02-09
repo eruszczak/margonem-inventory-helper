@@ -91,7 +91,7 @@ export const getBonuses = (source, eqItems) => {
   let bonuses = {}
   for (let placement in eqItems) {
     const item = eqItems[placement]
-    if (item && item.legbon) {
+    if (item && item.legbon in ITEM_BONUS) {
       const legBonus = ITEM_BONUS[item.legbon]
       if (item.legbon in bonuses) {
         let bonus = bonuses[item.legbon]

@@ -14,6 +14,7 @@
     <div class="navbar-menu" :class="{'is-active': navbarMenuIsActive}">
       <router-link class="navbar-item" :to="{name: 'items'}">Przedmioty</router-link>
       <router-link class="navbar-item" :to="{name: 'eqView'}">Zestawy EQ</router-link>
+      <router-link class="navbar-item" :to="{name: 'aboutView'}">O stronie</router-link>
       <!--<router-link class="navbar-item" :to="{name: 'itemCompareView'}">Porównaj</router-link>-->
       <div class="navbar-item field is-grouped is-grouped-multiline" style="justify-content: center">
         <p class="control">
