@@ -1,5 +1,5 @@
 <template>
-  <div class="vue-simple-spinner" :style="{'width': sizeValue, 'height': sizeValue}"></div>
+  <div class="loader" :style="{'width': sizeValue, 'height': sizeValue}"></div>
 </template>
 
 <script>
@@ -20,21 +20,43 @@
 </script>
 
 <style scoped>
-  .vue-simple-spinner {
-    transition: all .3s linear;
+  /*https://codepen.io/zesda/pen/VyWERr*/
+  .loader {
+    -webkit-animation: spin 1.5s linear infinite;
+    animation: spin 1.5s linear infinite;
+    border: 3px solid #ddd;
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
     margin: 0px auto;
-    border-radius: 100%;
-    border: 3px solid rgb(238, 238, 238);
-    border-top-color: rgb(33, 150, 243);
-    border-image: initial;
-    animation: vue-simple-spinner-spin 0.8s linear infinite;
   }
-  @keyframes vue-simple-spinner-spin {
+
+  @-webkit-keyframes spin {
     0% {
-      transform: rotate(0deg)
+      border-top-color:#42a5f5;
     }
-    to {
-      transform: rotate(1turn)
+    50% {
+      border-top-color: #ec407a;
+    }
+    100% {
+      border-top-color:#42a5f5;
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
     }
   }
+
+  @keyframes spin {
+    0% {
+      border-top-color:#42a5f5;
+    }
+    50% {
+      border-top-color: #ec407a;
+    }
+    100% {
+      border-top-color:#42a5f5;
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+
 </style>
