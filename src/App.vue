@@ -81,7 +81,7 @@
   .modal-content, .modal-card {
     overflow: hidden;
     max-height: calc(100vh - 40px);
-    padding: 5px;
+    /*padding: 5px;*/
     margin: 0 auto;
   }
 
