@@ -5,6 +5,7 @@ import ItemView from '@/components/ItemView'
 import EqView from '@/components/EqView'
 import EqCompareView from '@/components/EqCompareView'
 import ItemCompareView from '@/components/ItemCompareView'
+import AboutView from '@/components/AboutView'
 
 Vue.use(Router)
 
@@ -30,6 +31,11 @@ export default new Router({
       name: 'itemCompareView',
       path: '/porownaj-przedmioty/',
       component: ItemCompareView
+    },
+    {
+      name: 'aboutView',
+      path: '/o-stronie',
+      component: AboutView
     },
     {
       path: '/:type?',

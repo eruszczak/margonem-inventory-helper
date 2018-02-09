@@ -23,7 +23,6 @@
         </div>
       </div>
     </section>
-
     <nav class="navbar has-shadow">
       <div class="container">
         <div class="navbar-tabs">
@@ -36,10 +35,11 @@
     <section class="section">
       <div class="container">
         <div class="items">
-          <item v-for="item in items" :key="item.pk" :data="item" :action="rmbActions.add"></item>
+          <item v-for="item in items" :key="item.pk" :data="item" :action="rmbActions.add"/>
         </div>
       </div>
     </section>
+
   </div>
 </template>
 
