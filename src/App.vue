@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <vue-topprogress ref="topProgress"></vue-topprogress>
     <navbar/>
     <search/>
     <transition name="fade">
@@ -7,7 +8,6 @@
     </transition>
     <my-footer/>
     <eq-modal-preview/>
-    <loading :active.sync="isLoading"/>
   </div>
 </template>
 
@@ -17,6 +17,7 @@
   import MyFooter from './components/includes/Footer'
   import Navbar from './components/includes/Navbar'
   import EqModalPreview from './components/eq/EqModalPreview'
+  import { vueTopprogress } from 'vue-top-progress'
 
   export default {
     name: 'app',
@@ -25,10 +26,15 @@
         toggleValue: this.canAddToEq
       }
     },
-    created () {
+    mounted () {
       this.setEqItemsStats()
+      this.$refs.topProgress.start()
+      // Use setTimeout for demo
+      setTimeout(() => {
+        this.$refs.topProgress.done()
+      }, 1000)
     },
-    components: {Search, MyFooter, EqModalPreview, Navbar},
+    components: {Search, MyFooter, EqModalPreview, Navbar, vueTopprogress},
     computed: {
       ...mapGetters(['pageTitle', 'canAddToEq', 'isLoading'])
     },
@@ -46,6 +52,12 @@
       ...mapMutations(['setEqItemsStats', 'closeModal']),
       mouseOver: function (item, event) {
         item.isActive = true
+      },
+      errorDone: function () {
+        this.error = true
+      },
+      progressDone: function () {
+        this.progress = 0
       }
     }
   }

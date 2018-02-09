@@ -30,9 +30,9 @@
                     </div>
                     <div class="column">
                       <eq-overview :source="eqSetStats"/>
-                      <div v-if="!readOnly" class="mt1">
+                      <!--<div v-if="!readOnly" class="mt1">-->
                         <!--<button class="button is-dark is-small" @click="restart">restart</button>-->
-                      </div>
+                      <!--</div>-->
                     </div>
                   </div>
                 </div>
