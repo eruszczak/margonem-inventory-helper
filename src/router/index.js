@@ -10,6 +10,7 @@ import AboutView from '@/components/AboutView'
 Vue.use(Router)
 
 export default new Router({
+  mode: process.env.NODE_ENV === 'production' ? 'history' : 'hash',
   // linkActiveClass: 'is-active',
   linkExactActiveClass: 'is-active',
   routes: [
