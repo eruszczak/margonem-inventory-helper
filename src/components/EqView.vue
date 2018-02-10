@@ -16,7 +16,7 @@
                 <div class="content">
                   <div class="columns is-gapless">
                     <div v-if="isLoading" class="column">
-                      <my-spinner/>
+                      <my-spinner size="100"/>
                     </div>
                     <template v-else>
                       <div class="column is-narrow">
@@ -103,7 +103,7 @@
     mixins: [copyEq, eqLink],
     data () {
       return {
-        isLoading: true
+        isLoading: false
       }
     },
     mounted () {
@@ -133,8 +133,8 @@
       ...mapMutations(['restart']),
       ...mapActions(['fetchReadOnlyEqItems']),
       getEqItems () {
-        this.isLoading = true
         if (this.readOnly) {
+          this.isLoading = true
           this.fetchReadOnlyEqItems({
             slugs: typeof this.slugs === 'string' ? [this.slugs] : this.slugs,
             callback: () => {
@@ -143,7 +143,6 @@
             }
           })
         } else {
-          this.isLoading = false
           this.$Progress.finish()
         }
       },
