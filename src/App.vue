@@ -25,11 +25,11 @@
       }
     },
     mounted () {
-      this.$Progress.finish()
+      // this.$Progress.finish()
     },
     created () {
       this.setEqItemsStats()
-      this.$Progress.start()
+      // this.$Progress.start()
       this.$router.beforeEach((to, from, next) => {
         window.scrollTo(0, 0)
         this.$Progress.start()
