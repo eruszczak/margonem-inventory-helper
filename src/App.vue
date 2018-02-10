@@ -3,9 +3,9 @@
     <vue-topprogress ref="topProgress"></vue-topprogress>
     <navbar/>
     <search/>
-    <transition name="fade">
+    <!--<transition name="fade">-->
       <router-view/>
-    </transition>
+    <!--</transition>-->
     <my-footer/>
     <eq-modal-preview/>
   </div>
@@ -41,23 +41,12 @@
     watch: {
       pageTitle (newVal, oldVal) {
         window.document.title = newVal
-      },
-      '$route' (to, from) {
-        // do this .beforeRoute (just like scrolling)
-        console.log('route to', to)
-        this.closeModal()
       }
     },
     methods: {
       ...mapMutations(['setEqItemsStats', 'closeModal']),
       mouseOver: function (item, event) {
         item.isActive = true
-      },
-      errorDone: function () {
-        this.error = true
-      },
-      progressDone: function () {
-        this.progress = 0
       }
     }
   }

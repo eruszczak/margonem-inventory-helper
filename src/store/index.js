@@ -38,6 +38,9 @@ export const store = new Vuex.Store({
     toggleLoading: (state, isLoading) => {
       state.isLoading = isLoading
     },
+    hideMenu: state => {
+      state.navbarMenuIsActive = false
+    },
     toggleNavbarMenuIsActive: state => {
       state.navbarMenuIsActive = !state.navbarMenuIsActive
     }
