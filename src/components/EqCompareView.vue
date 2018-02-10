@@ -14,6 +14,7 @@
                         <p class="title">Twój</p>
                         <div class="content">
                           <eq :source="eqItems"/>
+                          <eq-overview :source="eqItemsStats" margin="mt1"/>
                         </div>
                       </div>
                     </article>
@@ -25,7 +26,11 @@
                       <div class="content">
                         <p class="title">Odwiedzany</p>
                         <div class="content">
-                          <eq :source="readOnlyEqItems" :readOnly="true" darkBorder/>
+                          <my-spinner v-if="isLoading" size="100"/>
+                          <template v-else>
+                            <eq :source="readOnlyEqItems" :readOnly="true" darkBorder/>
+                            <eq-overview :source="readOnlyEqItemsStats" margin="mt1"/>
+                          </template>
                         </div>
                       </div>
                     </article>
@@ -48,7 +53,8 @@
                       <div class="content">
                         <p class="title">Statystyki</p>
                         <div class="content">
-                          <eq-stats-compare :leftSource="eqItemsStats" :rightSource="readOnlyEqItemsStats"/>
+                          <my-spinner v-if="isLoading"/>
+                          <eq-stats-compare v-else :leftSource="eqItemsStats" :rightSource="readOnlyEqItemsStats"/>
                         </div>
                       </div>
                     </article>
@@ -60,7 +66,8 @@
                       <div class="content">
                         <p class="title">Bonusy</p>
                         <div class="content">
-                          <eq-bonuses-compare :leftSource="eqItemsStats.bonuses" :rightSource="readOnlyEqItemsStats.bonuses"/>
+                          <my-spinner v-if="isLoading"/>
+                          <eq-bonuses-compare v-else :leftSource="eqItemsStats.bonuses" :rightSource="readOnlyEqItemsStats.bonuses"/>
                         </div>
                       </div>
                     </article>
@@ -87,6 +94,11 @@
   export default {
     name: 'eq-compare-view',
     components: {Eq, RestoreEq, EqStatsCompare, EqBonuses, EqOverview, EqBonusesCompare},
+    data () {
+      return {
+        isLoading: true
+      }
+    },
     computed: {
       ...mapGetters([
         'eqItems', 'readOnlyEqItems', 'eqItemsStats', 'readOnlyEqItemsStats', 'realStackLength'
@@ -97,16 +109,16 @@
     },
     created () {
       this.getEqItems()
+      // this.$Progress.finish()
     },
     methods: {
       ...mapActions(['fetchReadOnlyEqItems', 'saveEqAsMine']),
-      ...mapMutations(['toggleLoading']),
       getEqItems: function () {
-        this.toggleLoading(true)
+        this.isLoading = true
         this.fetchReadOnlyEqItems({
           slugs: typeof this.slugs === 'string' ? [this.slugs] : this.slugs,
           callback: () => {
-            this.toggleLoading(false)
+            this.isLoading = false
           },
           isCompare: true
         })
