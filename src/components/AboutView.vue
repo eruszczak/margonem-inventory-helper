@@ -17,7 +17,10 @@
 
 <script>
   export default {
-    name: 'about-view'
+    name: 'about-view',
+    created () {
+      this.$Progress.finish()
+    }
   }
 </script>
 

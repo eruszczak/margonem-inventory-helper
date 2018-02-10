@@ -115,17 +115,18 @@
       }
     },
     methods: {
-      ...mapMutations(['restart', 'toggleLoading']),
+      ...mapMutations(['restart']),
       ...mapActions(['fetchReadOnlyEqItems']),
       getEqItems: function () {
         if (this.readOnly) {
-          this.toggleLoading(true)
           this.fetchReadOnlyEqItems({
             slugs: typeof this.slugs === 'string' ? [this.slugs] : this.slugs,
             callback: () => {
-              this.toggleLoading(false)
+              this.$Progress.finish()
             }
           })
+        } else {
+          this.$Progress.finish()
         }
       },
       showNext: function () {

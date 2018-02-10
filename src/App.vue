@@ -1,13 +1,12 @@
 <template>
   <div id="app">
-    <vue-topprogress ref="topProgress"></vue-topprogress>
     <navbar/>
     <search/>
-    <!--<transition name="fade">-->
-      <router-view/>
-    <!--</transition>-->
+    <!--<transition name="fade"><router-view/></transition>-->
+    <router-view/>
     <my-footer/>
     <eq-modal-preview/>
+    <vue-progress-bar></vue-progress-bar>
   </div>
 </template>
 
@@ -17,24 +16,29 @@
   import MyFooter from './components/includes/Footer'
   import Navbar from './components/includes/Navbar'
   import EqModalPreview from './components/eq/EqModalPreview'
-  import { vueTopprogress } from 'vue-top-progress'
 
   export default {
     name: 'app',
     data () {
       return {
-        toggleValue: this.canAddToEq
+        // toggleValue: this.canAddToEq
       }
     },
     mounted () {
-      this.setEqItemsStats()
-      this.$refs.topProgress.start()
-      // Use setTimeout for demo
-      setTimeout(() => {
-        this.$refs.topProgress.done()
-      }, 1000)
+      this.$Progress.finish()
     },
-    components: {Search, MyFooter, EqModalPreview, Navbar, vueTopprogress},
+    created () {
+      this.setEqItemsStats()
+      this.$Progress.start()
+      this.$router.beforeEach((to, from, next) => {
+        window.scrollTo(0, 0)
+        this.$Progress.start()
+        this.hideMenu()
+        this.closeModal()
+        next()
+      })
+    },
+    components: {Search, MyFooter, EqModalPreview, Navbar},
     computed: {
       ...mapGetters(['pageTitle', 'canAddToEq', 'isLoading'])
     },
@@ -44,7 +48,7 @@
       }
     },
     methods: {
-      ...mapMutations(['setEqItemsStats', 'closeModal']),
+      ...mapMutations(['setEqItemsStats', 'closeModal', 'hideMenu', 'closeModal']),
       mouseOver: function (item, event) {
         item.isActive = true
       }

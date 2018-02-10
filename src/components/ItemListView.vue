@@ -35,11 +35,13 @@
     <section class="section">
       <div class="container">
         <div class="items">
-          <item v-for="item in items" :key="item.pk" :data="item" :action="rmbActions.add"/>
+          <my-spinner v-if="type && isLoading" size="100"/>
+          <transition-group v-else name="fade">
+            <item v-for="item in items" :key="item.pk" :data="item" :action="rmbActions.add"/>
+          </transition-group>
         </div>
       </div>
     </section>
-
   </div>
 </template>
 
@@ -60,7 +62,7 @@
         subMenu: [],
         items: [],
         rmbActions: RIGHT_CLICK_MAPPER,
-        isLoading: false
+        isLoading: true
       }
     },
     computed: {
@@ -68,8 +70,6 @@
     },
     mounted () {
       this.getItems()
-    },
-    created () {
       for (let i = 0; i < MENU_LINKS.length; i += 1) {
         const subLinks = MENU_LINKS[i].sublinks
         for (let j = 0; j < subLinks.length; j += 1) {
@@ -83,11 +83,12 @@
     },
     watch: {
       '$route' (to, from) {
+        this.items = []
         this.getItems()
       }
     },
     methods: {
-      ...mapMutations(['setPageTitle', 'toggleLoading']),
+      ...mapMutations(['setPageTitle']),
       mouseOver: function (item, event) {
         this.menu.map((el) => {
           el.isActive = false
@@ -96,18 +97,19 @@
         this.subMenu = item.sublinks
       },
       getItems: function () {
-        this.items = []
         const type = MAP_TYPE_NAME_TO_ID[this.type]
         if (type) {
-          this.toggleLoading(true)
+          this.isLoading = true
           fetchItems(`?t=${type}`, response => {
-            // TOOD WHY THIS WORKS?
             this.items = response.data.results
-            this.toggleLoading(false)
+            this.isLoading = false
+            this.$Progress.finish()
           }, error => {
             console.error(error)
           })
           this.setPageTitle(this.type)
+        } else {
+          this.$Progress.finish()
         }
       }
     }
