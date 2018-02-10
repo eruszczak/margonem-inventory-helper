@@ -1,49 +1,51 @@
 <template>
-  <div>
-    <section class="hero" :class="itemClass">
-      <div v-if="isLoading" class="hero-body">
-        <my-spinner size="100" />
-      </div>
-      <template v-else>
-        <div class="hero-head has-text-centered" style="padding-top: 2em">
-          <h1 class="title">{{ data.name }}</h1>
-          <h2 class="subtitle">{{ data.type | encodeType }}<span v-if="data.lvl">, {{ data.lvl }} lvl</span></h2>
+  <section class="section">
+    <div class="container">
+      <section class="hero" :class="itemClass">
+        <div v-if="isLoading" class="hero-body">
+          <my-spinner size="100" />
         </div>
+        <template v-else>
+          <div class="hero-head has-text-centered" style="padding-top: 2em">
+            <h1 class="title">{{ data.name }}</h1>
+            <h2 class="subtitle">{{ data.type | encodeType }}<span v-if="data.lvl">, {{ data.lvl }} lvl</span></h2>
+          </div>
+          <div class="hero-body">
+            <div class="container has-text-centered">
+              <item :data="data" :action="rmbActions.add"/>
+              <div v-html="itemStats"></div>
+            </div>
+          </div>
+        </template>
+      </section>
+      <section class="hero is-light mt1">
         <div class="hero-body">
           <div class="container has-text-centered">
-            <item :data="data" :action="rmbActions.add"/>
-            <div v-html="itemStats"></div>
+            <h1 class="title">Podobne przedmioty</h1>
+            <p class="subtitle">Inne przedmioty tego typu na podobny poziom</p>
+            <div class="items">
+              <my-spinner v-if="isLoadingSimilar" />
+              <transition-group v-else name="fade">
+                <item  v-for="item in similarItems" :key="item.pk" :data="item" :action="rmbActions.add"/>
+              </transition-group>
+            </div>
           </div>
         </div>
-      </template>
-    </section>
-    <section class="hero is-light mt1">
-      <div class="hero-body">
-        <div class="container has-text-centered">
-          <h1 class="title">Podobne przedmioty</h1>
-          <p class="subtitle">Inne przedmioty tego typu na podobny poziom</p>
-          <div class="items">
-            <my-spinner v-if="isLoadingSimilar" />
-            <transition-group v-else name="fade">
-              <item  v-for="item in similarItems" :key="item.pk" :data="item" :action="rmbActions.add"/>
-            </transition-group>
+      </section>
+      <section class="hero is-light mt1">
+        <div class="hero-body">
+          <div class="container has-text-centered">
+            <h1 class="title">Ostatnio odwiedzane</h1>
+            <div class="items">
+              <transition-group name="fade">
+                <item v-for="item in itemHistory" :key="item.pk" :data="item" :action="rmbActions.add"/>
+              </transition-group>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-    <section class="hero is-light mt1">
-      <div class="hero-body">
-        <div class="container has-text-centered">
-          <h1 class="title">Ostatnio odwiedzane</h1>
-          <div class="items">
-            <transition-group name="fade">
-              <item v-for="item in itemHistory" :key="item.pk" :data="item" :action="rmbActions.add"/>
-            </transition-group>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+      </section>
+    </div>
+  </section>
 </template>
 
 <script>

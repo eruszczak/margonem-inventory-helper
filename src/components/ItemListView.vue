@@ -1,10 +1,10 @@
 <template>
   <div>
-    <section class="hero is-info">
+    <section class="hero is-info is-bold">
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
-            {{ type }}
+            {{ type || 'Wybierz typ przedmiotów' }}
           </h1>
           <h2 class="subtitle">
           </h2>
