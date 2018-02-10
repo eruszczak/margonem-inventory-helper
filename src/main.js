@@ -13,13 +13,11 @@ import Toggle from './components/ui/toggle'
 import Modal from './components/ui/modal'  // TODO local
 import Input from './components/ui/input'
 import Toast from './components/ui/toast'
-import Spinner from './components/includes/Spinner'  // TODO local
-
+import Spinner from './components/includes/Spinner'
 
 Vue.config.productionTip = false
 Vue.prototype.$toast = Toast
 Vue.use(VueClipboard)
-// Vue.use(vueTopprogress)
 
 Vue.component('tbl', Table)
 Vue.component('tbl-col', TableColumn)
@@ -33,10 +31,11 @@ Vue.component('my-input', Input)
 Vue.component('my-tag', Tag)
 Vue.component('my-taglist', Taglist)
 Vue.component('my-spinner', Spinner)
-// Vue.component('loading-bar', vueTopprogress)
 
-router.beforeEach(function (to, from, next) {
+router.beforeEach((to, from, next) => {
   window.scrollTo(0, 0)
+  store.commit('hideMenu')
+  store.commit('closeModal')
   next()
 })
 
