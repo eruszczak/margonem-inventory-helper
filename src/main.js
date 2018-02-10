@@ -4,13 +4,12 @@ import router from './router'
 import './assets/scss/all.scss'
 import { store } from './store/index'
 
-import VueClipboard from 'vue-clipboard2'  // TODO local
+import VueClipboard from 'vue-clipboard2'
 import { Table, TableColumn, TableHeader, TableRow } from './components/ui/table'
 import { Tag, Taglist } from './components/ui/tag'
 import Message from './components/ui/message'
-import Loading from './components/ui/loading'  // TODO local
 import Toggle from './components/ui/toggle'
-import Modal from './components/ui/modal'  // TODO local
+import Modal from './components/ui/modal'
 import Input from './components/ui/input'
 import Toast from './components/ui/toast'
 import Spinner from './components/includes/Spinner'
@@ -39,7 +38,6 @@ Vue.component('tbl-col', TableColumn)
 Vue.component('tbl-header', TableHeader)
 Vue.component('tbl-row', TableRow)
 Vue.component('msg', Message)
-Vue.component('loading', Loading)
 Vue.component('toggle', Toggle)
 Vue.component('modal', Modal)
 Vue.component('my-input', Input)

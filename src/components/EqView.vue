@@ -15,25 +15,31 @@
                 </p>
                 <div class="content">
                   <div class="columns is-gapless">
-                    <div class="column is-narrow">
-                      <eq :source="eqSet" :readOnly="readOnly" :darkBorder="readOnly"/>
-                      <div class="mt1">
-                        <template v-if="!readOnly">
-                          <restore-eq size="is-small" type="is-dark"/>
-                          <clipboard :content="getEqLink(eqSet)" value="Kopiuj link" type="is-dark" size="is-small"/>
-                        </template>
-                        <template v-else>
-                          <button class="button is-dark is-small" @click="copyEq(eqSet)">Zapisz jako moje</button>
-                          <router-link class="button is-dark is-small" :to="getCompareEqLink(eqSet)">Porównaj z moim</router-link>
-                        </template>
+                    <div v-if="isLoading" class="column">
+                      <my-spinner/>
+                    </div>
+                    <template v-else>
+                      <div class="column is-narrow">
+                        <eq :source="eqSet" :readOnly="readOnly" :darkBorder="readOnly"/>
+                        <div class="mt1">
+                          <template v-if="!readOnly">
+                            <restore-eq size="is-small" type="is-dark"/>
+                            <clipboard :content="getEqLink(eqSet)" value="Kopiuj link" type="is-dark" size="is-small"/>
+                            <router-link class="button is-dark is-small" :to="getEqRoute(eqSet)">Odwiedź</router-link>
+                          </template>
+                          <template v-else>
+                            <button class="button is-dark is-small" @click="copyEq(eqSet)">Zapisz jako moje</button>
+                            <router-link class="button is-dark is-small" :to="getCompareEqLink(eqSet)">Porównaj z moim</router-link>
+                          </template>
+                        </div>
                       </div>
-                    </div>
-                    <div class="column">
-                      <eq-overview :source="eqSetStats"/>
-                      <!--<div v-if="!readOnly" class="mt1">-->
+                      <div class="column">
+                        <eq-overview :source="eqSetStats"/>
+                        <!--<div v-if="!readOnly" class="mt1">-->
                         <!--<button class="button is-dark is-small" @click="restart">restart</button>-->
-                      <!--</div>-->
-                    </div>
+                        <!--</div>-->
+                      </div>
+                    </template>
                   </div>
                 </div>
               </article>
@@ -43,8 +49,11 @@
             <article class="tile is-child notification is-danger has-text-centered">
               <p class="title">Bonusy</p>
               <div class="content">
-                <eq-bonuses :source="eqSetStats"/>
-                <eq-bonuses-warnings :source="eqSetStats"/>
+                <my-spinner v-if="isLoading"/>
+                <template v-else>
+                  <eq-bonuses :source="eqSetStats"/>
+                  <eq-bonuses-warnings :source="eqSetStats"/>
+                </template>
               </div>
             </article>
           </div>
@@ -54,7 +63,8 @@
             <div class="content">
               <p class="title">Statystyki</p>
               <div class="content">
-                <eq-stats :source="eqSetStats"/>
+                <my-spinner v-if="isLoading"/>
+                <eq-stats v-else :source="eqSetStats"/>
               </div>
             </div>
           </article>
@@ -82,7 +92,7 @@
   import EqBonusesWarnings from './eq/EqBonusesWarnings'
   import EqOverview from './eq/EqOverview'
   import EqHistory from './eq/EqHistory'
-  import { getCompareEqLink } from '../utils/helpers'
+  import { getCompareEqLink, getEqRoute } from '../utils/helpers'
   import { copyEq } from './mixins/copyEq'
   import Clipboard from './includes/Clipboard'
   import { eqLink } from './mixins/eqLink'
@@ -91,6 +101,11 @@
     name: 'eq-view',
     components: {Eq, RestoreEq, EqStats, EqBonuses, EqOverview, EqBonusesWarnings, EqHistory, Clipboard},
     mixins: [copyEq, eqLink],
+    data () {
+      return {
+        isLoading: true
+      }
+    },
     mounted () {
       this.getEqItems()
     },
@@ -101,41 +116,45 @@
     },
     computed: {
       ...mapGetters(['eqItems', 'readOnlyEqItems', 'eqItemsStats', 'readOnlyEqItemsStats', 'realStackLength']),
-      readOnly: function () {
+      readOnly () {
         return 'i' in this.$route.query
       },
-      slugs: function () {
+      slugs () {
         return this.$route.query.i || []
       },
-      eqSet: function () {
+      eqSet () {
         return this.readOnly ? this.readOnlyEqItems : this.eqItems
       },
-      eqSetStats: function () {
+      eqSetStats () {
         return this.readOnly ? this.readOnlyEqItemsStats : this.eqItemsStats
       }
     },
     methods: {
       ...mapMutations(['restart']),
       ...mapActions(['fetchReadOnlyEqItems']),
-      getEqItems: function () {
+      getEqItems () {
+        this.isLoading = true
         if (this.readOnly) {
           this.fetchReadOnlyEqItems({
             slugs: typeof this.slugs === 'string' ? [this.slugs] : this.slugs,
             callback: () => {
+              this.isLoading = false
               this.$Progress.finish()
             }
           })
         } else {
+          this.isLoading = false
           this.$Progress.finish()
         }
       },
-      showNext: function () {
+      showNext () {
         this.current += 1
         if (this.current >= this.eqHistory.length) {
           this.current = 0
         }
       },
-      getCompareEqLink: getCompareEqLink
+      getCompareEqLink: getCompareEqLink,
+      getEqRoute: getEqRoute
     }
   }
 </script>

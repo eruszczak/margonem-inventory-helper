@@ -8,7 +8,7 @@
     props: {
       size: {
         type: String,
-        default: '42'
+        default: '50'
       }
     },
     data () {
