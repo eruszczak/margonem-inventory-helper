@@ -38,6 +38,8 @@ class ItemApiView(ListAPIView):
     #     return super().dispatch(*args, **kwargs)
 
     def get_queryset(self):
+        # from time import sleep
+        # sleep(3)
         queryset = super().get_queryset()
         query = self.get_query()
         item_slugs = query.pop('slugs', None)
