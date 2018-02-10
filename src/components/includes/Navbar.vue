@@ -1,5 +1,4 @@
 <template>
-  <!--<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">-->
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <router-link class="navbar-item" to="/">
@@ -25,6 +24,9 @@
         </p>
         <p class="control">
           <my-input :value="searchQuery" @input="setSearchQuery" placeholder="Szukaj przedmiotów"/>
+        </p>
+        <p class="control">
+          <button v-if="searchQuery" class="button is-small" @click="setSearchQuery('')">wyczyść</button>
         </p>
       </div>
       <!--<toggle class="navbar-item" :value="canAddToEq" @input="toggleCanAddToEq">-->

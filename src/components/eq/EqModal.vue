@@ -1,7 +1,7 @@
 <template>
   <div v-if="eqItemsStats">
     <section>
-      <eq-overview :source="eqItemsStats" margin="mt1"/>
+      <eq-overview :source="eqItemsStats"/>
       <h2 class="title">Statystyki</h2>
       <eq-stats :source="eqItemsStats"/>
       <h2 class="title">Bonusy</h2>
