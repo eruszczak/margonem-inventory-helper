@@ -14,7 +14,7 @@
                         <p class="title">Twój</p>
                         <div class="content">
                           <eq :source="eqItems"/>
-                          <eq-overview :source="eqItemsStats" margin="mt1"/>
+                          <eq-overview :source="eqItemsStats"/>
                         </div>
                       </div>
                     </article>
@@ -29,7 +29,7 @@
                           <my-spinner v-if="isLoading" size="100"/>
                           <template v-else>
                             <eq :source="readOnlyEqItems" :readOnly="true" darkBorder/>
-                            <eq-overview :source="readOnlyEqItemsStats" margin="mt1"/>
+                            <eq-overview :source="readOnlyEqItemsStats"/>
                           </template>
                         </div>
                       </div>

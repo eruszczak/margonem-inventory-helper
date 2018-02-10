@@ -1,9 +1,11 @@
 <template>
   <div id="app">
-    <navbar/>
-    <search/>
-    <!--<transition name="fade"><router-view/></transition>-->
-    <router-view/>
+    <div class="Site-content">
+      <navbar/>
+      <search/>
+      <!--<transition name="fade"><router-view/></transition>-->
+      <router-view/>
+    </div>
     <my-footer/>
     <eq-modal-preview/>
     <vue-progress-bar></vue-progress-bar>
@@ -85,4 +87,14 @@
   .notification {
     padding: 1rem;
   }
+
+  /*https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/*/
+  /*.Site {*/
+    /*display: flex;*/
+    /*min-height: 100vh;*/
+    /*flex-direction: column;*/
+  /*}*/
+  /*.Site-content {*/
+    /*flex: 1;*/
+  /*}*/
 </style>

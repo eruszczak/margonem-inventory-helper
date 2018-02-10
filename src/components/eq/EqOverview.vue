@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isSource" :class="[margin]">
+  <div v-if="isSource" :class="[margin]" class="mt1">
     <my-tag type="is-dark is-medium">{{ source.lvl }} lvl</my-tag>
     <my-taglist class="mt1" centered>
       <my-tag v-if="source.isConflict" type="is-danger">sprzeczne typy przedmiotów</my-tag>
