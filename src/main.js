@@ -14,6 +14,21 @@ import Modal from './components/ui/modal'  // TODO local
 import Input from './components/ui/input'
 import Toast from './components/ui/toast'
 import Spinner from './components/includes/Spinner'
+import VueProgressBar from 'vue-progressbar'
+
+Vue.use(VueProgressBar, {
+  color: '#bffaf3',
+  failedColor: '#874b4b',
+  thickness: '5px',
+  transition: {
+    speed: '0.2s',
+    opacity: '0.6s',
+    termination: 300
+  },
+  autoRevert: true,
+  location: 'top',
+  inverse: false
+})
 
 Vue.config.productionTip = false
 Vue.prototype.$toast = Toast
@@ -31,13 +46,6 @@ Vue.component('my-input', Input)
 Vue.component('my-tag', Tag)
 Vue.component('my-taglist', Taglist)
 Vue.component('my-spinner', Spinner)
-
-router.beforeEach((to, from, next) => {
-  window.scrollTo(0, 0)
-  store.commit('hideMenu')
-  store.commit('closeModal')
-  next()
-})
 
 // eslint-disable-next-line no-new
 new Vue({

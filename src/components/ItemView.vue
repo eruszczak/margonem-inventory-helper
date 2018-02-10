@@ -108,13 +108,15 @@
           this.data = response.data
           this.getSimilarItems()
           this.addToItemHistory(this.data)
-        }, response => {})
+        }, response => {
+        })
       },
       getSimilarItems: function () {
         fetchItemSimilar(this.slug, response => {
           this.isLoadingSimilar = false
           this.similarItems = response.data
           this.noSimilarItems = this.similarItems.length === 0
+          this.$Progress.finish()
         }, response => {
           this.error = true
         })
