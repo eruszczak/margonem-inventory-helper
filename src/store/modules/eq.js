@@ -108,8 +108,8 @@ export default {
           commit('addToEqHistory')
         }
         payload.callback && payload.callback()
-      }, error => {
-        console.error(error)
+      }, () => {
+        commit('setAPIError')
       })
     },
     wearItem ({commit, state}, payload) {
