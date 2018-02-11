@@ -1,14 +1,11 @@
 <template>
   <div id="app">
-    <div class="Site-content">
-      <navbar/>
-      <search/>
-      <!--<transition name="fade"><router-view/></transition>-->
-      <router-view/>
-    </div>
+    <navbar/>
+    <search/>
+    <router-view/>
     <my-footer/>
     <eq-modal-preview/>
-    <vue-progress-bar></vue-progress-bar>
+    <vue-progress-bar/>
   </div>
 </template>
 
@@ -26,12 +23,8 @@
         // toggleValue: this.canAddToEq
       }
     },
-    mounted () {
-      // this.$Progress.finish()
-    },
     created () {
       this.setEqItemsStats()
-      // this.$Progress.start()
       this.$router.beforeEach((to, from, next) => {
         window.scrollTo(0, 0)
         this.$Progress.start()
@@ -59,9 +52,9 @@
 </script>
 
 <style>
-  /*.modal-card, .modal-card-body, .modal-content {*/
-  /*overflow: visible;*/
-  /*}*/
+  .modal-card, .modal-card-body, .modal-content {
+  overflow: visible;
+  }
 
   @media screen and (min-width: 1024px) {
     a.navbar-item.is-active, a.navbar-link.is-active {
@@ -76,25 +69,10 @@
   .modal-content, .modal-card {
     overflow: hidden;
     max-height: calc(100vh - 40px);
-    /*padding: 5px;*/
     margin: 0 auto;
   }
-
-  /*.modal-card {*/
-    /*top: 2em;*/
-  /*}*/
 
   .notification {
     padding: 1rem;
   }
-
-  /*https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/*/
-  /*.Site {*/
-    /*display: flex;*/
-    /*min-height: 100vh;*/
-    /*flex-direction: column;*/
-  /*}*/
-  /*.Site-content {*/
-    /*flex: 1;*/
-  /*}*/
 </style>
