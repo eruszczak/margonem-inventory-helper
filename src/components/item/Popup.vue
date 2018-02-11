@@ -1,6 +1,6 @@
 <template>
   <div class="tooltipText" v-if="data">
-    <p style="font-style:italic; margin: 0 auto; margin-bottom: 5px">{{ actionDescription }}</p>
+    <p class="action-description">{{ actionDescription }}</p>
     <p>{{ data.name }} <span class="green-color" v-if="data.lvl"> ({{ data.lvl }})</span></p>
     <p class="green-color">*{{ data.rarity | encodeRarity }}* {{ data.type | encodeType }}</p>
     <p v-if="professions.length" class="green-color">{{ professions }}</p>
@@ -36,3 +36,10 @@
     }
   }
 </script>
+
+<style scoped>
+  .action-description {
+    font-style:italic;
+    margin: 0 auto 5px;
+  }
+</style>

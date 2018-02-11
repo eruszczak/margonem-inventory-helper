@@ -3,7 +3,7 @@
     <div id="search-results" class="has-text-centered" v-if="searchQuery">
       <my-spinner v-if="searching"/>
       <item v-else-if="searchResults.length" v-for="item in searchResults" :key="item.pk" :data="item"
-            :action="RIGHT_CLICK_MAPPER.add"/>
+            :action="RIGHT_CLICK_MAPPER.add" noBorder/>
       <msg v-else-if="noResults">Nie znaleziono przedmiotów dla podanej frazy</msg>
     </div>
   </transition>

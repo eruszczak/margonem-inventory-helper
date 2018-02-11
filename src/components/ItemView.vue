@@ -8,10 +8,13 @@
         <template v-else>
           <div class="hero-head" style="padding-top: 2em">
             <h1 class="title">{{ data.name }}<span v-if="data.lvl"> ({{ data.lvl }})</span></h1>
-            <h2 class="subtitle">{{ data.type | encodeType }}</h2>
+            <h2 class="subtitle">
+              {{ rarity | encodeRarity }}, {{ data.type | encodeType }}
+              <p>{{ professions }}</p>
+            </h2>
           </div>
           <div class="hero-body">
-            <item :data="data" :action="RIGHT_CLICK_MAPPER.add"/>
+            <item :data="data" :action="RIGHT_CLICK_MAPPER.add" noBorder/>
             <div v-html="itemStats"></div>
           </div>
         </template>
@@ -78,7 +81,13 @@
         'itemHistory'
       ]),
       itemStats () {
-        return this.data ? this.getEncodeDItemStats(this.data.json_stats) : this.data
+        return this.data ? this.getEncodeDItemStats(this.data.json_stats) : null
+      },
+      professions () {
+        return this.data ? this.getProfessions(this.data.profession) : null
+      },
+      rarity () {
+        return this.data ? this.data.rarity : null
       },
       itemClass: function () {
         if (!this.data) {
