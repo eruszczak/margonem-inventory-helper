@@ -4,7 +4,7 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
-            {{ type || 'Wybierz typ przedmiotów' }}
+            {{ typeDisplay || 'Wybierz typ przedmiotów' }}
           </h1>
           <h2 class="subtitle">
           </h2>
@@ -66,7 +66,18 @@
       }
     },
     computed: {
-      ...mapGetters(['pageTitle'])
+      ...mapGetters(['pageTitle']),
+      typeDisplay () {
+        for (let i = 0; i < MENU_LINKS.length; i += 1) {
+          const subLinks = MENU_LINKS[i].sublinks
+          for (let j = 0; j < subLinks.length; j += 1) {
+            if (subLinks[j].href.params.type === this.type) {
+              return subLinks[j].displayValue
+            }
+          }
+        }
+        return this.type
+      }
     },
     mounted () {
       this.getItems()
