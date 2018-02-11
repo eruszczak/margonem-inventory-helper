@@ -11,7 +11,7 @@ def parse_item(attrs, item):
 
     item_stats = {attr: val for attr, val in re.findall(r'(\w+)=([\w.-]+);', main_stats)}
     item_stats['img'] = item.find('img')['src']
-    item_stats['hidden_stats'] = re.search(r'nodesc', attrs)
+    item_stats['hidden_stats'] = re.search(r'nodesc', attrs) or False
     item_stats['type'] = item_type
     item_stats['worth'] = worth
 
@@ -116,6 +116,7 @@ def add_items_from_forum(items, forum_page_url):
 def add_items(forum_topic_url):
     soup = get_soup(forum_topic_url)
     items_stats = get_items_stats_from_forum(soup)
+    print(items_stats)
     added_count = add_items_from_forum(items_stats, forum_topic_url)
     return added_count
 

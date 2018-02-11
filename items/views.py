@@ -1,22 +1,12 @@
-# from django.db.utils import OperationalError
-from django.db.models import Q
 from django.shortcuts import get_object_or_404
-from rest_framework import status
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.reverse import reverse
-from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
 from .models import Item
-from .serializers import ItemSerializer, CharacterSerializer, NotFoundItemSerializer, ItemSimilarSerializer
-from utils.parse_items import get_eq_items_and_characters_from_profile
-
-# caching
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
-# from django.core.cache import cache
+from .serializers import ItemSerializer
 
 
 class SetPagination(PageNumberPagination):

@@ -5,16 +5,13 @@ from items.models import Item
 class ItemSerializer(serializers.ModelSerializer):
     detail_url = serializers.HyperlinkedIdentityField(view_name='item-detail-api-view', lookup_field='slug', read_only=True)
     # similar = serializers.HyperlinkedIdentityField(view_name='item-similar-api-view', lookup_field='slug', read_only=True)
-    type = serializers.CharField(source='type.number')
-    rarity = serializers.CharField(source='rarity.name')
     profession = serializers.SerializerMethodField()
-    # legbon = serializers.CharField(source='legbon.name')
 
     class Meta:
         model = Item
         lookup_field = 'slug'
-        fields = ('pk', 'img', 'name', 'lvl', 'type', 'rarity', 'profession', 'json_stats', 'legbon', 'slug',
-                  'detail_url')
+        fields = ('pk', 'img', 'name', 'lvl', 'type', 'rarity', 'profession', 'stats', 'legbon', 'slug',
+                  'detail_url', 'reqp')
 
     @staticmethod
     def get_profession(obj):
@@ -27,8 +24,8 @@ class ItemSimilarSerializer(ItemSerializer):
     class Meta:
         model = Item
         lookup_field = 'slug'
-        fields = ('pk', 'img', 'name', 'lvl', 'type', 'rarity', 'profession', 'json_stats', 'legbon__name', 'slug',
-                  'detail_url', 'similar')
+        fields = ('pk', 'img', 'name', 'lvl', 'type', 'rarity', 'profession', 'stats', 'legbon', 'slug',
+                  'detail_url', 'similar', 'reqp')
 
     def get_similar(self, item):
         limit = 15
@@ -52,15 +49,15 @@ class ItemSimilarSerializer(ItemSerializer):
         return ItemSerializer(queryset, many=True).data[:limit]
 
 
-class CharacterSerializer(serializers.Serializer):
-    name = serializers.CharField()
-    guild = serializers.CharField()
-    world = serializers.CharField()
-    outfit = serializers.CharField()
-    lvl = serializers.CharField()
-    id = serializers.CharField()
-    prof = serializers.CharField()
-
-
-class NotFoundItemSerializer(serializers.Serializer):
-    name = serializers.CharField()
+# class CharacterSerializer(serializers.Serializer):
+#     name = serializers.CharField()
+#     guild = serializers.CharField()
+#     world = serializers.CharField()
+#     outfit = serializers.CharField()
+#     lvl = serializers.CharField()
+#     id = serializers.CharField()
+#     prof = serializers.CharField()
+#
+#
+# class NotFoundItemSerializer(serializers.Serializer):
+#     name = serializers.CharField()

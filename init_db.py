@@ -4,7 +4,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "margonem.settings")
 django.setup()
 
 from items.models import Item
-from utils.parse_items import get_eq_items_and_characters_from_profile, add_items
+from utils.parse_items import add_items
 
 forum_pages_links = [
     'https://www.margonem.pl/?task=forum&show=posts&id=459240',  # 0 Elity I i II
