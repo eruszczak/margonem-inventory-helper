@@ -102,6 +102,8 @@
     methods: {
       ...mapMutations(['addToItemHistory', 'setAPIError']),
       getItemData: function () {
+        this.isLoading = true
+        this.isLoadingSimilar = true
         fetchItem(this.slug, response => {
           this.isLoading = false
           this.data = response.data
