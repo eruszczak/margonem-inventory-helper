@@ -1,12 +1,12 @@
 <template>
-  <div class="tooltipText" v-if="data">
+  <div class="tooltipText">
     <p class="action-description">{{ actionDescription }}</p>
-    <p>{{ data.name }} <span class="green-color" v-if="data.lvl"> ({{ data.lvl }})</span></p>
-    <p class="green-color">*{{ data.rarity | encodeRarity }}* {{ data.type | encodeType }}</p>
-    <p v-if="professions.length" class="green-color">{{ professions }}</p>
+    <p :class="itemClass">{{ data.name }} <span v-if="data.lvl"> ({{ data.lvl }})</span></p>
+    <p :class="itemClass">{{ data.rarity | encodeRarity }}, {{ data.type | encodeType }}</p>
+    <p v-if="professions.length" :class="itemClass">{{ professions }}</p>
     <div v-html="itemStats"></div>
     <template v-if="legbon">
-      <p class="green-color">{{ legbon.translation }}</p>
+      <p :class="itemClass">{{ legbon.translation }}</p>
       <p v-if="legbonMaxDuration">{{ legbonMaxDuration }}</p>
     </template>
   </div>
@@ -14,6 +14,7 @@
 
 <script>
   import {item} from '../mixins/item'
+  import { RARITY_CLASSES } from '../../utils/constants'
 
   export default {
     name: 'item',
@@ -32,6 +33,11 @@
         itemStats: this.getEncodeDItemStats(this.data.json_stats),
         lvl: this.data.lvl ? `(${this.data.lvl})` : '',
         legbon: this.getLegbon(this.data.legbon)
+      }
+    },
+    computed: {
+      itemClass () {
+        return RARITY_CLASSES[this.data.rarity]
       }
     }
   }

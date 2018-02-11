@@ -1,5 +1,3 @@
-//@import "~bulma/sass/utilities/initial-variables";
-//@import "~bulma/sass/utilities/functions";
 @import '~bulma';
 @import './variables';
 @import './animations';
@@ -34,4 +32,44 @@
 
 .mb1 {
   margin-bottom: 1em;
+}
+
+.tooltipText .is-info {
+  color: $info;
+}
+
+.tooltipText .is-light {
+  color: $light;
+}
+
+.tooltipText .is-danger {
+  color: $danger;
+}
+
+.tooltipText .is-warning {
+  color: $warning;
+}
+
+@media screen and (min-width: 1024px) {
+  a.navbar-item.is-active, a.navbar-link.is-active {
+    color: $info;
+  }
+}
+
+.modal-card, .modal-card-body, .modal-content {
+  overflow: visible;
+}
+
+.modal-card-body {
+  overflow-x: hidden;
+}
+
+.modal-content, .modal-card {
+  overflow: hidden;
+  max-height: calc(100vh - 40px);
+  margin: 0 auto;
+}
+
+.notification {
+  padding: 1rem;
 }
