@@ -15,9 +15,10 @@ class Profession(models.Model):
 
 
 class Item(models.Model):
+    reqp = models.CharField('Wymagane profesje', max_length=6, blank=True)
     profession = models.ManyToManyField(Profession, blank=True, related_name='Items')
-    legbon = models.CharField('Bonus', choices=LEGBON_CHOICES, max_length=15)
-    rarity = models.CharField('Rzadkość', choices=RARITY_CHOICES, default=DEFAULT_RARITY)
+    legbon = models.CharField('Bonus', choices=LEGBON_CHOICES, blank=True, max_length=15)
+    rarity = models.CharField('Rzadkość', max_length=15, choices=RARITY_CHOICES, default=DEFAULT_RARITY)
     type = models.IntegerField('Typ', choices=TYPE_CHOICES)
 
     stats = JSONField('Statystyki')
@@ -125,8 +126,6 @@ class Item(models.Model):
                 val = getattr(self, attr)
                 if val is not None:
                     stats.append((attr, val))
-                else:
-                    print('Error. {} does not exist'.format(attr))
         self.stats = OrderedDict(stats)
         # TODO encode as string - action, npc_lootbon, bounds, soulbound etc
         # these are "string" stats, with no real value
