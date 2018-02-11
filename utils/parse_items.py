@@ -6,12 +6,14 @@ from utils.helpers import create_slug, clean_dict, get_soup, download_and_save_i
 
 
 def parse_item(attrs, item):
-    item_name, main_stats, type_id, worth = attrs.split('||')
+    item_name, main_stats, item_type, worth = attrs.split('||')
     item_name = item_name.strip()
 
     item_stats = {attr: val for attr, val in re.findall(r'(\w+)=([\w.-]+);', main_stats)}
     item_stats['img'] = item.find('img')['src']
-    item_stats['hidden_stats'] = True if re.search(r'nodesc', attrs) else False
+    item_stats['hidden_stats'] = re.search(r'nodesc', attrs)
+    item_stats['type'] = item_type
+    item_stats['worth'] = worth
 
     if item_stats.get('slow'):
         item_stats['slow'] = float(int(item_stats['slow']) / 100)
@@ -23,12 +25,7 @@ def parse_item(attrs, item):
 
     item_rarity = re.search(r'legendary|unique|heroic', attrs)
     if item_rarity:
-        item_stats['rarity'] = ItemRarity.objects.get(name=item_rarity.group(0))
-
-    # item_type = re.search(r'\|{2}(\d+)\|{2}', attrs)
-    # if item_type:
-    item_stats['type'] = ItemType.objects.get(number=type_id)
-    item_stats['worth'] = worth
+        item_stats['rarity'] = item_rarity.group(0)
 
     resmanaendest = item_stats.get('resmanaendest')
     if resmanaendest:
@@ -49,7 +46,7 @@ def parse_item(attrs, item):
 
     for attr, val in re.findall(r'(opis|loot|legbon)=(.+?);', attrs):
         if attr == 'legbon':
-            val = ItemLegbon.objects.get(name=val.split(',')[0])
+            val = val.split(',')[0]
         elif attr == 'loot':
             val = val.split(',')[-1]
         elif attr == 'opis':

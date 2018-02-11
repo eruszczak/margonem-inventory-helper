@@ -138,6 +138,7 @@ class ItemSimilarApiView(ListAPIView):
 
 
 class GetEqSetFromProfile(APIView):
+
     def post(self, request, format=None):
         """
         Given link to character's eq, get those items and character list.
