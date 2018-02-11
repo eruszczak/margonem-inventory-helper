@@ -35,9 +35,10 @@
     <section class="section">
       <div class="container">
         <div class="items">
+          <my-input :value="filterValue" @input="filter" placeholder="Szukaj przedmiotów"/>
           <my-spinner v-if="type && isLoading" size="100"/>
           <transition-group v-else name="fade">
-            <item v-for="item in items" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
+            <item v-for="item in filteredItems" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
           </transition-group>
         </div>
       </div>
@@ -51,6 +52,7 @@
   import Item from './item/Item'
   import { RIGHT_CLICK_MAPPER } from '../utils/constants'
   import { fetchItems } from '../api/items'
+  import { replaceDiacritics } from '../utils/helpers'
 
   export default {
     name: 'items',
@@ -62,21 +64,8 @@
         subMenu: [],
         items: [],
         RIGHT_CLICK_MAPPER: RIGHT_CLICK_MAPPER,
-        isLoading: true
-      }
-    },
-    computed: {
-      ...mapGetters(['pageTitle']),
-      typeDisplay () {
-        for (let i = 0; i < MENU_LINKS.length; i += 1) {
-          const subLinks = MENU_LINKS[i].sublinks
-          for (let j = 0; j < subLinks.length; j += 1) {
-            if (subLinks[j].href.params.type === this.type) {
-              return subLinks[j].displayValue
-            }
-          }
-        }
-        return this.type
+        isLoading: true,
+        filterValue: ''
       }
     },
     mounted () {
@@ -96,6 +85,30 @@
       '$route' (to, from) {
         this.items = []
         this.getItems()
+      }
+    },
+    computed: {
+      ...mapGetters(['pageTitle']),
+      typeDisplay () {
+        for (let i = 0; i < MENU_LINKS.length; i += 1) {
+          const subLinks = MENU_LINKS[i].sublinks
+          for (let j = 0; j < subLinks.length; j += 1) {
+            if (subLinks[j].href.params.type === this.type) {
+              return subLinks[j].displayValue
+            }
+          }
+        }
+        return this.type
+      },
+      filteredItems () {
+        if (this.filterValue && this.items) {
+          const query = replaceDiacritics(this.filterValue.toLowerCase())
+          return this.items.filter(el => {
+            const itemName = replaceDiacritics(el.name.toLowerCase())
+            return itemName.indexOf(query) > -1
+          })
+        }
+        return this.items
       }
     },
     methods: {
@@ -122,6 +135,9 @@
         } else {
           this.$Progress.finish()
         }
+      },
+      filter (value) {
+        this.filterValue = value
       }
     }
   }
