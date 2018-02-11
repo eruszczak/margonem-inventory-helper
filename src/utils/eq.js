@@ -40,23 +40,22 @@ export const setStats = eqItems => {
     }
 
     // update eq stats
-    const stats = JSON.parse(item.json_stats)
-    for (let attr in stats) {
+    for (let attr in item.stats) {
       if (attr in source) {
         if (attr === 'dmg') {
           let currentRange = source[attr].split('-')
-          let newRange = stats[attr].split('-')
+          let newRange = item.stats[attr].split('-')
           let newMin = parseInt(currentRange[0]) + parseInt(newRange[0])
           let newMax = parseInt(currentRange[1]) + parseInt(newRange[1])
           source[attr] = `${newMin}-${newMax}`
         } else {
-          source[attr] = parseFloat(source[attr]) + parseFloat(stats[attr])
+          source[attr] = parseFloat(source[attr]) + parseFloat(item.stats[attr])
           if (!isInt(source[attr])) {
             source[attr] = round(source[attr])
           }
         }
       } else {
-        source[attr] = stats[attr]
+        source[attr] = item.stats[attr]
       }
     }
   }

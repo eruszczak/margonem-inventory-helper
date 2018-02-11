@@ -20,12 +20,11 @@ export const item = {
       }
       return professions
     },
-    getEncodeDItemStats (itemStats) {
-      let data = JSON.parse(itemStats)
+    getEncodedItemStats (itemStats) {
       let encodedMinorStats = ''
-      for (let attr in data) {
+      for (let attr in itemStats) {
         if (attr in ITEM_STAT) {
-          encodedMinorStats += `<p>${ITEM_STAT[attr].val.replace('{}', data[attr])}</p>`
+          encodedMinorStats += `<p>${ITEM_STAT[attr].val.replace('{}', itemStats[attr])}</p>`
         }
       }
       return encodedMinorStats
