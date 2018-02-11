@@ -178,7 +178,7 @@ export const ITEM_STAT = {
   absorbm: {val: 'Absorbuje do {} obrażeń mag.', val2: 'Absorpcje magiczne'},
   absorb: {val: 'Absorbuje do {} obrażeń fiz.', val2: 'Absorpcje fizyczne'},
   slow: {val: 'Obniża SA przeciwnika o {}%', val2: 'Obniżanie SA'},
-  sa: {val: 'SA +{}%', val2: 'Szybkość ataku'},
+  sa: {val: 'SA +{}%', val2: 'SA'},
   evade: {val: 'Unik +{}', val2: 'Unik'},
   lowevade: {val: 'Obniża unik przeciwnika o {}', val2: 'Obniżanie uniku'},
   acdmg: {val: 'Niszczy {} pancerza', val2: 'Niszczenie pancerza'},

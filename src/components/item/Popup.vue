@@ -1,5 +1,6 @@
 <template>
   <div class="tooltipText" v-if="data">
+    <p style="font-style:italic; margin: 0 auto; margin-bottom: 5px">{{ actionDescription }}</p>
     <p>{{ data.name }} <span class="green-color">{{ data.lvl }}</span></p>
     <p class="green-color">*{{ data.rarity | encodeRarity }}* {{ data.type | encodeType }}</p>
     <p v-if="professions.length" class="green-color">{{ professions }}</p>
@@ -21,7 +22,8 @@
       data: {
         type: Object,
         required: true
-      }
+      },
+      actionDescription: String
     },
     data () {
       return {
