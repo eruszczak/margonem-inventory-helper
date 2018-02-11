@@ -45,7 +45,7 @@
       }
     },
     methods: {
-      ...mapMutations(['setSearchQuery']),
+      ...mapMutations(['setSearchQuery', 'setAPIError']),
       search: debounce(
         function () {
           if (!this.searchQuery) {
@@ -67,8 +67,8 @@
               'searchResults': this.searchResults,
               'noResults': this.noResults
             }))
-          }, error => {
-            console.error(error)
+          }, () => {
+            this.setAPIError()
           })
         },
         300

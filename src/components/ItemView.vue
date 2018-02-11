@@ -17,7 +17,7 @@
             <item :data="data" :action="RIGHT_CLICK_MAPPER.add" noBorder/>
             <div v-html="itemStats"></div>
             <template v-if="legbon">
-              <p>{{ legbon.translation }}</p>
+              <p class="mt1">{{ legbon.translation }}</p>
               <p>{{ legbon.description }}</p>
               <p v-if="legbonMaxDuration">{{ legbonMaxDuration }}</p>
             </template>

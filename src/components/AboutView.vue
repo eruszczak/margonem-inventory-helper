@@ -17,6 +17,10 @@
           <li>formularz, w którym można zgłaszać błędy i uwagi</li>
         </ul>
       </msg>
+      <msg header="Pomoc">
+        <p>W razie powtarzających się problemów, może pomóc wyczyszczenie danych lokalnych zapisanych przez aplikację (np. twój ekwipunek albo ostatnio odwiedzane przedmioty).</p>
+        <button class="button" @click="clearStorage">Wyczyść localStorage</button>
+      </msg>
     </div>
   </section>
 </template>
@@ -26,6 +30,12 @@
     name: 'about-view',
     created () {
       this.$Progress.finish()
+    },
+    methods: {
+      clearStorage () {
+        window.localStorage.clear()
+        this.$toast.info('Wyczyszczono localStorage')
+      }
     }
   }
 </script>
