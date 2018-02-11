@@ -37,7 +37,7 @@
         <div class="items">
           <my-spinner v-if="type && isLoading" size="100"/>
           <transition-group v-else name="fade">
-            <item v-for="item in items" :key="item.pk" :data="item" :action="rmbActions.add"/>
+            <item v-for="item in items" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
           </transition-group>
         </div>
       </div>
@@ -61,7 +61,7 @@
         menu: MENU_LINKS,
         subMenu: [],
         items: [],
-        rmbActions: RIGHT_CLICK_MAPPER,
+        RIGHT_CLICK_MAPPER: RIGHT_CLICK_MAPPER,
         isLoading: true
       }
     },

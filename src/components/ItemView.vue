@@ -12,7 +12,7 @@
           </div>
           <div class="hero-body">
             <div class="container has-text-centered">
-              <item :data="data" :action="rmbActions.add"/>
+              <item :data="data" :action="RIGHT_CLICK_MAPPER.add"/>
               <div v-html="itemStats"></div>
             </div>
           </div>
@@ -26,7 +26,7 @@
             <div class="items">
               <my-spinner v-if="isLoadingSimilar" />
               <transition-group v-else name="fade">
-                <item  v-for="item in similarItems" :key="item.pk" :data="item" :action="rmbActions.add"/>
+                <item  v-for="item in similarItems" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
               </transition-group>
             </div>
           </div>
@@ -38,7 +38,7 @@
             <h1 class="title">Ostatnio odwiedzane</h1>
             <div class="items">
               <transition-group name="fade">
-                <item v-for="item in itemHistory" :key="item.pk" :data="item" :action="rmbActions.add"/>
+                <item v-for="item in itemHistory" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
               </transition-group>
             </div>
           </div>
@@ -69,7 +69,7 @@
         data: null,
         similarItems: [],
         noSimilarItems: false,
-        rmbActions: RIGHT_CLICK_MAPPER,
+        RIGHT_CLICK_MAPPER: RIGHT_CLICK_MAPPER,
         isLoading: true,
         isLoadingSimilar: true
       }

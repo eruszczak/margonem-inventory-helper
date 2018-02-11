@@ -41,7 +41,6 @@
       return {
         newValue: this.value || 0,
         tabItems: [],
-        rmbActions: RIGHT_CLICK_MAPPER,
         contentHeight: 0,
         _isTabs: true // Used internally by TabItem
       }
