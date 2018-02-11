@@ -78,9 +78,9 @@ def get_items_stats_from_forum(soup):
     stats = []
     for soup_item in soup_items:
         attrs = soup_item.find('img', attrs={'ctip': 'item'})
-        print(attrs)
         if attrs:
-            stats.append(parse_item(attrs['stats'], soup_item))
+            item_data = parse_item(attrs['stats'], soup_item)
+            stats.append(item_data)
     return stats
 
 
@@ -89,11 +89,10 @@ def add_items_from_forum(items, forum_page_url):
     for item_name, item_stats in items:
         if item_stats.get('upg'):
             continue
-
         clean_dict('book rkey quest created lowreq btype price emo loot', item_stats)
+        character_classes = item_stats.pop('reqp', [])
 
-        character_classes = item_stats.pop('reqp', None)
-
+        item_stats['reqp'] = character_classes or ''
         item_stats['img_url'] = item_stats.pop('img', None)
         item_stats['source_url'] = forum_page_url
         item_stats['slug'] = create_slug(item_name)
@@ -107,33 +106,21 @@ def add_items_from_forum(items, forum_page_url):
 
         download_and_save_img(item)
 
-        if character_classes:
-            for ch_class in character_classes:
-                profession = Profession.objects.get(name=ch_class)
-                item.profession.add(profession)
+        for character in character_classes:
+            profession = Profession.objects.get_or_create(name=character)[0]
+            item.profession.add(profession)
 
-        # if mob:
-        #     mob = Mob.objects.get_or_create(name=mob)[0]
-        #     item.mob.add(mob)
-        #     Item.objects.get_or_create(name=name, defaults=dict(**stat))
     return count
 
 
 def add_items(forum_topic_url):
     soup = get_soup(forum_topic_url)
     items_stats = get_items_stats_from_forum(soup)
-    print(items_stats)
-    # for stat in items_stats:
-    #     print(stat)
-    # added_count = add_items_from_forum(items_stats, forum_topic_url)
-    # return added_count
+    added_count = add_items_from_forum(items_stats, forum_topic_url)
+    return added_count
 
 
 def get_eq_items_and_characters_from_profile(profile_url):
     soup, characters = prepare_forum_profile_soup(profile_url)
     items, not_found_items = get_items_from_profile(soup)
     return items, not_found_items, characters
-
-
-
-
