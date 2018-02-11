@@ -50,7 +50,7 @@
   import Item from './item/Item'
   import { fetchItem, fetchItemSimilar } from '../api/items'
   import { mapGetters, mapMutations } from 'vuex'
-  import { RIGHT_CLICK_MAPPER } from '../utils/constants'
+  import { RARITY_CLASSES, RIGHT_CLICK_MAPPER } from '../utils/constants'
   import { item } from './mixins/item'
 
   export default {
@@ -89,22 +89,16 @@
       rarity () {
         return this.data ? this.data.rarity : null
       },
-      itemClass: function () {
-        if (!this.data) {
-          return null
+      itemClass () {
+        if (this.data) {
+          return RARITY_CLASSES[this.data.rarity]
         }
-        const classes = {
-          unique: 'is-warning',
-          heroic: 'is-info',
-          legendary: 'is-danger',
-          default: 'is-light'
-        }
-        return classes[this.data.rarity]
+        return null
       }
     },
     methods: {
       ...mapMutations(['addToItemHistory', 'setAPIError']),
-      getItemData: function () {
+      getItemData () {
         this.isLoading = true
         this.isLoadingSimilar = true
         fetchItem(this.slug, response => {
@@ -116,7 +110,7 @@
           this.setAPIError()
         })
       },
-      getSimilarItems: function () {
+      getSimilarItems () {
         fetchItemSimilar(this.slug, response => {
           this.isLoadingSimilar = false
           this.similarItems = response.data

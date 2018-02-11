@@ -56,27 +56,4 @@
 </script>
 
 <style>
-  .modal-card, .modal-card-body, .modal-content {
-  overflow: visible;
-  }
-
-  @media screen and (min-width: 1024px) {
-    a.navbar-item.is-active, a.navbar-link.is-active {
-      color: hsl(204, 86%, 53%) !important;
-    }
-  }
-
-  .modal-card-body {
-    overflow-x: hidden;
-  }
-
-  .modal-content, .modal-card {
-    overflow: hidden;
-    max-height: calc(100vh - 40px);
-    margin: 0 auto;
-  }
-
-  .notification {
-    padding: 1rem;
-  }
 </style>
