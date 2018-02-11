@@ -30,7 +30,7 @@
       return {
         legbonMaxDuration: this.getLegbonMaxDuration(this.data.lvl),
         professions: this.getProfessions(this.data.profession),
-        itemStats: this.getEncodeDItemStats(this.data.json_stats),
+        itemStats: this.getEncodedItemStats(this.data.stats),
         lvl: this.data.lvl ? `(${this.data.lvl})` : '',
         legbon: this.getLegbon(this.data.legbon)
       }

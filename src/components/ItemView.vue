@@ -5,7 +5,7 @@
         <div v-if="isLoading" class="hero-body">
           <my-spinner size="100" />
         </div>
-        <template v-else>
+        <template v-else-if="data">
           <div class="hero-head" style="padding-top: 2em">
             <h1 class="title">{{ data.name }}<span v-if="data.lvl"> ({{ data.lvl }})</span></h1>
             <h2 class="subtitle">
@@ -31,7 +31,7 @@
           <div class="items">
             <my-spinner v-if="isLoadingSimilar" />
             <transition-group v-else name="fade">
-              <item  v-for="item in similarItems" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
+              <item v-for="item in similarItems" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
             </transition-group>
             </div>
         </div>
@@ -86,7 +86,7 @@
         'itemHistory'
       ]),
       itemStats () {
-        return this.data ? this.getEncodeDItemStats(this.data.json_stats) : null
+        return this.data ? this.getEncodedItemStats(this.data.stats) : null
       },
       professions () {
         return this.data ? this.getProfessions(this.data.profession) : null
