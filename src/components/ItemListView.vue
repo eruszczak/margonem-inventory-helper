@@ -56,7 +56,7 @@
     name: 'items',
     components: {Item},
     props: ['type'],
-    data: function () {
+    data () {
       return {
         menu: MENU_LINKS,
         subMenu: [],
@@ -99,7 +99,7 @@
       }
     },
     methods: {
-      ...mapMutations(['setPageTitle']),
+      ...mapMutations(['setPageTitle', 'setAPIError']),
       mouseOver: function (item, event) {
         this.menu.map((el) => {
           el.isActive = false
@@ -115,8 +115,8 @@
             this.items = response.data.results
             this.isLoading = false
             this.$Progress.finish()
-          }, error => {
-            console.error(error)
+          }, () => {
+            this.setAPIError()
           })
           this.setPageTitle(this.typeDisplay)
         } else {

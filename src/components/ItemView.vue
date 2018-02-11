@@ -69,7 +69,6 @@
         data: null,
         similarItems: [],
         noSimilarItems: false,
-        error: false,
         rmbActions: RIGHT_CLICK_MAPPER,
         isLoading: true,
         isLoadingSimilar: true
@@ -101,16 +100,15 @@
       }
     },
     methods: {
-      ...mapMutations([
-        'addToItemHistory'
-      ]),
+      ...mapMutations(['addToItemHistory', 'setAPIError']),
       getItemData: function () {
         fetchItem(this.slug, response => {
           this.isLoading = false
           this.data = response.data
           this.getSimilarItems()
           this.addToItemHistory(this.data)
-        }, response => {
+        }, () => {
+          this.setAPIError()
         })
       },
       getSimilarItems: function () {
@@ -119,8 +117,8 @@
           this.similarItems = response.data
           this.noSimilarItems = this.similarItems.length === 0
           this.$Progress.finish()
-        }, response => {
-          this.error = true
+        }, () => {
+          this.setAPIError()
         })
       }
     }

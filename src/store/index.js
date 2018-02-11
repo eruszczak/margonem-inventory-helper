@@ -24,12 +24,14 @@ export const store = new Vuex.Store({
   state: {
     pageTitle: '',
     isLoading: false,
-    navbarMenuIsActive: false
+    navbarMenuIsActive: false,
+    isAPIError: false
   },
   getters: {
     pageTitle: state => state.pageTitle,
     isLoading: state => state.isLoading,
-    navbarMenuIsActive: state => state.navbarMenuIsActive
+    navbarMenuIsActive: state => state.navbarMenuIsActive,
+    isAPIError: state => state.isAPIError
   },
   mutations: {
     setPageTitle: (state, value) => {
@@ -43,6 +45,9 @@ export const store = new Vuex.Store({
     },
     toggleNavbarMenuIsActive: state => {
       state.navbarMenuIsActive = !state.navbarMenuIsActive
+    },
+    setAPIError: (state, value = true) => {
+      state.isAPIError = value
     }
   },
   modules: {

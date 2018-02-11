@@ -2,6 +2,9 @@
   <div id="app">
     <navbar/>
     <search/>
+    <div class="container mt1 mb1">
+      <msg v-if="isAPIError" type="is-danger">Wystąpił jakiś błąd. Spróbuj ponownie wkrótce</msg>
+    </div>
     <router-view/>
     <my-footer/>
     <eq-modal-preview/>
@@ -30,12 +33,13 @@
         this.$Progress.start()
         this.hideMenu()
         this.closeModal()
+        this.setAPIError(false)
         next()
       })
     },
     components: {Search, MyFooter, EqModalPreview, Navbar},
     computed: {
-      ...mapGetters(['pageTitle', 'canAddToEq', 'isLoading'])
+      ...mapGetters(['pageTitle', 'canAddToEq', 'isLoading', 'isAPIError'])
     },
     watch: {
       pageTitle (newVal, oldVal) {
@@ -43,7 +47,7 @@
       }
     },
     methods: {
-      ...mapMutations(['setEqItemsStats', 'closeModal', 'hideMenu', 'closeModal']),
+      ...mapMutations(['setEqItemsStats', 'closeModal', 'hideMenu', 'closeModal', 'setAPIError']),
       mouseOver: function (item, event) {
         item.isActive = true
       }
