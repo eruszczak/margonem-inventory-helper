@@ -47,9 +47,10 @@ class ItemApiView(ListAPIView):
             return queryset.filter(slug__in=item_slugs)
 
         if query:
-            val = self.request.query_params.get('n', '')
-            return queryset.filter(Q(name__unaccent__icontains=val) | Q(legbon__name__icontains=val))
-            # return queryset.filter(**query)
+            # val = self.request.query_params.get('n', '')
+            # return queryset.filter(Q(name__unaccent__icontains=val) | Q(legbon__name__icontains=val))
+            print(query)
+            return queryset.filter(**query)
 
         return self.queryset
 
@@ -63,21 +64,17 @@ class ItemApiView(ListAPIView):
 
         query = {'slugs': slugs}
         if name:
-            # django.db.utils.OperationalError: no such function: UNACCENT
-            # raised when trying to use this kwarg in .filter() when not using PostgreSQL
-            # and unaccent is uninstalled (it should be installed when running `migrate`)
-            # somehow, I cannot catch this error
             contains, startswith = 'name__unaccent__icontains', 'name__unaccent__istartswith'
             key = contains if len(name) > 2 else startswith
-            # query[key] = name
-            query['legbon__name__icontains'] = name
+            query[key] = name
+            # query['legbon__name__icontains'] = name
         # if item_rarity:
         #     if 'none' in item_rarity:
         #         return Item.objects.none()
         #     query['rarity__name__in'] = item_rarity
 
-        # if item_type:
-        #     query['type__number'] = item_type
+        if item_type:
+            query['type__number'] = item_type
 
         # if prof:
         #     query['profession__name__in'] = prof
@@ -97,6 +94,7 @@ class ItemDetailApiView(RetrieveAPIView):
     def get_queryset(self):
         # from time import sleep
         # sleep(3)
+
         return super().get_queryset()
 
 
