@@ -32,11 +32,11 @@
         </div>
       </div>
     </nav>
-    <section class="section">
+    <section class="section" v-if="type">
       <div class="container">
         <div class="items">
-          <my-input :value="filterValue" @input="filter" placeholder="Filtruj po nazwie albo lvl"/>
-          <my-spinner v-if="type && isLoading" size="100"/>
+          <my-input :value="filterValue" @input="setFilterValue" placeholder="Filtruj po nazwie albo lvl"/>
+          <my-spinner v-if="isLoading" size="100"/>
           <transition-group v-else name="fade">
             <item v-for="item in filteredItems" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
           </transition-group>
@@ -53,6 +53,7 @@
   import { RIGHT_CLICK_MAPPER } from '../utils/constants'
   import { fetchItems } from '../api/items'
   import { replaceDiacritics } from '../utils/helpers'
+  import debounce from 'lodash/debounce'
 
   export default {
     name: 'items',
@@ -102,12 +103,12 @@
       },
       filteredItems () {
         if (this.filterValue && this.items) {
-          const query = replaceDiacritics(this.filterValue.toLowerCase())
-          const lvl = parseInt(query)
-          return this.items.filter(item => {
-            const itemName = replaceDiacritics(item.name.toLowerCase())
-            return itemName.indexOf(query) > -1 || item.lvl === lvl
-          })
+          console.log('filteredItems')
+          console.error('result', this.filter())
+          const results = this.filter()
+          if (results) {
+            return results
+          }
         }
         return this.items
       }
@@ -137,9 +138,22 @@
           this.$Progress.finish()
         }
       },
-      filter (value) {
+      setFilterValue (value) {
         this.filterValue = value
-      }
+      },
+      filter: debounce(
+        function () {
+          const query = replaceDiacritics(this.filterValue.toLowerCase())
+          console.log('debouncing', query)
+          const lvl = parseInt(query)
+          return this.items.filter(item => {
+            const itemName = replaceDiacritics(item.name.toLowerCase())
+            console.log(itemName.indexOf(query), itemName.indexOf(query) > -1)
+            return itemName.indexOf(query) > -1 || item.lvl === lvl
+          })
+        },
+        300
+      )
     }
   }
 </script>
