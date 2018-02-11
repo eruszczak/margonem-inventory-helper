@@ -64,7 +64,7 @@ class ItemApiView(ListAPIView):
         #     query['rarity__name__in'] = item_rarity
 
         if item_type:
-            query['type__number'] = item_type
+            query['type'] = item_type
 
         # if prof:
         #     query['profession__name__in'] = prof
