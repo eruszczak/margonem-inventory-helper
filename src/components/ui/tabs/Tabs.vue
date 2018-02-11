@@ -21,7 +21,6 @@
 
 <script>
   import Item from '../../item/Item'
-  import { RIGHT_CLICK_MAPPER } from '../../../utils/constants'
 
   export default {
     name: 'Tabs',
