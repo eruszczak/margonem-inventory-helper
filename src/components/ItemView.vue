@@ -1,46 +1,40 @@
 <template>
   <section class="section">
     <div class="container">
-      <section class="hero" :class="itemClass">
+      <section class="hero has-text-centered" :class="itemClass">
         <div v-if="isLoading" class="hero-body">
           <my-spinner size="100" />
         </div>
         <template v-else>
-          <div class="hero-head has-text-centered" style="padding-top: 2em">
-            <h1 class="title">{{ data.name }}</h1>
-            <h2 class="subtitle">{{ data.type | encodeType }}<span v-if="data.lvl">, {{ data.lvl }} lvl</span></h2>
+          <div class="hero-head" style="padding-top: 2em">
+            <h1 class="title">{{ data.name }}<span v-if="data.lvl"> ({{ data.lvl }})</span></h1>
+            <h2 class="subtitle">{{ data.type | encodeType }}</h2>
           </div>
           <div class="hero-body">
-            <div class="container has-text-centered">
-              <item :data="data" :action="RIGHT_CLICK_MAPPER.add"/>
-              <div v-html="itemStats"></div>
-            </div>
+            <item :data="data" :action="RIGHT_CLICK_MAPPER.add"/>
+            <div v-html="itemStats"></div>
           </div>
         </template>
       </section>
-      <section class="hero is-light mt1">
+      <section class="hero is-light mt1 has-text-centered">
         <div class="hero-body">
-          <div class="container has-text-centered">
-            <h1 class="title">Podobne przedmioty</h1>
-            <p class="subtitle">Inne przedmioty tego typu na podobny poziom</p>
-            <div class="items">
-              <my-spinner v-if="isLoadingSimilar" />
-              <transition-group v-else name="fade">
-                <item  v-for="item in similarItems" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
-              </transition-group>
+          <h1 class="title">Podobne przedmioty</h1>
+          <p class="subtitle">Inne przedmioty tego typu na podobny poziom</p>
+          <div class="items">
+            <my-spinner v-if="isLoadingSimilar" />
+            <transition-group v-else name="fade">
+              <item  v-for="item in similarItems" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
+            </transition-group>
             </div>
-          </div>
         </div>
       </section>
-      <section class="hero is-light mt1">
+      <section class="hero is-light mt1 has-text-centered">
         <div class="hero-body">
-          <div class="container has-text-centered">
-            <h1 class="title">Ostatnio odwiedzane</h1>
-            <div class="items">
-              <transition-group name="fade">
-                <item v-for="item in itemHistory" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
-              </transition-group>
-            </div>
+          <h1 class="title">Ostatnio odwiedzane</h1>
+          <div class="items">
+            <transition-group name="fade">
+              <item v-for="item in itemHistory" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
+            </transition-group>
           </div>
         </div>
       </section>
