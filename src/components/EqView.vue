@@ -2,7 +2,7 @@
   <section class="section">
     <div class="container">
       <msg v-if="!readOnly">Znajdź przedmioty za pomocą wyszukiwarki powyżej oraz załóż je klikając PPM</msg>
-      <msg v-else>Odwiedzasz zestaw. Nie możesz go edytować</msg>
+      <msg v-else>Odwiedzasz zestaw. Nie możesz go edytować, ale możesz użyć go do zbudowania swojego zestawu</msg>
       <div class="tile is-ancestor">
         <div class="tile is-vertical is-7">
           <div class="tile">

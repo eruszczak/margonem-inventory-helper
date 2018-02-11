@@ -2,7 +2,7 @@
   <router-link v-if="!noLink" :to="{name: 'itemView', params: {slug: data.slug}}">
     <div :id="data.slug" class="item" @contextmenu.prevent="itemRightClick(data)">
       <img class="itemborder borderRarity" :class="data.rarity" :src="data.img" :alt="data.name">
-      <popup :data="data"/>
+      <popup :data="data" :actionDescription="actionDescription"/>
     </div>
   </router-link>
   <div v-else :id="data.slug" class="item" @contextmenu.prevent="itemRightClick(data)">
@@ -14,6 +14,7 @@
   import Popup from './Popup'
   import { mapActions, mapGetters } from 'vuex'
   import { RIGHT_CLICK_MAPPER } from '../../utils/constants'
+  import { isItemWearable } from '../../utils/helpers'
 
   export default {
     name: 'item',
@@ -30,7 +31,32 @@
     },
     components: {Popup},
     computed: {
-      ...mapGetters(['eqItems', 'canAddToEq'])
+      ...mapGetters(['eqItems', 'canAddToEq']),
+      actionDescription () {
+        if (!isItemWearable(this.data.type)) {
+          return 'Nie można założyć'
+        }
+        switch (this.action) {
+          case RIGHT_CLICK_MAPPER.ignore:
+            return 'PPM nieaktywne'
+          case RIGHT_CLICK_MAPPER.removeCompare:
+            return 'PPM usunie z porównywarki'
+          case RIGHT_CLICK_MAPPER.add: {
+            if (!this.canAddToEq) {
+              return 'PPM doda do porównywarki'
+            }
+            return 'PPM założy przedmiot'
+          }
+          case RIGHT_CLICK_MAPPER.remove: {
+            if (!this.readOnly && !this.history) {
+              return 'PPM zdejmie ten przedmiot'
+            }
+            return ''
+          }
+          default:
+            return ''
+        }
+      }
     },
     methods: {
       ...mapActions(['wearItem', 'takeOffItem', 'compareItem', 'uncompareItem']),
