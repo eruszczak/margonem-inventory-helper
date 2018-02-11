@@ -16,6 +16,11 @@
           <div class="hero-body">
             <item :data="data" :action="RIGHT_CLICK_MAPPER.add" noBorder/>
             <div v-html="itemStats"></div>
+            <template v-if="legbon">
+              <p>{{ legbon.translation }}</p>
+              <p>{{ legbon.description }}</p>
+              <p v-if="legbonMaxDuration">{{ legbonMaxDuration }}</p>
+            </template>
           </div>
         </template>
       </section>
@@ -94,6 +99,12 @@
           return RARITY_CLASSES[this.data.rarity]
         }
         return null
+      },
+      legbon () {
+        return this.data ? this.getLegbon(this.data.legbon) : null
+      },
+      legbonMaxDuration () {
+        return this.data ? this.getLegbonMaxDuration(this.data.lvl) : null
       }
     },
     methods: {
