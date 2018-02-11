@@ -83,7 +83,7 @@
 </template>
 
 <script>
-  import { mapActions, mapGetters, mapMutations } from 'vuex'
+  import { mapActions, mapGetters } from 'vuex'
   import Eq from './eq/Eq'
   import RestoreEq from './eq/RestoreEq'
   import EqStatsCompare from './eq/EqStatsCompare'
@@ -109,7 +109,6 @@
     },
     created () {
       this.getEqItems()
-      // this.$Progress.finish()
     },
     methods: {
       ...mapActions(['fetchReadOnlyEqItems', 'saveEqAsMine']),
@@ -119,6 +118,7 @@
           slugs: typeof this.slugs === 'string' ? [this.slugs] : this.slugs,
           callback: () => {
             this.isLoading = false
+            this.$Progress.finish()
           },
           isCompare: true
         })
