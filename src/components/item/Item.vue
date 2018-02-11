@@ -1,12 +1,12 @@
 <template>
   <router-link v-if="!noLink" :to="{name: 'itemView', params: {slug: data.slug}}">
     <div :id="data.slug" class="item" @contextmenu.prevent="itemRightClick(data)">
-      <img class="itemborder borderRarity" :class="data.rarity" :src="data.img" :alt="data.name">
+      <img class="itemborder" :class="[noBorder ? '' : 'borderRarity', data.rarity]" :src="data.img" :alt="data.name">
       <popup :data="data" :actionDescription="actionDescription"/>
     </div>
   </router-link>
   <div v-else :id="data.slug" class="item" @contextmenu.prevent="itemRightClick(data)">
-    <img class="itemborder borderRarity" :class="data.rarity" :src="data.img" :alt="data.name">
+    <img class="itemborder" :class="[noBorder ? '' : 'borderRarity', data.rarity]" :src="data.img" :alt="data.name">
   </div>
 </template>
 
@@ -25,6 +25,10 @@
       },
       action: Number,
       noLink: {
+        type: Boolean,
+        default: false
+      },
+      noBorder: {
         type: Boolean,
         default: false
       }
@@ -101,28 +105,12 @@
     margin: 1px;
   }
 
-  .green-color {
-    color: green;
-  }
-
-  .default-color {
-    color: grey;
-  }
-
-  .unique-color {
-    color: orange;
-  }
-
-  .heroic-color {
-    color: #136bf7;
-  }
-
-  .legendary-color {
-    color: #c60d14;
-  }
-
   .borderRarity {
     border: 2px solid
+  }
+
+  .white {
+    color: white
   }
 
   .default {
@@ -139,26 +127,6 @@
 
   .legendary {
     border-color: #c60d14;
-  }
-
-  .default-tag {
-    background-color: #cecece !important;
-    color: white !important;
-  }
-
-  .unique-tag {
-    background-color: orange !important;
-    color: white !important;
-  }
-
-  .heroic-tag {
-    background-color: #136bf7 !important;
-    color: white !important;
-  }
-
-  .legendary-tag {
-    background-color: #f5383f !important;
-    color: white !important;
   }
 
   .item .tooltipText {
@@ -179,10 +147,6 @@
   .item .tooltipText p {
     margin-bottom: 5px;
     width: max-content;
-  }
-
-  .item .tooltipText div hr {
-    margin-bottom: 15px;
   }
 
   .item .tooltipText div div p {
