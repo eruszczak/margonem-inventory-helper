@@ -107,7 +107,7 @@
         item.isActive = true
         this.subMenu = item.sublinks
       },
-      getItems: function () {
+      getItems () {
         const type = MAP_TYPE_NAME_TO_ID[this.type]
         if (type) {
           this.isLoading = true
@@ -118,7 +118,7 @@
           }, error => {
             console.error(error)
           })
-          this.setPageTitle(this.type)
+          this.setPageTitle(this.typeDisplay)
         } else {
           this.$Progress.finish()
         }

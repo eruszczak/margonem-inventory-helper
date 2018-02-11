@@ -6,7 +6,7 @@
       <!--</div>-->
     <!--</div>-->
   <!--</footer>-->
-  <footer class="site-footer is-light">
+  <footer class="is-light">
       <div class="container has-text-centered">
         Grafiki przedmiotów należą do <a href="http://garmory.pl/" target="_blank">Garmory sp. z o.o.</a>
       </div>
