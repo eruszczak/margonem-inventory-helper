@@ -35,7 +35,7 @@
     <section class="section">
       <div class="container">
         <div class="items">
-          <my-input :value="filterValue" @input="filter" placeholder="Szukaj przedmiotów"/>
+          <my-input :value="filterValue" @input="filter" placeholder="Filtruj po nazwie albo lvl"/>
           <my-spinner v-if="type && isLoading" size="100"/>
           <transition-group v-else name="fade">
             <item v-for="item in filteredItems" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
@@ -103,9 +103,10 @@
       filteredItems () {
         if (this.filterValue && this.items) {
           const query = replaceDiacritics(this.filterValue.toLowerCase())
-          return this.items.filter(el => {
-            const itemName = replaceDiacritics(el.name.toLowerCase())
-            return itemName.indexOf(query) > -1
+          const lvl = parseInt(query)
+          return this.items.filter(item => {
+            const itemName = replaceDiacritics(item.name.toLowerCase())
+            return itemName.indexOf(query) > -1 || item.lvl === lvl
           })
         }
         return this.items
