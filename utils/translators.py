@@ -4,35 +4,6 @@ BONUSES = ['holytouch', 'dmgred', 'verycrit', 'resgain', 'critred', 'lastheal', 
 RARITY = ['legendary', 'unique', 'heroic', 'default']
 CHARACTERS = ['w', 'b', 'h', 't', 'm', 'p']
 
-# translations are used for admin interface
-itemtype_translate = {
-    '1': 'jednoreczne',
-    '2': 'dwureczne',
-    '3': 'poltorareczne',
-    '4': 'dystansowe',
-    '5': 'pomocnicze',
-    '6': 'rozdzki',
-    '7': 'laski',
-    '8': 'zbroje',
-    '9': 'helmy',
-    '10': 'buty',
-    '11': 'rekawice',
-    '12': 'pierscienie',
-    '13': 'naszyjniki',
-    '14': 'tarcze',
-    '15': 'neutralne',
-    '16': 'konsumpcyjne',
-    '17': 'zloto',
-    '18': 'klucze',
-    '19': 'questowe',
-    '20': 'odnawialne',
-    '21': 'strzaly',
-    '22': 'talizmany',
-    '23': 'ksiazki',
-    '24': 'torby',
-    '25': 'mikstury',
-    # '26': 'eventowe',
-}
 
 actions_translate = {
     'flee': 'Umożliwia ucieczkę z walki'

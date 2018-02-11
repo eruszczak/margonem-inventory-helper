@@ -7,28 +7,8 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.safestring import mark_safe
 
-from utils.translators import ITEM_STATS, itemtype_translate
-
-
-class ItemRarity(models.Model):
-    name = models.CharField(max_length=20, unique=True)
-
-    def __str__(self):
-        return self.name
-
-
-class ItemType(models.Model):
-    number = models.IntegerField(unique=True)
-
-    def __str__(self):
-        return itemtype_translate.get(str(self.number), str(self.number))
-
-
-class ItemLegbon(models.Model):
-    name = models.CharField(max_length=20, unique=True)
-
-    def __str__(self):
-        return self.name
+from items.constants import TYPE_CHOICES, LEGBON_CHOICES, RARITY_CHOICES, DEFAULT_RARITY
+from utils.translators import ITEM_STATS
 
 
 class Profession(models.Model):
@@ -64,15 +44,16 @@ class Profession(models.Model):
 #         return self.name
 
 
+# mob = models.ManyToManyField(Mob)
 class Item(models.Model):
-    updated_at = models.DateTimeField('Ostatnia aktualizacja', auto_now=True)
-    json_stats = models.CharField('Statystyki w kolejności', max_length=500, blank=True, null=True)
-    stats = JSONField('Statystyki w kolejności', blank=True, default=dict)
-    profession = models.ManyToManyField(Profession, verbose_name='Profesje')
-    # mob = models.ManyToManyField(Mob)
-    legbon = models.ForeignKey(ItemLegbon, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Bonus')
-    rarity = models.ForeignKey(ItemRarity, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Rzadkość')
-    type = models.ForeignKey(ItemType, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Typ')
+    profession = models.ManyToManyField(Profession, blank=True, related_name='Items')
+    legbon = models.CharField('Bonus', choices=LEGBON_CHOICES, max_length=15)
+    rarity = models.CharField('Rzadkość', choices=RARITY_CHOICES, default=DEFAULT_RARITY)
+    type = models.IntegerField('Typ', choices=TYPE_CHOICES)
+
+    stats = JSONField('Statystyki')
+    updated_at = models.DateTimeField('Aktualizowano', auto_now=True)
+    hidden = models.BooleanField('Ukryty', default=False)
 
     lvl = models.PositiveIntegerField('Lvl', blank=True, null=True)
     bag = models.PositiveIntegerField('Miejsc na przedmioty', blank=True, null=True)
@@ -80,7 +61,7 @@ class Item(models.Model):
     name = models.CharField('Nazwa', unique=True, max_length=300)
     opis = models.TextField('Opis', blank=True, null=True)
     img = models.ImageField('Grafika')
-    slug = models.SlugField(unique=True, max_length=255)
+    slug = models.SlugField('Slug', unique=True, max_length=255)
     img_url = models.URLField('Źródło grafiki', max_length=255)
     source_url = models.URLField('Źródło przedmiotu', max_length=255, blank=True, null=True)
 
@@ -171,24 +152,23 @@ class Item(models.Model):
         """
         stats = []
         for attr in ITEM_STATS:
-            if attr.startswith('@'):
-                continue
-
-            val = getattr(self, attr, 'not exists')
-            if val:
-                stats.append((attr, val))
-            elif val == 'not exists':
-                print('Error. {} does not exist'.format(attr))
-        self.json_stats = json.dumps(OrderedDict(stats))
+            # todo what is @
+            if not attr.startswith('@'):
+                val = getattr(self, attr)
+                if val is not None:
+                    stats.append((attr, val))
+                else:
+                    print('Error. {} does not exist'.format(attr))
+        # self.json_stats = json.dumps(OrderedDict(stats))
         self.stats = OrderedDict(stats)
 
-        if self.rarity is None:
-            self.rarity = ItemRarity.objects.get(name='default')
+        # if self.rarity is None:
+        #     self.rarity = ItemRarity.objects.get(name='default')
 
         # TODO encode as string - action, npc_lootbon, bounds, soulbound etc
         # these are "string" stats, with no real value
 
-        super(Item, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def image_img(self):
         return mark_safe('<img src="%s" />' % self.img.url)

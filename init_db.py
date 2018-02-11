@@ -5,7 +5,6 @@ django.setup()
 
 from items.models import Item
 from utils.parse_items import get_eq_items_and_characters_from_profile, add_items
-from utils.databse import init_models, re_save_all_items
 
 forum_pages_links = [
     'https://www.margonem.pl/?task=forum&show=posts&id=459240',  # 0 Elity I i II
@@ -29,7 +28,6 @@ print(Item.objects.all().count())
 # exit()
 # for link in forum_pages_links:
 #     add_items(link)
-init_models()
 forum_profile_link = 'https://www.margonem.pl/?task=profile&id=2779867#eq90052'
 count = add_items(forum_profile_link)
 

@@ -1,7 +1,7 @@
 import re
 import math
 
-from items.models import ItemRarity, ItemType, ItemLegbon, Item, Profession
+from items.models import Item, Profession
 from utils.helpers import create_slug, clean_dict, get_soup, download_and_save_img, prepare_forum_profile_soup
 
 
@@ -81,6 +81,7 @@ def get_items_stats_from_forum(soup):
     stats = []
     for soup_item in soup_items:
         attrs = soup_item.find('img', attrs={'ctip': 'item'})
+        print(attrs)
         if attrs:
             stats.append(parse_item(attrs['stats'], soup_item))
     return stats
@@ -125,6 +126,8 @@ def add_items(forum_topic_url):
     soup = get_soup(forum_topic_url)
     items_stats = get_items_stats_from_forum(soup)
     print(items_stats)
+    # for stat in items_stats:
+    #     print(stat)
     # added_count = add_items_from_forum(items_stats, forum_topic_url)
     # return added_count
 
