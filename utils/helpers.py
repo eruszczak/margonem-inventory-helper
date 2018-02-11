@@ -1,8 +1,4 @@
-# -*- coding: utf-8 -*-
-
 import os
-import re
-import sys
 import urllib.request
 
 from bs4 import BeautifulSoup
@@ -64,18 +60,18 @@ def get_soup_from_js_page(link):
     Gets soup from HTML page with content retrieved by JavaScript
     Using Dryscape libary, which is available only on Linux
     """
-    if 'linux' in sys.platform:
+    try:
         import dryscrape
-        dryscrape.start_xvfb()
-
-        session = dryscrape.Session()
-        session.visit(link)
-        response = session.body()
-    else:
+    except ImportError:
         # for testing on Windows only, open already retrived HTML
         file_path = os.path.join(EXCLUDED_ROOT, 'src_profile_with_eq.html')
         with open(file_path, 'r', encoding='utf-8') as f:
             response = f.read()
+    else:
+        dryscrape.start_xvfb()
+        session = dryscrape.Session()
+        session.visit(link)
+        response = session.body()
 
     return BeautifulSoup(response, 'html.parser')
 
