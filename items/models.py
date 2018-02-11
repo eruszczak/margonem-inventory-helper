@@ -1,14 +1,10 @@
-# -*- coding: utf-8 -*-
-
-import json
 from collections import OrderedDict
 
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.safestring import mark_safe
 
-from items.constants import TYPE_CHOICES, LEGBON_CHOICES, RARITY_CHOICES, DEFAULT_RARITY
-from utils.translators import ITEM_STATS
+from items.constants import TYPE_CHOICES, LEGBON_CHOICES, RARITY_CHOICES, DEFAULT_RARITY, ITEM_STATS
 
 
 class Profession(models.Model):
@@ -18,33 +14,6 @@ class Profession(models.Model):
         return self.name
 
 
-# class MobType(models.Model):
-#     name = models.CharField(max_length=50)
-
-
-# class Event(models.Model):
-#     name = models.CharField(max_length=300)
-#     description = models.TextField()
-#
-#     def __str__(self):
-#         return self.name
-
-
-# class Mob(models.Model):
-#     event = models.ForeignKey(Event, on_delete=models.CASCADE, blank=True, null=True)
-#
-#     name = models.CharField(max_length=300)
-#     lvl = models.PositiveIntegerField(null=True, blank=True)
-#     location = models.CharField(max_length=300, null=True, blank=True)
-#
-#     # class Meta:
-#     #     unique_together = ('name', 'lvl')
-#
-#     def __str__(self):
-#         return self.name
-
-
-# mob = models.ManyToManyField(Mob)
 class Item(models.Model):
     profession = models.ManyToManyField(Profession, blank=True, related_name='Items')
     legbon = models.CharField('Bonus', choices=LEGBON_CHOICES, max_length=15)
@@ -152,22 +121,15 @@ class Item(models.Model):
         """
         stats = []
         for attr in ITEM_STATS:
-            # todo what is @
-            if not attr.startswith('@'):
+            if not attr.startswith('@IGNORE'):
                 val = getattr(self, attr)
                 if val is not None:
                     stats.append((attr, val))
                 else:
                     print('Error. {} does not exist'.format(attr))
-        # self.json_stats = json.dumps(OrderedDict(stats))
         self.stats = OrderedDict(stats)
-
-        # if self.rarity is None:
-        #     self.rarity = ItemRarity.objects.get(name='default')
-
         # TODO encode as string - action, npc_lootbon, bounds, soulbound etc
         # these are "string" stats, with no real value
-
         super().save(*args, **kwargs)
 
     def image_img(self):

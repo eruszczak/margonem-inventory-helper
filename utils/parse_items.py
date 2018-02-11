@@ -2,7 +2,7 @@ import re
 import math
 
 from items.models import Item, Profession
-from utils.helpers import create_slug, clean_dict, get_soup, download_and_save_img, prepare_forum_profile_soup
+from utils.helpers import create_slug, clean_dict, get_soup, download_and_save_img
 
 
 def parse_item(attrs, item):
@@ -56,21 +56,21 @@ def parse_item(attrs, item):
     return item_name, item_stats
 
 
-def get_items_from_profile(soup):
-    soup_items = soup.find_all('div', attrs={'class': 'itemborder'})
-    retrieved_items = []
-    not_found_items = []
-    for soup_item in soup_items:
-        item_name = soup_item.find('img')['tip'].split('</b>')[0].strip('<b>')
-        item = Item.objects.filter(name=item_name).first()
-        if item:
-            retrieved_items.append(item)
-        else:
-            not_found_items.append({
-                'name': item_name
-            })
-
-    return retrieved_items, not_found_items
+# def get_items_from_profile(soup):
+#     soup_items = soup.find_all('div', attrs={'class': 'itemborder'})
+#     retrieved_items = []
+#     not_found_items = []
+#     for soup_item in soup_items:
+#         item_name = soup_item.find('img')['tip'].split('</b>')[0].strip('<b>')
+#         item = Item.objects.filter(name=item_name).first()
+#         if item:
+#             retrieved_items.append(item)
+#         else:
+#             not_found_items.append({
+#                 'name': item_name
+#             })
+#
+#     return retrieved_items, not_found_items
 
 
 def get_items_stats_from_forum(soup):
@@ -120,7 +120,7 @@ def add_items(forum_topic_url):
     return added_count
 
 
-def get_eq_items_and_characters_from_profile(profile_url):
-    soup, characters = prepare_forum_profile_soup(profile_url)
-    items, not_found_items = get_items_from_profile(soup)
-    return items, not_found_items, characters
+# def get_eq_items_and_characters_from_profile(profile_url):
+#     soup, characters = prepare_forum_profile_soup(profile_url)
+#     items, not_found_items = get_items_from_profile(soup)
+#     return items, not_found_items, characters

@@ -137,51 +137,51 @@ class ItemSimilarApiView(ListAPIView):
         return obj
 
 
-class GetEqSetFromProfile(APIView):
-
-    def post(self, request, format=None):
-        """
-        Given link to character's eq, get those items and character list.
-        Expected parameter: 'profileLink': 'margonem.pl/?task=profile&id=...'
-        """
-        forum_profile_link = request.data.get('profileLink')
-        link_is_valid, message = self.valid_link(forum_profile_link)
-        if link_is_valid:
-            items_from_profile, not_found_items, characters = get_eq_items_and_characters_from_profile(forum_profile_link)
-            serializer = ItemSerializer(items_from_profile, many=True, context={'request': request})
-            serializer_character = CharacterSerializer(characters, many=True)
-            serializer_not_found = NotFoundItemSerializer(not_found_items, many=True)
-
-            data = {
-                'items': serializer.data,
-                'characters': serializer_character.data,
-                'itemsNotFound': serializer_not_found.data,
-                'message': message,
-                'status': status.HTTP_200_OK
-            }
-            return Response(data)
-
-        return Response({
-            'status': status.HTTP_404_NOT_FOUND,
-            'message': message
-        }, status=status.HTTP_400_BAD_REQUEST)
-
-    @staticmethod
-    def valid_link(link):
-        if len(link) > 100:
-            return False, 'link too long'
-
-        if 'margonem.pl/?task=profile&id=' in link:
-            if '#eq' in link:
-                return True, 'valid'
-            return True, 'general profile link, only characters can be retrieved'
-
-        return False, 'it\'s not a margonem profile'
+# class GetEqSetFromProfile(APIView):
+#
+#     def post(self, request, format=None):
+#         """
+#         Given link to character's eq, get those items and character list.
+#         Expected parameter: 'profileLink': 'margonem.pl/?task=profile&id=...'
+#         """
+#         forum_profile_link = request.data.get('profileLink')
+#         link_is_valid, message = self.valid_link(forum_profile_link)
+#         if link_is_valid:
+#             items_from_profile, not_found_items, characters = get_eq_items_and_characters_from_profile(forum_profile_link)
+#             serializer = ItemSerializer(items_from_profile, many=True, context={'request': request})
+#             serializer_character = CharacterSerializer(characters, many=True)
+#             serializer_not_found = NotFoundItemSerializer(not_found_items, many=True)
+#
+#             data = {
+#                 'items': serializer.data,
+#                 'characters': serializer_character.data,
+#                 'itemsNotFound': serializer_not_found.data,
+#                 'message': message,
+#                 'status': status.HTTP_200_OK
+#             }
+#             return Response(data)
+#
+#         return Response({
+#             'status': status.HTTP_404_NOT_FOUND,
+#             'message': message
+#         }, status=status.HTTP_400_BAD_REQUEST)
+#
+#     @staticmethod
+#     def valid_link(link):
+#         if len(link) > 100:
+#             return False, 'link too long'
+#
+#         if 'margonem.pl/?task=profile&id=' in link:
+#             if '#eq' in link:
+#                 return True, 'valid'
+#             return True, 'general profile link, only characters can be retrieved'
+#
+#         return False, 'it\'s not a margonem profile'
 
 
 @api_view(['GET'])
 def api_root(request, format=None):
     return Response({
         'items': reverse('item-api-view', request=request, format=format),
-        'profileEq': reverse('eq-set-from-profile', request=request, format=format)
+        # 'profileEq': reverse('eq-set-from-profile', request=request, format=format)
     })
