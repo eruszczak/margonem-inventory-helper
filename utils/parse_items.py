@@ -89,12 +89,13 @@ def create_items(items, source_url):
         if item['type'] in EQS:
             # Just like item_name, img_url can be changed too. So if item that you can wear has the same stats
             # but a different name or img_url, add this item as hidden one.
-            copy = item.copy()
-            copy.pop('img_url')
-            if Item.objects.filter(**item).exclude(name=item_name).exists():
+            item_copy = item.copy()
+            item_copy.pop('img_url')
+            if Item.objects.filter(**item_copy).exclude(name=item_name).exists():
                 item['hidden'] = True
                 counter['hidden'] += 1
                 print('hidden', item_name)
+                # TODO exclude hidden=True???
 
         item['source_url'] = source_url
         obj, created = Item.objects.get_or_create(name=item_name, defaults=dict(**item))
@@ -111,6 +112,3 @@ def create_items(items, source_url):
             obj.profession.add(profession)
 
     return counter
-
-
-
