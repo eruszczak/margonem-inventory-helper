@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.safestring import mark_safe
 
 from items.constants import TYPE_CHOICES, LEGBON_CHOICES, RARITY_CHOICES, DEFAULT_RARITY, ITEM_STATS
+from items.managers import ItemQuerySet
 from utils.helpers import create_slug
 
 
@@ -17,7 +18,7 @@ class Profession(models.Model):
 
 class Item(models.Model):
     name = models.CharField('Nazwa', unique=True, max_length=300)
-    lvl = models.PositiveIntegerField('Lvl', blank=True, null=True)
+    lvl = models.PositiveIntegerField('Lvl', blank=True, null=True, db_index=True)
     stats = JSONField('Statystyki', blank=True)
     updated_at = models.DateTimeField('Aktualizowano', auto_now=True)
     added_at = models.DateTimeField('Dodano', auto_now_add=True)
@@ -113,6 +114,8 @@ class Item(models.Model):
 
     action = models.CharField('Special action', max_length=30, blank=True, null=True)
     npc_lootbon = models.PositiveIntegerField('Special stat', blank=True, null=True)
+
+    objects = ItemQuerySet.as_manager()
 
     def __str__(self):
         return '{} ({})'.format(self.name, self.lvl or '')
