@@ -105,6 +105,23 @@ export const getEqRoute = (eqItems) => {
   }
 }
 
+export const getItemLvlGroups = () => {
+  const groups = []
+  const step = 25
+  for (let i = 1; i < 320; i += step) {
+    groups.push(`${i}-${i + step - 1}`)
+  }
+  let mapGroups = []
+  for (let group of groups) {
+    mapGroups.push({
+      name: group,
+      min: parseInt(group.split('-')[0]),
+      max: parseInt(group.split('-')[1])
+    })
+  }
+  return mapGroups.sort((a, b) => b.min - a.min)  // sorted descending by min
+}
+
 export const getEqUrl = (router, eqItems) => {
   const route = getEqRoute(eqItems)
   const path = router.resolve(route).href
