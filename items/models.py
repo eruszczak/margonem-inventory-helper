@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.safestring import mark_safe
 
 from items.constants import TYPE_CHOICES, LEGBON_CHOICES, RARITY_CHOICES, DEFAULT_RARITY, ITEM_STATS
+from utils.helpers import create_slug
 
 
 class Profession(models.Model):
@@ -21,15 +22,15 @@ class Item(models.Model):
     rarity = models.CharField('Rzadkość', max_length=15, choices=RARITY_CHOICES, default=DEFAULT_RARITY)
     type = models.IntegerField('Typ', choices=TYPE_CHOICES)
 
-    stats = JSONField('Statystyki')
+    stats = JSONField('Statystyki', blank=True)
     updated_at = models.DateTimeField('Aktualizowano', auto_now=True)
+    added_at = models.DateTimeField('Dodano', auto_now_add=True)
     hidden = models.BooleanField('Ukryty', default=False)
 
     lvl = models.PositiveIntegerField('Lvl', blank=True, null=True)
     bag = models.PositiveIntegerField('Miejsc na przedmioty', blank=True, null=True)
     hidden_stats = models.BooleanField('Niezidentyfikowany', default=False)
     name = models.CharField('Nazwa', unique=True, max_length=300)
-    opis = models.TextField('Opis', blank=True, null=True)
     img = models.ImageField('Grafika')
     slug = models.SlugField('Slug', unique=True, max_length=255)
     img_url = models.URLField('Źródło grafiki', max_length=255)
@@ -129,6 +130,7 @@ class Item(models.Model):
         self.stats = OrderedDict(stats)
         # TODO encode as string - action, npc_lootbon, bounds, soulbound etc
         # these are "string" stats, with no real value
+        self.slug = create_slug(self.name)
         super().save(*args, **kwargs)
 
     def image_img(self):

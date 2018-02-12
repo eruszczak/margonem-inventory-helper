@@ -74,32 +74,3 @@ def get_soup_from_js_page(link):
         response = session.body()
 
     return BeautifulSoup(response, 'html.parser')
-
-
-# def prepare_forum_profile_soup(profile_url):
-#     """
-#     Given url to forum profile, get soup only with single character's eq and list of characters from that profile
-#     """
-#     soup = get_soup_from_js_page(profile_url)
-#     character_eq = soup.find('div', attrs={'id': 'armory_char_items'})
-#     profile_characters = []
-#     for character in soup.find_all('div', attrs={'class': 'inside_char'}):
-#         div = character.find('a').find('div')
-#
-#         ch_id = character.find('a')['href']
-#         lvl = div['c_lvl']
-#         prof = div['c_prof']
-#         outfit = re.search(r'\'(.+)\'', div['style']).group().strip("'")
-#         name, guild, world = [d.getText().strip()
-#                               for d in character.find('div', attrs={'class': 'inside_char_stats'}).find_all('b')]
-#         data = {
-#             'name': name,
-#             'guild': guild,
-#             'world': world,
-#             'outfit': outfit,
-#             'lvl': lvl,
-#             'id': ch_id,
-#             'prof': prof
-#         }
-#         profile_characters.append(data)
-#     return character_eq, profile_characters
