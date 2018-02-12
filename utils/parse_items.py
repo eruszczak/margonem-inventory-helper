@@ -96,6 +96,9 @@ def create_items(items, source_url):
             # but a different name or img_url, add this item as hidden one.
             item_copy = item.copy()
             item_copy.pop('img_url')
+            # Also ignore stats that can be changed
+            item_copy.pop('ammo', None)
+            item_copy.pop('fullheal', None)
             items_with_the_same_stats = Item.objects.filter(**item_copy).exclude(name=item_name)
             if len(item_copy) > 2 and items_with_the_same_stats.exists():
                 item['hidden'] = True
