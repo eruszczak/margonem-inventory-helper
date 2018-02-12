@@ -1,3 +1,5 @@
+EQS = tuple(map(str, range(1, 15)))
+
 TYPE_CHOICES = (
     (1, 'Jednoręczne'),
     (2, 'Dwuręczne'),
