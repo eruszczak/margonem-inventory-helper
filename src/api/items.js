@@ -17,5 +17,5 @@ export const searchItems = (query, cb, cbError) => {
 }
 
 export const fetchItems = (query, cb, cbError) => {
-  axios.get(`/api/item/${query}`).then(cb, cbError)
+  axios.get(`/api/item/${query}&per_page=250`).then(cb, cbError)
 }

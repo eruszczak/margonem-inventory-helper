@@ -37,9 +37,13 @@
         <div class="items">
           <my-input :value="filterValue" @input="setFilterValue" placeholder="Filtruj po nazwie albo lvl"/>
           <my-spinner v-if="isLoading" size="100"/>
-          <transition-group v-else name="fade">
-            <item v-for="item in filteredItems" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
-          </transition-group>
+          <!--<transition-group v-else name="fade">-->
+            <!--<item v-for="item in items" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>-->
+            <div v-for="(val, key) in items">
+              <p>{{ key }}</p>
+              <item v-for="item in val" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
+            </div>
+          <!--</transition-group>-->
         </div>
       </div>
     </section>
@@ -52,8 +56,9 @@
   import Item from './item/Item'
   import { RIGHT_CLICK_MAPPER } from '../utils/constants'
   import { fetchItems } from '../api/items'
-  import { replaceDiacritics } from '../utils/helpers'
+  import { getItemLvlGroups, replaceDiacritics } from '../utils/helpers'
   import debounce from 'lodash/debounce'
+  import groupBy from 'lodash/groupBy'
 
   export default {
     name: 'items',
@@ -127,7 +132,12 @@
         if (type) {
           this.isLoading = true
           fetchItems(`?t=${type}`, response => {
-            this.items = response.data.results
+            // this.items = response.data.results
+            const lvlGroups = getItemLvlGroups()
+            this.items = groupBy(response.data.results, item => {
+              const group = lvlGroups.find(grp => item.lvl >= grp.min)
+              return group ? group.name : '0'
+            })
             this.isLoading = false
             this.$Progress.finish()
           }, () => {
