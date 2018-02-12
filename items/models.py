@@ -21,6 +21,7 @@ class Item(models.Model):
     legbon = models.CharField('Bonus', choices=LEGBON_CHOICES, blank=True, max_length=15)
     rarity = models.CharField('Rzadkość', max_length=15, choices=RARITY_CHOICES, default=DEFAULT_RARITY)
     type = models.IntegerField('Typ', choices=TYPE_CHOICES)
+    same_stats = models.CharField('The same stats', blank=True, max_length=255)
 
     stats = JSONField('Statystyki', blank=True)
     updated_at = models.DateTimeField('Aktualizowano', auto_now=True)

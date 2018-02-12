@@ -82,25 +82,29 @@ def create_items(items, source_url):
         'hidden': 0
     }
     for item in items:
+        print(item)
         clean_dict('book rkey quest created lowreq btype price emo loot', item)
         item_name = item.pop('name')
         # I need to detect if item exists with different name.
         # I will only check items that you can wear because only those can be compared (enough number of stats)
+        pks_with_the_same_stats = ''
         if item['type'] in EQS:
             # Just like item_name, img_url can be changed too. So if item that you can wear has the same stats
             # but a different name or img_url, add this item as hidden one.
             item_copy = item.copy()
             item_copy.pop('img_url')
-            if Item.objects.filter(**item_copy).exclude(name=item_name).exists():
+            items_with_the_same_stats = Item.objects.filter(**item_copy).exclude(name=item_name)
+            if len(item_copy) > 2 and items_with_the_same_stats.exists():
                 item['hidden'] = True
                 counter['hidden'] += 1
-                print('hidden', item_name)
-                # TODO exclude hidden=True???
+                print('\nhidden', item_name)
+                pks_with_the_same_stats = str(list(items_with_the_same_stats.values_list('pk', flat=True)))
 
+        item['same_stats'] = pks_with_the_same_stats
         item['source_url'] = source_url
         obj, created = Item.objects.get_or_create(name=item_name, defaults=dict(**item))
         if created:
-            print('created', item_name)
+            print('\ncreated', item_name)
             counter['created'] += 1
         else:
             counter['existed'] += 1

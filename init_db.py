@@ -15,8 +15,17 @@ def fetch_and_add_items(source_url):
     return counter
 
 
+def create_duplicate(name):
+    item = Item.objects.get(name=name)
+    item.pk = None
+    item.name = item.name + 'i'
+    item.save()
+    print(Item.objects.filter(name__icontains=name))
+
+
 print('before', Item.objects.all().count())
 forum_profile_link = 'https://www.margonem.pl/?task=profile&id=2779867#eq90052'
+# create_duplicate('Ognista potęga czarnoksiężnika')
 print('summary', fetch_and_add_items(forum_profile_link))
 print('after', Item.objects.all().count())
 
