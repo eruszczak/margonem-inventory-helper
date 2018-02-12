@@ -3,7 +3,7 @@ from .models import Item
 
 
 class ItemAdmin(admin.ModelAdmin):
-    list_filter = ('hidden_stats', 'type', 'rarity', 'upg')
+    list_filter = ('hidden_stats', 'type', 'rarity', 'upg', 'hidden')
     list_per_page = 150
     ordering = ('-updated_at', )
     search_fields = ['name', 'lvl']

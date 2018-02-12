@@ -16,6 +16,14 @@ class Profession(models.Model):
 
 
 class Item(models.Model):
+    name = models.CharField('Nazwa', unique=True, max_length=300)
+    lvl = models.PositiveIntegerField('Lvl', blank=True, null=True)
+    stats = JSONField('Statystyki', blank=True)
+    updated_at = models.DateTimeField('Aktualizowano', auto_now=True)
+    added_at = models.DateTimeField('Dodano', auto_now_add=True)
+    hidden = models.BooleanField('Ukryty', default=False)
+    hidden_stats = models.BooleanField('Niezidentyfikowany', default=False)
+
     reqp = models.CharField('Wymagane profesje', max_length=6, blank=True)
     profession = models.ManyToManyField(Profession, blank=True, related_name='Items')
     legbon = models.CharField('Bonus', choices=LEGBON_CHOICES, blank=True, max_length=15)
@@ -23,15 +31,7 @@ class Item(models.Model):
     type = models.IntegerField('Typ', choices=TYPE_CHOICES)
     same_stats = models.CharField('The same stats', blank=True, max_length=255)
 
-    stats = JSONField('Statystyki', blank=True)
-    updated_at = models.DateTimeField('Aktualizowano', auto_now=True)
-    added_at = models.DateTimeField('Dodano', auto_now_add=True)
-    hidden = models.BooleanField('Ukryty', default=False)
-
-    lvl = models.PositiveIntegerField('Lvl', blank=True, null=True)
     bag = models.PositiveIntegerField('Miejsc na przedmioty', blank=True, null=True)
-    hidden_stats = models.BooleanField('Niezidentyfikowany', default=False)
-    name = models.CharField('Nazwa', unique=True, max_length=300)
     img = models.ImageField('Grafika')
     slug = models.SlugField('Slug', unique=True, max_length=255)
     img_url = models.URLField('Źródło grafiki', max_length=255)
