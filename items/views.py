@@ -15,7 +15,7 @@ class SetPagination(PageNumberPagination):
 
 
 class ItemApiView(ListAPIView):
-    queryset = Item.objects.all().order_by('lvl')
+    queryset = Item.objects.public().order_by('lvl')
     serializer_class = ItemSerializer
     pagination_class = SetPagination
 
@@ -77,7 +77,7 @@ class ItemApiView(ListAPIView):
 
 
 class ItemDetailApiView(RetrieveAPIView):
-    queryset = Item.objects.all()
+    queryset = Item.objects.public()
     serializer_class = ItemSerializer
     lookup_field = 'slug'
 
