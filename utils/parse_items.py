@@ -21,7 +21,7 @@ def get_item_data(soup_item):
 
     data['name'] = item_name
     data['img_url'] = soup_item.find('img')['src']
-    data['hidden_stats'] = re.search(r'nodesc', attrs) or False
+    data['hidden_stats'] = True if re.search(r'nodesc', attrs) else False
     data['type'] = item_type
     data['worth'] = worth
     if data.get('reqp') is None:
@@ -82,8 +82,11 @@ def create_items(items, source_url):
         'hidden': 0
     }
     for item in items:
-        print(item)
-        clean_dict('book rkey quest created lowreq btype price emo loot', item)
+        # print(item)
+        clean_dict('book rkey quest created lowreq btype price emo loot teleport revive sila', item)
+        # teleport - łyżwy
+        # revive - Mistrzowski puchar Margonemskich Rozgrywek Piłkarskich
+        # sila - Gniew thinkera
         item_name = item.pop('name')
         # I need to detect if item exists with different name.
         # I will only check items that you can wear because only those can be compared (enough number of stats)

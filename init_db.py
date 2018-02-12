@@ -1,6 +1,5 @@
 import os
 import django
-
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "margonem.settings")
 django.setup()
 from utils.helpers import get_soup
@@ -23,18 +22,11 @@ def create_duplicate(name):
     print(Item.objects.filter(name__icontains=name))
 
 
+# Item.objects.all().delete()
+
 print('before', Item.objects.all().count())
-forum_profile_link = 'https://www.margonem.pl/?task=profile&id=2779867#eq90052'
 # create_duplicate('Ognista potęga czarnoksiężnika')
-print('summary', fetch_and_add_items(forum_profile_link))
-print('after', Item.objects.all().count())
-
-
-"""
-notes:
-    # the same item had different description: Głowa lodowatego lorda
-    # hp chluba 375 vs 813
-"""
+# print(fetch_and_add_items(forum_profile_link), forum_profile_link)
 
 
 forum_pages_links = [
@@ -44,7 +36,18 @@ forum_pages_links = [
     'https://www.margonem.pl/?task=forum&show=posts&id=487093',  # 3 zwoje torby talizmany
     'https://www.margonem.pl/?task=forum&show=posts&id=484360',  # 4 legendarne zbroje itd
     'https://www.margonem.pl/?task=forum&show=posts&id=470820',  # 5 herosi tytani
-    'https://www.margonem.pl/?task=forum&show=posts&id=457475',  # 6 spis legend
+    'https://www.margonem.pl/?task=forum&show=posts&id=457475',  # 6 spis legend,
+    'https://www.margonem.pl/?task=profile&id=4155914#tab2' # alpha
 ]
-# for link in forum_pages_links:
-#     add_items(link)
+for link in forum_pages_links:
+    print('checking', link)
+    print(fetch_and_add_items(link), link)
+
+print('after', Item.objects.all().count())
+
+
+"""
+notes:
+    # the same item had different description: Głowa lodowatego lorda
+    # hp chluba 375 vs 813
+"""
