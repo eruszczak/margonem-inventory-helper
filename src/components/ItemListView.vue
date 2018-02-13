@@ -4,7 +4,7 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title has-text-centered">
-            {{ typeDisplay || 'Wybierz typ przedmiotów' }}
+            {{ typeDisplay }}
           </h1>
           <h2 class="subtitle">
           </h2>
@@ -117,7 +117,7 @@
             }
           }
         }
-        return this.type
+        return 'Wybierz typ przedmiotów'
       },
       filteredItems () {
         if (this.filterValue && this.items) {
