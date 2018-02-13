@@ -18,7 +18,7 @@ class Profession(models.Model):
 
 class Item(models.Model):
     name = models.CharField('Nazwa', unique=True, max_length=300)
-    lvl = models.PositiveIntegerField('Lvl', blank=True, null=True, db_index=True)
+    lvl = models.PositiveIntegerField('Lvl', blank=True, null=True)
     stats = JSONField('Statystyki', blank=True)
     updated_at = models.DateTimeField('Aktualizowano', auto_now=True)
     added_at = models.DateTimeField('Dodano', auto_now_add=True)
@@ -119,6 +119,11 @@ class Item(models.Model):
 
     class Meta:
         ordering = ('lvl', 'pk')
+        indexes = [
+            models.Index(fields=['lvl']),
+            models.Index(fields=['type']),
+            models.Index(fields=['name']),
+        ]
 
     def __str__(self):
         return '{} ({})'.format(self.name, self.lvl or '')
