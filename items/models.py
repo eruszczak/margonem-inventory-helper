@@ -117,6 +117,9 @@ class Item(models.Model):
 
     objects = ItemQuerySet.as_manager()
 
+    class Meta:
+        ordering = ('lvl', 'pk')
+
     def __str__(self):
         return '{} ({})'.format(self.name, self.lvl or '')
 
