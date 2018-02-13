@@ -1,3 +1,7 @@
+from functools import reduce
+from operator import or_, and_
+
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.reverse import reverse
@@ -19,60 +23,50 @@ class ItemApiView(ListAPIView):
     serializer_class = ItemSerializer
     pagination_class = SetPagination
 
-    # one_hour = 60 * 60
-    # one_day = 24 * one_hour
-    # my_cache_time = 7 * one_day
-    #
-    # @method_decorator(cache_page(my_cache_time))
-    # def dispatch(self, *args, **kwargs):
-    #     return super().dispatch(*args, **kwargs)
-
     def get_queryset(self):
-        # from time import sleep
-        # sleep(3)
         queryset = super().get_queryset().only('type', 'slug', 'name', 'lvl', 'stats', 'reqp')
-        query = self.get_query()
-        item_slugs = query.pop('slugs', None)
-        if item_slugs:
+        item_slugs = self.request.query_params.getlist('i')
+        if len(item_slugs):
             return queryset.filter(slug__in=item_slugs)
 
-        if query:
-            # val = self.request.query_params.get('n', '')
-            # return queryset.filter(Q(name__unaccent__icontains=val) | Q(legbon__name__icontains=val))
-            return queryset.filter(**query)
+        queries = self.get_search_queries()
+        if len(queries):
+            queryset = queryset.filter(reduce(and_, queries))
 
-        return self.queryset
+        return queryset
 
-    def get_query(self):
-        item_rarity = self.request.query_params.getlist('r')
+    def get_search_queries(self):
         item_type = self.request.query_params.get('t')
-        name = self.request.query_params.get('n')
-        prof = self.request.query_params.getlist('p')
-        bonus = self.request.query_params.get('b')
-        slugs = self.request.query_params.getlist('i')
+        # item_rarity = self.request.query_params.getlist('r')
+        value = self.request.query_params.get('n')
+        # prof = self.request.query_params.getlist('p')
+        # bonus = self.request.query_params.get('b')
 
-        query = {'slugs': slugs}
-        if name:
-            contains, startswith = 'name__unaccent__icontains', 'name__unaccent__istartswith'
-            key = contains if len(name) > 2 else startswith
-            query[key] = name
-            # query['legbon__name__icontains'] = name
+        queries = []
+        if value:
+            if value.isdigit():
+                queries.append(Q(lvl=value))
+            else:
+                contains, startswith = 'name__unaccent__icontains', 'name__unaccent__istartswith'
+                key = contains if len(value) > 2 else startswith
+                queries.append(Q(**{key: value}))
+
         # if item_rarity:
         #     if 'none' in item_rarity:
         #         return Item.objects.none()
         #     query['rarity__name__in'] = item_rarity
 
         if item_type:
-            query['type'] = item_type
+            queries.append(Q(type=item_type))
 
         # if prof:
-        #     query['profession__name__in'] = prof
+        #     query['reqp__icontains'] = prof
 
-        if bonus:
-            bonus = bonus.split(',')
-            query['legbon__name__in'] = bonus
+        # if bonus:
+        #     bonus = bonus.split(',')
+        #     queries.append(Q(legbon__name__in=bonus))
 
-        return query
+        return queries
 
 
 class ItemDetailApiView(RetrieveAPIView):
@@ -81,9 +75,6 @@ class ItemDetailApiView(RetrieveAPIView):
     lookup_field = 'slug'
 
     def get_queryset(self):
-        # from time import sleep
-        # sleep(3)
-
         return super().get_queryset()
 
 
