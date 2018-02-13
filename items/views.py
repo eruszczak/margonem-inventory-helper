@@ -30,7 +30,7 @@ class ItemApiView(ListAPIView):
     def get_queryset(self):
         # from time import sleep
         # sleep(3)
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().only('type', 'slug', 'name', 'lvl', 'stats', 'reqp')
         query = self.get_query()
         item_slugs = query.pop('slugs', None)
         if item_slugs:
@@ -39,7 +39,6 @@ class ItemApiView(ListAPIView):
         if query:
             # val = self.request.query_params.get('n', '')
             # return queryset.filter(Q(name__unaccent__icontains=val) | Q(legbon__name__icontains=val))
-            print(query)
             return queryset.filter(**query)
 
         return self.queryset
