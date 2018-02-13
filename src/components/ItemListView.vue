@@ -33,23 +33,21 @@
       </div>
     </nav>
     <section class="section" v-if="type" v-infinite-scroll="loadMore" infinite-scroll-disabled="isLoading" infinite-scroll-distance="10">
-      <div class="container">
-        <div class="items">
-          <my-input :value="filterValue" @input="setFilterValue" placeholder="Filtruj po nazwie albo lvl"/>
-          <section class="hero mt1" v-for="(val, key, index) in items" :class="[index % 2 !== 0 ? 'is-light' : 'is-light2']">
-            <div class="hero-head" style="padding-top: 1rem">
-              <h1 class="title has-text-centered">{{ key }}</h1>
-            </div>
-            <div class="hero-body">
-              <item v-for="item in val" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
-            </div>
-          </section>
-          <div class="mt1">
-            <div v-if="next && !isLoading" class="container has-text-centered">
-              <button class="button" @click="loadMore">Pokaż więcej</button>
-            </div>
-            <my-spinner v-if="isLoading" size="100"/>
+      <div class="container" style="padding: 0 2rem">
+        <my-input :value="filterValue" @input="setFilterValue" placeholder="Filtruj po nazwie albo lvl"/>
+        <section class="hero mt1" v-for="(val, key, index) in items" :class="[index % 2 !== 0 ? 'is-light' : 'is-light2']">
+          <div class="hero-head" style="padding-top: 1rem">
+            <h1 class="title has-text-centered">{{ key }}</h1>
           </div>
+          <div class="hero-body">
+            <item v-for="item in val" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
+          </div>
+        </section>
+        <div class="mt1">
+          <div v-if="next && !isLoading" class="container has-text-centered">
+            <button class="button" @click="loadMore">Pokaż więcej</button>
+          </div>
+          <my-spinner v-if="isLoading" size="100"/>
         </div>
       </div>
     </section>
@@ -79,7 +77,8 @@
         isLoading: true,
         filterValue: '',
         next: null,
-        lvlGroups: getItemLvlGroups()
+        lvlGroups: getItemLvlGroups(),
+        defaultGroupName: '0'
       }
     },
     mounted () {
@@ -147,7 +146,7 @@
           fetchItems(`?t=${this.typeId}&per_page=100`, response => {
             this.items = groupBy(response.data.results, item => {
               const group = this.lvlGroups.find(grp => item.lvl >= grp.min)
-              return group ? group.name : '0'
+              return group ? group.name : this.defaultGroupName
             })
             this.isLoading = false
             this.$Progress.finish()
@@ -184,10 +183,11 @@
         fetchItems(this.next, response => {
           response.data.results.forEach(item => {
             const group = this.lvlGroups.find(grp => item.lvl >= grp.min)
-            if (group.name in this.items) {
-              this.items[group.name].push(item)
+            const groupName = group ? group.name : this.defaultGroupName
+            if (groupName in this.items) {
+              this.items[groupName].push(item)
             } else {
-              this.items[group.name] = [item]
+              this.items[groupName] = [item]
             }
           })
           this.isLoading = false
