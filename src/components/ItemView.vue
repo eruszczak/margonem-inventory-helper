@@ -19,7 +19,7 @@
             <template v-if="legbon">
               <p class="mt1">{{ legbon.translation }}</p>
               <p>{{ legbon.description }}</p>
-              <p v-if="legbonMaxDuration">{{ legbonMaxDuration }}</p>
+              <p v-if="legbonMaxDuration">Pełny czas działania: {{ legbonMaxDuration }}</p>
             </template>
           </div>
         </template>

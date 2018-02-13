@@ -9,7 +9,7 @@ export const item = {
     getLegbonMaxDuration (itemLvl) {
       if (itemLvl) {
         let maxDuration = this.data.lvl + calculateMaxFullBonusDuration(itemLvl)
-        return `Pełny czas działania: ${itemLvl} - ${maxDuration} lvl`
+        return `${itemLvl}-${maxDuration} lvl`
       }
       return ''
     },

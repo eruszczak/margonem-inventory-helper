@@ -39,10 +39,14 @@
           <my-spinner v-if="isLoading" size="100"/>
           <!--<transition-group v-else name="fade">-->
             <!--<item v-for="item in items" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>-->
-            <div v-for="(val, key) in items">
-              <p>{{ key }}</p>
+          <section class="hero is-light mt1" v-for="(val, key) in items">
+            <div class="hero-head" style="padding-top: 1rem">
+              <h1 class="title has-text-centered">{{ key }}</h1>
+            </div>
+            <div class="hero-body">
               <item v-for="item in val" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
             </div>
+          </section>
           <!--</transition-group>-->
         </div>
       </div>
