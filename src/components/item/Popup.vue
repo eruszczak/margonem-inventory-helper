@@ -6,8 +6,7 @@
     <p v-if="professions.length" :class="itemClass">{{ professions }}</p>
     <div v-html="itemStats"></div>
     <template v-if="legbon">
-      <p :class="itemClass">{{ legbon.translation }}</p>
-      <p v-if="legbonMaxDuration">{{ legbonMaxDuration }}</p>
+      <p :class="itemClass">{{ legbon.translation }} <span v-if="legbonMaxDuration">({{ legbonMaxDuration }})</span></p>
     </template>
   </div>
 </template>
