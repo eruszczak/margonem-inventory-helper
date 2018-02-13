@@ -89,7 +89,7 @@
         return this.data ? this.getEncodedItemStats(this.data.stats) : null
       },
       professions () {
-        return this.data ? this.getProfessions(this.data.profession) : null
+        return this.data ? this.getProfessions(this.data.reqp) : null
       },
       rarity () {
         return this.data ? this.data.rarity : null

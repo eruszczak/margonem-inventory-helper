@@ -98,7 +98,7 @@
       '$route' (to, from) {
         this.items = []
         this.getItems()
-      }
+      },
     },
     computed: {
       ...mapGetters(['pageTitle']),
