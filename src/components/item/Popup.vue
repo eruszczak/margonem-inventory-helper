@@ -3,7 +3,7 @@
     <p class="action-description">{{ actionDescription }}</p>
     <p :class="itemClass">{{ data.name }} <span v-if="data.lvl"> ({{ data.lvl }})</span></p>
     <p :class="itemClass">{{ data.rarity | encodeRarity }}, {{ data.type | encodeType }}</p>
-    <p v-if="professions.length" :class="itemClass">{{ professions }}</p>
+    <p :class="itemClass">{{ professions || 'wszystkie profesje' }}</p>
     <div v-html="itemStats"></div>
     <template v-if="legbon">
       <p :class="itemClass">{{ legbon.translation }} <span v-if="legbonMaxDuration">({{ legbonMaxDuration }})</span></p>
