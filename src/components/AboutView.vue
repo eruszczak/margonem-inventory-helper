@@ -19,7 +19,7 @@
       </msg>
       <msg header="Pomoc">
         <p>W razie powtarzających się problemów, może pomóc wyczyszczenie danych lokalnych zapisanych przez aplikację (np. twój ekwipunek albo ostatnio odwiedzane przedmioty).</p>
-        <button class="button" @click="clearStorage">Wyczyść localStorage</button>
+        <button class="button mt1" @click="clearStorage">Wyczyść localStorage</button>
       </msg>
     </div>
   </section>
@@ -33,8 +33,10 @@
     },
     methods: {
       clearStorage () {
-        window.localStorage.clear()
-        this.$toast.info('Wyczyszczono localStorage')
+        for (let item in localStorage) {
+          localStorage.removeItem(item)
+          location.reload()
+        }
       }
     }
   }

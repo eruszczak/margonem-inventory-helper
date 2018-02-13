@@ -176,6 +176,7 @@
         300
       ),
       loadMore () {
+        console.log('loadMore')
         if (!this.next) {
           return
         }
