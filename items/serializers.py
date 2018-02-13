@@ -5,17 +5,11 @@ from items.models import Item
 class ItemSerializer(serializers.ModelSerializer):
     detail_url = serializers.HyperlinkedIdentityField(view_name='item-detail-api-view', lookup_field='slug', read_only=True)
     # similar = serializers.HyperlinkedIdentityField(view_name='item-similar-api-view', lookup_field='slug', read_only=True)
-    profession = serializers.SerializerMethodField()
 
     class Meta:
         model = Item
         lookup_field = 'slug'
-        fields = ('pk', 'img', 'name', 'lvl', 'type', 'rarity', 'profession', 'stats', 'legbon', 'slug',
-                  'detail_url', 'reqp')
-
-    @staticmethod
-    def get_profession(obj):
-        return ''.join([p.name for p in obj.profession.all()])
+        fields = ('pk', 'img', 'name', 'lvl', 'type', 'rarity', 'stats', 'legbon', 'slug', 'detail_url', 'reqp')
 
 
 class ItemSimilarSerializer(ItemSerializer):
