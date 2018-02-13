@@ -36,8 +36,7 @@
       <div class="container">
         <div class="items">
           <my-input :value="filterValue" @input="setFilterValue" placeholder="Filtruj po nazwie albo lvl"/>
-          <!--<transition-group v-else name="fade">-->
-          <section class="hero is-light mt1" v-for="(val, key) in items">
+          <section class="hero mt1" v-for="(val, key, index) in items" :class="[index % 2 !== 0 ? 'is-light' : 'is-light2']">
             <div class="hero-head" style="padding-top: 1rem">
               <h1 class="title has-text-centered">{{ key }}</h1>
             </div>
@@ -45,11 +44,10 @@
               <item v-for="item in val" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
             </div>
           </section>
-          <!--</transition-group>-->
-          <div v-if="next && !isLoading" class="container has-text-centered mt1">
-            <button class="button" @click="loadMore">Pokaż więcej</button>
-          </div>
           <div class="mt1">
+            <div v-if="next && !isLoading" class="container has-text-centered">
+              <button class="button" @click="loadMore">Pokaż więcej</button>
+            </div>
             <my-spinner v-if="isLoading" size="100"/>
           </div>
         </div>
@@ -180,7 +178,6 @@
       ),
       loadMore () {
         if (!this.next) {
-          console.log('no next')
           return
         }
         this.isLoading = true
@@ -194,7 +191,6 @@
             }
           })
           this.isLoading = false
-          this.$Progress.finish()
           this.next = response.data.next
         }, () => {
           this.setAPIError()
