@@ -5,6 +5,9 @@ import './assets/scss/all.scss'
 import { store } from './store/index'
 
 import VueClipboard from 'vue-clipboard2'
+import infiniteScroll from 'vue-infinite-scroll'
+import VueProgressBar from 'vue-progressbar'
+
 import { Table, TableColumn, TableHeader, TableRow } from './components/ui/table'
 import { Tag, Taglist } from './components/ui/tag'
 import Message from './components/ui/message'
@@ -13,7 +16,6 @@ import Modal from './components/ui/modal'
 import Input from './components/ui/input'
 import Toast from './components/ui/toast'
 import Spinner from './components/includes/Spinner'
-import VueProgressBar from 'vue-progressbar'
 
 Vue.use(VueProgressBar, {
   color: '#bffaf3',
@@ -28,11 +30,11 @@ Vue.use(VueProgressBar, {
   location: 'top',
   inverse: false
 })
+Vue.use(VueClipboard)
+Vue.use(infiniteScroll)
 
 Vue.config.productionTip = false
 Vue.prototype.$toast = Toast
-Vue.use(VueClipboard)
-
 Vue.component('tbl', Table)
 Vue.component('tbl-col', TableColumn)
 Vue.component('tbl-header', TableHeader)

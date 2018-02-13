@@ -32,13 +32,11 @@
         </div>
       </div>
     </nav>
-    <section class="section" v-if="type">
+    <section class="section" v-if="type" v-infinite-scroll="loadMore" infinite-scroll-disabled="isLoading" infinite-scroll-distance="10">
       <div class="container">
         <div class="items">
           <my-input :value="filterValue" @input="setFilterValue" placeholder="Filtruj po nazwie albo lvl"/>
-          <my-spinner v-if="isLoading" size="100"/>
           <!--<transition-group v-else name="fade">-->
-            <!--<item v-for="item in items" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>-->
           <section class="hero is-light mt1" v-for="(val, key) in items">
             <div class="hero-head" style="padding-top: 1rem">
               <h1 class="title has-text-centered">{{ key }}</h1>
@@ -48,6 +46,12 @@
             </div>
           </section>
           <!--</transition-group>-->
+          <div v-if="next && !isLoading" class="container has-text-centered mt1">
+            <button class="button" @click="loadMore">Pokaż więcej</button>
+          </div>
+          <div class="mt1">
+            <my-spinner v-if="isLoading" size="100"/>
+          </div>
         </div>
       </div>
     </section>
@@ -75,7 +79,9 @@
         items: [],
         RIGHT_CLICK_MAPPER: RIGHT_CLICK_MAPPER,
         isLoading: true,
-        filterValue: ''
+        filterValue: '',
+        next: null,
+        lvlGroups: getItemLvlGroups()
       }
     },
     mounted () {
@@ -99,6 +105,12 @@
     },
     computed: {
       ...mapGetters(['pageTitle']),
+      typeId () {
+        if (this.type) {
+          return MAP_TYPE_NAME_TO_ID[this.type]
+        }
+        return null
+      },
       typeDisplay () {
         for (let i = 0; i < MENU_LINKS.length; i += 1) {
           const subLinks = MENU_LINKS[i].sublinks
@@ -132,18 +144,16 @@
         this.subMenu = item.sublinks
       },
       getItems () {
-        const type = MAP_TYPE_NAME_TO_ID[this.type]
-        if (type) {
+        if (this.typeId) {
           this.isLoading = true
-          fetchItems(`?t=${type}`, response => {
-            // this.items = response.data.results
-            const lvlGroups = getItemLvlGroups()
+          fetchItems(`?t=${this.typeId}&per_page=100`, response => {
             this.items = groupBy(response.data.results, item => {
-              const group = lvlGroups.find(grp => item.lvl >= grp.min)
+              const group = this.lvlGroups.find(grp => item.lvl >= grp.min)
               return group ? group.name : '0'
             })
             this.isLoading = false
             this.$Progress.finish()
+            this.next = response.data.next
           }, () => {
             this.setAPIError()
           })
@@ -167,7 +177,29 @@
           })
         },
         300
-      )
+      ),
+      loadMore () {
+        if (!this.next) {
+          console.log('no next')
+          return
+        }
+        this.isLoading = true
+        fetchItems(this.next, response => {
+          response.data.results.forEach(item => {
+            const group = this.lvlGroups.find(grp => item.lvl >= grp.min)
+            if (group.name in this.items) {
+              this.items[group.name].push(item)
+            } else {
+              this.items[group.name] = [item]
+            }
+          })
+          this.isLoading = false
+          this.$Progress.finish()
+          this.next = response.data.next
+        }, () => {
+          this.setAPIError()
+        }, true)
+      }
     }
   }
 </script>
