@@ -28,7 +28,7 @@
     data () {
       return {
         legbonMaxDuration: this.getLegbonMaxDuration(this.data.lvl),
-        professions: this.getProfessions(this.data.profession),
+        professions: this.getProfessions(this.data.reqp),
         itemStats: this.getEncodedItemStats(this.data.stats),
         lvl: this.data.lvl ? `(${this.data.lvl})` : '',
         legbon: this.getLegbon(this.data.legbon)

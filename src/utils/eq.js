@@ -31,8 +31,8 @@ export const setStats = eqItems => {
     }
 
     // check if this item's professions are not conflicting with current allowed professions
-    if (item.profession && !source.isConflict) {
-      const requiredProfessions = item.profession.split('')
+    if (item.reqp && !source.isConflict) {
+      const requiredProfessions = item.reqp.split('')
       if (source.requiredProfessions === null) {
         source.requiredProfessions = requiredProfessions
       }
