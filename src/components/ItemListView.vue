@@ -3,7 +3,7 @@
     <section class="hero is-info is-bold">
       <div class="hero-body">
         <div class="container">
-          <h1 class="title">
+          <h1 class="title has-text-centered">
             {{ typeDisplay || 'Wybierz typ przedmiotów' }}
           </h1>
           <h2 class="subtitle">
