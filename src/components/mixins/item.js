@@ -3,9 +3,6 @@ import {calculateMaxFullBonusDuration, encodeProfessions} from '../../utils/help
 
 export const item = {
   methods: {
-    getClassName (itemRarity) {
-      return `${itemRarity}-color`
-    },
     getLegbonMaxDuration (itemLvl) {
       if (itemLvl) {
         let maxDuration = this.data.lvl + calculateMaxFullBonusDuration(itemLvl)
