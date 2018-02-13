@@ -16,6 +16,11 @@ export const searchItems = (query, cb, cbError) => {
   axios.get(`/api/item/?per_page=30&n=${query}`).then(cb, cbError)
 }
 
-export const fetchItems = (query, cb, cbError) => {
-  axios.get(`/api/item/${query}&per_page=250`).then(cb, cbError)
+export const fetchItems = (queryOrUrl, cb, cbError, isUrl = false) => {
+  let path = `/api/item/${queryOrUrl}`
+  if (isUrl) {
+    const parsedUrl = new URL(queryOrUrl)
+    path = parsedUrl.pathname + parsedUrl.search
+  }
+  axios.get(path).then(cb, cbError)
 }
