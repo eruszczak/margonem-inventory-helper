@@ -136,6 +136,9 @@
     },
     watch: {
       '$route' (to, from) {
+        if (!this.type) {
+          this.$Progress.finish()
+        }
         this._fetchItems()
       }
     },
@@ -151,11 +154,13 @@
           const subLinks = MENU_LINKS[i].sublinks
           for (let j = 0; j < subLinks.length; j += 1) {
             if (subLinks[j].href.params.type === this.type) {
-              this.$setPageTitle(subLinks[j].displayValue)
-              return subLinks[j].displayValue
+              const text = subLinks[j].displayValue
+              this.$setPageTitle(text)
+              return text
             }
           }
         }
+        this.$setPageTitle('Wybierz typ przedmiotów')
         return 'Wybierz typ przedmiotów'
       }
     },

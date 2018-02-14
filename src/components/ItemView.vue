@@ -65,7 +65,7 @@
     mixins: [item],
     props: ['slug'],
     mounted () {
-      this.getItemData()
+      this._fetchItem()
     },
     data () {
       return {
@@ -79,13 +79,11 @@
     },
     watch: {
       '$route' (to, from) {
-        this.getItemData()
+        this._fetchItem()
       }
     },
     computed: {
-      ...mapGetters([
-        'itemHistory'
-      ]),
+      ...mapGetters(['itemHistory']),
       itemStats () {
         return this.data ? this.getEncodedItemStats(this.data.stats) : null
       },
@@ -110,12 +108,13 @@
     },
     methods: {
       ...mapMutations(['addToItemHistory', 'setAPIError']),
-      getItemData () {
+      _fetchItem () {
         this.isLoading = true
         this.isLoadingSimilar = true
         fetchItem(this.slug, response => {
           this.isLoading = false
           this.data = response.data
+          this.$setPageTitle(`${this.data.name}`)
           this.getSimilarItems()
           this.addToItemHistory(this.data)
         }, () => {
