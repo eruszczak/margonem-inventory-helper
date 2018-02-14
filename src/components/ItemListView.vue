@@ -127,41 +127,34 @@
       },
       getItems () {
         if (this.typeId) {
-          this.isLoading = true
-          fetchItems(`?t=${this.typeId}&per_page=100`, response => {
-            this.items = groupBy(response.data.results, item => {
-              const group = this.lvlGroups.find(grp => item.lvl >= grp.min)
-              return group ? group.name : this.defaultGroupName
-            })
-            this.isLoading = false
-            this.$Progress.finish()
-            this.next = response.data.next
-          }, () => {
-            this.setAPIError()
-          })
-          this.setPageTitle(this.typeDisplay)
+          this._fetchItems()
         } else {
           this.$Progress.finish()
         }
       },
       search: debounce(
         function (value) {
-          fetchItems(`?t=${this.typeId}&per_page=100&n=${value}`, response => {
-            this.items = groupBy(response.data.results, item => {
-              const group = this.lvlGroups.find(grp => item.lvl >= grp.min)
-              return group ? group.name : this.defaultGroupName
-            })
-            this.isLoading = false
-            this.$Progress.finish()
-            this.next = response.data.next
-          }, () => {
-            this.setAPIError()
-          })
+          this.searchQuery = value
+          this.$Progress.start()
+          this._fetchItems()
         },
         350
       ),
+      _fetchItems () {
+        this.isLoading = true
+        fetchItems(`?t=${this.typeId}&per_page=100&n=${this.searchQuery}`, response => {
+          this.items = groupBy(response.data.results, item => {
+            const group = this.lvlGroups.find(grp => item.lvl >= grp.min)
+            return group ? group.name : this.defaultGroupName
+          })
+          this.isLoading = false
+          this.$Progress.finish()
+          this.next = response.data.next
+        }, () => {
+          this.setAPIError()
+        })
+      },
       loadMore () {
-        console.log('loadMore')
         if (!this.next) {
           return
         }
