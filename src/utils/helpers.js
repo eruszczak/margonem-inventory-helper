@@ -51,35 +51,6 @@ export const isInt = (value) => {
   return er.test(value)
 }
 
-// export const objectToQueryString = (obj) => {
-//   let str = []
-//   for (let p in obj) {
-//     if (obj.hasOwnProperty(p) && obj[p]) {
-//       str.push(`${encodeURIComponent(p)}=${encodeURIComponent(obj[p])}`)
-//     }
-//   }
-//   return str.join('&')
-// }
-
-// export const removePairsWithEmptyValues = (obj) => {
-//   let objWithNoEmptyValues = {}
-//   for (const key in obj) {
-//     const value = obj[key]
-//     if (value) {
-//       objWithNoEmptyValues[key] = value
-//     }
-//   }
-//   return objWithNoEmptyValues
-// }
-
-// export const prependToPageTitle = (val) => {
-//   const title = 'MargoPrzedmioty - przeglądaj przedmioty z Margonem, buduj ekwipunek, porównuj statystyki.'
-//   if (val) {
-//     return `${val}. ${title}`
-//   }
-//   return title
-// }
-
 export const getBaseUrl = () => {
   const port = location.port ? `:${location.port}` : ''
   return `${location.protocol}//${location.hostname}${port}`
@@ -148,17 +119,6 @@ export const getCompareEqLink = eqItems => {
   let route = Object.assign({}, getEqRoute(eqItems))
   route.name = 'eqCompareView'
   return route
-}
-
-export const replaceDiacritics = value => {
-  for (let val in DIACTRITICS) {
-    value = value.replace(val, DIACTRITICS[val])
-  }
-  return value
-}
-
-const DIACTRITICS = {
-  'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n', 'ó': 'o', 'ś': 's', 'ź': 'z', 'ż': 'z'
 }
 
 export const round = value => parseFloat(value.toFixed(2))
