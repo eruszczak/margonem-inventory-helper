@@ -15,3 +15,5 @@ export const RARITY_CLASSES = {
 }
 
 export const BONUS_LIMIT = 2
+
+export const DEBOUNCE_TIME_IN_MS = 300

@@ -54,7 +54,7 @@
   import { mapGetters, mapMutations } from 'vuex'
   import { MAP_TYPE_NAME_TO_ID, MENU_LINKS } from '../utils/navbar'
   import Item from './item/Item'
-  import { RIGHT_CLICK_MAPPER } from '../utils/constants'
+  import { DEBOUNCE_TIME_IN_MS, RIGHT_CLICK_MAPPER } from '../utils/constants'
   import { fetchItems } from '../api/items'
   import { getItemLvlGroups } from '../utils/helpers'
   import debounce from 'lodash/debounce'
@@ -93,7 +93,6 @@
     },
     watch: {
       '$route' (to, from) {
-        this.items = []
         this.searchQuery = ''
         this.getItems()
       }
@@ -140,11 +139,12 @@
           this.$Progress.start()
           this._fetchItems()
         },
-        300
+        DEBOUNCE_TIME_IN_MS
       ),
       _fetchItems () {
         // I'm using debouncedSearchQuery because on route change I need to reset searchQuery and I don't want
         // it to trigger this method.
+        this.items = []
         this.isLoading = true
         fetchItems(`?t=${this.typeId}&per_page=100&n=${this.debouncedSearchQuery}`, response => {
           this.items = groupBy(response.data.results, item => {

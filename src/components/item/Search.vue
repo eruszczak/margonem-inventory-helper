@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import { RIGHT_CLICK_MAPPER } from '../../utils/constants'
+  import { DEBOUNCE_TIME_IN_MS, RIGHT_CLICK_MAPPER } from '../../utils/constants'
   import debounce from 'lodash/debounce'
   import { searchItems } from '../../api/items'
   import { mapGetters, mapMutations } from 'vuex'
@@ -71,7 +71,7 @@
             this.setAPIError()
           })
         },
-        300
+        DEBOUNCE_TIME_IN_MS
       )
     }
   }
