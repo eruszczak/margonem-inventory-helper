@@ -16,6 +16,7 @@
           <div class="hero-body">
             <item :data="data" :action="RIGHT_CLICK_MAPPER.add" noBorder/>
             <div v-html="itemStats"></div>
+            <p v-if="data.hidden_stats">Przedmiot ma ukryte statystyki</p>
             <template v-if="legbon">
               <p class="mt1">{{ legbon.translation }}</p>
               <p>{{ legbon.description }}</p>

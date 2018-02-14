@@ -5,6 +5,7 @@
     <p :class="itemClass">{{ data.rarity | encodeRarity }}, {{ data.type | encodeType }}</p>
     <p :class="itemClass">{{ professions || 'wszystkie profesje' }}</p>
     <div v-html="itemStats"></div>
+    <p v-if="data.hidden_stats">Przedmiot ma ukryte statystyki</p>
     <template v-if="legbon">
       <p :class="itemClass">{{ legbon.translation }} <span v-if="legbonMaxDuration">({{ legbonMaxDuration }})</span></p>
     </template>
