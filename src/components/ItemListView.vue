@@ -59,7 +59,9 @@
             </div>
           </div>
           <div class="column is-one-quarter has-text-right">
-            <button class="button is-info" :disabled="!selectedBonus && !selectedProf && !selectedRarity && !searchQuery" @click="search">Szukaj</button>
+            <button
+              class="button is-info" @click="search"
+                    :disabled="!selectedBonus && !selectedProf && !selectedRarity && !searchQuery">Szukaj</button>
           </div>
         </div>
         <template v-if="!isLoading">
@@ -134,7 +136,6 @@
     },
     watch: {
       '$route' (to, from) {
-        this.searchQuery = ''
         this._fetchItems()
       }
     },
