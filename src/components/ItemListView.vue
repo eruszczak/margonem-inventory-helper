@@ -31,10 +31,10 @@
     <section class="section" v-if="type" v-infinite-scroll="loadMore" infinite-scroll-disabled="isLoading" infinite-scroll-distance="10">
       <div class="container items">
         <div class="columns">
-          <div class="column">
+          <div class="column is-one-quarter">
             <div class="field">
               <p class="control">
-                <input class="input" :value="searchQuery" @input="search" type="text" placeholder="Szukaj po nazwie albo lvl"/>
+                <my-input :value="searchQuery" @input="setSearchQuery" placeholder="Szukaj po nazwie albo lvl"/>
               </p>
             </div>
           </div>
@@ -58,6 +58,9 @@
               </select>
             </div>
           </div>
+          <div class="column is-one-quarter has-text-right">
+            <button class="button is-info" :disabled="!selectedBonus && !selectedProf && !selectedRarity && !searchQuery" @click="search">Szukaj</button>
+          </div>
         </div>
         <template v-if="!isLoading">
           <msg v-if="itemCount === 0">Nie znaleziono przedmiotów</msg>
@@ -73,7 +76,7 @@
         </section>
         <div class="mt1">
           <div v-if="next && !isLoading" class="container has-text-centered">
-            <button class="button" @click="loadMore">Pokaż więcej</button>
+            <button class="button is-info is-medium" @click="loadMore">Pokaż więcej</button>
           </div>
           <my-spinner v-if="isLoading" size="100"/>
         </div>
@@ -86,10 +89,9 @@
   import { mapGetters, mapMutations } from 'vuex'
   import { MAP_TYPE_NAME_TO_ID, MENU_LINKS } from '../utils/navbar'
   import Item from './item/Item'
-  import { DEBOUNCE_TIME_IN_MS, RIGHT_CLICK_MAPPER } from '../utils/constants'
+  import { RIGHT_CLICK_MAPPER } from '../utils/constants'
   import { fetchItems } from '../api/items'
   import { getItemLvlGroups, getProfsInOrder } from '../utils/helpers'
-  import debounce from 'lodash/debounce'
   import groupBy from 'lodash/groupBy'
   import { ITEM_BONUS, ITEM_RARITY } from '../utils/items'
 
@@ -134,15 +136,6 @@
       '$route' (to, from) {
         this.searchQuery = ''
         this._fetchItems()
-      },
-      selectedProf (value) {
-        this._fetchItems()
-      },
-      selectedBonus (value) {
-        this._fetchItems()
-      },
-      selectedRarity (value) {
-        this._fetchItems()
       }
     },
     computed: {
@@ -181,14 +174,13 @@
           this.$Progress.finish()
         }
       },
-      search: debounce(
-        function (e) {
-          this.searchQuery = e.target.value
-          this.$Progress.start()
-          this._fetchItems()
-        },
-        DEBOUNCE_TIME_IN_MS
-      ),
+      search () {
+        this.$Progress.start()
+        this._fetchItems()
+      },
+      setSearchQuery (value) {
+        this.searchQuery = value
+      },
       _fetchItems () {
         if (!this.typeId) {
           return
