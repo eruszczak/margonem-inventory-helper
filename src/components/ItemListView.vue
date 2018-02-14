@@ -40,13 +40,13 @@
           </div>
           <div class="column">
             <div class="select">
-              <select>
+              <select v-model="selectedBonus">
                 <option value="" selected>-- Wybierz bonus --</option>
                 <option v-for="(val, key) in ITEM_BONUS" :value="key">{{ val.translation }}</option>
               </select>
             </div>
             <div class="select">
-              <select>
+              <select v-model="selectedProf">
                 <option value="" selected>-- Wybierz profesję -</option>
                 <option v-for="obj in profsInOrder" :value="obj.value">{{ obj.name }}</option>
               </select>
@@ -99,7 +99,9 @@
         lvlGroups: getItemLvlGroups(),
         defaultGroupName: '0',
         ITEM_BONUS: ITEM_BONUS,
-        profsInOrder: getProfsInOrder()
+        profsInOrder: getProfsInOrder(),
+        selectedBonus: '',
+        selectedProf: ''
       }
     },
     mounted () {
@@ -118,6 +120,12 @@
     watch: {
       '$route' (to, from) {
         this.searchQuery = ''
+        this._fetchItems()
+      },
+      selectedProf (value) {
+        this._fetchItems()
+      },
+      selectedBonus (value) {
         this._fetchItems()
       }
     },
@@ -168,7 +176,8 @@
       _fetchItems () {
         this.items = []
         this.isLoading = true
-        fetchItems(`?t=${this.typeId}&per_page=100&n=${this.searchQuery}`, response => {
+        const qs = `?t=${this.typeId}&per_page=100&n=${this.searchQuery}&p=${this.selectedProf}&b=${this.selectedBonus}`
+        fetchItems(qs, response => {
           this.items = groupBy(response.data.results, item => {
             const group = this.lvlGroups.find(grp => item.lvl >= grp.min)
             return group ? group.name : this.defaultGroupName
