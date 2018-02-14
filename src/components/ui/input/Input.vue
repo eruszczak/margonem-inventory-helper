@@ -8,7 +8,10 @@
     props: {
       value: [String, Number, Boolean, Function, Object, Array, Symbol],
       disabled: Boolean,
-      type: String,
+      type: {
+        type: String,
+        default: 'text'
+      },
       name: String,
       size: String,
       placeholder: String
