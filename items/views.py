@@ -38,7 +38,7 @@ class ItemApiView(ListAPIView):
 
     def get_search_queries(self):
         item_type = self.request.query_params.get('t')
-        # item_rarity = self.request.query_params.getlist('r')
+        item_rarity = self.request.query_params.get('r')
         value = self.request.query_params.get('n')
         prof = self.request.query_params.get('p')
         bonus = self.request.query_params.get('b')
@@ -52,10 +52,8 @@ class ItemApiView(ListAPIView):
                 key = contains if len(value) > 2 else startswith
                 queries.append(Q(**{key: value}))
 
-        # if item_rarity:
-        #     if 'none' in item_rarity:
-        #         return Item.objects.none()
-        #     query['rarity__name__in'] = item_rarity
+        if item_rarity:
+            queries.append(Q(rarity=item_rarity))
 
         if item_type:
             queries.append(Q(type=item_type))
