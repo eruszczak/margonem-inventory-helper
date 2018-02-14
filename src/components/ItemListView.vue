@@ -32,17 +32,25 @@
       <div class="container items">
         <div class="columns">
           <div class="column">
-            <input class="input" :value="searchQuery" @input="search" type="text" placeholder="Szukaj po nazwie albo lvl"/>
+            <div class="field">
+              <p class="control">
+                <input class="input" :value="searchQuery" @input="search" type="text" placeholder="Szukaj po nazwie albo lvl"/>
+              </p>
+            </div>
           </div>
           <div class="column">
-            <select>
-              <option v-for="(val, key) in ITEM_BONUS" :value="key">{{ val.translation }}</option>
-            </select>
-          </div>
-          <div class="column">
-            <select>
-              <option v-for="obj in profsInOrder" :value="obj.value">{{ obj.name }}</option>
-            </select>
+            <div class="select">
+              <select>
+                <option value="" selected>-- Wybierz bonus --</option>
+                <option v-for="(val, key) in ITEM_BONUS" :value="key">{{ val.translation }}</option>
+              </select>
+            </div>
+            <div class="select">
+              <select>
+                <option value="" selected>-- Wybierz profesję -</option>
+                <option v-for="obj in profsInOrder" :value="obj.value">{{ obj.name }}</option>
+              </select>
+            </div>
           </div>
         </div>
         <section class="hero mt1" v-for="(val, key, index) in items" :class="[index % 2 !== 0 ? 'is-light' : 'is-light2']">
