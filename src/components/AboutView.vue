@@ -33,6 +33,7 @@
     name: 'about-view',
     created () {
       this.$Progress.finish()
+      this.$setPageTitle('O stronie')
     },
     methods: {
       clearStorage () {

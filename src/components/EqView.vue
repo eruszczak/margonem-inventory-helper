@@ -9,10 +9,7 @@
             <div class="tile is-parent">
               <article class="tile is-child notification has-text-centered"
                        :class="[readOnly ? 'is-warning' : 'is-info']">
-                <p class="title">
-                  <span v-if="readOnly">Odwiedzany zestaw</span>
-                  <span v-else>Twój zestaw</span>
-                </p>
+                <p class="title">{{ eqTitle }}</p>
                 <div class="content">
                   <div class="columns is-gapless">
                     <div v-if="isLoading" class="column">
@@ -108,14 +105,25 @@
     },
     mounted () {
       this.getEqItems()
+      this.$setPageTitle(this.eqTitle)
     },
     watch: {
       '$route' (to, from) {
         this.getEqItems()
+      },
+      eqTitle () {
+        console.log('watching')
+        this.$setPageTitle(this.eqTitle)
       }
     },
     computed: {
       ...mapGetters(['eqItems', 'readOnlyEqItems', 'eqItemsStats', 'readOnlyEqItemsStats', 'realStackLength']),
+      eqTitle () {
+        if (this.readOnly) {
+          return 'Odwiedzany zestaw'
+        }
+        return 'Twój zestaw'
+      },
       readOnly () {
         return 'i' in this.$route.query
       },

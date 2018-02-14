@@ -109,6 +109,7 @@
     },
     created () {
       this.getEqItems()
+      this.$setPageTitle('Porównanie ekwipunków')
     },
     methods: {
       ...mapActions(['fetchReadOnlyEqItems', 'saveEqAsMine']),
