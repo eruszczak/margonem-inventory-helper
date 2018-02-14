@@ -19,12 +19,12 @@ class SetPagination(PageNumberPagination):
 
 
 class ItemApiView(ListAPIView):
-    queryset = Item.objects.public()
+    queryset = Item.objects.public().only('type', 'slug', 'name', 'lvl', 'stats', 'reqp')
     serializer_class = ItemSerializer
     pagination_class = SetPagination
 
     def get_queryset(self):
-        queryset = super().get_queryset().only('type', 'slug', 'name', 'lvl', 'stats', 'reqp')
+        queryset = super().get_queryset()
         item_slugs = self.request.query_params.getlist('i')
         if len(item_slugs):
             return queryset.filter(slug__in=item_slugs)
@@ -68,7 +68,7 @@ class ItemApiView(ListAPIView):
 
 
 class ItemDetailApiView(RetrieveAPIView):
-    queryset = Item.objects.public()
+    queryset = Item.objects.public().only('type', 'slug', 'name', 'lvl', 'stats', 'reqp')
     serializer_class = ItemSerializer
     lookup_field = 'slug'
 
@@ -77,6 +77,7 @@ class ItemDetailApiView(RetrieveAPIView):
 
 
 class ItemSimilarApiView(ListAPIView):
+    queryset = Item.objects.public().only('type', 'slug', 'name', 'lvl', 'stats', 'reqp')
     serializer_class = ItemSerializer
     lookup_field = 'slug'
 
