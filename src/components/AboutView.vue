@@ -2,6 +2,9 @@
   <section class="section">
     <div class="container">
       <msg header="O stronie">
+        Jest to testowa wersja strony, dlatego mogą zdarzać się błędy.
+      </msg>
+      <msg header="Dostępne funkcjonalności">
         <ul>
           <li>można przeglądać i wyszukiwać przedmioty z gry Margonem</li>
           <li>można budować swój ekwipunek</li>
