@@ -122,6 +122,17 @@ export const getItemLvlGroups = () => {
   return mapGroups.sort((a, b) => b.min - a.min)  // sorted descending by min
 }
 
+export const getProfsInOrder = () => {
+  let profs = []
+  for (let prof of CHARACTER_CLASSES_IN_ORDER) {
+    profs.push({
+      name: CHARACTER_CLASSES[prof],
+      value: prof
+    })
+  }
+  return profs
+}
+
 export const getEqUrl = (router, eqItems) => {
   const route = getEqRoute(eqItems)
   const path = router.resolve(route).href

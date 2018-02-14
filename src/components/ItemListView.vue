@@ -30,7 +30,21 @@
     </nav>
     <section class="section" v-if="type" v-infinite-scroll="loadMore" infinite-scroll-disabled="isLoading" infinite-scroll-distance="10">
       <div class="container items">
-        <input class="input" :value="searchQuery" @input="search" type="text" placeholder="Szukaj po nazwie albo lvl"/>
+        <div class="columns">
+          <div class="column">
+            <input class="input" :value="searchQuery" @input="search" type="text" placeholder="Szukaj po nazwie albo lvl"/>
+          </div>
+          <div class="column">
+            <select>
+              <option v-for="(val, key) in ITEM_BONUS" :value="key">{{ val.translation }}</option>
+            </select>
+          </div>
+          <div class="column">
+            <select>
+              <option v-for="obj in profsInOrder" :value="obj.value">{{ obj.name }}</option>
+            </select>
+          </div>
+        </div>
         <section class="hero mt1" v-for="(val, key, index) in items" :class="[index % 2 !== 0 ? 'is-light' : 'is-light2']">
           <div class="hero-head" style="padding-top: 1rem">
             <h1 class="title has-text-centered">{{ key }}</h1>
@@ -56,9 +70,10 @@
   import Item from './item/Item'
   import { DEBOUNCE_TIME_IN_MS, RIGHT_CLICK_MAPPER } from '../utils/constants'
   import { fetchItems } from '../api/items'
-  import { getItemLvlGroups } from '../utils/helpers'
+  import { getItemLvlGroups, getProfsInOrder } from '../utils/helpers'
   import debounce from 'lodash/debounce'
   import groupBy from 'lodash/groupBy'
+  import { ITEM_BONUS } from '../utils/items'
 
   export default {
     name: 'items',
@@ -74,7 +89,9 @@
         next: null,
         searchQuery: '',
         lvlGroups: getItemLvlGroups(),
-        defaultGroupName: '0'
+        defaultGroupName: '0',
+        ITEM_BONUS: ITEM_BONUS,
+        profsInOrder: getProfsInOrder()
       }
     },
     mounted () {
