@@ -1,5 +1,6 @@
 <template>
   <nav class="navbar" role="navigation" aria-label="main navigation">
+  <!--<nav class="navbar is-fixed-top-desktop" role="navigation" aria-label="main navigation">-->
     <div class="navbar-brand">
       <router-link class="navbar-item" to="/">
         <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
