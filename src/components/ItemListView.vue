@@ -3,11 +3,7 @@
     <section class="hero is-info is-bold">
       <div class="hero-body">
         <div class="container">
-          <h1 class="title has-text-centered">
-            {{ typeDisplay }}
-          </h1>
-          <h2 class="subtitle">
-          </h2>
+          <h1 class="title has-text-centered">{{ typeDisplay }}</h1>
         </div>
       </div>
       <div class="hero-foot">
@@ -33,8 +29,8 @@
       </div>
     </nav>
     <section class="section" v-if="type" v-infinite-scroll="loadMore" infinite-scroll-disabled="isLoading" infinite-scroll-distance="10">
-      <div class="container" style="padding: 0 2rem">
-        <my-input :value="filterValue" @input="setFilterValue" placeholder="Filtruj po nazwie albo lvl"/>
+      <div class="container items">
+        <my-input :value="searchQuery" @input="search" placeholder="Szukaj po nazwie albo lvl"/>
         <section class="hero mt1" v-for="(val, key, index) in items" :class="[index % 2 !== 0 ? 'is-light' : 'is-light2']">
           <div class="hero-head" style="padding-top: 1rem">
             <h1 class="title has-text-centered">{{ key }}</h1>
@@ -60,7 +56,7 @@
   import Item from './item/Item'
   import { RIGHT_CLICK_MAPPER } from '../utils/constants'
   import { fetchItems } from '../api/items'
-  import { getItemLvlGroups, replaceDiacritics } from '../utils/helpers'
+  import { getItemLvlGroups } from '../utils/helpers'
   import debounce from 'lodash/debounce'
   import groupBy from 'lodash/groupBy'
 
@@ -75,8 +71,8 @@
         items: [],
         RIGHT_CLICK_MAPPER: RIGHT_CLICK_MAPPER,
         isLoading: true,
-        filterValue: '',
         next: null,
+        searchQuery: '',
         lvlGroups: getItemLvlGroups(),
         defaultGroupName: '0'
       }
@@ -98,7 +94,7 @@
       '$route' (to, from) {
         this.items = []
         this.getItems()
-      },
+      }
     },
     computed: {
       ...mapGetters(['pageTitle']),
@@ -118,17 +114,6 @@
           }
         }
         return 'Wybierz typ przedmiotów'
-      },
-      filteredItems () {
-        if (this.filterValue && this.items) {
-          console.log('filteredItems')
-          console.error('result', this.filter())
-          const results = this.filter()
-          if (results) {
-            return results
-          }
-        }
-        return this.items
       }
     },
     methods: {
@@ -159,21 +144,21 @@
           this.$Progress.finish()
         }
       },
-      setFilterValue (value) {
-        this.filterValue = value
-      },
-      filter: debounce(
-        function () {
-          const query = replaceDiacritics(this.filterValue.toLowerCase())
-          console.log('debouncing', query)
-          const lvl = parseInt(query)
-          return this.items.filter(item => {
-            const itemName = replaceDiacritics(item.name.toLowerCase())
-            console.log(itemName.indexOf(query), itemName.indexOf(query) > -1)
-            return itemName.indexOf(query) > -1 || item.lvl === lvl
+      search: debounce(
+        function (value) {
+          fetchItems(`?t=${this.typeId}&per_page=100&n=${value}`, response => {
+            this.items = groupBy(response.data.results, item => {
+              const group = this.lvlGroups.find(grp => item.lvl >= grp.min)
+              return group ? group.name : this.defaultGroupName
+            })
+            this.isLoading = false
+            this.$Progress.finish()
+            this.next = response.data.next
+          }, () => {
+            this.setAPIError()
           })
         },
-        300
+        350
       ),
       loadMore () {
         console.log('loadMore')
@@ -202,5 +187,13 @@
 </script>
 
 <style scoped>
+  .container.items {
+    padding: 0
+  }
+  @media screen and (min-width: 1024px) {
+    .container.items {
+      padding: 0 2rem
+    }
+  }
 
 </style>
