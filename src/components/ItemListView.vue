@@ -59,7 +59,11 @@
             </div>
           </div>
         </div>
-        <section class="hero mt1" v-for="(val, key, index) in items" :class="[index % 2 !== 0 ? 'is-light' : 'is-light2']">
+        <template v-if="!isLoading">
+          <msg v-if="itemCount === 0">Nie znaleziono przedmiotów</msg>
+          <h1 class="title mb1 has-text-centered" v-else-if="itemCount">{{ itemCount }} przedmiotów</h1>
+        </template>
+        <section class="hero mt2" v-for="(val, key, index) in items" :class="[index % 2 !== 0 ? 'is-light' : 'is-light2']">
           <div class="hero-head" style="padding-top: 1rem">
             <h1 class="title has-text-centered">{{ key }}</h1>
           </div>
@@ -109,7 +113,8 @@
         profsInOrder: getProfsInOrder(),
         selectedBonus: '',
         selectedProf: '',
-        selectedRarity: ''
+        selectedRarity: '',
+        itemCount: false
       }
     },
     mounted () {
@@ -185,6 +190,9 @@
         DEBOUNCE_TIME_IN_MS
       ),
       _fetchItems () {
+        if (!this.typeId) {
+          return
+        }
         this.items = []
         this.isLoading = true
         const qs = `?t=${this.typeId}&per_page=100&n=${this.searchQuery}&p=${this.selectedProf}&b=${this.selectedBonus}&r=${this.selectedRarity}`
@@ -193,6 +201,7 @@
             const group = this.lvlGroups.find(grp => item.lvl >= grp.min)
             return group ? group.name : this.defaultGroupName
           })
+          this.itemCount = response.data.count
           this.isLoading = false
           this.$Progress.finish()
           this.next = response.data.next
