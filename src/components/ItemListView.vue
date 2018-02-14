@@ -33,8 +33,8 @@
         <div class="columns">
           <div class="column is-one-quarter">
             <div class="field">
-              <p class="control">
-                <my-input :value="searchQuery" @input="setSearchQuery" placeholder="Szukaj po nazwie albo lvl"/>
+              <p class="control" @keyup.enter="search">
+                <my-input :value="searchQuery" @input="setSearchQuery"  placeholder="Szukaj po nazwie albo lvl"/>
               </p>
             </div>
           </div>
@@ -60,8 +60,7 @@
           </div>
           <div class="column is-one-quarter has-text-right">
             <button
-              class="button is-info" @click="search"
-                    :disabled="!selectedBonus && !selectedProf && !selectedRarity && !searchQuery">Szukaj</button>
+              class="button is-info" @click="search" :disabled="isSearchDisabled">Szukaj</button>
           </div>
         </div>
         <template v-if="!isLoading">
@@ -118,7 +117,8 @@
         selectedBonus: '',
         selectedProf: '',
         selectedRarity: '',
-        itemCount: false
+        itemCount: false,
+        searched: false
       }
     },
     mounted () {
@@ -143,11 +143,17 @@
       }
     },
     computed: {
+      isSearchDisabled () {
+        return this.fieldsAreEmpty && !this.searched
+      },
       typeId () {
         if (this.type) {
           return MAP_TYPE_NAME_TO_ID[this.type]
         }
         return null
+      },
+      fieldsAreEmpty () {
+        return !this.selectedBonus && !this.selectedProf && !this.selectedRarity && !this.searchQuery
       },
       typeDisplay () {
         for (let i = 0; i < MENU_LINKS.length; i += 1) {
@@ -181,8 +187,11 @@
         }
       },
       search () {
-        this.$Progress.start()
-        this._fetchItems()
+        if (!this.isSearchDisabled) {
+          this.$Progress.start()
+          this._fetchItems()
+          this.searched = !this.fieldsAreEmpty
+        }
       },
       setSearchQuery (value) {
         this.searchQuery = value
