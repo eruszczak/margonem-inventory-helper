@@ -123,6 +123,7 @@ class Item(models.Model):
             models.Index(fields=['lvl']),
             models.Index(fields=['type']),
             models.Index(fields=['name']),
+            models.Index(fields=['slug']),
         ]
 
     def __str__(self):
