@@ -73,6 +73,7 @@
         isLoading: true,
         next: null,
         searchQuery: '',
+        debouncedSearchQuery: '',
         lvlGroups: getItemLvlGroups(),
         defaultGroupName: '0'
       }
@@ -93,6 +94,7 @@
     watch: {
       '$route' (to, from) {
         this.items = []
+        this.searchQuery = ''
         this.getItems()
       }
     },
@@ -134,15 +136,17 @@
       },
       search: debounce(
         function (value) {
-          this.searchQuery = value
+          this.debouncedSearchQuery = value
           this.$Progress.start()
           this._fetchItems()
         },
-        350
+        300
       ),
       _fetchItems () {
+        // I'm using debouncedSearchQuery because on route change I need to reset searchQuery and I don't want
+        // it to trigger this method.
         this.isLoading = true
-        fetchItems(`?t=${this.typeId}&per_page=100&n=${this.searchQuery}`, response => {
+        fetchItems(`?t=${this.typeId}&per_page=100&n=${this.debouncedSearchQuery}`, response => {
           this.items = groupBy(response.data.results, item => {
             const group = this.lvlGroups.find(grp => item.lvl >= grp.min)
             return group ? group.name : this.defaultGroupName
