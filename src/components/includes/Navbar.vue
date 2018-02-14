@@ -22,12 +22,14 @@
             <span v-else>Ukryj podgląd</span>
           </a>
         </p>
-        <p class="control">
-          <my-input :value="searchQuery" @input="setSearchQuery" placeholder="Szukaj przedmiotów"/>
-        </p>
-        <p class="control">
-          <button v-if="searchQuery" class="button is-small" @click="setSearchQuery('')">wyczyść</button>
-        </p>
+        <div class="field has-addons control">
+          <div class="control">
+            <my-input :value="searchQuery" @input="setSearchQuery" placeholder="Szukaj przedmiotów"/>
+          </div>
+          <div class="control">
+            <button v-if="searchQuery" class="button" @click="setSearchQuery('')">Wyczyść</button>
+          </div>
+        </div>
       </div>
       <!--<toggle class="navbar-item" :value="canAddToEq" @input="toggleCanAddToEq">-->
       <!--{{ canAddToEq ? 'Do eq' : 'Do porównywarki'}}-->
