@@ -9,7 +9,7 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         lookup_field = 'slug'
-        fields = ('pk', 'img', 'name', 'lvl', 'type', 'rarity', 'stats', 'legbon', 'slug', 'detail_url', 'reqp')
+        fields = ('pk', 'img', 'name', 'lvl', 'type', 'rarity', 'stats', 'legbon', 'slug', 'detail_url', 'reqp', 'hidden_stats')
 
 
 class ItemSimilarSerializer(ItemSerializer):
@@ -19,7 +19,7 @@ class ItemSimilarSerializer(ItemSerializer):
         model = Item
         lookup_field = 'slug'
         fields = ('pk', 'img', 'name', 'lvl', 'type', 'rarity', 'profession', 'stats', 'legbon', 'slug',
-                  'detail_url', 'similar', 'reqp')
+                  'detail_url', 'similar', 'reqp', 'hidden_stats')
 
     def get_similar(self, item):
         limit = 15
