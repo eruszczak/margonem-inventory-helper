@@ -30,7 +30,7 @@
     </nav>
     <section class="section" v-if="type" v-infinite-scroll="loadMore" infinite-scroll-disabled="isLoading" infinite-scroll-distance="10">
       <div class="container items">
-        <my-input :value="searchQuery" @input="search" placeholder="Szukaj po nazwie albo lvl"/>
+        <input class="input" :value="searchQuery" @input="search" type="text" placeholder="Szukaj po nazwie albo lvl"/>
         <section class="hero mt1" v-for="(val, key, index) in items" :class="[index % 2 !== 0 ? 'is-light' : 'is-light2']">
           <div class="hero-head" style="padding-top: 1rem">
             <h1 class="title has-text-centered">{{ key }}</h1>
@@ -73,7 +73,6 @@
         isLoading: true,
         next: null,
         searchQuery: '',
-        debouncedSearchQuery: '',
         lvlGroups: getItemLvlGroups(),
         defaultGroupName: '0'
       }
@@ -94,7 +93,7 @@
     watch: {
       '$route' (to, from) {
         this.searchQuery = ''
-        this.getItems()
+        this._fetchItems()
       }
     },
     computed: {
@@ -134,19 +133,17 @@
         }
       },
       search: debounce(
-        function (value) {
-          this.debouncedSearchQuery = value
+        function (e) {
+          this.searchQuery = e.target.value
           this.$Progress.start()
           this._fetchItems()
         },
         DEBOUNCE_TIME_IN_MS
       ),
       _fetchItems () {
-        // I'm using debouncedSearchQuery because on route change I need to reset searchQuery and I don't want
-        // it to trigger this method.
         this.items = []
         this.isLoading = true
-        fetchItems(`?t=${this.typeId}&per_page=100&n=${this.debouncedSearchQuery}`, response => {
+        fetchItems(`?t=${this.typeId}&per_page=100&n=${this.searchQuery}`, response => {
           this.items = groupBy(response.data.results, item => {
             const group = this.lvlGroups.find(grp => item.lvl >= grp.min)
             return group ? group.name : this.defaultGroupName
