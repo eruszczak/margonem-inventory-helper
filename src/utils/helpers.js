@@ -19,15 +19,13 @@ export const isItemWearable = (itemType) => {
   return itemType in ITEM_PLACE
 }
 
-// export const encodeAndSetSummaryStats = (summaryStats) => {
-//   let endodedStats = ''
-//   for (const attr of ITEM_STATS_IN_ORDER) {
-//     if (attr in summaryStats) {
-//       endodedStats += `<p>${ITEM_STAT[attr].replace('{}', summaryStats[attr])}</p>`
-//     }
-//   }
-//   return endodedStats
-// }
+export const setPageTitle = val => {
+  let title = 'MargoPrzedmioty - przeglądaj przedmioty z Margonem, buduj ekwipunek, porównuj statystyki.'
+  if (val) {
+    title = `${val} | ${title}`
+  }
+  window.document.title = title
+}
 
 export const calculateHolyTouchAmount = (itemLvl) => {
   let val = 8 + itemLvl + (0.02 * itemLvl * itemLvl + 2.6 * itemLvl) / 5

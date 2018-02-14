@@ -22,21 +22,16 @@ export const store = new Vuex.Store({
     )
   ],
   state: {
-    pageTitle: '',
     isLoading: false,
     navbarMenuIsActive: false,
     isAPIError: false
   },
   getters: {
-    pageTitle: state => state.pageTitle,
     isLoading: state => state.isLoading,
     navbarMenuIsActive: state => state.navbarMenuIsActive,
     isAPIError: state => state.isAPIError
   },
   mutations: {
-    setPageTitle: (state, value) => {
-      state.pageTitle = value
-    },
     toggleLoading: (state, isLoading) => {
       state.isLoading = isLoading
     },

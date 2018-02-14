@@ -16,6 +16,7 @@ import Modal from './components/ui/modal'
 import Input from './components/ui/input'
 import Toast from './components/ui/toast'
 import Spinner from './components/includes/Spinner'
+import {setPageTitle} from "./utils/helpers";
 
 Vue.use(VueProgressBar, {
   color: '#bffaf3',
@@ -35,6 +36,7 @@ Vue.use(infiniteScroll)
 
 Vue.config.productionTip = false
 Vue.prototype.$toast = Toast
+Vue.prototype.$setPageTitle = setPageTitle
 Vue.component('tbl', Table)
 Vue.component('tbl-col', TableColumn)
 Vue.component('tbl-header', TableHeader)

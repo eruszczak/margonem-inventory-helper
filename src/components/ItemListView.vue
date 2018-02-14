@@ -88,12 +88,12 @@
 </template>
 
 <script>
-  import { mapGetters, mapMutations } from 'vuex'
+  import { mapMutations } from 'vuex'
   import { MAP_TYPE_NAME_TO_ID, MENU_LINKS } from '../utils/navbar'
   import Item from './item/Item'
   import { RIGHT_CLICK_MAPPER } from '../utils/constants'
   import { fetchItems } from '../api/items'
-  import { getItemLvlGroups, getProfsInOrder } from '../utils/helpers'
+  import {getItemLvlGroups, getProfsInOrder} from '../utils/helpers'
   import groupBy from 'lodash/groupBy'
   import { ITEM_BONUS, ITEM_RARITY } from '../utils/items'
 
@@ -140,7 +140,6 @@
       }
     },
     computed: {
-      ...mapGetters(['pageTitle']),
       typeId () {
         if (this.type) {
           return MAP_TYPE_NAME_TO_ID[this.type]
@@ -152,6 +151,7 @@
           const subLinks = MENU_LINKS[i].sublinks
           for (let j = 0; j < subLinks.length; j += 1) {
             if (subLinks[j].href.params.type === this.type) {
+              this.$setPageTitle(subLinks[j].displayValue)
               return subLinks[j].displayValue
             }
           }
@@ -160,8 +160,8 @@
       }
     },
     methods: {
-      ...mapMutations(['setPageTitle', 'setAPIError']),
-      mouseOver: function (item, event) {
+      ...mapMutations(['setAPIError']),
+      mouseOver (item, event) {
         this.menu.map((el) => {
           el.isActive = false
         })

@@ -29,7 +29,6 @@
     created () {
       this.setEqItemsStats()
       this.$router.beforeEach((to, from, next) => {
-        window.scrollTo(0, 0)
         this.$Progress.start()
         this.hideMenu()
         this.closeModal()
@@ -39,12 +38,7 @@
     },
     components: {Search, MyFooter, EqModalPreview, Navbar},
     computed: {
-      ...mapGetters(['pageTitle', 'canAddToEq', 'isLoading', 'isAPIError'])
-    },
-    watch: {
-      pageTitle (newVal, oldVal) {
-        window.document.title = newVal
-      }
+      ...mapGetters(['canAddToEq', 'isLoading', 'isAPIError'])
     },
     methods: {
       ...mapMutations(['setEqItemsStats', 'closeModal', 'hideMenu', 'closeModal', 'setAPIError']),
