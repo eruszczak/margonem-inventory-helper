@@ -41,14 +41,20 @@
           <div class="column">
             <div class="select">
               <select v-model="selectedBonus">
-                <option value="" selected>-- Wybierz bonus --</option>
+                <option value="" selected>-- Bonus --</option>
                 <option v-for="(val, key) in ITEM_BONUS" :value="key">{{ val.translation }}</option>
               </select>
             </div>
             <div class="select">
               <select v-model="selectedProf">
-                <option value="" selected>-- Wybierz profesję -</option>
+                <option value="" selected>-- Profesja -</option>
                 <option v-for="obj in profsInOrder" :value="obj.value">{{ obj.name }}</option>
+              </select>
+            </div>
+            <div class="select">
+              <select v-model="selectedRarity">
+                <option value="" selected>-- Rzadkość -</option>
+                <option v-for="(val, key) in ITEM_RARITY" :value="key">{{ val }}</option>
               </select>
             </div>
           </div>
@@ -81,7 +87,7 @@
   import { getItemLvlGroups, getProfsInOrder } from '../utils/helpers'
   import debounce from 'lodash/debounce'
   import groupBy from 'lodash/groupBy'
-  import { ITEM_BONUS } from '../utils/items'
+  import { ITEM_BONUS, ITEM_RARITY } from '../utils/items'
 
   export default {
     name: 'items',
@@ -99,9 +105,11 @@
         lvlGroups: getItemLvlGroups(),
         defaultGroupName: '0',
         ITEM_BONUS: ITEM_BONUS,
+        ITEM_RARITY: ITEM_RARITY,
         profsInOrder: getProfsInOrder(),
         selectedBonus: '',
-        selectedProf: ''
+        selectedProf: '',
+        selectedRarity: ''
       }
     },
     mounted () {
@@ -126,6 +134,9 @@
         this._fetchItems()
       },
       selectedBonus (value) {
+        this._fetchItems()
+      },
+      selectedRarity (value) {
         this._fetchItems()
       }
     },
@@ -176,7 +187,7 @@
       _fetchItems () {
         this.items = []
         this.isLoading = true
-        const qs = `?t=${this.typeId}&per_page=100&n=${this.searchQuery}&p=${this.selectedProf}&b=${this.selectedBonus}`
+        const qs = `?t=${this.typeId}&per_page=100&n=${this.searchQuery}&p=${this.selectedProf}&b=${this.selectedBonus}&r=${this.selectedRarity}`
         fetchItems(qs, response => {
           this.items = groupBy(response.data.results, item => {
             const group = this.lvlGroups.find(grp => item.lvl >= grp.min)
