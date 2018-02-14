@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
+from items.mixins import CacheMixin
 from .models import Item
 from .serializers import ItemSerializer
 
@@ -18,7 +19,7 @@ class SetPagination(PageNumberPagination):
     page_size_query_param = 'per_page'
 
 
-class ItemApiView(ListAPIView):
+class ItemApiView(CacheMixin, ListAPIView):
     queryset = Item.objects.public().only('type', 'slug', 'name', 'lvl', 'stats', 'reqp')
     serializer_class = ItemSerializer
     pagination_class = SetPagination
@@ -67,7 +68,7 @@ class ItemApiView(ListAPIView):
         return queries
 
 
-class ItemDetailApiView(RetrieveAPIView):
+class ItemDetailApiView(CacheMixin, RetrieveAPIView):
     queryset = Item.objects.public().only('type', 'slug', 'name', 'lvl', 'stats', 'reqp')
     serializer_class = ItemSerializer
     lookup_field = 'slug'
@@ -76,7 +77,7 @@ class ItemDetailApiView(RetrieveAPIView):
         return super().get_queryset()
 
 
-class ItemSimilarApiView(ListAPIView):
+class ItemSimilarApiView(CacheMixin, ListAPIView):
     queryset = Item.objects.public().only('type', 'slug', 'name', 'lvl', 'stats', 'reqp')
     serializer_class = ItemSerializer
     lookup_field = 'slug'
