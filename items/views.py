@@ -31,6 +31,7 @@ class ItemApiView(ListAPIView):
 
         queries = self.get_search_queries()
         if len(queries):
+            print(queries)
             queryset = queryset.filter(reduce(and_, queries))
 
         return queryset
@@ -39,8 +40,8 @@ class ItemApiView(ListAPIView):
         item_type = self.request.query_params.get('t')
         # item_rarity = self.request.query_params.getlist('r')
         value = self.request.query_params.get('n')
-        # prof = self.request.query_params.getlist('p')
-        # bonus = self.request.query_params.get('b')
+        prof = self.request.query_params.get('p')
+        bonus = self.request.query_params.get('b')
 
         queries = []
         if value:
@@ -59,12 +60,11 @@ class ItemApiView(ListAPIView):
         if item_type:
             queries.append(Q(type=item_type))
 
-        # if prof:
-        #     query['reqp__icontains'] = prof
+        if prof:
+            queries.append(Q(reqp__icontains=prof))   # TODO
 
-        # if bonus:
-        #     bonus = bonus.split(',')
-        #     queries.append(Q(legbon__name__in=bonus))
+        if bonus:
+            queries.append(Q(legbon=bonus))
 
         return queries
 
