@@ -69,10 +69,7 @@
     mixins: [item],
     props: ['slug'],
     mounted () {
-      this._fetchItem()
-      setTimeout(() => {
-        this.fetchItemHistory()
-      }, 1000)
+      this._fetchItem(true)
     },
     data () {
       return {
@@ -89,15 +86,9 @@
     watch: {
       '$route' (to, from) {
         this._fetchItem()
-      },
-      itemHistorySlugs (value) {
-        localStorage.setItem(ITEM_HISTORY_KEY, JSON.stringify(value))
       }
     },
     computed: {
-      itemHistorySlugs () {
-        return this.itemHistory.map(item => item.slug)
-      },
       itemStats () {
         return this.data ? this.getEncodedItemStats(this.data.stats) : null
       },
@@ -122,7 +113,7 @@
     },
     methods: {
       ...mapMutations(['setAPIError']),
-      _fetchItem () {
+      _fetchItem (mount) {
         this.isLoading = true
         this.isLoadingSimilar = true
         fetchItem(this.slug, response => {
@@ -130,7 +121,11 @@
           this.data = response.data
           this.$setPageTitle(`${this.data.name}`)
           this._fetchItemSimilar()
-          this.addToItemHistory(this.data)
+          if (mount) {
+            this.fetchItemHistory()
+          } else {
+            this.addToItemHistory(this.data)
+          }
         }, () => {
           this.setAPIError()
         })
@@ -152,6 +147,8 @@
         }
         fetchMultipleItems(JSON.parse(slugs), response => {
           this.itemHistory = response.data.results
+          this.addToItemHistory(this.data)
+          // this.itemHistory = this.getSortedItemHistory(response.data.results)
           this.isLoadingHistory = false
         }, () => {
           this.setAPIError()
@@ -161,7 +158,18 @@
         this.itemHistory = this.itemHistory.filter(el => item.pk !== el.pk)
         this.itemHistory.unshift(item)
         this.itemHistory = this.itemHistory.slice(0, ITEM_HISTORY_LIMIT)
+        this.setItemHistorySlugs()
       },
+      // getSortedItemHistory (items) {
+      //   function sortFunc (sortingArr, a, b) {
+      //     return sortingArr.indexOf(a[1]) - sortingArr.indexOf(b[1]);
+      //   }
+      //   return items.sort(sortFunc)
+      // },
+      setItemHistorySlugs () {
+        let slugs = this.itemHistory.map(item => item.slug)
+        localStorage.setItem(ITEM_HISTORY_KEY, JSON.stringify(slugs))
+      }
     }
   }
 </script>
