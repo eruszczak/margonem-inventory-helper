@@ -8,7 +8,9 @@ from rest_framework.reverse import reverse
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
+from items.constants import ITEM_STATS_IN_ORDER
 from items.mixins import CacheMixin
 from .models import Item
 from .serializers import ItemSerializer
@@ -117,9 +119,18 @@ class ItemSimilarApiView(CacheMixin, ListAPIView):
         return obj
 
 
+class ItemHelpers(CacheMixin, APIView):
+
+    def get(self, request, format=None):
+        return Response({
+            'ITEM_STATS_IN_ORDER': ITEM_STATS_IN_ORDER
+        })
+
+
 @api_view(['GET'])
 def api_root(request, format=None):
     return Response({
         'items': reverse('item-api-view', request=request, format=format),
+        'helpers': reverse('helpers', request=request, format=format),
         # 'profileEq': reverse('eq-set-from-profile', request=request, format=format)
     })

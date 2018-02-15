@@ -82,7 +82,7 @@ def create_items(items, source_url):
         'hidden': 0
     }
     for item in items:
-        # print(item)
+        print(item)
         clean_dict('book rkey quest created lowreq btype price emo loot teleport revive sila', item)
         # teleport - łyżwy
         # revive - Mistrzowski puchar Margonemskich Rozgrywek Piłkarskich
