@@ -41,7 +41,8 @@
         <div class="hero-body">
           <h1 class="title">Ostatnio odwiedzane</h1>
           <div class="items">
-            <transition-group name="fade">
+            <my-spinner v-if="isLoadingHistory" />
+            <transition-group v-else name="fade">
               <item v-for="item in itemHistory" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
             </transition-group>
           </div>
@@ -54,10 +55,13 @@
 <script>
   import Popup from './item/Popup'
   import Item from './item/Item'
-  import { fetchItem, fetchItemSimilar } from '../api/items'
-  import { mapGetters, mapMutations } from 'vuex'
+  import {fetchItem, fetchItemSimilar, fetchMultipleItems} from '../api/items'
+  import { mapMutations } from 'vuex'
   import { RARITY_CLASSES, RIGHT_CLICK_MAPPER } from '../utils/constants'
   import { item } from './mixins/item'
+
+  const ITEM_HISTORY_LIMIT = 15
+  const ITEM_HISTORY_KEY = 'itemhistory'
 
   export default {
     name: 'ItemView',
@@ -66,24 +70,34 @@
     props: ['slug'],
     mounted () {
       this._fetchItem()
+      setTimeout(() => {
+        this.fetchItemHistory()
+      }, 1000)
     },
     data () {
       return {
         data: null,
         similarItems: [],
+        itemHistory: [],
         noSimilarItems: false,
         RIGHT_CLICK_MAPPER: RIGHT_CLICK_MAPPER,
         isLoading: true,
-        isLoadingSimilar: true
+        isLoadingSimilar: true,
+        isLoadingHistory: true
       }
     },
     watch: {
       '$route' (to, from) {
         this._fetchItem()
+      },
+      itemHistorySlugs (value) {
+        localStorage.setItem(ITEM_HISTORY_KEY, JSON.stringify(value))
       }
     },
     computed: {
-      ...mapGetters(['itemHistory']),
+      itemHistorySlugs () {
+        return this.itemHistory.map(item => item.slug)
+      },
       itemStats () {
         return this.data ? this.getEncodedItemStats(this.data.stats) : null
       },
@@ -107,7 +121,7 @@
       }
     },
     methods: {
-      ...mapMutations(['addToItemHistory', 'setAPIError']),
+      ...mapMutations(['setAPIError']),
       _fetchItem () {
         this.isLoading = true
         this.isLoadingSimilar = true
@@ -115,13 +129,13 @@
           this.isLoading = false
           this.data = response.data
           this.$setPageTitle(`${this.data.name}`)
-          this.getSimilarItems()
+          this._fetchItemSimilar()
           this.addToItemHistory(this.data)
         }, () => {
           this.setAPIError()
         })
       },
-      getSimilarItems () {
+      _fetchItemSimilar () {
         fetchItemSimilar(this.slug, response => {
           this.isLoadingSimilar = false
           this.similarItems = response.data
@@ -130,7 +144,24 @@
         }, () => {
           this.setAPIError()
         })
-      }
+      },
+      fetchItemHistory () {
+        const slugs = localStorage.getItem(ITEM_HISTORY_KEY)
+        if (!slugs) {
+          return
+        }
+        fetchMultipleItems(JSON.parse(slugs), response => {
+          this.itemHistory = response.data.results
+          this.isLoadingHistory = false
+        }, () => {
+          this.setAPIError()
+        })
+      },
+      addToItemHistory (item) {
+        this.itemHistory = this.itemHistory.filter(el => item.pk !== el.pk)
+        this.itemHistory.unshift(item)
+        this.itemHistory = this.itemHistory.slice(0, ITEM_HISTORY_LIMIT)
+      },
     }
   }
 </script>
