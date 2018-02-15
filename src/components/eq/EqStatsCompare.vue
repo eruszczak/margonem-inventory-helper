@@ -23,17 +23,19 @@
 </template>
 
 <script>
-  import { ITEM_STAT, ITEM_STATS_IN_ORDER } from '../../utils/items'
+  import { ITEM_STAT } from '../../utils/items'
   import Item from '../item/Item'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'eq-stats-compare',
     props: ['leftSource', 'rightSource', 'leftItem', 'rightItem'],
     components: {Item},
     computed: {
+      ...mapGetters(['ITEM_STATS_IN_ORDER']),
       orderedStats: function () {
         let globalStatsInOrder = []
-        for (let statInOrder of ITEM_STATS_IN_ORDER) {
+        for (let statInOrder of this.ITEM_STATS_IN_ORDER) {
           if (statInOrder in this.leftSource || statInOrder in this.rightSource) {
             let stat = {
               name: statInOrder,

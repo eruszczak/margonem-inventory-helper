@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import { mapGetters, mapMutations } from 'vuex'
+  import { mapGetters, mapMutations, mapActions } from 'vuex'
   import Search from './components/item/Search'
   import MyFooter from './components/includes/Footer'
   import Navbar from './components/includes/Navbar'
@@ -25,6 +25,9 @@
       return {
         // toggleValue: this.canAddToEq
       }
+    },
+    mounted () {
+      this.FETCH_HELPERS()
     },
     created () {
       this.setEqItemsStats()
@@ -42,6 +45,7 @@
     },
     methods: {
       ...mapMutations(['setEqItemsStats', 'closeModal', 'hideMenu', 'closeModal', 'setAPIError']),
+      ...mapActions(['FETCH_HELPERS']),
       mouseOver: function (item, event) {
         item.isActive = true
       }
