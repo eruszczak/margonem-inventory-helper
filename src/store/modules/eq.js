@@ -1,7 +1,7 @@
 import { getDefaultEqItems, ITEM_PLACE } from '../../utils/items'
 import { eqItemsAreTheSame, getOrderedPksOfEqItems, setStats } from '../../utils/eq'
 import { fetchMultipleItems } from '../../api/items'
-import { isItemWearable } from '../../utils/helpers'
+import { isItemWearable, getSlugs } from '../../utils/helpers'
 
 const STACK_LENGTH_LIMIT = 15
 const ITEM_HISTORY_LIMIT = 15
@@ -10,6 +10,7 @@ const EQ_HISTORY_LIMIT = 5
 export default {
   state: {
     eqItems: getDefaultEqItems(),
+    eqItemsSlugs: [],
     readOnlyEqItems: getDefaultEqItems(),
     eqItemsStats: {},
     readOnlyEqItemsStats: {},
@@ -21,6 +22,7 @@ export default {
   },
   getters: {
     eqItems: state => state.eqItems,
+    eqItemsSlugs: state => state.eqItemsSlugs,
     itemHistory: state => state.itemHistory,
     readOnlyEqItems: state => state.readOnlyEqItems,
     eqHistory: state => state.eqHistory,
@@ -33,15 +35,18 @@ export default {
   mutations: {
     replaceEqItems: (state, eqItems) => {
       state.eqItems = Object.assign({}, eqItems)
+      state.eqItemsSlugs = getSlugs(state.eqItems)
     },
     // addItemToEq: function (state, clickedItem, isStackOperation = false, initial = false) {
     addItemToEq: function (state, item) {
       const itemPlacement = ITEM_PLACE[item.type]
       state.eqItems[itemPlacement] = item
+      state.eqItemsSlugs = getSlugs(state.eqItems)
     },
     removeItemFromEq: function (state, item) {
       const itemPlacement = ITEM_PLACE[item.type]
       state.eqItems[itemPlacement] = null
+      state.eqItemsSlugs = getSlugs(state.eqItems)
     },
     addToItemHistory: (state, item) => {
       state.itemHistory = state.itemHistory.filter(el => item.pk !== el.pk)
@@ -60,6 +65,13 @@ export default {
       })
       state.eqHistory.unshift(state.readOnlyEqItems)
       state.eqHistory = state.eqHistory.slice(0, EQ_HISTORY_LIMIT)
+    },
+    setEqItems: (state, items) => {
+      state.eqItems = getDefaultEqItems()
+      for (const item of items) {
+        const placement = ITEM_PLACE[item.type]
+        state.eqItems[placement] = item
+      }
     },
     setReadOnlyEqItems: (state, items) => {
       state.readOnlyEqItems = getDefaultEqItems()
@@ -100,6 +112,14 @@ export default {
     }
   },
   actions: {
+    initEqSet ({commit, state}) {
+      fetchMultipleItems(state.eqItemsSlugs, response => {
+        commit('setEqItems', response.data.results)
+        commit('setEqItemsStats')
+      }, () => {
+        commit('setAPIError')
+      })
+    },
     fetchReadOnlyEqItems ({commit}, payload) {
       fetchMultipleItems(payload.slugs, response => {
         commit('setReadOnlyEqItems', response.data.results)

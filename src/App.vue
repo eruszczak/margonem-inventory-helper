@@ -28,9 +28,9 @@
     },
     mounted () {
       this.FETCH_HELPERS()
+      this.initEqSet()
     },
     created () {
-      this.setEqItemsStats()
       this.$router.beforeEach((to, from, next) => {
         this.$Progress.start()
         this.hideMenu()
@@ -41,11 +41,11 @@
     },
     components: {Search, MyFooter, EqModalPreview, Navbar},
     computed: {
-      ...mapGetters(['canAddToEq', 'isLoading', 'isAPIError'])
+      ...mapGetters(['canAddToEq', 'isLoading', 'isAPIError', 'eqItemsSlugs'])
     },
     methods: {
-      ...mapMutations(['setEqItemsStats', 'closeModal', 'hideMenu', 'closeModal', 'setAPIError']),
-      ...mapActions(['FETCH_HELPERS']),
+      ...mapMutations(['closeModal', 'hideMenu', 'closeModal', 'setAPIError']),
+      ...mapActions(['initEqSet', 'FETCH_HELPERS']),
       mouseOver: function (item, event) {
         item.isActive = true
       }

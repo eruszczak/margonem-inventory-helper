@@ -28,7 +28,7 @@
         </div>
       </div>
     </nav>
-    <section class="section" v-if="type" v-infinite-scroll="loadMore" infinite-scroll-disabled="isLoading" infinite-scroll-distance="10">
+    <section class="section" v-if="type">
       <div class="container items">
         <div class="columns">
           <div class="column is-one-quarter">
@@ -59,8 +59,7 @@
             </div>
           </div>
           <div class="column is-one-quarter has-text-right">
-            <button
-              class="button is-info" @click="search" :disabled="isSearchDisabled">Szukaj</button>
+            <button class="button is-info" @click="search" :disabled="isSearchDisabled">Szukaj</button>
           </div>
         </div>
         <template v-if="!isLoading">
@@ -75,10 +74,8 @@
             <item v-for="item in val" :key="item.pk" :data="item" :action="RIGHT_CLICK_MAPPER.add"/>
           </div>
         </section>
-        <div class="mt1">
-          <div v-if="next && !isLoading" class="container has-text-centered">
-            <button class="button is-info is-medium" @click="loadMore">Pokaż więcej</button>
-          </div>
+        <div class="mt1 has-text-centered">
+          <button v-if="next && !isLoading" class="button is-info is-medium" @click="loadMore">Pokaż więcej</button>
           <my-spinner v-if="isLoading" size="100"/>
         </div>
       </div>
@@ -217,7 +214,7 @@
         })
       },
       loadMore () {
-        if (!this.next) {
+        if (!this.next || this.isLoading) {
           return
         }
         this.isLoading = true
