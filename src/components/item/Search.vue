@@ -16,16 +16,11 @@
   import { mapGetters, mapMutations } from 'vuex'
   import Item from '../item/Item'
 
-  const SEARCH_KEY = 'search'
-
   export default {
     name: 'search',
     components: {Item},
     mounted () {
-      let search = localStorage.getItem(SEARCH_KEY)
-      search = JSON.parse(search)
-      this.noResults = search ? search.noResults : false
-      this.searchResults = search ? search.searchResults : []
+      this._searchItems()
     },
     data () {
       return {
@@ -48,31 +43,20 @@
       ...mapMutations(['setSearchQuery', 'setAPIError']),
       search: debounce(
         function () {
-          if (!this.searchQuery) {
-            this.searchResults = []
-            localStorage.removeItem('search')
-            return
-          }
-          if (this.searchQuery.length < 3) {
-            return
-          }
-
-          this.searching = true
-          searchItems(this.searchQuery, response => {
-            // do I really need noResults flag?
-            this.searchResults = response.data.results
-            this.searching = false
-            this.noResults = this.searchResults.length === 0
-            localStorage.setItem(SEARCH_KEY, JSON.stringify({
-              'searchResults': this.searchResults,
-              'noResults': this.noResults
-            }))
-          }, () => {
-            this.setAPIError()
-          })
+          this._searchItems()
         },
         DEBOUNCE_TIME_IN_MS
-      )
+      ),
+      _searchItems () {
+        this.searching = true
+        searchItems(this.searchQuery, response => {
+          this.searchResults = response.data.results
+          this.searching = false
+          this.noResults = this.searchResults.length === 0
+        }, () => {
+          this.setAPIError()
+        })
+      }
     }
   }
 </script>
