@@ -3,7 +3,7 @@
   <!--<nav class="navbar is-fixed-top-desktop" role="navigation" aria-label="main navigation">-->
     <div class="navbar-brand">
       <router-link class="navbar-item" to="/">
-        <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+        <img src="../../assets/logo.png" width="112" height="28">
       </router-link>
       <button class="button navbar-burger" @click="toggleNavbarMenuIsActive">
         <span></span>

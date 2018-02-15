@@ -125,28 +125,6 @@ export const CHARACTER_CLASSES = {
 
 export const CHARACTER_CLASSES_IN_ORDER = ['m', 'p', 'w', 'b', 'h', 't']
 
-export const ITEM_STATS_IN_ORDER = [
-  'dmg', 'pdmg', 'abdest', 'fire', 'light', 'wound', 'wound_chance', 'frost',
-  'frost_slowed', 'poison', 'poison_slowed', 'crit', 'pierce', 'critval', 'critmval',
-  'contra',
-
-  'ac', 'absorb', 'absorbm', 'ds', 'di', 'dz', 'da', 'sa',
-  'evade', 'blok', 'hp', 'hpbon', 'manabon', 'energybon', 'resacdmg', 'pierceb',
-
-  'resmanaendest', 'resmanaendest_ene', 'lowheal2turns', 'lowevade', 'lowcritallval',
-
-  'manadest', 'endest', 'acdmg', 'adest',
-
-  'heal', 'slow', 'resdmg', 'lowcrit',
-
-  'resfire', 'resfrost', 'act', 'reslight',
-
-  'perheal', 'leczy', 'fullheal', 'afterheal', 'afterheal_chance',
-
-  'gold', 'bag', 'amount', 'ammo', 'capacity',
-  'ttl', 'resp', 'timelimit', 'respred', 'creditsbon', 'runes', 'worth'
-]
-
 export const ITEM_STAT = {
   dmg: {val: 'Atak: {}', val2: 'Atak'},
   pdmg: {val: 'Atak fizyczny: {}', val2: 'Atak fizyczny'},
@@ -212,6 +190,10 @@ export const ITEM_STAT = {
   lowheal2turns: {
     val: 'Obniżenie leczenia turowego przeciwnika na 2 tury o {}',
     val2: 'Obniżenie leczenia turowego przeciwnika na 2 tury'
+  },
+  npc_expbon: {
+    val: 'Zwiększa ilość exp za potwory o {}%',
+    val2: 'Zwiększa ilość exp za potwory'
   },
   resmanaendest: {val: 'Obniżanie niszczenia many o {}', val2: 'Obniżanie niszczenia many'},
   resmanaendest_ene: {val: 'Obniżanie niszczenia energii o {}', val2: 'Obniżanie niszczenia energii'},
