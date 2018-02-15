@@ -4,7 +4,6 @@ import { fetchMultipleItems } from '../../api/items'
 import { isItemWearable, getSlugs } from '../../utils/helpers'
 
 const STACK_LENGTH_LIMIT = 15
-const ITEM_HISTORY_LIMIT = 15
 const EQ_HISTORY_LIMIT = 5
 
 export default {
@@ -16,14 +15,12 @@ export default {
     readOnlyEqItemsStats: {},
     eqLink: null,
     stack: [],
-    itemHistory: [],
     eqHistory: [],
     replacementsCounter: 0
   },
   getters: {
     eqItems: state => state.eqItems,
     eqItemsSlugs: state => state.eqItemsSlugs,
-    itemHistory: state => state.itemHistory,
     readOnlyEqItems: state => state.readOnlyEqItems,
     eqHistory: state => state.eqHistory,
     eqItemsStats: state => state.eqItemsStats,
@@ -47,11 +44,6 @@ export default {
       const itemPlacement = ITEM_PLACE[item.type]
       state.eqItems[itemPlacement] = null
       state.eqItemsSlugs = getSlugs(state.eqItems)
-    },
-    addToItemHistory: (state, item) => {
-      state.itemHistory = state.itemHistory.filter(el => item.pk !== el.pk)
-      state.itemHistory.unshift(item)
-      state.itemHistory = state.itemHistory.slice(0, ITEM_HISTORY_LIMIT)
     },
     /**
      * Adds readOnlyEqItems to history. If it was already in history, remove it and add again to the array beginning

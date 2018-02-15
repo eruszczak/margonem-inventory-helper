@@ -103,7 +103,6 @@
         this.getEqItems()
       },
       eqTitle () {
-        console.log('watching')
         this.$setPageTitle(this.eqTitle)
       }
     },
