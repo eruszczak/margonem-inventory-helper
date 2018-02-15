@@ -15,17 +15,19 @@
 </template>
 
 <script>
-  import { ITEM_STAT, ITEM_STATS_IN_ORDER } from '../../utils/items'
+  import { ITEM_STAT } from '../../utils/items'
   import { Table, TableColumn, TableHeader, TableRow } from '../ui/table/index'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'eq-stats',
     props: ['source'],
     components: {Table, TableColumn, TableHeader, TableRow},
     computed: {
+      ...mapGetters(['ITEM_STATS_IN_ORDER']),
       orderedStats: function () {
         let globalStatsInOrder = []
-        for (let statInOrder of ITEM_STATS_IN_ORDER) {
+        for (let statInOrder of this.ITEM_STATS_IN_ORDER) {
           if (statInOrder in this.source) {
             let stat = {
               name: statInOrder,

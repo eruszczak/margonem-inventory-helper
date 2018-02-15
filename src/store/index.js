@@ -5,6 +5,7 @@ import compare from './modules/compare'
 import search from './modules/search'
 import modal from './modules/modal'
 import createPersistedState from 'vuex-persistedstate'
+import { fetchHelpers } from '../api/items'
 
 Vue.use(Vuex)
 
@@ -24,12 +25,14 @@ export const store = new Vuex.Store({
   state: {
     isLoading: false,
     navbarMenuIsActive: false,
-    isAPIError: false
+    isAPIError: false,
+    ITEM_STATS_IN_ORDER: []
   },
   getters: {
     isLoading: state => state.isLoading,
     navbarMenuIsActive: state => state.navbarMenuIsActive,
-    isAPIError: state => state.isAPIError
+    isAPIError: state => state.isAPIError,
+    ITEM_STATS_IN_ORDER: state => state.ITEM_STATS_IN_ORDER
   },
   mutations: {
     toggleLoading: (state, isLoading) => {
@@ -43,6 +46,18 @@ export const store = new Vuex.Store({
     },
     setAPIError: (state, value = true) => {
       state.isAPIError = value
+    },
+    SET_ITEM_STATS_IN_ORDER: (state, value) => {
+      state.ITEM_STATS_IN_ORDER = value
+    }
+  },
+  actions: {
+    FETCH_HELPERS ({commit}) {
+      fetchHelpers(response => {
+        commit('SET_ITEM_STATS_IN_ORDER', response.data.ITEM_STATS_IN_ORDER)
+      }, () => {
+        commit('setAPIError')
+      })
     }
   },
   modules: {
