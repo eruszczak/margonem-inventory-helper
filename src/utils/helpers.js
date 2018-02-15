@@ -38,10 +38,18 @@ export const calculateMaxFullBonusDuration = (itemLvl) => {
 
 export const calculateBonusWeakness = (requiredLvl, itemLvl, itemBonusValue) => {
   let lvlDiff = requiredLvl - itemLvl
-  if (lvlDiff > calculateMaxFullBonusDuration(itemLvl)) {
-    return round(itemBonusValue - 0.02 * lvlDiff)
+  // if (lvlDiff > calculateMaxFullBonusDuration(itemLvl)) {
+  //   itemBonusValue = round(itemBonusValue - 0.02 * lvlDiff)
+  // }
+  console.log(`${itemLvl} na ${requiredLvl} ma ${itemBonusValue}`)
+  const myOdLvl = calculateMaxFullBonusDuration(itemLvl) + 1 + itemLvl
+  let ile = 100 - (2 * (requiredLvl - myOdLvl + 1))
+  ile = ile < 0 ? 0 : ile
+  let dzialanie = (ile * itemBonusValue) / 100;
+  if (dzialanie > itemBonusValue) {
+    dzialanie = itemBonusValue
   }
-  return itemBonusValue
+  return dzialanie
 }
 
 export const isInt = (value) => {
