@@ -20,7 +20,7 @@
                         <eq :source="eqSet" :readOnly="readOnly" :darkBorder="readOnly"/>
                         <div class="mt1">
                           <template v-if="!readOnly">
-                            <restore-eq size="is-small" type="is-dark"/>
+                            <!--<restore-eq size="is-small" type="is-dark"/>-->
                             <clipboard :content="getEqLink(eqSet)" value="Kopiuj link" type="is-dark" size="is-small"/>
                             <router-link class="button is-dark is-small" :to="getEqRoute(eqSet)">Odwiedź</router-link>
                           </template>
