@@ -13,7 +13,7 @@
     <template slot="footer">
       <clipboard :content="getEqLink(eqItems)" value="Kopiuj link"/>
       <router-link class="button" :to="{name: 'eqView'}">Zobacz szczegóły</router-link>
-      <restore-eq/>
+      <!--<restore-eq/>-->
     </template>
   </modal>
 </template>
