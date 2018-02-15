@@ -18,6 +18,7 @@
           <li>podgląd ostatnio oglądanych ekwipunków</li>
           <li>uzupełnienie brakujących przedmiotów</li>
           <li>formularz, w którym można zgłaszać błędy i uwagi</li>
+          <li>przywracanie poprzednich stanów mojego zestawu EQ (cofanie zmian przedmiotów)</li>
         </ul>
       </msg>
       <msg header="Pomoc">

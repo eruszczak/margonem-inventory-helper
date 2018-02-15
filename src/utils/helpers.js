@@ -54,7 +54,7 @@ export const getBaseUrl = () => {
   return `${location.protocol}//${location.hostname}${port}`
 }
 
-const getSlugs = (eqItems) => {
+export const getSlugs = eqItems => {
   let slugs = []
   for (let placement in eqItems) {
     const item = eqItems[placement]
@@ -65,7 +65,7 @@ const getSlugs = (eqItems) => {
   return slugs
 }
 
-export const getEqRoute = (eqItems) => {
+export const getEqRoute = eqItems => {
   return {
     name: 'eqView',
     query: {
