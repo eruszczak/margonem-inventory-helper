@@ -22,6 +22,9 @@ def create_duplicate(name):
     print(Item.objects.filter(name__icontains=name))
 
 
+for item in Item.objects.all():
+    item.save()
+exit()
 # Item.objects.all().delete()
 
 print('before', Item.objects.all().count())
@@ -30,14 +33,14 @@ print('before', Item.objects.all().count())
 
 
 forum_pages_links = [
-    'https://www.margonem.pl/?task=forum&show=posts&id=459240',  # 0 Elity I i II
-    'https://www.margonem.pl/?task=forum&show=posts&id=96201',  # 1 rosliny
-    'https://www.margonem.pl/?task=forum&show=posts&id=487344',  # 2 kupcy sprzedawcy
-    'https://www.margonem.pl/?task=forum&show=posts&id=487093',  # 3 zwoje torby talizmany
-    'https://www.margonem.pl/?task=forum&show=posts&id=484360',  # 4 legendarne zbroje itd
-    'https://www.margonem.pl/?task=forum&show=posts&id=470820',  # 5 herosi tytani
-    'https://www.margonem.pl/?task=forum&show=posts&id=457475',  # 6 spis legend,
-    'https://www.margonem.pl/?task=profile&id=4155914#tab2' # alpha
+    # 'https://www.margonem.pl/?task=forum&show=posts&id=488969',  # 0 Elity I i II
+    # 'https://www.margonem.pl/?task=forum&show=posts&id=96201',  # 1 rosliny
+    # 'https://www.margonem.pl/?task=forum&show=posts&id=487344',  # 2 kupcy sprzedawcy
+    # 'https://www.margonem.pl/?task=forum&show=posts&id=487093',  # 3 zwoje torby talizmany
+    # 'https://www.margonem.pl/?task=forum&show=posts&id=493914',  # 4 legendarne zbroje itd
+    # 'https://www.margonem.pl/?task=forum&show=posts&id=470820',  # 5 herosi tytani
+    'https://www.margonem.pl/?task=forum&show=posts&id=491816',  # 6 spis legend,
+    # 'https://www.margonem.pl/?task=profile&id=4155914#tab2' # alpha
 ]
 for link in forum_pages_links:
     print('checking', link)

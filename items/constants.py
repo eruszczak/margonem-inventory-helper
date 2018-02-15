@@ -71,7 +71,7 @@ defensive = [
 
 
 decrease = [
-    'resmanaendest', 'resmanaendest_ene', 'lowheal2turns', 'lowevade', 'lowcritallval'
+    'resmanaendest', 'resmanaendest_ene', 'lowheal2turns', 'lowevade', 'lowcritallval', 'npc_expbon'
 ]
 
 destroy = [
@@ -91,4 +91,4 @@ minor = [
     'ttl', 'resp', 'timelimit', 'respred', 'creditsbon', 'runes', '@IGNORE@worth'
 ]
 
-ITEM_STATS = attack + defensive + decrease + destroy + helper + resistances + hp + minor
+ITEM_STATS_IN_ORDER = attack + defensive + decrease + destroy + helper + resistances + hp + minor

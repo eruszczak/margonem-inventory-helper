@@ -4,7 +4,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.safestring import mark_safe
 
-from items.constants import TYPE_CHOICES, LEGBON_CHOICES, RARITY_CHOICES, DEFAULT_RARITY, ITEM_STATS
+from items.constants import TYPE_CHOICES, LEGBON_CHOICES, RARITY_CHOICES, DEFAULT_RARITY, ITEM_STATS_IN_ORDER
 from items.managers import ItemQuerySet
 from utils.helpers import create_slug
 
@@ -104,7 +104,7 @@ class Item(models.Model):
     afterheal_chance = models.PositiveIntegerField('Wyleczenie po walce, szanse', blank=True, null=True)
     resp = models.PositiveIntegerField('Czas odnowienia', blank=True, null=True)
     perheal = models.IntegerField('Leczy % życia', blank=True, null=True)
-
+    npc_expbon = models.PositiveIntegerField('Zwieksza ilosc expa za potwory', blank=True, null=True)
     resacdmg = models.PositiveIntegerField('Ochrona przed niszczeniem pancerza', blank=True, null=True)
     lowheal2turns = models.IntegerField('Obniżenie leczenia turowego przeciwnika na 2 tury', blank=True, null=True)
     resmanaendest = models.PositiveIntegerField('Obniżanie niszczenia many', blank=True, null=True)
@@ -135,7 +135,7 @@ class Item(models.Model):
         Otherwise, I would have to iterate over all of the ordered stats for each item to display them in the order.
         """
         stats = []
-        for attr in ITEM_STATS:
+        for attr in ITEM_STATS_IN_ORDER:
             if not attr.startswith('@IGNORE'):
                 val = getattr(self, attr)
                 if val is not None:
