@@ -1,5 +1,7 @@
 EQS = tuple(map(str, range(1, 15)))
 
+MIXTURES = 25
+
 TYPE_CHOICES = (
     (1, 'Jednoręczne'),
     (2, 'Dwuręczne'),
@@ -25,7 +27,7 @@ TYPE_CHOICES = (
     (22, 'Talizmany'),
     (23, 'Książki'),
     (24, 'Torby'),
-    (25, 'Mikstury'),
+    (MIXTURES, 'Mikstury'),
     (26, 'Eventowe')
 )
 

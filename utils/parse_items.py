@@ -1,7 +1,7 @@
 import re
 import math
 
-from items.constants import EQS
+from items.constants import EQS, MIXTURES
 from items.models import Item, Profession
 from utils.helpers import clean_dict, download_and_save_img
 
@@ -17,6 +17,9 @@ def get_item_data(soup_item):
 
     data = {attr: val for attr, val in re.findall(r'(\w+)=([\w.-]+);', main_stats)}
     if data.get('upg'):
+        return None
+
+    if item_type == str(MIXTURES) and data.get('lvl'):
         return None
 
     data['name'] = item_name
@@ -82,7 +85,6 @@ def create_items(items, source_url):
         'hidden': 0
     }
     for item in items:
-        print(item)
         clean_dict('book rkey quest created lowreq btype price emo loot teleport revive sila', item)
         # teleport - łyżwy
         # revive - Mistrzowski puchar Margonemskich Rozgrywek Piłkarskich
@@ -103,8 +105,9 @@ def create_items(items, source_url):
             if len(item_copy) > 2 and items_with_the_same_stats.exists():
                 item['hidden'] = True
                 counter['hidden'] += 1
-                print('\nhidden', item_name)
+                # print('\nhidden', item_name)
                 pks_with_the_same_stats = str(list(items_with_the_same_stats.values_list('pk', flat=True)))
+
 
         item['same_stats'] = pks_with_the_same_stats
         item['source_url'] = source_url
