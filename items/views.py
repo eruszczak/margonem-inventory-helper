@@ -34,8 +34,9 @@ class ItemApiView(CacheMixin, ListAPIView):
 
         queries = self.get_search_queries()
         if len(queries):
-            print(queries)
             queryset = queryset.filter(reduce(and_, queries))
+            if self.request.GET.get('searchbox'):
+                queryset = queryset.order_by('type')
 
         return queryset
 
