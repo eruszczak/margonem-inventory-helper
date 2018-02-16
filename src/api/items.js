@@ -13,7 +13,7 @@ export const fetchMultipleItems = (slugs, cb, cbError) => {
 }
 
 export const searchItems = (query, cb, cbError) => {
-  axios.get(`/api/item/?per_page=15&n=${query}`).then(cb, cbError)
+  axios.get(`/api/item/?per_page=15&n=${query}&searchbox=1`).then(cb, cbError)
 }
 
 export const fetchHelpers = (cb, cbError) => {
