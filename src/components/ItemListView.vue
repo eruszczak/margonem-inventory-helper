@@ -31,14 +31,14 @@
     <section class="section" v-if="type">
       <div class="container items">
         <div class="columns">
-          <div class="column is-one-quarter">
+          <div class="column is-one-fifth">
             <div class="field">
               <p class="control" @keyup.enter="search">
-                <my-input :value="searchQuery" @input="setSearchQuery"  placeholder="Szukaj po nazwie albo lvl"/>
+                <my-input :value="searchQuery" @input="setSearchQuery"  placeholder="Nazwa albo lvl"/>
               </p>
             </div>
           </div>
-          <div class="column">
+          <div class="column is-three-fifths">
             <div class="select">
               <select v-model="selectedBonus">
                 <option value="" selected>-- Bonus --</option>
@@ -58,7 +58,7 @@
               </select>
             </div>
           </div>
-          <div class="column is-one-quarter has-text-right">
+          <div class="column is-one-fifth has-text-right">
             <button class="button is-info" @click="search" :disabled="isSearchDisabled">Szukaj</button>
           </div>
         </div>
