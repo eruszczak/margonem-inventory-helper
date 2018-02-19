@@ -143,6 +143,7 @@
       fetchItemHistory () {
         const slugs = localStorage.getItem(ITEM_HISTORY_KEY)
         if (!slugs) {
+          this.isLoadingHistory = false
           return
         }
         fetchMultipleItems(JSON.parse(slugs), response => {
