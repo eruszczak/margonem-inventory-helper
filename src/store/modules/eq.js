@@ -105,6 +105,9 @@ export default {
   },
   actions: {
     initEqSet ({commit, state}) {
+      if (!state.eqItemsSlugs.length) {
+        return
+      }
       fetchMultipleItems(state.eqItemsSlugs, response => {
         commit('setEqItems', response.data.results)
         commit('setEqItemsStats')
