@@ -48,6 +48,9 @@
         DEBOUNCE_TIME_IN_MS
       ),
       _searchItems () {
+        if (!this.searchQuery) {
+          return
+        }
         this.searching = true
         searchItems(this.searchQuery, response => {
           this.searchResults = response.data.results
