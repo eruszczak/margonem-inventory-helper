@@ -82,9 +82,7 @@ CACHES = {
         'LOCATION': '127.0.0.1:11211',
     }
 }
-
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-USE_X_FORWARDED_HOST = True
+if DEBUG:
+    from .settings_local import *
+else:
+    from .settings_production import *
