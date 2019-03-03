@@ -14,5 +14,11 @@ Margonem is a browser-based MMORPG. Using this app, you can search for items fro
 # Preview
 
 ![](1.png)
+
+---
+
 ![](2.png)
+
+--- 
+
 ![](3.png)
