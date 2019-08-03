@@ -2,10 +2,30 @@ kind: pipeline
 name: default
 
 steps:
+  - name: restore-cache
+    image: drillster/drone-volume-cache
+    volumes:
+      - name: cache
+        path: /cache
+    settings:
+      restore: true
+      mount:
+        - ./frontend/node_modules
+
   - name: frontend
     image: node:10.16.0
     commands:
       - cd frontend
+
+  - name: rebuild-cache
+    image: drillster/drone-volume-cache
+    volumes:
+      - name: cache
+        path: /cache
+    settings:
+      rebuild: true
+      mount:
+        - ./frontend/node_modules
 
   - name: docker-compose
     image: tiangolo/docker-with-compose
@@ -47,6 +67,9 @@ steps:
   #       master
 
 volumes:
+  - name: cache
+    host:
+      path: /tmp/cache
   - name: docker_sock
     host:
       path: /var/run/docker.sock
