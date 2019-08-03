@@ -43,19 +43,6 @@ services:
     depends_on:
       - margo-database
 
-  # pgweb1:
-  #   container_name: pgweb1
-  #   restart: always
-  #   image: sosedoff/pgweb
-  #   ports:
-  #     - "9999:8081"
-  #   networks:
-  #     - internal
-  #   environment:
-  #     - DATABASE_URL=postgres://postgres:postgres@margo-database:5432/db?sslmode=disable
-  #   depends_on:
-  #     - margo-database
-
 networks:
   web:
     external: true
