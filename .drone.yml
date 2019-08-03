@@ -17,16 +17,6 @@ steps:
     commands:
       - cd frontend
 
-  - name: rebuild-cache
-    image: drillster/drone-volume-cache
-    volumes:
-      - name: cache
-        path: /cache
-    settings:
-      rebuild: true
-      mount:
-        - ./frontend/node_modules
-
   - name: docker-compose
     image: tiangolo/docker-with-compose
     volumes:
@@ -50,6 +40,16 @@ steps:
     when:
       branch:
         - master
+
+  - name: rebuild-cache
+    image: drillster/drone-volume-cache
+    volumes:
+      - name: cache
+        path: /cache
+    settings:
+      rebuild: true
+      mount:
+        - ./frontend/node_modules
   # - name: deploy
   #   image: appleboy/drone-ssh
   #   settings:
