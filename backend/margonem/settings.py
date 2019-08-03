@@ -1,19 +1,23 @@
 import os
-
+import json
 import dj_database_url
 from decouple import Csv, config
-
-DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BACKUP_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'backup')
 EXCLUDED_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'excluded')
-SECRET_KEY = config('SECRET_KEY')
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+# DEBUG = os.environ.get('DEBUG', config('DEBUG'))
+# SECRET_KEY = os.environ.get('SECRET_KEY', config('SECRET_KEY'))
+# ALLOWED_HOSTS = json.loads(os.environ['ALLOWED_HOSTS']) if 'ALLOWED_HOSTS' in os.environ else config('ALLOWED_HOSTS', cast=Csv())
+
+DEBUG = os.environ['DEBUG'] == 'True'
+SECRET_KEY = os.environ['SECRET_KEY']
+ALLOWED_HOSTS = json.loads(os.environ['ALLOWED_HOSTS'])
+
 
 DATABASES = {
-    'default': dj_database_url.parse(config('DATABASE_URL'))
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL', config('DATABASE_URL')))
 }
 
 INSTALLED_APPS = [

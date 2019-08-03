@@ -1,0 +1,47 @@
+kind: pipeline
+name: default
+
+steps:
+  - name: frontend
+    image: node:10.16.0
+    commands:
+      - cd frontend
+
+  - name: docker-compose
+    image: tiangolo/docker-with-compose
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+    environment:
+      USERNAME:
+        from_secret: username_hub
+      PASSWORD:
+        from_secret: password_hub
+      ALLOWED_HOSTS:
+        from_secret: allowed_hosts
+      DATABASE_URL:
+        from_secret: database_url
+      SECRET_KEY:
+        from_secret: secret_key
+    commands:
+      - docker login -u $USERNAME -p $PASSWORD
+      - docker-compose build
+      - docker-compose push
+    when:
+      branch:
+        - master
+  # - name: deploy
+  #   image: appleboy/drone-ssh
+  #   settings:
+  #     host:
+  #       from_secret: ssh_host
+  #     username:
+  #       from_secret: ssh_user
+  #     password:
+  #       from_secret: ssh_password
+  #     port: 22
+  #     script:
+  #       - /root/deploy-linkzone.sh
+  #   when:
+  #     branch:
+  #       master
