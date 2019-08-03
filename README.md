@@ -1,3 +1,5 @@
+[![Build Status](https://drone.eryk.io/api/badges/reryk/moje-margo/status.svg)](https://drone.eryk.io/reryk/moje-margo)
+
 # moje-margo
 
 https://mojemargo.pl/
@@ -6,10 +8,9 @@ Margonem is a browser-based MMORPG. Using this app, you can search for items fro
 
 # Used tools
 
-* Django Rest Framework
-* Vue.js
-* Bulma
-
+- Django Rest Framework
+- Vue.js
+- Bulma
 
 # Preview
 
@@ -19,6 +20,6 @@ Margonem is a browser-based MMORPG. Using this app, you can search for items fro
 
 ![](2.png)
 
---- 
+---
 
 ![](3.png)

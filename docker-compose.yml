@@ -1,0 +1,63 @@
+version: "3"
+services:
+  margo-frontend:
+    container_name: margo-frontend-container
+    image: reryk/margo-frontend
+    build: ./frontend
+    restart: always
+    networks:
+      - web
+    ports:
+      - "8001:80"
+    depends_on:
+      - margo-backend
+
+  margo-database:
+    container_name: margo-database-container
+    image: postgres:9.3
+    restart: always
+    env_file: .env-db
+    volumes:
+      - /opt/postgres/margo:/var/lib/postgresql/data
+    networks:
+      - internal
+    expose:
+      - 5432
+
+  margo-backend:
+    container_name: margo-backend-container
+    build: ./backend
+    restart: always
+    command: bash -c "cd backend && python manage.py runserver 0.0.0.0:8000"
+    env_file: .env
+    environment:
+      - ALLOWED_HOSTS
+      - DATABASE_URL
+    volumes:
+      - .:/code
+    networks:
+      - internal
+      - web
+    ports:
+      - "8000:8000"
+    depends_on:
+      - margo-database
+
+  # pgweb1:
+  #   container_name: pgweb1
+  #   restart: always
+  #   image: sosedoff/pgweb
+  #   ports:
+  #     - "9999:8081"
+  #   networks:
+  #     - internal
+  #   environment:
+  #     - DATABASE_URL=postgres://postgres:postgres@margo-database:5432/db?sslmode=disable
+  #   depends_on:
+  #     - margo-database
+
+networks:
+  web:
+    external: true
+  internal:
+    external: false
