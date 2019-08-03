@@ -50,21 +50,21 @@ steps:
       rebuild: true
       mount:
         - ./frontend/node_modules
-  # - name: deploy
-  #   image: appleboy/drone-ssh
-  #   settings:
-  #     host:
-  #       from_secret: ssh_host
-  #     username:
-  #       from_secret: ssh_user
-  #     password:
-  #       from_secret: ssh_password
-  #     port: 22
-  #     script:
-  #       - /root/deploy-linkzone.sh
-  #   when:
-  #     branch:
-  #       master
+
+  - name: deploy
+    image: appleboy/drone-ssh
+    settings:
+      host:
+        from_secret: ssh_host
+      username:
+        from_secret: ssh_user
+      password:
+        from_secret: ssh_password
+      port: 22
+      script:
+        - /root/deploy-margo.sh
+    when:
+      branch: master
 
 volumes:
   - name: cache
