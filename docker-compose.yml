@@ -14,7 +14,7 @@ services:
 
   margo-database:
     container_name: margo-database-container
-    image: postgres:9.3
+    image: postgres:9.4
     restart: always
     env_file: .env-db
     volumes:
@@ -28,13 +28,18 @@ services:
     container_name: margo-backend-container
     build: ./backend
     restart: always
-    command: bash -c "cd backend && python manage.py runserver 0.0.0.0:8000"
+    # command: bash -c "cd backend && python manage.py makemigrations && python manage.py migrate && gunicorn margonem.wsgi -b 0.0.0.0:8000 --workers 1"
+    command: bash -c "cd backend && python manage.py collectstatic --noinput && python manage.py migrate && gunicorn margonem.wsgi -b 0.0.0.0:8000 --workers 1"
+    # command: bash -c "cd backend && python manage.py collectstatic --noinput && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    # command: bash -c "cd backend && python manage.py runserver 0.0.0.0:8000"
     env_file: .env
     environment:
       - ALLOWED_HOSTS
       - DATABASE_URL
     volumes:
       - .:/code
+      - '/opt/margo/static:/code/static'
+      - '/opt/margo/media:/code/media'
     networks:
       - internal
       - web
