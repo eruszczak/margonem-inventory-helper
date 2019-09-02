@@ -38,8 +38,8 @@ services:
       - DATABASE_URL
     volumes:
       - .:/code
-      - '/opt/margo/static:/code/static'
-      - '/opt/margo/media:/code/media'
+      - '/opt/margo/static:/code/backend/static'
+      - '/opt/margo/media:/code/backend/media'
     networks:
       - internal
       - web
