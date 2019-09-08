@@ -1,3 +1,4 @@
 .env-prod
 /static
 /.idea
+/media
