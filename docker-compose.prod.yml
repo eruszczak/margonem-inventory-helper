@@ -5,7 +5,7 @@ services:
     image: reryk/margo-frontend
     build: ./frontend
     restart: always
-    env_file: .env-prod
+    env_file: .env.prod
     networks:
       - web
     ports:
@@ -17,7 +17,7 @@ services:
     container_name: margo-database-container
     image: postgres:9.4
     restart: always
-    env_file: .env-prod
+    env_file: .env.prod
     volumes:
       - '/opt/postgres/margo:/var/lib/postgresql/data'
     networks:
@@ -29,11 +29,9 @@ services:
     container_name: margo-backend-container
     build: ./backend
     restart: always
-    env_file: .env-prod
-    command: bash -c "cd backend && python manage.py collectstatic --noinput && gunicorn margonem.wsgi -b 0.0.0.0:8000 --workers 1"
-    environment:
-      - ALLOWED_HOSTS
-      - DATABASE_URL
+    env_file: .env.prod
+#    command: bash -c "cd backend && python manage.py collectstatic --noinput && gunicorn margonem.wsgi -b 0.0.0.0:8000 --workers 1"
+    command: bash -c "cd backend && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - '.:/code'
       - '/opt/margo:/opt/margo'

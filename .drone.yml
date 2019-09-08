@@ -27,12 +27,6 @@ steps:
         from_secret: username_hub
       PASSWORD:
         from_secret: password_hub
-      ALLOWED_HOSTS:
-        from_secret: allowed_hosts
-      DATABASE_URL:
-        from_secret: database_url
-      SECRET_KEY:
-        from_secret: secret_key
     commands:
       - docker login -u $USERNAME -p $PASSWORD
       - docker-compose build
