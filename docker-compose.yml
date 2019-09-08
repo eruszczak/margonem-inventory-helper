@@ -5,6 +5,7 @@ services:
     image: reryk/margo-frontend
     build: ./frontend
     restart: always
+    env_file: .env
     networks:
       - web
     ports:
@@ -16,7 +17,7 @@ services:
     container_name: margo-database-container
     image: postgres:9.4
     restart: always
-    env_file: .env-db
+    env_file: .env
     volumes:
       - /opt/postgres/margo:/var/lib/postgresql/data
     networks:
