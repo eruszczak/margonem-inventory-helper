@@ -1,4 +1,4 @@
-.env-prod
+.env.prod
 /static
 /.idea
 /media
