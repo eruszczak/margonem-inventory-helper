@@ -11,6 +11,12 @@ class ItemSerializer(serializers.ModelSerializer):
         lookup_field = 'slug'
         fields = ('pk', 'img', 'name', 'lvl', 'type', 'rarity', 'stats', 'legbon', 'slug', 'detail_url', 'reqp', 'hidden_stats')
 
+    def to_representation(self, instance):
+        response = super(ItemSerializer, self).to_representation(instance)
+        if instance.img:
+            response['img'] = instance.img.url
+        return response
+
 
 class ItemSimilarSerializer(ItemSerializer):
     similar = serializers.SerializerMethodField(read_only=True)
@@ -41,17 +47,3 @@ class ItemSimilarSerializer(ItemSerializer):
                 half_diff = diff / 2
                 queryset = queryset[half_diff:qs_len - half_diff]
         return ItemSerializer(queryset, many=True).data[:limit]
-
-
-# class CharacterSerializer(serializers.Serializer):
-#     name = serializers.CharField()
-#     guild = serializers.CharField()
-#     world = serializers.CharField()
-#     outfit = serializers.CharField()
-#     lvl = serializers.CharField()
-#     id = serializers.CharField()
-#     prof = serializers.CharField()
-#
-#
-# class NotFoundItemSerializer(serializers.Serializer):
-#     name = serializers.CharField()
