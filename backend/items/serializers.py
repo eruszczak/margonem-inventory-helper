@@ -4,7 +4,6 @@ from items.models import Item
 
 class ItemSerializer(serializers.ModelSerializer):
     detail_url = serializers.HyperlinkedIdentityField(view_name='item-detail-api-view', lookup_field='slug', read_only=True)
-    # similar = serializers.HyperlinkedIdentityField(view_name='item-similar-api-view', lookup_field='slug', read_only=True)
 
     class Meta:
         model = Item
