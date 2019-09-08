@@ -30,8 +30,7 @@ services:
     build: ./backend
     restart: always
     env_file: .env.prod
-#    command: bash -c "cd backend && python manage.py collectstatic --noinput && gunicorn margonem.wsgi -b 0.0.0.0:8000 --workers 1"
-    command: bash -c "cd backend && python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "cd backend && python manage.py collectstatic --noinput && gunicorn margonem.wsgi -b 0.0.0.0:8000 --workers 1"
     volumes:
       - '.:/code'
       - '/opt/margo:/opt/margo'
