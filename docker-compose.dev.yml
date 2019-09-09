@@ -27,6 +27,7 @@ services:
 
   margo-backend:
     container_name: margo-backend-container
+    image: reryk/margo-backend
     build: ./backend
     restart: always
 #    command: bash -c "cd backend && python manage.py collectstatic --noinput && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
