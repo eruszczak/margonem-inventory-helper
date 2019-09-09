@@ -27,6 +27,7 @@ services:
 
   margo-backend:
     container_name: margo-backend-container
+    image: reryk/margo-backend
     build: ./backend
     restart: always
     env_file: .env.prod
