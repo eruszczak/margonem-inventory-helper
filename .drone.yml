@@ -29,8 +29,8 @@ steps:
         from_secret: password_hub
     commands:
       - docker login -u $USERNAME -p $PASSWORD
-      - docker-compose build
-      - docker-compose push
+      - docker-compose -f docker-compose.prod.yml build
+      - docker-compose -f docker-compose.prod.yml push
     when:
       branch:
         - master
