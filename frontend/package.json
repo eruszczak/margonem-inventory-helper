@@ -13,7 +13,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "bulma": "^0.6.2",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.13",
     "vue": "^2.5.2",
     "vue-clipboard2": "0.0.8",
     "vue-infinite-scroll": "^2.0.2",
