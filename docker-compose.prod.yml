@@ -6,12 +6,28 @@ services:
     build: ./frontend
     restart: always
     env_file: .env.prod
-    networks:
-      - web
-    ports:
-      - "8001:80"
+    volumes:
+      - media:/movie-media
+#    ports:
+#      - "8003:80"
     depends_on:
       - margo-backend
+
+  margo-backend:
+    container_name: margo-backend-container
+    image: reryk/margo-backend
+    build: ./backend
+    restart: always
+    command: bash -c "python manage.py migrate && gunicorn margonem.wsgi -b 0.0.0.0:8000 --workers 2"
+    env_file: .env.prod
+    volumes:
+      - media:/movie-media
+#    ports:
+#      - "8004:8000"
+    expose:
+      - 8000
+    depends_on:
+      - margo-database
 
   margo-database:
     container_name: margo-database-container
@@ -19,32 +35,14 @@ services:
     restart: always
     env_file: .env.prod
     volumes:
-      - '/opt/postgres/margo:/var/lib/postgresql/data'
-    networks:
-      - internal
+      - /opt/postgres/margo:/var/lib/postgresql/data
     expose:
       - 5432
 
-  margo-backend:
-    container_name: margo-backend-container
-    image: reryk/margo-backend
-    build: ./backend
-    restart: always
-    env_file: .env.prod
-    command: bash -c "cd backend && python manage.py collectstatic --noinput && gunicorn margonem.wsgi -b 0.0.0.0:8000 --workers 1"
-    volumes:
-      - '.:/code'
-      - '/opt/margo:/opt/margo'
-    networks:
-      - internal
-      - web
-    ports:
-      - '8000:8000'
-    depends_on:
-      - margo-database
+volumes:
+  media:
 
 networks:
-  web:
-    external: true
-  internal:
-    external: false
+  default:
+    external:
+      name: nginx-proxy
