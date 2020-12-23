@@ -10,8 +10,8 @@ services:
       - VIRTUAL_HOST=margo.eryk.io
     volumes:
       - media:/movie-media
-    ports:
-      - "8003:80"
+#    ports:
+#      - "8003:80"
     depends_on:
       - margo-backend
 
@@ -24,8 +24,8 @@ services:
     env_file: .env.prod
     volumes:
       - media:/movie-media
-    ports:
-      - "8004:8000"
+#    ports:
+#      - "8004:8000"
     expose:
       - 8000
     depends_on:
