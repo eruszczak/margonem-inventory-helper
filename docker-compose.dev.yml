@@ -6,12 +6,28 @@ services:
     build: ./frontend
     restart: always
     env_file: .env.dev
-    networks:
-      - web
+    volumes:
+      - media:/movie-media
     ports:
-      - "8001:80"
+      - "8003:80"
     depends_on:
       - margo-backend
+
+  margo-backend:
+    container_name: margo-backend-container
+    image: reryk/margo-backend
+    build: ./backend
+    restart: always
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    env_file: .env.dev
+    volumes:
+      - media:/movie-media
+    ports:
+      - "8004:8000"
+    expose:
+      - 8000
+    depends_on:
+      - margo-database
 
   margo-database:
     container_name: margo-database-container
@@ -20,33 +36,8 @@ services:
     env_file: .env.dev
     volumes:
       - /opt/postgres/margo:/var/lib/postgresql/data
-    networks:
-      - internal
     expose:
       - 5432
 
-  margo-backend:
-    container_name: margo-backend-container
-    image: reryk/margo-backend
-    build: ./backend
-    restart: always
-#    command: bash -c "cd backend && python manage.py collectstatic --noinput && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
-    command: bash -c "cd backend && python manage.py runserver 0.0.0.0:8000"
-    env_file: .env.dev
-    volumes:
-      - .:/code
-      - '/opt/margo/static:/code/backend/static'
-      - '/opt/margo/media:/code/backend/media'
-    networks:
-      - internal
-      - web
-    ports:
-      - "8000:8000"
-    depends_on:
-      - margo-database
-
-networks:
-  web:
-    external: true
-  internal:
-    external: false
+volumes:
+  media:
