@@ -6,6 +6,8 @@ services:
     build: ./frontend
     restart: always
     env_file: .env.dev
+    enviroment:
+      - VIRTUAL_HOST=margo.eryk.io
     volumes:
       - media:/movie-media
     ports:
