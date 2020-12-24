@@ -10,8 +10,8 @@ services:
 
   margo-frontend:
     container_name: margo-frontend-container
-    image: nginx
-#    build: ./frontend
+    image: reryk/margo-frontend
+    build: ./frontend
     environment:
       - VIRTUAL_HOST=moje1.eryk.io
       - LETSENCRYPT_HOST=moje1.eryk.io
