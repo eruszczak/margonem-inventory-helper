@@ -13,8 +13,8 @@ services:
     image: nginx
 #    build: ./frontend
     environment:
-      - VIRTUAL_HOST=test2.eryk.io
-      - LETSENCRYPT_HOST=test2.eryk.io
+      - VIRTUAL_HOST=moje.eryk.io
+      - LETSENCRYPT_HOST=moje.eryk.io
 #      - VIRTUAL_PROTO=https
 #      - VIRTUAL_PORT=443
 #      - CERT_NAME=margo.eryk.io.crt
