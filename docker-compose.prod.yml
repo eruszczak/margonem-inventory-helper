@@ -1,13 +1,6 @@
 version: "3"
-services:
-  test4:
-    image: nginx
-    environment:
-      ### ToDo: Change to your public DNS name
-      - VIRTUAL_HOST=test4.eryk.io
-      - LETSENCRYPT_HOST=test4.eryk.io
-    restart: always
 
+services:
   margo-frontend:
     container_name: margo-frontend-container
     image: reryk/margo-frontend
@@ -15,15 +8,10 @@ services:
     environment:
       - VIRTUAL_HOST=margo.eryk.io
       - LETSENCRYPT_HOST=margo.eryk.io
-#      - VIRTUAL_PROTO=https
-#      - VIRTUAL_PORT=443
-#      - CERT_NAME=margo.eryk.io.crt
     volumes:
-#      - certs:/etc/nginx/certs
       - media:/movie-media
-#    expose:
-#      - 80
-#      - 443
+    expose:
+      - 80
     depends_on:
       - margo-backend
 
@@ -51,11 +39,10 @@ services:
     expose:
       - 5432
 
+
 volumes:
   media:
-#  certs:
-#    external:
-#      name: nginx-proxy_certs
+
 
 networks:
   default:
