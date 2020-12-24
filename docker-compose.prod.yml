@@ -1,15 +1,20 @@
 version: "3"
 services:
+  web:
+    image: nginx
+    environment:
+      ### ToDo: Change to your public DNS name
+      - VIRTUAL_HOST=test.eryk.io
+      - LETSENCRYPT_HOST=test.eryk.io
+    restart: always
+
   margo-frontend:
     container_name: margo-frontend-container
     image: nginx
 #    build: ./frontend
-    restart: always
-    env_file: .env.prod
     environment:
-      - VIRTUAL_HOST=margo.eryk.io
-      - LETSENCRYPT_HOST=margo.eryk.io
-      - LETSENCRYPT_EMAIL=erykruszczak@gmail.com
+      - VIRTUAL_HOST=test2.eryk.io
+      - LETSENCRYPT_HOST=test2.eryk.io
 #      - VIRTUAL_PROTO=https
 #      - VIRTUAL_PORT=443
 #      - CERT_NAME=margo.eryk.io.crt
