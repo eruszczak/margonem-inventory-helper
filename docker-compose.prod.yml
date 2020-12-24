@@ -17,8 +17,8 @@ services:
       - certs:/etc/nginx/certs
       - media:/movie-media
     expose:
-      - 80
-      - 443
+      - "80:80"
+      - "443:443"
     depends_on:
       - margo-backend
 
