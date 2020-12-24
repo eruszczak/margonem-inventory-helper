@@ -15,6 +15,7 @@ services:
       - media:/movie-media
     expose:
       - 80
+      - 443
     depends_on:
       - margo-backend
 
