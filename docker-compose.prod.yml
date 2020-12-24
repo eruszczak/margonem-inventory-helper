@@ -10,6 +10,9 @@ services:
       - VIRTUAL_HOST=margo.eryk.io
       - LETSENCRYPT_HOST=margo.eryk.io
       - LETSENCRYPT_EMAIL=erykruszczak@gmail.com
+      - VIRTUAL_PROTO=https
+      - VIRTUAL_PORT=443
+      - CERT_NAME=margo.eryk.io.crt
     volumes:
       - certs:/etc/nginx/certs:ro
       - media:/movie-media
