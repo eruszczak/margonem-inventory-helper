@@ -14,7 +14,7 @@ services:
 #      - VIRTUAL_PORT=443
 #      - CERT_NAME=margo.eryk.io.crt
     volumes:
-      - certs:/etc/nginx/certs:ro
+      - certs:/etc/nginx/certs
       - media:/movie-media
     expose:
       - 80
