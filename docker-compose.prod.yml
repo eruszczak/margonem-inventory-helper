@@ -11,9 +11,10 @@ services:
       - LETSENCRYPT_HOST=margo.eryk.io
       - LETSENCRYPT_EMAIL=erykruszczak@gmail.com
     volumes:
+      - certs:/etc/nginx/certs:ro
       - media:/movie-media
-#    ports:
-#      - "8003:80"
+    expose:
+      - 80
     depends_on:
       - margo-backend
 
@@ -26,8 +27,6 @@ services:
     env_file: .env.prod
     volumes:
       - media:/movie-media
-#    ports:
-#      - "8004:8000"
     expose:
       - 8000
     depends_on:
@@ -45,6 +44,9 @@ services:
 
 volumes:
   media:
+  certs:
+    external:
+      name: nginx-proxy_certs
 
 networks:
   default:
