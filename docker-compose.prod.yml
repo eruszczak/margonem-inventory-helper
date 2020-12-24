@@ -13,8 +13,8 @@ services:
     image: reryk/margo-frontend
     build: ./frontend
     environment:
-      - VIRTUAL_HOST=moje1.eryk.io
-      - LETSENCRYPT_HOST=moje1.eryk.io
+      - VIRTUAL_HOST=margo.eryk.io
+      - LETSENCRYPT_HOST=margo.eryk.io
 #      - VIRTUAL_PROTO=https
 #      - VIRTUAL_PORT=443
 #      - CERT_NAME=margo.eryk.io.crt
