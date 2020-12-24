@@ -1,11 +1,11 @@
 version: "3"
 services:
-  web:
+  test4:
     image: nginx
     environment:
       ### ToDo: Change to your public DNS name
-      - VIRTUAL_HOST=test.eryk.io
-      - LETSENCRYPT_HOST=test.eryk.io
+      - VIRTUAL_HOST=test4.eryk.io
+      - LETSENCRYPT_HOST=test4.eryk.io
     restart: always
 
   margo-frontend:
