@@ -2,8 +2,8 @@ version: "3"
 services:
   margo-frontend:
     container_name: margo-frontend-container
-    image: reryk/margo-frontend
-    build: ./frontend
+    image: nginx
+#    build: ./frontend
     restart: always
     env_file: .env.prod
     environment:
