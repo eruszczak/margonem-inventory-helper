@@ -16,9 +16,9 @@ services:
     volumes:
       - certs:/etc/nginx/certs
       - media:/movie-media
-    ports:
-      - "80:80"
-      - "443:443"
+    expose:
+      - 80
+      - 443
     depends_on:
       - margo-backend
 
