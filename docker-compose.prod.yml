@@ -4,7 +4,7 @@ services:
   margo-frontend:
     container_name: margo-frontend-container
     image: reryk/margo-frontend
-    restart: always
+    restart: unless-stopped
     build: ./frontend
     environment:
       - VIRTUAL_HOST=margo.eryk.io
@@ -20,7 +20,7 @@ services:
     container_name: margo-backend-container
     image: reryk/margo-backend
     build: ./backend
-    restart: always
+    restart: unless-stopped
     command: bash -c "python manage.py migrate && gunicorn margonem.wsgi -b 0.0.0.0:8000 --workers 2"
     env_file: .env.prod
     volumes:
@@ -33,7 +33,7 @@ services:
   margo-database:
     container_name: margo-database-container
     image: postgres:9.4
-    restart: always
+    restart: unless-stopped
     env_file: .env.prod
     volumes:
       - /opt/postgres/margo:/var/lib/postgresql/data
