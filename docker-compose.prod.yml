@@ -4,6 +4,7 @@ services:
   margo-frontend:
     container_name: margo-frontend-container
     image: reryk/margo-frontend
+    restart: always
     build: ./frontend
     environment:
       - VIRTUAL_HOST=margo.eryk.io
