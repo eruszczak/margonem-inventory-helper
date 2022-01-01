@@ -8,7 +8,7 @@ services:
     build: ./frontend
     env_file: '.env.frontend'
     volumes:
-      - moje-margo_media:/movie-media
+      - moje-margo_media:/margo-media
     expose:
       - 80
     depends_on:
@@ -22,7 +22,7 @@ services:
     restart: unless-stopped
     command: bash -c "python manage.py migrate && gunicorn margonem.wsgi -b 0.0.0.0:8000 --workers 2"
     volumes:
-      - moje-margo_media:/movie-media
+      - moje-margo_media:/margo-media
     expose:
       - 8000
     depends_on:
