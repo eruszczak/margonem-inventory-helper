@@ -1,0 +1,34 @@
+name: Push Docker Image
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}/
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Login to Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ${{ secrets.DOCKER_REGISTRY }}
+        username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+        password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+
+    - uses: actions/checkout@v2
+      with:
+        ref: master
+
+    - name: Prepare empty env files needed for build
+      run: touch .env.frontend .env.backend .env.db
+
+    - name: Build images
+      run: docker-compose build
+      
+    - name: Push images
+      run: docker-compose push

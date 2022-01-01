@@ -1,0 +1,52 @@
+version: "3"
+
+services:
+  moje-margo-frontend:
+    container_name: moje-margo-frontend
+    image: ${DOCKER_REGISTRY}moje-margo-frontend
+    restart: unless-stopped
+    build: ./frontend
+    env_file: '.env.frontend'
+    volumes:
+      - moje-margo_media:/movie-media
+    expose:
+      - 80
+    depends_on:
+      - moje-margo-backend
+
+  moje-margo-backend:
+    container_name: moje-margo-backend
+    image: ${DOCKER_REGISTRY}moje-margo-backend
+    build: ./backend
+    env_file: '.env.backend'
+    restart: unless-stopped
+    command: bash -c "python manage.py migrate && gunicorn margonem.wsgi -b 0.0.0.0:8000 --workers 2"
+    volumes:
+      - moje-margo_media:/movie-media
+    expose:
+      - 8000
+    depends_on:
+      - moje-margo-database
+
+  moje-margo-database:
+    container_name: margo-database
+    image: postgres:9.4
+    env_file: '.env.db'
+    restart: unless-stopped
+    volumes:
+      - moje-margo_data:/var/lib/postgresql/data
+    expose:
+      - 5432
+
+
+volumes:
+  moje-margo_media:
+    external: true
+  moje-margo_data:
+    external: true
+
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
