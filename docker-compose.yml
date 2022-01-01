@@ -29,7 +29,7 @@ services:
       - moje-margo-database
 
   moje-margo-database:
-    container_name: margo-database
+    container_name: moje-margo-database
     image: postgres:9.4
     env_file: '.env.db'
     restart: unless-stopped
