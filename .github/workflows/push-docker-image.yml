@@ -3,13 +3,13 @@ name: Push Docker Image
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
+
 
 env:
   DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}/
   DOCKER_CLIENT_TIMEOUT: 180
   COMPOSE_HTTP_TIMEOUT: 180
+
 
 jobs:
   build_and_push:
