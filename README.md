@@ -3,7 +3,7 @@
 # About
 https://margo.eryk.io
 
-[Margonem](https://margonem.com/) is a browser-based MMORPG. Using this app, you can search for items from this game and see their statistics. You can compare one item with another and also build whole equipment for your character.
+[Margonem](https://margonem.com/) is a browser-based MMORPG. In early 2018 I decided to create an inventory helper for this game.
 
 # Tech stack
 * [Vue.js](https://vuejs.org/)
@@ -14,9 +14,10 @@ https://margo.eryk.io
 
 # Features
 * adding new items to the database from the game using web scraping scripts
+* search & compare items
 * browse a list of items split into different categories
 * right click the item to add it to your virtual equipment
-* build the entire equipment and see it's summary
+* build the entire equipment and see its summary
 * generate URL for your virtual equipment so you can share it with others
 
 
