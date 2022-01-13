@@ -1,9 +1,7 @@
 [![Push Docker Image](https://github.com/erykio/moje-margo/actions/workflows/push-docker-image.yml/badge.svg)](https://github.com/erykio/moje-margo/actions/workflows/push-docker-image.yml)
 
 # About
-https://margo.eryk.io
-
-[Margonem](https://margonem.com/) is a browser-based MMORPG. In early 2018 I decided to create an inventory helper for this game.
+[Margonem](https://margonem.com/) is a browser-based MMORPG. In early 2018 I decided to create an inventory helper for this game - https://margo.eryk.io
 
 # Tech stack
 * [Vue.js](https://vuejs.org/)
