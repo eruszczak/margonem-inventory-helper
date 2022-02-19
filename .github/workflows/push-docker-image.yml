@@ -32,34 +32,6 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Set up Python version
-        uses: actions/setup-python@v2.2.2
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: Create and start virtual environment
-        working-directory: ./backend
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-
-      - name: list
-        working-directory: ./backend
-        run: |
-          ls -all
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Available platforms
-        run: echo ${{ steps.buildx.outputs.platforms }}
-
-
-
       - name: Install
         working-directory: ./frontend
         run: npm install
@@ -68,34 +40,17 @@ jobs:
         working-directory: ./frontend
         run: npm run build
 
-
-
-      - name: Create and start virtual environment
-        working-directory: ./backend
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-
-      - name: Install dependencies
-        working-directory: ./backend
-        run: pip install -r requirements.txt
-
-
-
-      - name: Build & Push a frontend image
+      - name: Build a frontend image
         working-directory: ./frontend
         run: |
-          docker buildx build \
-            -t ${{ secrets.DOCKER_REGISTRY }}/moje-margo-frontend:latest \
-            --platform linux/amd64,linux/arm64 \
-            --push \
-            -f Dockerfile2 .
+          docker build -t ${{ secrets.DOCKER_REGISTRY }}/moje-margo-frontend:latest -f Dockerfile2 .
 
-      - name: Build & Push a backend image
+      - name: Build a backend image
         working-directory: ./backend
         run: |
-          docker buildx build \
-            -t ${{ secrets.DOCKER_REGISTRY }}/moje-margo-backend:latest \
-            --platform linux/amd64,linux/arm64 \
-            --push \
-            -f Dockerfile2 .
+          docker build -t ${{ secrets.DOCKER_REGISTRY }}/moje-margo-backend:latest .
+
+      - name: Push
+        run: |
+          docker push ${{ secrets.DOCKER_REGISTRY }}/moje-margo-backend:latest &&
+          docker push ${{ secrets.DOCKER_REGISTRY }}/moje-margo-frontend:latest
