@@ -9,6 +9,8 @@ env:
   DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}/
   DOCKER_CLIENT_TIMEOUT: 180
   COMPOSE_HTTP_TIMEOUT: 180
+  PYTHON_VERSION: '3.6'
+  NODE_VERSION: '10'
 
 
 jobs:
@@ -28,7 +30,7 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: '10'
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -39,6 +41,9 @@ jobs:
 
       - name: Available platforms
         run: echo ${{ steps.buildx.outputs.platforms }}
+
+
+
 
       - name: Install
         working-directory: ./frontend
@@ -55,15 +60,35 @@ jobs:
             -t ${{ secrets.DOCKER_REGISTRY }}/moje-margo-frontend:latest \
             --platform linux/amd64,linux/arm64 \
             -f Dockerfile2 .
+          
 
-#      - name: Build a backend image
-#        run: |
-#          docker buildx build \
-#            -t ${{ secrets.DOCKER_REGISTRY }}/moje-margo-backend:latest \
-#            --platform linux/amd64,linux/arm64 \
-#            backend/
+
+      - name: Set up Python version
+        uses: actions/setup-python@v2.2.2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Create and start virtual environment
+        working-directory: ./backend
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+
+      - name: Install dependencies
+        working-directory: ./backend
+        run: pip install -r requirements.txt
+
+      - name: Build a backend image
+        working-directory: ./backend
+        run: |
+          docker buildx build \
+            -t ${{ secrets.DOCKER_REGISTRY }}/moje-margo-backend:latest \
+            --platform linux/amd64,linux/arm64 \
+            -f Dockerfile2 .
+
+
 
       - name: Push images
         run: |
-          docker push ${{ secrets.DOCKER_REGISTRY }}/moje-margo-frontend:latest && \
-#          docker push ${{ secrets.DOCKER_REGISTRY }}/moje-margo-backend:latest
+          docker push ${{ secrets.DOCKER_REGISTRY }}/moje-margo-frontend:latest &&
+          docker push ${{ secrets.DOCKER_REGISTRY }}/moje-margo-backend:latest
