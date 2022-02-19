@@ -32,6 +32,11 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      - name: Set up Python version
+        uses: actions/setup-python@v2.2.2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -44,7 +49,6 @@ jobs:
 
 
 
-
       - name: Install
         working-directory: ./frontend
         run: npm install
@@ -53,20 +57,7 @@ jobs:
         working-directory: ./frontend
         run: npm run build
 
-      - name: Build a frontend image
-        working-directory: ./frontend
-        run: |
-          docker buildx build \
-            -t ${{ secrets.DOCKER_REGISTRY }}/moje-margo-frontend:latest \
-            --platform linux/amd64,linux/arm64 \
-            -f Dockerfile2 .
-          
 
-
-      - name: Set up Python version
-        uses: actions/setup-python@v2.2.2
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Create and start virtual environment
         working-directory: ./backend
@@ -78,17 +69,22 @@ jobs:
         working-directory: ./backend
         run: pip install -r requirements.txt
 
-      - name: Build a backend image
+
+
+      - name: Build & Push a frontend image
+        working-directory: ./frontend
+        run: |
+          docker buildx build \
+            -t ${{ secrets.DOCKER_REGISTRY }}/moje-margo-frontend:latest \
+            --platform linux/amd64,linux/arm64 \
+            --push \
+            -f Dockerfile2 .
+
+      - name: Build & Push a backend image
         working-directory: ./backend
         run: |
           docker buildx build \
             -t ${{ secrets.DOCKER_REGISTRY }}/moje-margo-backend:latest \
             --platform linux/amd64,linux/arm64 \
+            --push \
             -f Dockerfile2 .
-
-
-
-      - name: Push images
-        run: |
-          docker push ${{ secrets.DOCKER_REGISTRY }}/moje-margo-frontend:latest &&
-          docker push ${{ secrets.DOCKER_REGISTRY }}/moje-margo-backend:latest
