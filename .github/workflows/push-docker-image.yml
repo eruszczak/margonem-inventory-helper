@@ -37,7 +37,10 @@ jobs:
         run: echo ${{ steps.buildx.outputs.platforms }}
 
       - name: Build a frontend image
-        run: docker buildx -t ${{ secrets.DOCKER_REGISTRY }}/moje-margo-frontend frontend/
+        run: docker buildx build \
+              -t ${{ secrets.DOCKER_REGISTRY }}/moje-margo-frontend:latest \
+              --platform linux/amd64,linux/arm/v7,linux/arm64 \
+              frontend/
 
 #      - name: Push images
 #        run: docker-compose push
