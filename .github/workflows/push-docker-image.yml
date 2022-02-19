@@ -26,6 +26,10 @@ jobs:
         with:
           ref: master
 
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '10'
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -36,21 +40,30 @@ jobs:
       - name: Available platforms
         run: echo ${{ steps.buildx.outputs.platforms }}
 
+      - name: Install
+        working-directory: ./frontend
+        run: npm install
+
+      - name: Build
+        working-directory: ./frontend
+        run: npm run build
+
       - name: Build a frontend image
+        working-directory: ./frontend
         run: |
           docker buildx build \
             -t ${{ secrets.DOCKER_REGISTRY }}/moje-margo-frontend:latest \
             --platform linux/amd64,linux/arm64 \
-            frontend/
+            -f Dockerfile2 .
 
-      - name: Build a backend image
-        run: |
-          docker buildx build \
-            -t ${{ secrets.DOCKER_REGISTRY }}/moje-margo-backend:latest \
-            --platform linux/amd64,linux/arm64 \
-            backend/
+#      - name: Build a backend image
+#        run: |
+#          docker buildx build \
+#            -t ${{ secrets.DOCKER_REGISTRY }}/moje-margo-backend:latest \
+#            --platform linux/amd64,linux/arm64 \
+#            backend/
 
       - name: Push images
         run: |
           docker push ${{ secrets.DOCKER_REGISTRY }}/moje-margo-frontend:latest && \
-          docker push ${{ secrets.DOCKER_REGISTRY }}/moje-margo-backend:latest
+#          docker push ${{ secrets.DOCKER_REGISTRY }}/moje-margo-backend:latest
