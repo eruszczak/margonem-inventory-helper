@@ -40,7 +40,7 @@ jobs:
         run: |
           docker buildx build \
             -t ${{ secrets.DOCKER_REGISTRY }}/moje-margo-frontend:latest \
-            --platform linux/arm64 \
+            --platform linux/amd64,linux/arm64 \
             frontend/
 
       - name: Build a backend image
