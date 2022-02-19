@@ -37,6 +37,17 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
+      - name: Create and start virtual environment
+        working-directory: ./backend
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+
+      - name: list
+        working-directory: ./backend
+        run: |
+          ls -all
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
