@@ -3,12 +3,13 @@ version: "3"
 services:
   moje-margo-frontend:
     container_name: moje-margo-frontend
-    image: ${DOCKER_REGISTRY}moje-margo-frontend
+    image: moje-margo-frontend
     restart: unless-stopped
     build: ./frontend
-    env_file: '.env.frontend'
     volumes:
-      - moje-margo_media:/margo-media
+      - ./media:/margo-media
+    ports:
+      - '3000:80'
     expose:
       - 80
     depends_on:
@@ -16,13 +17,17 @@ services:
 
   moje-margo-backend:
     container_name: moje-margo-backend
-    image: ${DOCKER_REGISTRY}moje-margo-backend
+    image: moje-margo-backend
     build: ./backend
-    env_file: '.env.backend'
     restart: unless-stopped
-    command: bash -c "python manage.py migrate && gunicorn margonem.wsgi -b 0.0.0.0:8000 --workers 2"
+    env_file:
+      - .env
+#    command: bash -c "python manage.py migrate && gunicorn margonem.wsgi -b 0.0.0.0:8000 --workers 2"
+    command: bash -c "gunicorn margonem.wsgi -b 0.0.0.0:8000 --workers 2"
     volumes:
-      - moje-margo_media:/margo-media
+      - ./media:/margo-media
+    ports:
+      - '8000:8000'
     expose:
       - 8000
     depends_on:
@@ -31,22 +36,19 @@ services:
   moje-margo-database:
     container_name: moje-margo-database
     image: postgres:9.4
-    env_file: '.env.db'
+    environment:
+      POSTGRES_PASSWORD: postgres # required; superuser password
+      POSTGRES_USER: postgres # superuser to be created
+      POSTGRES_DB: db # database to be created
     restart: unless-stopped
     volumes:
       - moje-margo_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     expose:
       - 5432
 
 
 volumes:
-  moje-margo_media:
-    external: true
   moje-margo_data:
     external: true
-
-
-networks:
-  default:
-    external:
-      name: nginx-proxy
