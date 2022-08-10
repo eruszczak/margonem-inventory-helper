@@ -1,4 +1,4 @@
-[![Push Docker Image](https://github.com/erykio/moje-margo/actions/workflows/push-docker-image.yml/badge.svg)](https://github.com/erykio/moje-margo/actions/workflows/push-docker-image.yml)
+[![Release](https://github.com/erykio/moje-margo/actions/workflows/release.yml/badge.svg)](https://github.com/erykio/moje-margo/actions/workflows/release.yml)
 
 # About
 [Margonem](https://margonem.com/) is a browser-based MMORPG. In early 2018 I decided to create an inventory helper for this game - https://margo.eryk.io
