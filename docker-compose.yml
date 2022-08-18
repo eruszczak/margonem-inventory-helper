@@ -22,8 +22,8 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-#    command: bash -c "python manage.py migrate && gunicorn margonem.wsgi -b 0.0.0.0:8000 --workers 2"
-    command: bash -c "gunicorn margonem.wsgi -b 0.0.0.0:8000 --workers 2"
+    command: bash -c "python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8000"
+    # command: bash -c "python manage.py migrate --noinput && gunicorn margonem.wsgi -b 0.0.0.0:8000 --workers 2"
     volumes:
       - ./media:/margo-media
     ports:
@@ -42,7 +42,7 @@ services:
       POSTGRES_DB: db # database to be created
     restart: unless-stopped
     volumes:
-      - moje-margo_data:/var/lib/postgresql/data
+      - moje-margo-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     expose:
@@ -50,5 +50,4 @@ services:
 
 
 volumes:
-  moje-margo_data:
-    external: true
+  moje-margo-data:
