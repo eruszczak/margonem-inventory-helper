@@ -55,7 +55,7 @@
 <script>
   import Popup from './item/Popup'
   import Item from './item/Item'
-  import {fetchItem, fetchItemSimilar, fetchMultipleItems} from '../api/items'
+  import {fetchItemSimilar, fetchMultipleItems} from '../api/items'
   import { mapMutations } from 'vuex'
   import { RARITY_CLASSES, RIGHT_CLICK_MAPPER } from '../utils/constants'
   import { item } from './mixins/item'
@@ -113,22 +113,26 @@
     },
     methods: {
       ...mapMutations(['setAPIError']),
-      _fetchItem (mount) {
+      async _fetchItem (mount) {
         this.isLoading = true
         this.isLoadingSimilar = true
-        fetchItem(this.slug, response => {
-          this.isLoading = false
-          this.data = response.data
-          this.$setPageTitle(`${this.data.name}`)
-          this._fetchItemSimilar()
-          if (mount) {
-            this.fetchItemHistory()
-          } else {
-            this.addToItemHistory(this.data)
-          }
-        }, () => {
-          this.setAPIError()
-        })
+        const {data, error} = await this.$supabase.from('items_item')
+          .select('*')
+          .eq('slug', this.slug)
+          .limit(1)
+          .single()
+        this.data = data
+        this.isLoading = false
+        this.$setPageTitle(`${this.data.name}`)
+        if (error) {
+          this.setAPIError(true)
+        }
+        //   this._fetchItemSimilar()
+        //   if (mount) {
+        //     this.fetchItemHistory()
+        //   } else {
+        //     this.addToItemHistory(this.data)
+        //   }
       },
       _fetchItemSimilar () {
         fetchItemSimilar(this.slug, response => {
@@ -161,12 +165,6 @@
         this.itemHistory = this.itemHistory.slice(0, ITEM_HISTORY_LIMIT)
         this.setItemHistorySlugs()
       },
-      // getSortedItemHistory (items) {
-      //   function sortFunc (sortingArr, a, b) {
-      //     return sortingArr.indexOf(a[1]) - sortingArr.indexOf(b[1]);
-      //   }
-      //   return items.sort(sortFunc)
-      // },
       setItemHistorySlugs () {
         let slugs = this.itemHistory.map(item => item.slug)
         localStorage.setItem(ITEM_HISTORY_KEY, JSON.stringify(slugs))

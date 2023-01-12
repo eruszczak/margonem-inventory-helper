@@ -5,7 +5,6 @@ import compare from './modules/compare'
 import search from './modules/search'
 import modal from './modules/modal'
 import createPersistedState from 'vuex-persistedstate'
-import { fetchHelpers } from '../api/items'
 
 Vue.use(Vuex)
 
@@ -26,7 +25,22 @@ export const store = new Vuex.Store({
     isLoading: false,
     navbarMenuIsActive: false,
     isAPIError: false,
-    ITEM_STATS_IN_ORDER: []
+    ITEM_STATS_IN_ORDER: [
+      'dmg', 'pdmg', 'abdest', 'fire', 'light',
+      'wound', 'wound_chance',
+      'frost', 'frost_slowed',
+      'poison', 'poison_slowed',
+      'crit', 'pierce', 'critval', 'critmval', 'contra',
+      'ac', 'absorb', 'absorbm', 'ds', 'di', 'dz', 'da', 'sa',
+      'evade', 'blok', 'hp', 'hpbon', 'manabon', 'energybon', 'resacdmg', 'pierceb',
+      'resmanaendest', 'resmanaendest_ene', 'lowheal2turns', 'lowevade', 'lowcritallval', 'npc_expbon',
+      'manadest', 'endest', 'acdmg', 'adest',
+      'heal', 'slow', 'resdmg', 'lowcrit',
+      'resfire', 'resfrost', 'act', 'reslight',
+      'perheal', 'leczy', 'fullheal', 'afterheal', 'afterheal_chance',
+      'gold', 'bag', '@IGNORE@amount', 'ammo', '@IGNORE@capacity',
+      'ttl', 'resp', 'timelimit', 'respred', 'creditsbon', 'runes', '@IGNORE@worth'
+    ]
   },
   getters: {
     isLoading: state => state.isLoading,
@@ -46,18 +60,6 @@ export const store = new Vuex.Store({
     },
     setAPIError: (state, value = true) => {
       state.isAPIError = value
-    },
-    SET_ITEM_STATS_IN_ORDER: (state, value) => {
-      state.ITEM_STATS_IN_ORDER = value
-    }
-  },
-  actions: {
-    FETCH_HELPERS ({commit}) {
-      fetchHelpers(response => {
-        commit('SET_ITEM_STATS_IN_ORDER', response.data.ITEM_STATS_IN_ORDER)
-      }, () => {
-        commit('setAPIError')
-      })
     }
   },
   modules: {

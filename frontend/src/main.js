@@ -4,6 +4,7 @@ import router from './router'
 import './assets/scss/all.scss'
 import { store } from './store/index'
 
+import VueSupabase from "vue-supabase";
 import VueClipboard from 'vue-clipboard2'
 import infiniteScroll from 'vue-infinite-scroll'
 import VueProgressBar from 'vue-progressbar'
@@ -18,6 +19,11 @@ import Toast from './components/ui/toast'
 import Spinner from './components/includes/Spinner'
 import {setPageTitle} from './utils/helpers'
 
+Vue.use(VueSupabase, {
+  supabaseUrl: process.env.VUE_APP_SUPABASE_URL,
+  supabaseKey: process.env.VUE_APP_SUPABASE_KEY,
+  supabaseOptions: {},
+});
 Vue.use(VueProgressBar, {
   color: '#bffaf3',
   failedColor: '#874b4b',
@@ -49,7 +55,6 @@ Vue.component('my-tag', Tag)
 Vue.component('my-taglist', Taglist)
 Vue.component('my-spinner', Spinner)
 
-// eslint-disable-next-line no-new
 new Vue({
   el: '#app',
   router,

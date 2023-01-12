@@ -116,7 +116,7 @@ export const ITEM_PLACE = {
 
 export const CHARACTER_CLASSES = {
   w: 'wojownik',
-  b: 'tancerz',
+  b: 'tancerz ostrzy',
   h: 'łowca',
   t: 'tropiciel',
   m: 'mag',

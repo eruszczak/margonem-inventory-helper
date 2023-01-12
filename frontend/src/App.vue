@@ -27,7 +27,6 @@
       }
     },
     mounted () {
-      this.FETCH_HELPERS()
       this.initEqSet()
     },
     created () {
@@ -45,7 +44,7 @@
     },
     methods: {
       ...mapMutations(['closeModal', 'hideMenu', 'closeModal', 'setAPIError']),
-      ...mapActions(['initEqSet', 'FETCH_HELPERS']),
+      ...mapActions(['initEqSet']),
       mouseOver: function (item, event) {
         item.isActive = true
       }

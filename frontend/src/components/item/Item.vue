@@ -1,12 +1,12 @@
 <template>
   <router-link v-if="!noLink" :to="{name: 'itemView', params: {slug: data.slug}}">
     <div :id="data.slug" class="item" @contextmenu.prevent="itemRightClick(data)">
-      <img class="itemborder" :class="[noBorder ? '' : 'borderRarity', data.rarity]" :src="data.img" :alt="data.name">
+      <img class="itemborder" :class="[noBorder ? '' : 'borderRarity', data.rarity]" :src="data.img_url" :alt="data.name">
       <popup :data="data" :actionDescription="actionDescription"/>
     </div>
   </router-link>
   <div v-else :id="data.slug" class="item" @contextmenu.prevent="itemRightClick(data)">
-    <img class="itemborder" :class="[noBorder ? '' : 'borderRarity', data.rarity]" :src="data.img" :alt="data.name">
+    <img class="itemborder" :class="[noBorder ? '' : 'borderRarity', data.rarity]" :src="data.img_url" :alt="data.name">
   </div>
 </template>
 
